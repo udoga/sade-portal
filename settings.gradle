@@ -1,0 +1,4 @@
+rootProject.name = 'sample-panel'
+include 'base'
+include 'core'
+include 'rest'

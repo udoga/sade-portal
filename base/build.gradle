@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'uds.samplepanel'
+version '0.0.0'
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main.java.srcDir("main/java")
+    test.java.srcDir("test/java")
+    main.resources.srcDir("main/resources")
+    test.resources.srcDir("test/resources")
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
