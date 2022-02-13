@@ -8,8 +8,7 @@ public class MemoryTableTest {
     MemoryTable<MockRecord> table;
 
     private void assertNotFound(Executable e, int id) {
-        RuntimeException exception = assertThrows(RuntimeException.class, e);
-        assertEquals(table.typeName + " not found: id=" + id, exception.getMessage());
+        assertThrows(RuntimeException.class, e, table.typeName + " not found: id=" + id);
     }
 
     @BeforeEach

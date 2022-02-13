@@ -21,7 +21,13 @@ public class Props {
     }
 
     public String get(String key) {
-        return properties.getProperty(key);
+        String result = properties.getProperty(key);
+        if (result == null) throw new RuntimeException("Property not found: key=" + key);
+        return result;
+    }
+
+    public int getInt(String key) {
+        return Integer.parseInt(get(key));
     }
 
     private void load(String path) {
