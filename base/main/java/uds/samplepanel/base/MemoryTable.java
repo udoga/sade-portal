@@ -46,6 +46,6 @@ public class MemoryTable<T extends Record> implements Table<T> {
 
     private int findIndex(int id) {
         for (int i = 0; i < records.size(); i++) if (records.get(i).id == id) return i;
-        throw new RuntimeException(typeName + " not found: id=" + id);
+        throw new RecordNotFound(typeName, id);
     }
 }
