@@ -10,7 +10,7 @@ public class User extends Record {
     }
 
     public User(String username) {
-        super(null);
+        this.id = null;
         this.username = username;
     }
 

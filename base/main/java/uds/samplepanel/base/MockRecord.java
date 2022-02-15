@@ -10,7 +10,7 @@ public class MockRecord extends Record {
     }
 
     MockRecord(Integer id, String name) {
-        super(id);
+        this.id = id;
         this.name = name;
     }
 
