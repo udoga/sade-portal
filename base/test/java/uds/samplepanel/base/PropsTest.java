@@ -14,13 +14,11 @@ public class PropsTest {
 
     @Nested
     public class GivenLoadedProps {
-        Resource resource;
         Props props;
 
         @BeforeEach
         public void setup() {
-            resource = new Resource("test.properties");
-            props = new Props(resource.findPath());
+            props = new Props(PathUtil.findResourcePath("test.properties"));
         }
 
         @Test
