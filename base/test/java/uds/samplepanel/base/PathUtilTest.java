@@ -3,6 +3,7 @@ package uds.samplepanel.base;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static uds.samplepanel.base.TestUtil.assertException;
 
 public class PathUtilTest {
     @Test
@@ -13,6 +14,6 @@ public class PathUtilTest {
 
     @Test
     public void whenResourceNotFound_throwsError() {
-        assertThrows(RuntimeException.class, () -> PathUtil.findResourcePath("missing.properties"));
+        assertException(RuntimeException.class, "Resource not found: x", () -> PathUtil.findResourcePath("x"));
     }
 }

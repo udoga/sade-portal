@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static uds.samplepanel.base.TestUtil.assertException;
 
 public class PropsTest {
     @Test
@@ -37,7 +38,7 @@ public class PropsTest {
         public void findsIntegerProperties() {
             assertEquals(1, props.getInt("number1"));
             assertEquals(2, props.getInt("number2"));
-            assertThrows(RuntimeException.class, () -> props.getInt("x"), "Property not found: key=x");
+            assertException(RuntimeException.class, "Property not found: key=x", () -> props.getInt("x"));
             assertThrows(NumberFormatException.class, () -> props.getInt("key1"));
         }
     }

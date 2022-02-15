@@ -3,12 +3,13 @@ package uds.samplepanel.base;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
+import static uds.samplepanel.base.TestUtil.assertException;
 
 public class MemoryTableTest {
     MemoryTable<MockRecord> table;
 
     private void assertNotFound(Executable e, int id) {
-        assertThrows(RuntimeException.class, e, table.typeName + " not found: id=" + id);
+        assertException(RuntimeException.class, table.typeName + " not found: id=" + id, e);
     }
 
     @BeforeEach
