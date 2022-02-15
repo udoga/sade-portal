@@ -1,33 +1,33 @@
 package uds.samplepanel.core;
 
-import uds.samplepanel.base.Table;
+import uds.samplepanel.base.Repo;
 
 import java.util.List;
 
 public class UserService {
-    private final Table<User> table;
+    private final Repo<User> repo;
 
-    public UserService(Table<User> table) {
-        this.table = table;
+    public UserService(Repo<User> repo) {
+        this.repo = repo;
     }
 
     public List<User> list() {
-        return table.list();
+        return repo.list();
     }
 
     public User read(int id) {
-        return table.read(id);
+        return repo.read(id);
     }
 
     public User create(User user) {
-        return table.create(user);
+        return repo.create(user);
     }
 
     public User update(int id, User user) {
-        return table.update(id, user);
+        return repo.update(id, user);
     }
 
     public User delete(int id) {
-        return table.delete(id);
+        return repo.delete(id);
     }
 }

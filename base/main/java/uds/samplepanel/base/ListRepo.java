@@ -3,11 +3,11 @@ package uds.samplepanel.base;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemoryTable<T extends Record> implements Table<T> {
+public class ListRepo<T extends Record> implements Repo<T> {
     public final String typeName;
     private final ArrayList<T> records;
 
-    public MemoryTable(String typeName) {
+    public ListRepo(String typeName) {
         this.typeName = typeName;
         this.records = new ArrayList<>();
     }
