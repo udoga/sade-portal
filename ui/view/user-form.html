@@ -1,0 +1,11 @@
+<div ng-controller="UserFormController">
+  <h2>User Form</h2>
+  <form>
+    <label>Username</label>
+    <input type="text" name="username" ng-model="user.username"/>
+    <div>
+      <a href="#!users">Cancel</a>
+      <a href ng-click="save()">Save</a>
+    </div>
+  </form>
+</div>

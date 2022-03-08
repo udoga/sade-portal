@@ -23,6 +23,18 @@ nav {
   background: #f0f0f0;
 }
 
+nav a {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-decoration: none;
+  color: black;
+}
+
+nav a:hover {
+  background: #e0e0e0;
+}
+
 main {
   margin-left: 300px;
   padding: 20px;
@@ -39,10 +51,21 @@ table, th, td {
   border: 1px solid #e0e0e0;
 }
 
-th, td {
-  padding: 8px;
+table {
+  width: 100%;
+}
+
+th.min, td.min {
+  width: 1%;
+  white-space: nowrap;
 }
 
 th {
+  padding: 12px 8px 12px 8px;
+  text-align: left;
   background: #f0f0f0;
+}
+
+td {
+  padding: 8px;
 }

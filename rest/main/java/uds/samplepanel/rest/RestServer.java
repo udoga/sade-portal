@@ -1,6 +1,7 @@
 package uds.samplepanel.rest;
 
 import io.javalin.Javalin;
+import io.javalin.core.JavalinConfig;
 import io.javalin.http.Context;
 import java.util.Map;
 import uds.samplepanel.base.RecordNotFound;
@@ -15,7 +16,7 @@ public class RestServer {
     public RestServer(int port, UserService userService) {
         this.port = port;
         this.userService = userService;
-        this.server = Javalin.create();
+        this.server = Javalin.create(JavalinConfig::enableCorsForAllOrigins);
         configureRequests();
         configureErrors();
     }
