@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Sample Panel</title>
+  <link rel="stylesheet" href="reset.css"/>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="angular.min.js"></script>
+  <script src="main.js"></script>
+</head>
+<body ng-app="app">
+  <header>
+    <h1>Sample Panel</h1>
+  </header>
+  <nav>
+  </nav>
+  <main>
+    <h2>Users</h2>
+    <div ng-controller="UserController">
+      <table>
+        <tr>
+          <th>Id</th>
+          <th>Username</th>
+          <th><a href="#">New</a></th>
+        </tr>
+        <tr ng-repeat="user in users">
+          <td>{{user.id}}</td>
+          <td>{{user.username}}</td>
+          <td>
+            <a href="#">Update</a>
+            <a href="#">Delete</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
