@@ -6,10 +6,12 @@ import java.util.List;
 public class ListRepo<T extends Record> implements Repo<T> {
     public final String typeName;
     private final ArrayList<T> records;
+    private int nextId;
 
     public ListRepo(String typeName) {
         this.typeName = typeName;
         this.records = new ArrayList<>();
+        this.nextId = 0;
     }
 
     @Override
@@ -19,7 +21,7 @@ public class ListRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T create(T record) {
-        record.id = records.size();
+        record.id = nextId++;
         records.add(record);
         return record;
     }

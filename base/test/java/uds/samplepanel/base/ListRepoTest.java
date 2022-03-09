@@ -118,5 +118,14 @@ public class ListRepoTest {
             assertEquals(new MockRecord(1, "new_name"), repo.read(1));
             assertEquals(1, record.id);
         }
+
+        @Test
+        public void whenDeletesFirstAndCreates_assignsUniqueId() {
+            repo.delete(0);
+            repo.create(new MockRecord("name"));
+            assertEquals(2, repo.list().size());
+            assertEquals(1, repo.list().get(0).id);
+            assertEquals(2, repo.list().get(1).id);
+        }
     }
 }
