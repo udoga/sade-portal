@@ -12,7 +12,8 @@ public class Main {
         Props props = new Props((args.length > 0)? args[0] : PathUtil.findResourcePath("default.properties"));
         Repo<User> userRepo = new ListRepo<>("User");
         UserService userService = new UserService(userRepo);
-        RestServer server = new RestServer(props.getInt("port"), userService);
+        ServerConfig config = new ServerConfig(props.getSection("server"));
+        RestServer server = new RestServer(config, userService);
         server.run();
     }
 }

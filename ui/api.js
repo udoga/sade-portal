@@ -1,5 +1,5 @@
 function Api($http) {
-  this.url = "http://localhost:7000";
+  this.url = "/api";
 
   this.listUsers = function() {
     return $http.get(this.url + "/users");

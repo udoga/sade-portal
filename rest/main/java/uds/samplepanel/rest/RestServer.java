@@ -1,36 +1,46 @@
 package uds.samplepanel.rest;
 
-import io.javalin.Javalin;
-import io.javalin.core.JavalinConfig;
-import io.javalin.http.Context;
 import java.util.Map;
+import io.javalin.Javalin;
+import io.javalin.http.Context;
+import io.javalin.http.staticfiles.Location;
 import uds.samplepanel.base.RecordNotFound;
 import uds.samplepanel.core.User;
 import uds.samplepanel.core.UserService;
 
 public class RestServer {
-    private final int port;
+    private final ServerConfig config;
     private final UserService userService;
     private final Javalin server;
 
-    public RestServer(int port, UserService userService) {
-        this.port = port;
+    public RestServer(ServerConfig config, UserService userService) {
+        this.config = config;
         this.userService = userService;
-        this.server = Javalin.create(JavalinConfig::enableCorsForAllOrigins);
-        configureRequests();
-        configureErrors();
+        this.server = Javalin.create();
+        configure();
     }
 
     public void run() {
-        server.start(port);
+        server.start(config.port);
     }
 
-    private void configureRequests() {
-        server.get("/users", (c) -> send(c, userService.list()));
-        server.post("/users", (c) -> send(c, userService.create(getUser(c))));
-        server.get("/users/{id}", (c) -> send(c, userService.read(getId(c))));
-        server.put("/users/{id}", (c) -> send(c, userService.update(getId(c), getUser(c))));
-        server.delete("/users/{id}", (c) -> send(c, userService.delete(getId(c))));
+    private void configure() {
+        configureServer();
+        configureHandlers();
+        configureErrors();
+    }
+
+    private void configureServer() {
+        server._conf.enableCorsForAllOrigins();
+        server._conf.addStaticFiles(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
+    }
+
+    private void configureHandlers() {
+        server.get("/api/users", (c) -> send(c, userService.list()));
+        server.post("/api/users", (c) -> send(c, userService.create(getUser(c))));
+        server.get("/api/users/{id}", (c) -> send(c, userService.read(getId(c))));
+        server.put("/api/users/{id}", (c) -> send(c, userService.update(getId(c), getUser(c))));
+        server.delete("/api/users/{id}", (c) -> send(c, userService.delete(getId(c))));
     }
 
     private int getId(Context c) {
