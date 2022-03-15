@@ -1,9 +1,13 @@
 package uds.samplepanel.rest;
 
 import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
+import io.javalin.plugin.json.JavalinJackson;
 import uds.samplepanel.base.RecordNotFound;
 import uds.samplepanel.core.User;
 import uds.samplepanel.core.UserService;
@@ -26,6 +30,7 @@ public class RestServer {
 
     private void configure() {
         configureServer();
+        configureMapper();
         configureHandlers();
         configureErrors();
     }
@@ -33,6 +38,13 @@ public class RestServer {
     private void configureServer() {
         server._conf.enableCorsForAllOrigins();
         server._conf.addStaticFiles(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
+    }
+
+    private void configureMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        server._conf.jsonMapper(new JavalinJackson(mapper));
     }
 
     private void configureHandlers() {
