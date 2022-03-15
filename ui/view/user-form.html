@@ -1,8 +1,14 @@
 <div ng-controller="UserFormController">
   <h2>User Form</h2>
   <form>
-    <label>Username</label>
-    <input type="text" name="username" ng-model="user.username"/>
+    <div>
+      <label>Username</label>
+      <input type="text" name="username" ng-model="user.username"/>
+    </div>
+    <div>
+      <label>Birth Date</label>
+      <input type="text" name="username" ng-model="user.birthDate"/>
+    </div>
     <div>
       <a href="#!users">Cancel</a>
       <a href ng-click="save()">Save</a>

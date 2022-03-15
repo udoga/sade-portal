@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import uds.samplepanel.base.ListRepo;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
@@ -19,7 +21,7 @@ public class UserServiceTest {
 
     @Test
     public void createsUser() {
-        User user = service.create(new User("username"));
+        User user = service.create(new User("username", LocalDate.now()));
         assertEquals(1, repo.list().size());
         assertEquals(0, user.id);
         assertEquals("username", user.username);
@@ -29,7 +31,7 @@ public class UserServiceTest {
     public class GivenServiceWithOneUser {
         @BeforeEach
         public void setup() {
-            repo.create(new User("username"));
+            repo.create(new User("username", LocalDate.now()));
         }
 
         @Test
@@ -45,7 +47,7 @@ public class UserServiceTest {
 
         @Test
         public void updatesUserById() {
-            User user = service.update(0, new User("updated"));
+            User user = service.update(0, new User("updated", LocalDate.now()));
             assertEquals("updated", user.username);
             assertEquals("updated", repo.read(0).username);
         }
