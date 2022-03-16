@@ -9,17 +9,18 @@ import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
 import uds.samplepanel.base.RecordNotFound;
+import uds.samplepanel.core.Item;
+import uds.samplepanel.core.MainService;
 import uds.samplepanel.core.User;
-import uds.samplepanel.core.UserService;
 
 public class RestServer {
     private final ServerConfig config;
-    private final UserService userService;
+    private final MainService service;
     private final Javalin server;
 
-    public RestServer(ServerConfig config, UserService userService) {
+    public RestServer(ServerConfig config, MainService service) {
         this.config = config;
-        this.userService = userService;
+        this.service = service;
         this.server = Javalin.create();
         configure();
     }
@@ -48,11 +49,16 @@ public class RestServer {
     }
 
     private void configureHandlers() {
-        server.get("/api/users", (c) -> send(c, userService.list()));
-        server.post("/api/users", (c) -> send(c, userService.create(getUser(c))));
-        server.get("/api/users/{id}", (c) -> send(c, userService.read(getId(c))));
-        server.put("/api/users/{id}", (c) -> send(c, userService.update(getId(c), getUser(c))));
-        server.delete("/api/users/{id}", (c) -> send(c, userService.delete(getId(c))));
+        server.get("/api/users", (c) -> send(c, service.listUsers()));
+        server.post("/api/users", (c) -> send(c, service.createUser(getUser(c))));
+        server.get("/api/users/{id}", (c) -> send(c, service.readUser(getId(c))));
+        server.put("/api/users/{id}", (c) -> send(c, service.updateUser(getId(c), getUser(c))));
+        server.delete("/api/users/{id}", (c) -> send(c, service.deleteUser(getId(c))));
+        server.get("/api/items", (c) -> send(c, service.listItems()));
+        server.post("/api/items", (c) -> send(c, service.createItem(getItem(c))));
+        server.get("/api/items/{id}", (c) -> send(c, service.readItem(getId(c))));
+        server.put("/api/items/{id}", (c) -> send(c, service.updateItem(getId(c), getItem(c))));
+        server.delete("/api/items/{id}", (c) -> send(c, service.deleteItem(getId(c))));
     }
 
     private int getId(Context c) {
@@ -61,6 +67,10 @@ public class RestServer {
 
     private User getUser(Context c) {
         return c.bodyAsClass(User.class);
+    }
+
+    private Item getItem(Context c) {
+        return c.bodyAsClass(Item.class);
     }
 
     private void send(Context c, Object data) {

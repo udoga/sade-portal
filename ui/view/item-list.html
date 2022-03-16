@@ -1,0 +1,39 @@
+<div ng-controller="ItemListController">
+  <h2>Items</h2>
+  <table>
+    <tr>
+      <th class="min">Id</th>
+      <th>Byte</th>
+      <th>Short</th>
+      <th>Int</th>
+      <th>Long</th>
+      <th>Double</th>
+      <th>Float</th>
+      <th>Decimal</th>
+      <th>Boolean</th>
+      <th>Char</th>
+      <th>String</th>
+      <th>Date</th>
+      <th class="min"><a ng-href="#!items/new">New</a></th>
+    </tr>
+    <tr ng-repeat="item in items">
+      <td class="min">{{item.id}}</td>
+      <td>{{ item.byteField }}</td>
+      <td>{{ item.shortField }}</td>
+      <td>{{ item.intField }}</td>
+      <td>{{ item.longField }}</td>
+      <td>{{ item.doubleField }}</td>
+      <td>{{ item.floatField }}</td>
+      <td>{{ item.decimalField }}</td>
+      <td>{{ item.booleanField }}</td>
+      <td>{{ item.charField }}</td>
+      <td>{{ item.stringField }}</td>
+      <td>{{ item.dateField }}</td>
+      <td class="min">
+        <a ng-href="#!items/{{item.id}}">Read</a>
+        <a ng-href="#!items/{{item.id}}/edit">Edit</a>
+        <a href ng-click="delete(item.id)">Delete</a>
+      </td>
+    </tr>
+  </table>
+</div>
