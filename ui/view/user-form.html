@@ -1,17 +1,17 @@
 <div ng-controller="UserFormController">
   <h2>User Form</h2>
   <form>
-    <div>
+    <div class="field">
       <label>Username</label>
-      <input type="text" name="username" ng-model="user.username"/>
+      <input type="text" placeholder="Username" ng-model="user.username"/>
     </div>
-    <div>
+    <div class="field">
       <label>Birth Date</label>
-      <input type="text" name="username" ng-model="user.birthDate"/>
+      <input type="text" placeholder="Birth Date" ng-model="user.birthDate"/>
     </div>
-    <div>
-      <a href="#!users">Cancel</a>
-      <a href ng-click="save()">Save</a>
+    <div class="options">
+      <a class="white form button" href="#!users">Back</a>
+      <a class="green form button" href ng-click="save()">Save</a>
     </div>
   </form>
 </div>
