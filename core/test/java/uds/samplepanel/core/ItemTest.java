@@ -18,15 +18,16 @@ public class ItemTest {
         assertEquals(0, item.floatField);
         assertEquals(BigDecimal.ZERO, item.decimalField);
         assertFalse(item.booleanField);
-        assertEquals('\0', item.charField);
+        assertEquals(' ', item.charField);
         assertEquals("", item.stringField);
-        assertEquals(LocalDate.MIN, item.dateField);
+        assertEquals(LocalDate.EPOCH, item.dateField);
+        assertNull(item.enumField);
     }
 
     @Test
     public void initializesWithFields() {
         Item item = new Item(1, (byte) 2, (short) 3, 4, 5, 6.5, (float) 7.5, BigDecimal.ONE, true, 'A', "ABC",
-                LocalDate.of(2000, 1, 1));
+                LocalDate.of(2000, 1, 1), ItemEnum.ValueOne);
         assertEquals(1, item.id);
         assertEquals(2, item.byteField);
         assertEquals(3, item.shortField);
@@ -39,5 +40,6 @@ public class ItemTest {
         assertEquals('A', item.charField);
         assertEquals("ABC", item.stringField);
         assertEquals(LocalDate.of(2000, 1, 1), item.dateField);
+        assertEquals(ItemEnum.ValueOne, item.enumField);
     }
 }

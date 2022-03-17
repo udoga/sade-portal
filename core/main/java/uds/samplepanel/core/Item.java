@@ -16,9 +16,10 @@ public class Item extends Record {
     public char charField;
     public String stringField;
     public LocalDate dateField;
+    public ItemEnum enumField;
 
     public Item() {
-        this(null, (byte) 0, (short) 0, 0, 0, 0, 0, BigDecimal.ZERO, false, '\0', "", LocalDate.MIN);
+        this(null, (byte) 0, (short) 0, 0, 0, 0, 0, BigDecimal.ZERO, false, ' ', "", LocalDate.EPOCH, null);
     }
 
     public Item(Integer id,
@@ -32,7 +33,8 @@ public class Item extends Record {
                 boolean booleanField,
                 char charField,
                 String stringField,
-                LocalDate dateField) {
+                LocalDate dateField,
+                ItemEnum enumField) {
         this.id = id;
         this.byteField = byteField;
         this.shortField = shortField;
@@ -45,5 +47,6 @@ public class Item extends Record {
         this.charField = charField;
         this.stringField = stringField;
         this.dateField = dateField;
+        this.enumField = enumField;
     }
 }
