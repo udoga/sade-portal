@@ -4,10 +4,12 @@
     <meta charset="utf-8"/>
     <title>Sample Panel</title>
     <link rel="icon" href="image/favicon.ico">
+    <link rel="stylesheet" href="library/fontawesome/css/all.css"/>
     <link rel="stylesheet" href="style/reset.css"/>
     <link rel="stylesheet" href="style/style.css"/>
-    <script src="library/angular.min.js"></script>
-    <script src="library/angular-route.min.js"></script>
+    <script src="library/angularjs/angular.min.js"></script>
+    <script src="library/angularjs/angular-route.min.js"></script>
+    <script src="library/fontawesome/js/all.js"></script>
     <script src="controller/user-form-controller.js"></script>
     <script src="controller/user-list-controller.js"></script>
     <script src="controller/user-page-controller.js"></script>
@@ -20,7 +22,11 @@
   </head>
   <body ng-app="app">
     <header>
+      <a class="left"><i class="fas fa-bars"></i></a>
       <h1>Sample Panel</h1>
+      <a class="right"><i class="fas fa-power-off"></i></a>
+      <a class="right"><i class="fas fa-globe-americas"></i></a>
+      <a class="right"><i class="fas fa-cog"></i></a>
     </header>
     <nav>
       <a href="/">Home</a>
