@@ -1,9 +1,10 @@
 function Config($routeProvider) {
   this.bind = function(url, view) {
-    $routeProvider.when(url, { templateUrl : "view/" + view + ".html"});
+    $routeProvider.when(url, { templateUrl: "view/" + view + ".html"});
   };
 
-  this.bind("/", "home");
+  $routeProvider.when("/", { redirectTo: '/home' });
+  this.bind("/home", "home");
   this.bind("/users", "user-list");
   this.bind("/users/new", "user-form");
   this.bind("/users/:id", "user-page");

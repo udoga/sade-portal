@@ -9,7 +9,7 @@
   --header-background-color: #254a87;
   --header-hover-color: #1f4077;
   --header-border-color: #1f4077;
-  --navigation-font-color: #303030;
+  --navigation-font-color: #505050;
   --navigation-background-color: #f8f8f8;
   --navigation-hover-color: #eeeeee;
   --navigation-border-color: #e7e7e7;
@@ -83,8 +83,13 @@ nav a {
   color: var(--navigation-font-color);
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
   background: var(--navigation-hover-color);
+}
+
+nav svg {
+  width: 25px;
+  padding-right: 10px;
 }
 
 main {

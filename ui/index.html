@@ -10,6 +10,7 @@
     <script src="library/angularjs/angular.min.js"></script>
     <script src="library/angularjs/angular-route.min.js"></script>
     <script src="library/fontawesome/js/all.js"></script>
+    <script src="controller/navigation-controller.js"></script>
     <script src="controller/user-form-controller.js"></script>
     <script src="controller/user-list-controller.js"></script>
     <script src="controller/user-page-controller.js"></script>
@@ -28,10 +29,10 @@
       <a class="right"><i class="fas fa-globe-americas"></i></a>
       <a class="right"><i class="fas fa-cog"></i></a>
     </header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="#!users">Users</a>
-      <a href="#!items">Items</a>
+    <nav ng-controller="NavigationController">
+      <a href="#!home" ng-class="getClass('/home')"><i class="fas fa-home"></i>Home</a>
+      <a href="#!users" ng-class="getClass('/users')"><i class="fas fa-user"></i>Users</a>
+      <a href="#!items" ng-class="getClass('/items')"><i class="fas fa-table"></i>Items</a>
     </nav>
     <main>
       <div ng-view></div>
