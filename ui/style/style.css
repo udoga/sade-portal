@@ -1,54 +1,79 @@
+:root {
+  /* Layout */
+  --header-height: 56px;
+  --navigation-width: 300px;
+
+  /* Colors */
+  --header-font-color: white;
+  --header-background-color: #254a87;
+  --header-border-color: #1d3a6b;
+  --navigation-font-color: #303030;
+  --navigation-background-color: #f8f8f8;
+  --navigation-hover-color: #eeeeee;
+  --navigation-border-color: #e7e7e7;
+  --main-border-color: #e0e0e0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+input {
+  outline: 0;
+}
+
 body {
   font-family: sans-serif;
   font-size: 14px;
 }
 
 header {
-  height: 60px;
-  background: #f0f0f0;
-  border-bottom: 1px solid #e0e0e0;
+  height: var(--header-height);
+  background: var(--header-background-color);
+  border-bottom: 1px solid var(--header-border-color);
 }
 
 h1 {
-  line-height: 60px;
+  line-height: var(--header-height);
+  color: var(--header-font-color);
   font-size: 20px;
   padding-left: 10px;
 }
 
 nav {
-  width: 300px;
-  height: calc(100vh - 61px);
+  width: var(--navigation-width);
+  height: calc(100vh - var(--header-height) - 1px);
+  border-right: 1px solid var(--navigation-border-color);
+  background: var(--navigation-background-color);
   float: left;
-  border-right: 1px solid #e0e0e0;
-  background: #f0f0f0;
 }
 
 nav a {
   display: block;
   padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-  text-decoration: none;
-  color: black;
+  border-bottom: 1px solid var(--navigation-border-color);
+  color: var(--navigation-font-color);
 }
 
 nav a:hover {
-  background: #e0e0e0;
+  background: var(--navigation-hover-color);
 }
 
 main {
-  margin-left: 300px;
+  margin-left: var(--navigation-width);
   padding: 20px;
 }
 
 h2 {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 40px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--main-border-color);
   margin-bottom: 20px;
 }
 
 table, th, td {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--main-border-color);
 }
 
 table {
@@ -58,8 +83,7 @@ table {
 th {
   padding: 12px 8px 12px 8px;
   text-align: left;
-  background: #f0f0f0;
-  font-weight: bold;
+  background: #f9fafb;
 }
 
 td {
@@ -73,46 +97,40 @@ th.narrow, td.narrow {
 
 th.options, td.options {
   padding: 4px;
-  font-weight: normal;
   min-width: 140px;
   text-align: center;
 }
 
-form input, form select {
-  outline: 0;
-}
-
-form .field {
+.field {
   margin-bottom: 15px;
 }
 
-form .field label {
+.field label {
   display: block;
   font-weight: bold;
   margin-bottom: 6px;
 }
 
-form .field input[type=text] {
+.field input[type=text] {
   width: 100%;
   height: 28px;
   box-sizing: border-box;
   padding: 0 8px 0 8px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--main-border-color);
   border-radius: 4px;
   border:
 }
 
-form .field input[type="text"]:focus, form .field select:focus {
+.field input[type="text"]:focus, form .field select:focus {
   border-color: #377bb5;
 }
 
-form .options {
+.options {
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 a.button {
-  text-decoration: none;
   border-width: 1px;
   border-style: solid;
   border-radius: 4px;
