@@ -127,10 +127,11 @@ th.narrow, td.narrow {
   white-space: nowrap;
 }
 
-th.options, td.options {
+th.last, td.last {
   padding: 4px;
-  min-width: 140px;
+  min-width: 120px;
   text-align: center;
+  vertical-align: middle;
 }
 
 .field {
@@ -181,8 +182,12 @@ a.button.header {
   box-sizing: border-box;
 }
 
+a.button.icon svg {
+  padding-right: 5px;
+}
+
 a.button.row {
-  font-size: 13px;
+  font-size: 10px;
   padding: 4px;
 }
 

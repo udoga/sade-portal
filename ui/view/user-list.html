@@ -5,18 +5,24 @@
       <th class="narrow">Id</th>
       <th>Username</th>
       <th>Birth Date</th>
-      <th class="narrow options">
-        <a class="green header button" ng-href="#!users/new">New</a>
+      <th class="narrow last">
+        <a class="green header icon button" ng-href="#!users/new"><i class="fas fa-plus"></i>New</a>
       </th>
     </tr>
     <tr ng-repeat="user in users">
       <td class="narrow">{{user.id}}</td>
       <td>{{user.username}}</td>
       <td>{{user.birthDate}}</td>
-      <td class="narrow options">
-        <a class="light-blue row button" ng-href="#!users/{{user.id}}">Show</a>
-        <a class="yellow row button" ng-href="#!users/{{user.id}}/edit">Edit</a>
-        <a class="red row button" href ng-click="delete(user.id)">Delete</a>
+      <td class="narrow last">
+        <a title="Show" class="light-blue row button" ng-href="#!users/{{user.id}}">
+          <i class="far fa-eye"></i>
+        </a>
+        <a title="Edit" class="yellow row button" ng-href="#!users/{{user.id}}/edit">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+        <a title="Delete" class="red row button" href ng-click="delete(user.id)">
+          <i class="fas fa-trash"></i>
+        </a>
       </td>
     </tr>
   </table>
