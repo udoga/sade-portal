@@ -21,20 +21,20 @@
     <script src="api.js"></script>
     <script src="app.js"></script>
   </head>
-  <body ng-app="app">
+  <body ng-app="app" ng-controller="NavigationController">
     <header>
-      <a class="left"><i class="fas fa-bars"></i></a>
+      <a class="left" ng-click="toggleNavigation()"><i class="fas fa-bars"></i></a>
       <h1>Sample Panel</h1>
       <a class="right"><i class="fas fa-power-off"></i></a>
       <a class="right"><i class="fas fa-globe-americas"></i></a>
       <a class="right"><i class="fas fa-cog"></i></a>
     </header>
-    <nav ng-controller="NavigationController">
-      <a href="#!home" ng-class="getClass('/home')"><i class="fas fa-home"></i>Home</a>
-      <a href="#!users" ng-class="getClass('/users')"><i class="fas fa-user"></i>Users</a>
-      <a href="#!items" ng-class="getClass('/items')"><i class="fas fa-table"></i>Items</a>
+    <nav ng-class="getNavigationClass()">
+      <a href="#!home" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
+      <a href="#!users" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
+      <a href="#!items" ng-class="getLinkClass('/items')"><i class="fas fa-table"></i>Items</a>
     </nav>
-    <main>
+    <main ng-class="getMainClass()">
       <div ng-view></div>
     </main>
   </body>

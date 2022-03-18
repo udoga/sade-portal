@@ -3,6 +3,7 @@
   --header-height: 56px;
   --header-button-width: 50px;
   --navigation-width: 300px;
+  --navigation-interval: 0.5s;
 
   /* Colors */
   --header-font-color: white;
@@ -74,6 +75,17 @@ nav {
   border-right: 1px solid var(--navigation-border-color);
   background: var(--navigation-background-color);
   float: left;
+  position: fixed;
+  top: calc(var(--header-height) + 1px);
+  transition: left var(--navigation-interval);
+}
+
+nav.closed {
+  left: calc(var(--navigation-width) * -1);
+}
+
+nav.opened {
+  left: 0px;
 }
 
 nav a {
@@ -93,8 +105,16 @@ nav svg {
 }
 
 main {
-  margin-left: var(--navigation-width);
   padding: 20px;
+  transition: margin-left var(--navigation-interval);
+}
+
+main.wide {
+  margin-left: 0px;
+}
+
+main.shifted {
+  margin-left: var(--navigation-width);
 }
 
 h2 {
