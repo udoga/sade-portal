@@ -57,7 +57,6 @@ header a.right {
 }
 
 header a:hover {
-  color: var(--header-font-color);
   background: var(--header-hover-color);
 }
 
@@ -77,11 +76,8 @@ nav {
   float: left;
   position: fixed;
   top: calc(var(--header-height) + 1px);
-  transition: left var(--navigation-interval);
-}
-
-nav.closed {
   left: calc(var(--navigation-width) * -1);
+  transition: left var(--navigation-interval);
 }
 
 nav.opened {
@@ -106,11 +102,8 @@ nav svg {
 
 main {
   padding: 20px;
-  transition: margin-left var(--navigation-interval);
-}
-
-main.wide {
   margin-left: 0px;
+  transition: margin-left var(--navigation-interval);
 }
 
 main.shifted {
