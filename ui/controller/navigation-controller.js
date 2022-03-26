@@ -1,7 +1,19 @@
 function NavigationController($scope, $location, $window) {
-  $scope.reload = function() {
+  $scope.initialize = function() {
     $scope.mobile = $scope.isMobile();
     $scope.navigationOpened = !$scope.mobile;
+    $window.addEventListener('resize', $scope.onResize);
+  }
+
+  $scope.onResize = function(event) {
+    if ($scope.mobile == $scope.isMobile()) return;
+    $scope.mobile = $scope.isMobile();
+    $scope.navigationOpened = !$scope.mobile;
+    $scope.$apply();
+  }
+
+  $scope.closeNavigation = function() {
+    $scope.navigationOpened = false;
   }
 
   $scope.toggleNavigation = function() {
@@ -24,12 +36,14 @@ function NavigationController($scope, $location, $window) {
     return ($window.innerWidth <= 768);
   }
 
-  $scope.onResize = function(event) {
-    if ($scope.mobile == $scope.isMobile()) return;
-    $scope.reload();
-    $scope.$apply();
+  $scope.isOverlayVisible = function() {
+    return $scope.navigationOpened && $scope.mobile;
   }
 
-  $scope.reload();
-  $window.addEventListener('resize', $scope.onResize);
+  $scope.navigate = function(path) {
+    $location.path(path);
+    if ($scope.mobile) $scope.closeNavigation();
+  }
+
+  $scope.initialize();
 }

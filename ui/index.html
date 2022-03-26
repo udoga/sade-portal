@@ -30,12 +30,13 @@
       <a class="right"><i class="fas fa-cog"></i></a>
     </header>
     <nav ng-class="getNavigationClass()">
-      <a href="#!home" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
-      <a href="#!users" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
-      <a href="#!items" ng-class="getLinkClass('/items')"><i class="fas fa-table"></i>Items</a>
+      <a ng-click="navigate('home')" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
+      <a ng-click="navigate('users')" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
+      <a ng-click="navigate('items')" ng-class="getLinkClass('/items')"><i class="fas fa-table"></i>Items</a>
     </nav>
     <main ng-class="getMainClass()">
       <div ng-view></div>
     </main>
+    <div class="overlay" ng-hide="!isOverlayVisible()" ng-click="closeNavigation()"></div>
   </body>
 </html>
