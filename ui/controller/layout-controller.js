@@ -1,4 +1,4 @@
-function NavigationController($scope, $location, $window) {
+function LayoutController($scope, $location, $window) {
   $scope.initialize = function() {
     $scope.mobile = $scope.isMobile();
     $scope.navigationOpened = !$scope.mobile;
