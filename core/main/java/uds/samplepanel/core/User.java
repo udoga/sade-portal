@@ -2,24 +2,22 @@ package uds.samplepanel.core;
 
 import uds.samplepanel.base.Record;
 
-import java.time.LocalDate;
-
 public class User extends Record {
     public final String username;
-    public final LocalDate birthDate;
+    public final String fullName;
 
     public User() {
         this(null, null);
     }
 
-    public User(String username, LocalDate birthDate) {
+    public User(String username, String fullName) {
         this.id = null;
         this.username = username;
-        this.birthDate = birthDate;
+        this.fullName = fullName;
     }
 
     @Override
     public String toString() {
-        return "User[id=" + id + " username=" + username + " birthDate=" + birthDate + "]";
+        return "User[id=" + id + " username=" + username + " fullName=" + fullName + "]";
     }
 }

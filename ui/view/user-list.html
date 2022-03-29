@@ -4,7 +4,7 @@
     <tr>
       <th class="narrow">Id</th>
       <th>Username</th>
-      <th>Birth Date</th>
+      <th>Full Name</th>
       <th class="narrow last">
         <a class="green header icon button" ng-href="#!users/new"><i class="fas fa-plus"></i>New</a>
       </th>
@@ -12,7 +12,7 @@
     <tr ng-repeat="user in users">
       <td class="narrow">{{user.id}}</td>
       <td>{{user.username}}</td>
-      <td>{{user.birthDate}}</td>
+      <td>{{user.fullName}}</td>
       <td class="narrow last">
         <a title="Show" class="light-blue row button" ng-href="#!users/{{user.id}}">
           <i class="far fa-eye"></i>

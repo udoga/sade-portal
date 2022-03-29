@@ -12,15 +12,14 @@ public class UserTest {
         User user = new User();
         assertNull(user.id);
         assertNull(user.username);
-        assertNull(user.birthDate);
+        assertNull(user.fullName);
     }
 
     @Test
     public void initializesWithFields() {
-        User user = new User("sample", LocalDate.of(2000, 1, 1));
+        User user = new User("username", "Full Name");
         assertNull(user.id);
-        assertEquals("sample", user.username);
-        assertEquals(LocalDate.of(2000, 1, 1), user.birthDate);
-        assertEquals("User[id=null username=sample birthDate=2000-01-01]", user.toString());
+        assertEquals("username", user.username);
+        assertEquals("Full Name", user.fullName);
     }
 }

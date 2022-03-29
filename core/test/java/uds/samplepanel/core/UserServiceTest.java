@@ -21,7 +21,7 @@ public class UserServiceTest {
 
     @Test
     public void createsUser() {
-        User user = service.create(new User("username", LocalDate.now()));
+        User user = service.create(new User("username", ""));
         assertEquals(1, repo.list().size());
         assertEquals(0, user.id);
         assertEquals("username", user.username);
@@ -31,7 +31,7 @@ public class UserServiceTest {
     public class GivenServiceWithOneUser {
         @BeforeEach
         public void setup() {
-            repo.create(new User("username", LocalDate.now()));
+            repo.create(new User("username", ""));
         }
 
         @Test
@@ -47,7 +47,7 @@ public class UserServiceTest {
 
         @Test
         public void updatesUserById() {
-            User user = service.update(0, new User("updated", LocalDate.now()));
+            User user = service.update(0, new User("updated", ""));
             assertEquals("updated", user.username);
             assertEquals("updated", repo.read(0).username);
         }
