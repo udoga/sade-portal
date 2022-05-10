@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListRepo<T extends Record> implements Repo<T> {
-    public final String typeName;
+    public final String tableName;
     private final ArrayList<T> records;
     private int nextId;
 
-    public ListRepo(String typeName) {
-        this.typeName = typeName;
+    public ListRepo(String tableName) {
+        this.tableName = tableName;
         this.records = new ArrayList<>();
         this.nextId = 0;
     }
@@ -48,6 +48,6 @@ public class ListRepo<T extends Record> implements Repo<T> {
 
     private int findIndex(int id) {
         for (int i = 0; i < records.size(); i++) if (records.get(i).id == id) return i;
-        throw new RecordNotFound(typeName, id);
+        throw new RecordNotFound(tableName, id);
     }
 }

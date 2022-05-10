@@ -1,7 +1,7 @@
 package uds.samplepanel.base;
 
 public class RecordNotFound extends RuntimeException {
-    public RecordNotFound(String typeName, int id) {
-        super(typeName + " not found: id=" + id);
+    public RecordNotFound(String tableName, int id) {
+        super("Record not found in " + tableName + ": id=" + id);
     }
 }

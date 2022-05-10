@@ -1,6 +1,6 @@
+package uds.samplepanel.base;
+
 import java.util.Map;
-import uds.samplepanel.base.Props;
-import uds.samplepanel.rest.ServerConfig;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

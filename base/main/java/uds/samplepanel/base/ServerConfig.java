@@ -1,6 +1,4 @@
-package uds.samplepanel.rest;
-
-import uds.samplepanel.base.Props;
+package uds.samplepanel.base;
 
 public class ServerConfig {
     public final int port;

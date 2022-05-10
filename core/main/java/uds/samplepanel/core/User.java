@@ -7,11 +7,15 @@ public class User extends Record {
     public final String fullName;
 
     public User() {
-        this(null, null);
+        this(null, null, null);
     }
 
     public User(String username, String fullName) {
-        this.id = null;
+        this(null, username, fullName);
+    }
+
+    public User(Integer id, String username, String fullName) {
+        this.id = id;
         this.username = username;
         this.fullName = fullName;
     }

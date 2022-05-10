@@ -9,6 +9,7 @@ import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
 import uds.samplepanel.base.RecordNotFound;
+import uds.samplepanel.base.ServerConfig;
 import uds.samplepanel.core.Item;
 import uds.samplepanel.core.MainService;
 import uds.samplepanel.core.User;

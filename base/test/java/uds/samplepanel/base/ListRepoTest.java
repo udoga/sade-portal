@@ -9,17 +9,17 @@ public class ListRepoTest {
     ListRepo<MockRecord> repo;
 
     private void assertNotFound(Executable e, int id) {
-        assertException(RecordNotFound.class, repo.typeName + " not found: id=" + id, e);
+        assertException(RecordNotFound.class, "Record not found in " + repo.tableName + ": id=" + id, e);
     }
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("MockRecord");
+        repo = new ListRepo<>("MockRecords");
     }
 
     @Test
     public void keepsTypeNameAndRecords() {
-        assertEquals("MockRecord", repo.typeName);
+        assertEquals("MockRecords", repo.tableName);
         assertEquals(0, repo.list().size());
     }
 
