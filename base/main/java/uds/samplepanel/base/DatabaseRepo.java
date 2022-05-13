@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -47,6 +48,22 @@ public abstract class DatabaseRepo<T extends Record> implements Repo<T> {
     protected abstract T toObject(ResultSet s) throws SQLException;
 
     protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;
+
+    protected char getChar(ResultSet set, String columnName) throws SQLException {
+        return set.getString(columnName).charAt(0);
+    }
+
+    protected void setChar(PreparedStatement s, int index, char c) throws SQLException {
+        s.setString(index, String.valueOf(c));
+    }
+
+    protected LocalDate getLocalDate(ResultSet set, String columnName) throws SQLException {
+        return set.getDate(columnName).toLocalDate();
+    }
+
+    protected void setLocalDate(PreparedStatement s, int index, LocalDate date) throws SQLException {
+        s.setDate(index, (date == null)? null : java.sql.Date.valueOf(date));
+    }
 
     private <V> V call(Callable<V> callable) {
         try { return callable.call(); }
