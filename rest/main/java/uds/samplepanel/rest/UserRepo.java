@@ -1,6 +1,7 @@
-package uds.samplepanel.core;
+package uds.samplepanel.rest;
 
 import uds.samplepanel.base.DatabaseRepo;
+import uds.samplepanel.core.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
