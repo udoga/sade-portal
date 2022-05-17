@@ -1,5 +1,6 @@
 package uds.samplepanel.base;
 
-public abstract class Record {
-    public Integer id;
+public interface Record {
+    Integer getId();
+    void setId(Integer id);
 }

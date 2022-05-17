@@ -2,9 +2,10 @@ package uds.samplepanel.core;
 
 import uds.samplepanel.base.Record;
 
-public class User extends Record {
-    public final String username;
-    public final String fullName;
+public class User implements Record {
+    public Integer id;
+    public String username;
+    public String fullName;
 
     public User() {
         this(null, null, null);
@@ -23,5 +24,15 @@ public class User extends Record {
     @Override
     public String toString() {
         return "User[id=" + id + " username=" + username + " fullName=" + fullName + "]";
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

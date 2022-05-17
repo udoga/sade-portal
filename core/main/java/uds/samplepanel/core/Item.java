@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import uds.samplepanel.base.Record;
 
-public class Item extends Record {
+public class Item implements Record {
+    public Integer id;
     public byte byteField;
     public short shortField;
     public int intField;
@@ -48,5 +49,15 @@ public class Item extends Record {
         this.stringField = stringField;
         this.dateField = dateField;
         this.enumField = enumField;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

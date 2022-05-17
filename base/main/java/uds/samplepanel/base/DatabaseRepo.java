@@ -82,7 +82,7 @@ public abstract class DatabaseRepo<T extends Record> implements Repo<T> {
         PreparedStatement statement = connection.prepareStatement(sql, columnNames.toArray(new String[0]));
         if (fill) fillStatement(statement, record);
         statement.executeUpdate();
-        return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.id) : record;
+        return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
     }
 
     private T getFirst(List<T> objects, Integer id) {

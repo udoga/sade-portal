@@ -21,7 +21,7 @@ public class ListRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T create(T record) {
-        record.id = nextId++;
+        record.setId(nextId++);
         records.add(record);
         return record;
     }
@@ -35,7 +35,7 @@ public class ListRepo<T extends Record> implements Repo<T> {
     @Override
     public T update(int id, T record) {
         int index = findIndex(id);
-        record.id = id;
+        record.setId(id);
         records.set(index, record);
         return records.get(index);
     }
@@ -47,7 +47,7 @@ public class ListRepo<T extends Record> implements Repo<T> {
     }
 
     private int findIndex(int id) {
-        for (int i = 0; i < records.size(); i++) if (records.get(i).id == id) return i;
+        for (int i = 0; i < records.size(); i++) if (records.get(i).getId() == id) return i;
         throw new RecordNotFound(tableName, id);
     }
 }

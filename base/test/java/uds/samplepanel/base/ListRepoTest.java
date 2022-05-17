@@ -1,5 +1,6 @@
 package uds.samplepanel.base;
 
+import java.util.Objects;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
@@ -126,6 +127,39 @@ public class ListRepoTest {
             assertEquals(2, repo.list().size());
             assertEquals(1, repo.list().get(0).id);
             assertEquals(2, repo.list().get(1).id);
+        }
+    }
+
+    private static class MockRecord implements Record {
+        public Integer id;
+        public final String name;
+
+        MockRecord(String name) {
+            this(null, name);
+        }
+
+        MockRecord(Integer id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof MockRecord && this.equals((MockRecord) o);
+        }
+
+        public boolean equals(MockRecord record) {
+            return Objects.equals(id, record.id) && name.equals(record.name);
+        }
+
+        @Override
+        public Integer getId() {
+            return id;
+        }
+
+        @Override
+        public void setId(Integer id) {
+            this.id = id;
         }
     }
 }
