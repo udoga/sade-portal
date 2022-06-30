@@ -1,4 +1,4 @@
-group = 'uds.samplepanel'
+group = 'com.sadesoft.portal'
 version = '0.0.0'
 
 allprojects {

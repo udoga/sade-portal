@@ -1,7 +1,16 @@
-# Sample Panel
+# Sade Portal
 
-Requirements: Java (>= 9) and Gradle (>= 6.9.1)
+## Basic Setup
 
-Start server: `gradle run`
+1. Install Java (>= 9) and Gradle (>= 6.9.1).
+2. Start application from command line: `gradle run`
+3. Open browser: http://localhost:7000
 
-Open browser: http://localhost:7000
+## IntelliJ IDEA
+
+1. Open project in IntelliJ IDEA.
+2. Select File -> Settings -> Build, Execution, Deployment -> Gradle.
+3. Select "Use Gradle From: Specified Location" (under Gradle section) and select local Gradle location.
+4. Close the window and close project (File -> Close Project).
+5. Clean up files created by IntelliJ IDEA: `git clean -df`
+6. Reopen the project and there shouldn't be any extra files: `git status`

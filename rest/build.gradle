@@ -3,7 +3,7 @@ plugins {
     id 'application'
 }
 
-group 'uds.samplepanel'
+group 'com.sadesoft.portal'
 version '0.0.0'
 
 test {
@@ -29,5 +29,5 @@ dependencies {
 }
 
 application {
-    getMainClass().set("uds.samplepanel.rest.Main")
+    getMainClass().set("com.sadesoft.portal.rest.Main")
 }
