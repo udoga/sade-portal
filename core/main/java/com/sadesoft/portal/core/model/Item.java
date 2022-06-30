@@ -1,8 +1,8 @@
-package com.sadesoft.portal.core;
+package com.sadesoft.portal.core.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import com.sadesoft.portal.base.Record;
+import com.sadesoft.portal.base.repo.Record;
 
 public class Item implements Record {
     public Integer id;

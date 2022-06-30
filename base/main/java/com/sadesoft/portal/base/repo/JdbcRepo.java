@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.repo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,13 +8,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import com.sadesoft.portal.base.error.RecordNotFound;
 
-public abstract class DatabaseRepo<T extends Record> implements Repo<T> {
+public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
     protected final String tableName;
     protected final List<String> columnNames;
 
-    public DatabaseRepo(Connection connection, String tableName, List<String> columnNames) {
+    public JdbcRepo(Connection connection, String tableName, List<String> columnNames) {
         this.connection = connection;
         this.tableName = tableName;
         this.columnNames = columnNames;

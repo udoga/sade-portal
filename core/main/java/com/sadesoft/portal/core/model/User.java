@@ -1,6 +1,6 @@
-package com.sadesoft.portal.core;
+package com.sadesoft.portal.core.model;
 
-import com.sadesoft.portal.base.Record;
+import com.sadesoft.portal.base.repo.Record;
 
 public class User implements Record {
     public Integer id;

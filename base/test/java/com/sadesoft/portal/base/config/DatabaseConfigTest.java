@@ -1,14 +1,14 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DatabaseConnectorTest {
+public class DatabaseConfigTest {
     @Test
     public void initializes() {
         Props props = new Props(Map.of("url", "url", "username", "u", "password", "p", "driver", "d"));
-        DatabaseConnector c = new DatabaseConnector(props);
+        DatabaseConfig c = new DatabaseConfig(props);
         assertEquals("url", c.url);
         assertEquals("u", c.username);
         assertEquals("p", c.password);

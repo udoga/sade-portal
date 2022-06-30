@@ -1,4 +1,4 @@
-package com.sadesoft.portal.core;
+package com.sadesoft.portal.core.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.util;
 
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;

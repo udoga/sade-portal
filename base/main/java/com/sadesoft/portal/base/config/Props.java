@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 import java.io.FileReader;
 import java.io.IOException;

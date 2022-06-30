@@ -1,9 +1,11 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.repo;
 
 import java.util.Objects;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
+import com.sadesoft.portal.base.error.RecordNotFound;
+import com.sadesoft.portal.base.util.TestUtil;
 
 public class ListRepoTest {
     ListRepo<MockRecord> repo;

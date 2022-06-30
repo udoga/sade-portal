@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.util;
 
 import java.net.URL;
 

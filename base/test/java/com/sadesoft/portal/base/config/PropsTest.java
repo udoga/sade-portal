@@ -1,6 +1,7 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 import java.util.Map;
+import com.sadesoft.portal.base.util.PathUtil;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

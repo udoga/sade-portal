@@ -1,8 +1,8 @@
-package com.sadesoft.portal.core;
-
-import com.sadesoft.portal.base.Repo;
+package com.sadesoft.portal.core.service;
 
 import java.util.List;
+import com.sadesoft.portal.base.repo.Repo;
+import com.sadesoft.portal.core.model.User;
 
 public class UserService {
     private final Repo<User> repo;

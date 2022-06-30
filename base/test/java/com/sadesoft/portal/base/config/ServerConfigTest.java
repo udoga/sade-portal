@@ -1,8 +1,7 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

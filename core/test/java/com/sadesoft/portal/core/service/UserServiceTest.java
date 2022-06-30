@@ -1,11 +1,11 @@
-package com.sadesoft.portal.core;
+package com.sadesoft.portal.core.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import com.sadesoft.portal.base.ListRepo;
-
 import static org.junit.jupiter.api.Assertions.*;
+import com.sadesoft.portal.base.repo.ListRepo;
+import com.sadesoft.portal.core.model.User;
 
 public class UserServiceTest {
     ListRepo<User> repo;

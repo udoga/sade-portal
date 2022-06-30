@@ -1,7 +1,6 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.util;
 
 import org.junit.jupiter.api.function.Executable;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

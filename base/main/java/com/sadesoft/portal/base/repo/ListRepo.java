@@ -1,7 +1,8 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.repo;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.sadesoft.portal.base.error.RecordNotFound;
 
 public class ListRepo<T extends Record> implements Repo<T> {
     public final String tableName;

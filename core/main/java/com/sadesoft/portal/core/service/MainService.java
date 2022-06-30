@@ -1,6 +1,8 @@
-package com.sadesoft.portal.core;
+package com.sadesoft.portal.core.service;
 
 import java.util.List;
+import com.sadesoft.portal.core.model.Item;
+import com.sadesoft.portal.core.model.User;
 
 public class MainService {
     private final UserService userService;

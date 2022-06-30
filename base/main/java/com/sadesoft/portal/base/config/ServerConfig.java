@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 public class ServerConfig {
     public final int port;

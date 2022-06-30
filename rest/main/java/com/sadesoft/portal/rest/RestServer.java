@@ -8,11 +8,11 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
-import com.sadesoft.portal.base.RecordNotFound;
-import com.sadesoft.portal.base.ServerConfig;
-import com.sadesoft.portal.core.Item;
-import com.sadesoft.portal.core.MainService;
-import com.sadesoft.portal.core.User;
+import com.sadesoft.portal.base.error.RecordNotFound;
+import com.sadesoft.portal.base.config.ServerConfig;
+import com.sadesoft.portal.core.model.Item;
+import com.sadesoft.portal.core.service.MainService;
+import com.sadesoft.portal.core.model.User;
 
 public class RestServer {
     private final ServerConfig config;

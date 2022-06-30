@@ -1,16 +1,15 @@
-package com.sadesoft.portal.rest;
-
-import com.sadesoft.portal.base.DatabaseRepo;
-import com.sadesoft.portal.core.Item;
-import com.sadesoft.portal.core.ItemEnum;
+package com.sadesoft.portal.rest.repo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.model.Item;
+import com.sadesoft.portal.core.model.ItemEnum;
 
-public class ItemRepo extends DatabaseRepo<Item> {
+public class ItemRepo extends JdbcRepo<Item> {
     public ItemRepo(Connection connection) {
         super(connection, "items", List.of("id", "byte_field", "short_field", "int_field", "long_field", "double_field",
                 "float_field", "decimal_field", "boolean_field", "char_field", "string_field", "date_field",

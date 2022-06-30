@@ -1,16 +1,16 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnector {
+public class DatabaseConfig {
     public String url;
     public String username;
     public String password;
     public String driver;
 
-    public DatabaseConnector(Props props) {
+    public DatabaseConfig(Props props) {
         this.url = props.get("url");
         this.username = props.get("username");
         this.password = props.get("password");
