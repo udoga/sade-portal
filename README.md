@@ -17,7 +17,22 @@
 
 ## Modules
 
-- base: General classes that can be useful in any unrelated projects.
-- core: Core classes specific to Sade Portal application.
+- base: General classes that can be reusable for unrelated projects.
+- core: Core classes specific to this application.
 - rest: REST API dependencies and adapters for custom databases.
 - ui: Web user interface with AngularJS.
+
+## Todos
+
+- ref: rest: use controller classes
+- add: rest: api authentication with token
+- add: rest: update javalin to the new version
+- add: rest: pagination, sorting, filtering
+- add: ui: login page
+- add: ui: make tables responsive
+- add: ui: page selection to tables
+- add: ui: message boxes
+- add: ui: date picker
+- add: ui: tree menu
+- add: ui: language selection
+- add: ui: user manual
