@@ -32,7 +32,7 @@ public class ItemRepo extends JdbcRepo<Item> {
                 getChar(s, columnNames.get(i++)),
                 s.getString(columnNames.get(i++)),
                 getLocalDate(s, columnNames.get(i++)),
-                ItemEnum.valueOf(s.getString(columnNames.get(i))));
+                ItemEnum.from(s.getString(columnNames.get(i))));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ItemRepo extends JdbcRepo<Item> {
         setChar(s, i++, o.charField);
         s.setString(i++, o.stringField);
         setLocalDate(s, i++, o.dateField);
-        s.setString(i++, o.enumField.name());
+        s.setString(i++, (o.enumField == null)? "" : o.enumField.name());
         if (o.id != null) s.setInt(i, o.id);
     }
 }
