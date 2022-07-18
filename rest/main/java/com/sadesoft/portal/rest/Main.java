@@ -7,11 +7,14 @@ import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.model.Item;
+import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.service.ItemService;
 import com.sadesoft.portal.core.service.MainService;
+import com.sadesoft.portal.core.service.ProjectService;
 import com.sadesoft.portal.core.service.UserService;
 import com.sadesoft.portal.rest.repo.ItemRepo;
+import com.sadesoft.portal.rest.repo.ProjectRepo;
 import com.sadesoft.portal.rest.repo.UserRepo;
 
 public class Main {
@@ -21,9 +24,11 @@ public class Main {
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
         Repo<User> userRepo = new UserRepo(connection);
         Repo<Item> itemRepo = new ItemRepo(connection);
+        Repo<Project> projectRepo = new ProjectRepo(connection);
         UserService userService = new UserService(userRepo);
         ItemService itemService = new ItemService(itemRepo);
-        MainService mainService = new MainService(userService, itemService);
+        ProjectService projectService = new ProjectService(projectRepo);
+        MainService mainService = new MainService(userService, itemService, projectService);
         RestServer server = new RestServer(serverConfig, mainService);
         server.run();
     }

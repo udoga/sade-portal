@@ -13,6 +13,7 @@ import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.core.model.Item;
 import com.sadesoft.portal.core.service.MainService;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.model.Project;
 
 public class RestServer {
     private final ServerConfig config;
@@ -60,7 +61,13 @@ public class RestServer {
         server.get("/api/items/{id}", (c) -> send(c, service.readItem(getId(c))));
         server.put("/api/items/{id}", (c) -> send(c, service.updateItem(getId(c), getItem(c))));
         server.delete("/api/items/{id}", (c) -> send(c, service.deleteItem(getId(c))));
+        server.get("/api/projects", (c) -> send(c, service.listProjects()));
+        server.post("/api/projects", (c) -> send(c, service.createProject(getProject(c))));
+        server.get("/api/projects/{id}", (c) -> send(c, service.readProject(getId(c))));
+        server.put("/api/projects/{id}", (c) -> send(c, service.updateProject(getId(c), getProject(c))));
+        server.delete("/api/projects/{id}", (c) -> send(c, service.deleteProject(getId(c))));
     }
+
 
     private int getId(Context c) {
         return Integer.parseInt(c.pathParam("id"));
@@ -72,6 +79,10 @@ public class RestServer {
 
     private Item getItem(Context c) {
         return c.bodyAsClass(Item.class);
+    }
+
+    private Project getProject(Context c) {
+        return c.bodyAsClass(Project.class);
     }
 
     private void send(Context c, Object data) {
