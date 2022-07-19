@@ -6,9 +6,13 @@ public class Project implements Record {
     public Integer id;
     public String name;
 
-    public Project() { this(null, null);}
+    public Project() {
+        this(null, null);
+    }
 
-    public Project(String name) { this(null, name);}
+    public Project(String name) {
+        this(null, name);
+    }
 
     public Project(Integer id, String name) {
         this.id = id;

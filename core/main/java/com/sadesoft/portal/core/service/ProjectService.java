@@ -16,7 +16,9 @@ public class ProjectService {
         return repo.list();
     }
 
-    public Project read(int id) { return repo.read(id);}
+    public Project read(int id) {
+        return repo.read(id);
+    }
 
     public Project create(Project project) {
         return repo.create(project);
