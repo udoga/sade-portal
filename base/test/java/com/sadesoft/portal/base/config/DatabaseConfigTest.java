@@ -14,4 +14,14 @@ public class DatabaseConfigTest {
         assertEquals("p", c.password);
         assertEquals("d", c.driver);
     }
+
+    @Test
+    public void initializesWithDefaults() {
+        Props props = new Props(Map.of("url", "url"));
+        DatabaseConfig c = new DatabaseConfig(props);
+        assertEquals("url", c.url);
+        assertEquals("", c.username);
+        assertEquals("", c.password);
+        assertEquals("", c.driver);
+    }
 }

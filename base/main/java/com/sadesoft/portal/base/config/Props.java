@@ -39,6 +39,10 @@ public class Props {
         return value;
     }
 
+    public String getOrDefault(String key, String defaultValue) {
+        return map.getOrDefault(key, defaultValue);
+    }
+
     public int getInt(String key) {
         String value = get(key);
         return Integer.parseInt(value);

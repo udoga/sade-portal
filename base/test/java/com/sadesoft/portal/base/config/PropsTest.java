@@ -54,4 +54,11 @@ public class PropsTest {
         assertEquals("1", section.get("a"));
         assertEquals("2", section.get("b"));
     }
+
+    @Test
+    public void findsOrReturnsDefault() {
+        Props props = new Props(Map.of("key1", "value1"));
+        assertEquals("value1", props.getOrDefault("key1", "x"));
+        assertEquals("x", props.getOrDefault("key2", "x"));
+    }
 }

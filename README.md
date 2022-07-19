@@ -26,7 +26,6 @@
 
 - ref: rest: use controller classes
 - add: rest: api authentication with token
-- add: rest: update javalin to the new version
 - add: rest: pagination, sorting, filtering
 - add: ui: login page
 - add: ui: make tables responsive
