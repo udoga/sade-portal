@@ -1,5 +1,6 @@
 package com.sadesoft.portal.rest;
 
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -10,19 +11,15 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
 import com.sadesoft.portal.base.error.RecordNotFound;
 import com.sadesoft.portal.base.config.ServerConfig;
-import com.sadesoft.portal.core.model.Item;
-import com.sadesoft.portal.core.service.MainService;
-import com.sadesoft.portal.core.model.User;
-import com.sadesoft.portal.core.model.Project;
 
 public class RestServer {
     private final ServerConfig config;
-    private final MainService service;
+    private final List<RestController> controllers;
     private final Javalin server;
 
-    public RestServer(ServerConfig config, MainService service) {
+    public RestServer(ServerConfig config, List<RestController> controllers) {
         this.config = config;
-        this.service = service;
+        this.controllers = controllers;
         this.server = Javalin.create();
         configure();
     }
@@ -51,41 +48,9 @@ public class RestServer {
     }
 
     private void configureHandlers() {
-        server.get("/api/items", (c) -> send(c, service.listItems()));
-        server.post("/api/items", (c) -> send(c, service.createItem(getItem(c))));
-        server.get("/api/items/{id}", (c) -> send(c, service.readItem(getId(c))));
-        server.put("/api/items/{id}", (c) -> send(c, service.updateItem(getId(c), getItem(c))));
-        server.delete("/api/items/{id}", (c) -> send(c, service.deleteItem(getId(c))));
-        server.get("/api/projects", (c) -> send(c, service.listProjects()));
-        server.post("/api/projects", (c) -> send(c, service.createProject(getProject(c))));
-        server.get("/api/projects/{id}", (c) -> send(c, service.readProject(getId(c))));
-        server.put("/api/projects/{id}", (c) -> send(c, service.updateProject(getId(c), getProject(c))));
-        server.delete("/api/projects/{id}", (c) -> send(c, service.deleteProject(getId(c))));
-        server.get("/api/users", (c) -> send(c, service.listUsers()));
-        server.post("/api/users", (c) -> send(c, service.createUser(getUser(c))));
-        server.get("/api/users/{id}", (c) -> send(c, service.readUser(getId(c))));
-        server.put("/api/users/{id}", (c) -> send(c, service.updateUser(getId(c), getUser(c))));
-        server.delete("/api/users/{id}", (c) -> send(c, service.deleteUser(getId(c))));
-    }
-
-    private int getId(Context c) {
-        return Integer.parseInt(c.pathParam("id"));
-    }
-
-    private Item getItem(Context c) {
-        return c.bodyAsClass(Item.class);
-    }
-
-    private Project getProject(Context c) {
-        return c.bodyAsClass(Project.class);
-    }
-
-    private User getUser(Context c) {
-        return c.bodyAsClass(User.class);
-    }
-
-    private void send(Context c, Object data) {
-        c.json(Map.of("data", data));
+        for (RestController controller: controllers)
+            for (RestMethod method: controller.methods)
+                server.addHandler(method.type, controller.path + method.path, method.handler);
     }
 
     private void configureErrors() {
