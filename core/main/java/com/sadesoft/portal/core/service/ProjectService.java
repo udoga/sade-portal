@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 import com.sadesoft.portal.base.repo.Repo;
-import com.sadesoft.portal.core.model.Item;
 import com.sadesoft.portal.core.model.Project;
 
 public class ProjectService {

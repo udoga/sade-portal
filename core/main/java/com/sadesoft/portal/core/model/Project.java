@@ -10,10 +10,6 @@ public class Project implements Record {
         this(null, null);
     }
 
-    public Project(String name) {
-        this(null, name);
-    }
-
     public Project(Integer id, String name) {
         this.id = id;
         this.name = name;

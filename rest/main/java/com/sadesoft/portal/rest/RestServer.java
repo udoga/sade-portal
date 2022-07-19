@@ -51,11 +51,6 @@ public class RestServer {
     }
 
     private void configureHandlers() {
-        server.get("/api/users", (c) -> send(c, service.listUsers()));
-        server.post("/api/users", (c) -> send(c, service.createUser(getUser(c))));
-        server.get("/api/users/{id}", (c) -> send(c, service.readUser(getId(c))));
-        server.put("/api/users/{id}", (c) -> send(c, service.updateUser(getId(c), getUser(c))));
-        server.delete("/api/users/{id}", (c) -> send(c, service.deleteUser(getId(c))));
         server.get("/api/items", (c) -> send(c, service.listItems()));
         server.post("/api/items", (c) -> send(c, service.createItem(getItem(c))));
         server.get("/api/items/{id}", (c) -> send(c, service.readItem(getId(c))));
@@ -66,15 +61,15 @@ public class RestServer {
         server.get("/api/projects/{id}", (c) -> send(c, service.readProject(getId(c))));
         server.put("/api/projects/{id}", (c) -> send(c, service.updateProject(getId(c), getProject(c))));
         server.delete("/api/projects/{id}", (c) -> send(c, service.deleteProject(getId(c))));
+        server.get("/api/users", (c) -> send(c, service.listUsers()));
+        server.post("/api/users", (c) -> send(c, service.createUser(getUser(c))));
+        server.get("/api/users/{id}", (c) -> send(c, service.readUser(getId(c))));
+        server.put("/api/users/{id}", (c) -> send(c, service.updateUser(getId(c), getUser(c))));
+        server.delete("/api/users/{id}", (c) -> send(c, service.deleteUser(getId(c))));
     }
-
 
     private int getId(Context c) {
         return Integer.parseInt(c.pathParam("id"));
-    }
-
-    private User getUser(Context c) {
-        return c.bodyAsClass(User.class);
     }
 
     private Item getItem(Context c) {
@@ -83,6 +78,10 @@ public class RestServer {
 
     private Project getProject(Context c) {
         return c.bodyAsClass(Project.class);
+    }
+
+    private User getUser(Context c) {
+        return c.bodyAsClass(User.class);
     }
 
     private void send(Context c, Object data) {

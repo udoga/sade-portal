@@ -18,7 +18,7 @@ public class ProjectRepo extends JdbcRepo<Project> {
         int i = 0;
         return new Project(
                 s.getInt(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)));
+                s.getString(columnNames.get(i)));
     }
 
     @Override

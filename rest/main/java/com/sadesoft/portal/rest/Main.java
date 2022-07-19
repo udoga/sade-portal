@@ -22,13 +22,13 @@ public class Main {
         Props props = new Props((args.length > 0)? args[0] : PathUtil.findResourcePath("default.properties"));
         Connection connection = new DatabaseConfig(props.getSection("database")).connect();
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
-        Repo<User> userRepo = new UserRepo(connection);
         Repo<Item> itemRepo = new ItemRepo(connection);
         Repo<Project> projectRepo = new ProjectRepo(connection);
-        UserService userService = new UserService(userRepo);
+        Repo<User> userRepo = new UserRepo(connection);
         ItemService itemService = new ItemService(itemRepo);
         ProjectService projectService = new ProjectService(projectRepo);
-        MainService mainService = new MainService(userService, itemService, projectService);
+        UserService userService = new UserService(userRepo);
+        MainService mainService = new MainService(itemService, projectService, userService);
         RestServer server = new RestServer(serverConfig, mainService);
         server.run();
     }

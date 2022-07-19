@@ -1,11 +1,6 @@
-DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
-
-CREATE TABLE users(
-    id IDENTITY PRIMARY KEY,
-    username VARCHAR(255),
-    full_name VARCHAR(255)
-);
+DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE items(
     id IDENTITY PRIMARY KEY,
@@ -28,9 +23,11 @@ CREATE TABLE projects(
     name VARCHAR(255)
 );
 
-INSERT INTO users VALUES
-    (default, 'first.user', 'First User'),
-    (default, 'second.user', 'Second User');
+CREATE TABLE users(
+    id IDENTITY PRIMARY KEY,
+    username VARCHAR(255),
+    full_name VARCHAR(255)
+);
 
 INSERT INTO items VALUES
     (default, 11, 12, 13, 14, 15.0, 16.1, 17.2,  true, 'A', 'String One'  , '2018-01-01', 'ValueOne'  ),
@@ -40,3 +37,7 @@ INSERT INTO items VALUES
 INSERT INTO projects VALUES
     (default, 'First Project'),
     (default, 'Second Project');
+
+INSERT INTO users VALUES
+    (default, 'first.user', 'First User'),
+    (default, 'second.user', 'Second User');

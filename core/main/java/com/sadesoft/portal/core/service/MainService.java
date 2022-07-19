@@ -6,34 +6,14 @@ import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.User;
 
 public class MainService {
-    private final UserService userService;
     private final ItemService itemService;
     private final ProjectService projectService;
+    private final UserService userService;
 
-    public MainService(UserService userService, ItemService itemService, ProjectService projectService) {
-        this.userService = userService;
+    public MainService(ItemService itemService, ProjectService projectService, UserService userService) {
         this.itemService = itemService;
         this.projectService = projectService;
-    }
-
-    public List<User> listUsers() {
-        return userService.list();
-    }
-
-    public User readUser(int id) {
-        return userService.read(id);
-    }
-
-    public User createUser(User user) {
-        return userService.create(user);
-    }
-
-    public User updateUser(int id, User user) {
-        return userService.update(id, user);
-    }
-
-    public User deleteUser(int id) {
-        return userService.delete(id);
+        this.userService = userService;
     }
 
     public List<Item> listItems() {
@@ -56,7 +36,9 @@ public class MainService {
         return itemService.delete(id);
     }
 
-    public List<Project> listProjects() { return projectService.list();}
+    public List<Project> listProjects() {
+        return projectService.list();
+    }
 
     public Project readProject(int id) {
         return projectService.read(id);
@@ -72,5 +54,25 @@ public class MainService {
 
     public Project deleteProject(int id) {
         return projectService.delete(id);
+    }
+
+    public List<User> listUsers() {
+        return userService.list();
+    }
+
+    public User readUser(int id) {
+        return userService.read(id);
+    }
+
+    public User createUser(User user) {
+        return userService.create(user);
+    }
+
+    public User updateUser(int id, User user) {
+        return userService.update(id, user);
+    }
+
+    public User deleteUser(int id) {
+        return userService.delete(id);
     }
 }
