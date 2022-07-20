@@ -1,0 +1,35 @@
+<div ng-controller="PersonListController">
+  <h2>People</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Access Type</th>
+      <th>Work Email</th>
+      <th>Mobile Phone</th>
+      <th class="narrow last">
+        <a class="green header icon button" ng-href="#!people/new"><i class="fas fa-plus"></i>New</a>
+      </th>
+    </tr>
+    <tr ng-repeat="person in people">
+      <td class="narrow">{{person.id}}</td>
+      <td>{{person.firstName}}</td>
+      <td>{{person.lastName}}</td>
+      <td>{{person.accessType}}</td>
+      <td>{{person.workEmail}}</td>
+      <td>{{person.mobilePhone}}</td>
+      <td class="narrow last">
+        <a title="Show" class="light-blue row button" ng-href="#!people/{{person.id}}">
+          <i class="far fa-eye"></i>
+        </a>
+        <a title="Edit" class="yellow row button" ng-href="#!people/{{person.id}}/edit">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+        <a title="Delete" class="red row button" href ng-click="delete(person.id)">
+          <i class="fas fa-trash"></i>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
