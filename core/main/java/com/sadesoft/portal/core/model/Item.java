@@ -5,22 +5,21 @@ import java.time.LocalDate;
 import com.sadesoft.portal.base.repo.Record;
 
 public class Item implements Record {
-    public Integer id;
-    public byte byteField;
-    public short shortField;
-    public int intField;
-    public long longField;
-    public double doubleField;
-    public float floatField;
-    public BigDecimal decimalField;
-    public boolean booleanField;
-    public char charField;
-    public String stringField;
-    public LocalDate dateField;
-    public ItemEnum enumField;
+    public Integer id = null;
+    public Byte byteField = null;
+    public Short shortField = null;
+    public Integer intField = null;
+    public Long longField = null;
+    public Double doubleField = null;
+    public Float floatField = null;
+    public BigDecimal decimalField = null;
+    public Boolean booleanField = null;
+    public Character charField = null;
+    public String stringField = null;
+    public LocalDate dateField = null;
+    public ItemEnum enumField = null;
 
     public Item() {
-        this(null, (byte) 0, (short) 0, 0, 0, 0, 0, BigDecimal.ZERO, false, ' ', "", LocalDate.EPOCH, null);
     }
 
     public Item(Integer id,

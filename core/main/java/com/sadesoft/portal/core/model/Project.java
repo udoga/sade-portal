@@ -3,11 +3,10 @@ package com.sadesoft.portal.core.model;
 import com.sadesoft.portal.base.repo.Record;
 
 public class Project implements Record {
-    public Integer id;
-    public String name;
+    public Integer id = null;
+    public String name = null;
 
     public Project() {
-        this(null, null);
     }
 
     public Project(Integer id, String name) {

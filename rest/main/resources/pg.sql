@@ -25,7 +25,7 @@ CREATE TABLE people(
     last_name VARCHAR(255),
     email VARCHAR(255),
     work_email VARCHAR(255),
-    mobile_Phone VARCHAR(255),
+    mobile_phone VARCHAR(255),
     work_phone VARCHAR(255),
     employment_start_date DATE,
     contract_type VARCHAR(255),
@@ -66,7 +66,9 @@ INSERT INTO items VALUES
     (default, 31, 32, 33, 34, 35.0, 36.1, 37.2, false, 'C', 'String Three', '2019-01-01', 'ValueThree');
 
 INSERT INTO people VALUES
-    (default , 'first', 'last', 'email', 'workmail', '5553553535', '5553335533', '2022-06-27', 'Definite', '2022-08-11', '123', 'Employee', '2000-02-05', '0Positive', 'Bachelor', 'Student', 'YTU', 'Male', '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', null, 'TR', 0, 'Completed');
+    (default, 'first', 'last', 'personal@email.com', 'work@email.com', '5553553535', '5553335533', '2022-06-27',
+    'Definite', '2022-08-11', '123', 'Employee', '2000-02-05', '0Positive', 'Bachelor', 'Student', 'YTU', 'Male',
+    '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', null, 'TR', 0, 'Completed');
 
 INSERT INTO projects VALUES
     (default, 'First Project'),

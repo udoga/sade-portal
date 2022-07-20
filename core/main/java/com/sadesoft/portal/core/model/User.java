@@ -3,12 +3,11 @@ package com.sadesoft.portal.core.model;
 import com.sadesoft.portal.base.repo.Record;
 
 public class User implements Record {
-    public Integer id;
-    public String username;
-    public String fullName;
+    public Integer id = null;
+    public String username = null;
+    public String fullName = null;
 
     public User() {
-        this(null, null, null);
     }
 
     public User(String username, String fullName) {
