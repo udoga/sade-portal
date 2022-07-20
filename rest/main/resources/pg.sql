@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
@@ -18,6 +19,36 @@ CREATE TABLE items(
     enum_field VARCHAR(255)
 );
 
+CREATE TABLE people(
+    id IDENTITY PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255),
+    work_email VARCHAR(255),
+    mobile_Phone VARCHAR(255),
+    work_phone VARCHAR(255),
+    employment_start_date DATE,
+    contract_type VARCHAR(255),
+    contract_end_date DATE,
+    working_day_id VARCHAR(255),
+    access_type VARCHAR(255),
+    birthday DATE,
+    blood_type VARCHAR(255),
+    educational_level VARCHAR(255),
+    education_status VARCHAR(255),
+    educational_institution VARCHAR(255),
+    gender VARCHAR(255),
+    id_number VARCHAR(255),
+    level_of_disability VARCHAR(255),
+    marital_status VARCHAR(255),
+    partner_work_status BOOLEAN,
+    military_service VARCHAR(255),
+    military_service_delay_date DATE,
+    nationality VARCHAR(255),
+    number_of_children INT,
+    tour_status VARCHAR(255)
+);
+
 CREATE TABLE projects(
     id IDENTITY PRIMARY KEY,
     name VARCHAR(255)
@@ -33,6 +64,9 @@ INSERT INTO items VALUES
     (default, 11, 12, 13, 14, 15.0, 16.1, 17.2,  true, 'A', 'String One'  , '2018-01-01', 'ValueOne'  ),
     (default, 21, 22, 23, 24, 25.0, 26.1, 27.2, false, 'B', 'String Two'  , '2019-01-01', 'ValueTwo'  ),
     (default, 31, 32, 33, 34, 35.0, 36.1, 37.2, false, 'C', 'String Three', '2019-01-01', 'ValueThree');
+
+INSERT INTO people VALUES
+    (default , 'first', 'last', 'email', 'workmail', '5553553535', '5553335533', '2022-06-27', 'Definite', '2022-08-11', '123', 'Employee', '2000-02-05', '0Positive', 'Bachelor', 'Student', 'YTU', 'Male', '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', null, 'TR', 0, 'Completed');
 
 INSERT INTO projects VALUES
     (default, 'First Project'),
