@@ -5,6 +5,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
@@ -54,6 +55,7 @@ public class RestServer {
     }
 
     private void configureErrors() {
+        server.exception(MissingFieldError.class, (e, c) -> handle(c, e, 400));
         server.exception(RecordNotFound.class, (e, c) -> handle(c, e, 404));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
     }
