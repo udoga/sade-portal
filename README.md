@@ -26,8 +26,6 @@
 
 - fix: rest: error when updating records without id
 - add: rest: PersonService validation (null checks and consistency)
-- add: rest: types to pg.sql (for enums)
-- add: rest: 'not null' to sql columns
 - ref: rest: remove null checks from PersonRepo and empty checks from Enums
 - add: rest: pagination, sorting, filtering
 - add: rest: api authentication with token

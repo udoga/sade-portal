@@ -44,25 +44,25 @@ public class PersonRepo extends JdbcRepo<Person>{
                 s.getString(columnNames.get(i++)),
                 s.getString(columnNames.get(i++)),
                 getLocalDate(s, columnNames.get(i++)),
-                ContractType.from(s.getString(columnNames.get(i++))),
+                ContractType.valueOf(s.getString(columnNames.get(i++))),
                 getLocalDate(s, columnNames.get(i++)),
                 s.getString(columnNames.get(i++)),
-                AccessType.from(s.getString(columnNames.get(i++))),
+                AccessType.valueOf(s.getString(columnNames.get(i++))),
                 getLocalDate(s, columnNames.get(i++)),
-                BloodType.from(s.getString(columnNames.get(i++))),
-                EducationalLevel.from(s.getString(columnNames.get(i++))),
-                EducationStatus.from(s.getString(columnNames.get(i++))),
+                BloodType.valueOf(s.getString(columnNames.get(i++))),
+                EducationalLevel.valueOf(s.getString(columnNames.get(i++))),
+                EducationStatus.valueOf(s.getString(columnNames.get(i++))),
                 s.getString(columnNames.get(i++)),
-                Gender.from(s.getString(columnNames.get(i++))),
+                Gender.valueOf(s.getString(columnNames.get(i++))),
                 s.getString(columnNames.get(i++)),
-                LevelOfDisability.from(s.getString(columnNames.get(i++))),
-                MaritalStatus.from(s.getString(columnNames.get(i++))),
+                LevelOfDisability.valueOf(s.getString(columnNames.get(i++))),
+                MaritalStatus.valueOf(s.getString(columnNames.get(i++))),
                 s.getBoolean(columnNames.get(i++)),
-                MilitaryService.from(s.getString(columnNames.get(i++))),
+                MilitaryService.valueOf(s.getString(columnNames.get(i++))),
                 getLocalDate(s, columnNames.get(i++)),
                 s.getString(columnNames.get(i++)),
                 s.getInt(columnNames.get(i++)),
-                TourStatus.from(s.getString(columnNames.get(i)))
+                TourStatus.valueOf(s.getString(columnNames.get(i)))
         );
     }
 
@@ -76,25 +76,25 @@ public class PersonRepo extends JdbcRepo<Person>{
         s.setString(i++, o.mobilePhone);
         s.setString(i++, o.workPhone);
         setLocalDate(s, i++, o.employmentStartDate);
-        s.setString(i++, (o.contractType == null)? "" : o.contractType.name());
+        s.setString(i++, o.contractType.name());
         setLocalDate(s, i++, o.contractEndDate);
         s.setString(i++, o.workingDayId);
-        s.setString(i++, (o.accessType == null)? "" : o.accessType.name());
+        s.setString(i++, o.accessType.name());
         setLocalDate(s, i++, o.birthday);
-        s.setString(i++, (o.bloodType == null)? "" : o.bloodType.name());
-        s.setString(i++, (o.educationalLevel == null)? "" : o.educationalLevel.name());
-        s.setString(i++, (o.educationStatus == null)? "" : o.educationStatus.name());
+        s.setString(i++, o.bloodType.name());
+        s.setString(i++, o.educationalLevel.name());
+        s.setString(i++, o.educationStatus.name());
         s.setString(i++, o.educationalInstitution);
-        s.setString(i++, (o.gender == null)? "" : o.gender.name());
+        s.setString(i++, o.gender.name());
         s.setString(i++, o.idNumber);
-        s.setString(i++, (o.levelOfDisability == null)? "" : o.levelOfDisability.name());
-        s.setString(i++, (o.maritalStatus == null)? "" : o.maritalStatus.name());
+        s.setString(i++, o.levelOfDisability.name());
+        s.setString(i++, o.maritalStatus.name());
         s.setBoolean(i++, o.partnerWorkStatus);
-        s.setString(i++, (o.militaryService == null)? "" : o.militaryService.name());
+        s.setString(i++, o.militaryService.name());
         setLocalDate(s, i++, o.militaryServiceDelayDate);
         s.setString(i++, o.nationality);
         s.setInt(i++, o.numberOfChildren);
-        s.setString(i++, (o.tourStatus == null)? "" : o.tourStatus.name());
+        s.setString(i++, o.tourStatus.name());
         if (o.id != null) s.setInt(i, o.id);
     }
 }
