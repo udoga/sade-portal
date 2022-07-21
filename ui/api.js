@@ -1,26 +1,6 @@
 function Api($http) {
   this.url = "/api";
 
-  this.listItems = function() {
-    return $http.get(this.url + "/items");
-  };
-
-  this.createItem = function(item) {
-    return $http.post(this.url + "/items/", item);
-  }
-
-  this.readItem = function(id) {
-    return $http.get(this.url + "/items/" + id);
-  }
-
-  this.updateItem = function(id, item) {
-    return $http.put(this.url + "/items/" + id, item);
-  }
-
-  this.deleteItem = function(id) {
-    return $http.delete(this.url + "/items/" + id);
-  }
-
   this.listPeople = function() {
     return $http.get(this.url + "/people");
   };

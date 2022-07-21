@@ -24,7 +24,6 @@
 
 ## Todos
 
-- ref: remove items
 - fix: rest: error when updating records without id
 - add: rest: PersonService validation (null checks and consistency)
 - add: rest: types to pg.sql (for enums)
