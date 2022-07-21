@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE people(
-    id IDENTITY PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -33,20 +33,20 @@ CREATE TABLE people(
 );
 
 CREATE TABLE projects(
-    id IDENTITY PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE users(
-    id IDENTITY PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY NOT NULL,
     username VARCHAR(255) NOT NULL,
     full_name VARCHAR(255) NOT NULL
 );
 
 INSERT INTO people VALUES
     (default, 'first', 'last', 'personal@email.com', 'work@email.com', '5553553535', '5553335533', '2022-06-27',
-    'Definite', '2022-08-11', '123', 'Employee', '2000-02-05', '0Positive', 'Bachelor', 'Student', 'YTU', 'Male',
-    '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', null, 'TR', 0, 'Completed');
+    'Definite', '2022-08-11', '123', 'Employee', '2000-02-05', 'APositive', 'Bachelor', 'Student', 'YTU', 'Male',
+    '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', '2020-01-01', 'TR', 0, 'Completed');
 
 INSERT INTO projects VALUES
     (default, 'First Project'),
