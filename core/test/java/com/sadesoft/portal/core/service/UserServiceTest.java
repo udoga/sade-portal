@@ -7,21 +7,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.repo.ListRepo;
 import com.sadesoft.portal.core.model.User;
-import org.junit.jupiter.api.function.Executable;
 
 public class UserServiceTest {
     ListRepo<User> repo;
     UserService service;
+    User validUser;
 
     @BeforeEach
     public void setup() {
         repo = new ListRepo<>("User");
         service = new UserService(repo);
+        validUser = new User("username", "full name");
     }
 
     @Test
     public void createsUser() {
-        User user = service.create(new User("username", "fullName"));
+        User user = service.create(validUser);
         assertEquals(1, repo.list().size());
         assertEquals(0, user.id);
         assertEquals("username", user.username);
@@ -29,20 +30,17 @@ public class UserServiceTest {
 
     @Test
     public void whenCreatesUserWithoutUsername_throwsError() {
-        User user = new User(null, "name");
-        assertThrows(MissingFieldError.class, () -> service.create(user));
+        assertThrows(MissingFieldError.class, () -> service.create(validUser.withUsername(null)));
     }
 
     @Test
     public void whenCreatesUserWithoutFullName_throwsError() {
-        User user = new User("name", null);
-        assertThrows(MissingFieldError.class, () -> service.create(user));
+        assertThrows(MissingFieldError.class, () -> service.create(validUser.withFullName(null)));
     }
 
     @Test
     public void whenCreatesUserWithEmptyUsername_throwsError() {
-        User user = new User("", "fullName");
-        assertThrows(MissingFieldError.class, () -> service.create(user));
+        assertThrows(MissingFieldError.class, () -> service.create(validUser.withUsername("")));
     }
 
     @Nested
@@ -79,12 +77,12 @@ public class UserServiceTest {
 
         @Test
         public void whenUpdatesUserWithoutUsername_throwsError() {
-            assertThrows(MissingFieldError.class, () -> service.update(0, new User(null, "fullName")));
+            assertThrows(MissingFieldError.class, () -> service.update(0, validUser.withUsername(null)));
         }
 
         @Test
         public void whenUpdatesUserWithoutFullName_throwsError() {
-            assertThrows(MissingFieldError.class, () -> service.update(0, new User("username", null)));
+            assertThrows(MissingFieldError.class, () -> service.update(0, validUser.withFullName(null)));
         }
     }
 }
