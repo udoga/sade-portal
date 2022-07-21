@@ -20,12 +20,16 @@ import com.sadesoft.portal.core.model.TourStatus;
 
 public class PersonRepo extends JdbcRepo<Person>{
     public PersonRepo(Connection connection) {
-        super(connection, "people", List.of("id", "first_name", "last_name", "email", "work_email", "mobile_phone",
+        super(connection, "people",
+                List.of("id", "first_name", "last_name", "email", "work_email", "mobile_phone",
                 "work_phone", "employment_start_date", "contract_type", "contract_end_date", "working_day_id",
                 "access_type", "birthday", "blood_type", "educational_level", "education_status",
                 "educational_institution", "gender", "id_number", "level_of_disability", "marital_status",
                 "partner_work_status", "military_service", "military_service_delay_date", "nationality",
-                "number_of_children", "tour_status"));
+                "number_of_children", "tour_status"),
+                List.of("access_type", "blood_type", "contract_type",
+                "educational_level", "education_status", "gender", "level_of_disability", "marital_status",
+                "military_service", "tour_status"));
     }
 
     @Override

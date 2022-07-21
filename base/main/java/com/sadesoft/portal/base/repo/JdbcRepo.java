@@ -14,11 +14,13 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
     protected final String tableName;
     protected final List<String> columnNames;
+    protected final List<String> enumColumns;
 
-    public JdbcRepo(Connection connection, String tableName, List<String> columnNames) {
+    public JdbcRepo(Connection connection, String tableName, List<String> columnNames, List<String> enumColumns) {
         this.connection = connection;
         this.tableName = tableName;
         this.columnNames = columnNames;
+        this.enumColumns = enumColumns;
     }
 
     @Override
@@ -121,7 +123,20 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         String delimiter = ", ";
         StringBuilder result = new StringBuilder();
         for (String name: columnNames.subList(includeId? 0 : 1, columnNames.size()))
-            result.append(String.format(template, name, "?")).append(delimiter);
+            result.append(String.format(template, name, getQuestionMark(name))).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
+    }
+
+    private String getQuestionMark(String columnName) {
+        if (isPostgresql() && enumColumns.contains(columnName)) return "?::" + columnName;
+        return "?";
+    }
+
+    private boolean isPostgresql() {
+        try {
+            return connection.getMetaData().getDriverName().toLowerCase().contains("postgresql");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

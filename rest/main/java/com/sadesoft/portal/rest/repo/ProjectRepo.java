@@ -10,7 +10,7 @@ import com.sadesoft.portal.core.model.Project;
 
 public class ProjectRepo extends JdbcRepo<Project> {
     public ProjectRepo(Connection connection) {
-        super(connection, "projects", List.of("id", "name"));
+        super(connection, "projects", List.of("id", "name"), List.of());
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.sadesoft.portal.core.model.User;
 
 public class UserRepo extends JdbcRepo<User> {
     public UserRepo(Connection connection) {
-        super(connection, "users", List.of("id", "username", "full_name"));
+        super(connection, "users", List.of("id", "username", "full_name"), List.of());
     }
 
     @Override
