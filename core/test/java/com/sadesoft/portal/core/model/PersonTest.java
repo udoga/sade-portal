@@ -12,7 +12,7 @@ public class PersonTest {
 
     @BeforeEach
     public void setup() {
-        validPerson = new Person(0, "firstName", "lastName", "sample@email.com",
+        validPerson = new Person(1, "firstName", "lastName", "sample@email.com",
                 "sample@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
                 ContractType.Definite , LocalDate.of(2023,1,1), "123", AccessType.Employee,
                 LocalDate.of(2000,1,1), BloodType.APositive,
@@ -56,7 +56,7 @@ public class PersonTest {
 
     @Test
     public void initializesWithFields() {
-        assertNull(validPerson.id);
+        assertEquals(1, validPerson.id);
         assertEquals("firstName", validPerson.firstName);
         assertEquals("lastName", validPerson.lastName);
         assertEquals("sample@email.com", validPerson.email);
@@ -87,34 +87,32 @@ public class PersonTest {
 
     @Test
     public void clonesWithFields() {
-        assertNull(validPerson.withId(1).id);
-        assertNull(validPerson.withFirstName("new_first_name").firstName);
-        assertNull(validPerson.withLastName("new_last_name").lastName);
-        assertNull(validPerson.withEmail("new_email").email);
-        assertNull(validPerson.withWorkEmail("new_work_email").workEmail);
-        assertNull(validPerson.withMobilePhone("new_mobile_phone").mobilePhone);
-        assertNull(validPerson.withFirstName("new_work_phone").firstName);
-        assertNull(validPerson.withEmploymentStartDate(LocalDate.of(2022,2,2)).employmentStartDate);
-        assertNull(validPerson.withContractType(ContractType.Indefinite).contractType);
-        assertNull(validPerson.withContractEndDate(LocalDate.of(2023,2,2)).contractEndDate);
-        assertNull(validPerson.withWorkingDayId("new_working_day_id").workingDayId);
-        assertNull(validPerson.withAccessType(AccessType.Manager).accessType);
-        assertNull(validPerson.withBirthday(LocalDate.of(2000,2,2)).birthday);
-        assertNull(validPerson.withBloodType(BloodType.ABNegative).bloodType);
-        assertNull(validPerson.withEducationalLevel(EducationalLevel.Associate).educationalLevel);
-        assertNull(validPerson.withEducationStatus(EducationStatus.Graduate).educationStatus);
-        assertNull(validPerson.withEducationalInstitution("ITU").educationalInstitution);
-        assertNull(validPerson.withGender(Gender.Female).gender);
-        assertNull(validPerson.withIdNumber("10987654321").idNumber);
-        assertNull(validPerson.withLevelOfDisability(LevelOfDisability.FirstLevel).levelOfDisability);
-        assertNull(validPerson.withMaritalStatus(MaritalStatus.Married).maritalStatus);
-        assertNull(validPerson.withPartnerWorkStatus(true).partnerWorkStatus);
-        assertNull(validPerson.withMilitaryService(MilitaryService.Delayed).militaryService);
-        assertNull(validPerson.withMilitaryServiceDelayDate(LocalDate.of(2024,2,2)).militaryServiceDelayDate);
-        assertNull(validPerson.withNationality("new_nationality").nationality);
-        assertNull(validPerson.withNumberOfChildren(1).numberOfChildren);
-        assertNull(validPerson.withTourStatus(TourStatus.Active).tourStatus);
-        assertNull(validPerson.withFirstName("new_first_name").id);
+        assertNull(validPerson.withId(null).id);
         assertNull(validPerson.withFirstName(null).firstName);
+        assertNull(validPerson.withLastName(null).lastName);
+        assertNull(validPerson.withEmail(null).email);
+        assertNull(validPerson.withWorkEmail(null).workEmail);
+        assertNull(validPerson.withMobilePhone(null).mobilePhone);
+        assertNull(validPerson.withFirstName(null).firstName);
+        assertNull(validPerson.withEmploymentStartDate(null).employmentStartDate);
+        assertNull(validPerson.withContractType(null).contractType);
+        assertNull(validPerson.withContractEndDate(null).contractEndDate);
+        assertNull(validPerson.withWorkingDayId(null).workingDayId);
+        assertNull(validPerson.withAccessType(null).accessType);
+        assertNull(validPerson.withBirthday(null).birthday);
+        assertNull(validPerson.withBloodType(null).bloodType);
+        assertNull(validPerson.withEducationalLevel(null).educationalLevel);
+        assertNull(validPerson.withEducationStatus(null).educationStatus);
+        assertNull(validPerson.withEducationalInstitution(null).educationalInstitution);
+        assertNull(validPerson.withGender(null).gender);
+        assertNull(validPerson.withIdNumber(null).idNumber);
+        assertNull(validPerson.withLevelOfDisability(null).levelOfDisability);
+        assertNull(validPerson.withMaritalStatus(null).maritalStatus);
+        assertNull(validPerson.withPartnerWorkStatus(null).partnerWorkStatus);
+        assertNull(validPerson.withMilitaryService(null).militaryService);
+        assertNull(validPerson.withMilitaryServiceDelayDate(null).militaryServiceDelayDate);
+        assertNull(validPerson.withNationality(null).nationality);
+        assertNull(validPerson.withNumberOfChildren(null).numberOfChildren);
+        assertNull(validPerson.withTourStatus(null).tourStatus);
     }
 }
