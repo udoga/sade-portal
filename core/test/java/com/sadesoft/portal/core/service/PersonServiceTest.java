@@ -18,8 +18,8 @@ public class PersonServiceTest {
     public void setup() {
         repo = new ListRepo<>("Person");
         service = new PersonService(repo);
-        validPerson = new Person(0, "firstName", "lastName", "fl@email.com",
-                "fl@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
+        validPerson = new Person(0, "firstName", "lastName", "sample@email.com",
+                "sample@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
                 ContractType.Definite , LocalDate.of(2023,1,1), "123", AccessType.Employee,
                 LocalDate.of(2000,1,1), BloodType.APositive,
                 EducationalLevel.Bachelor, EducationStatus.Student, "YTU",
@@ -35,8 +35,8 @@ public class PersonServiceTest {
         assertEquals(0, person.id);
         assertEquals("firstName", person.firstName);
         assertEquals("lastName", person.lastName);
-        assertEquals("fl@email.com", person.email);
-        assertEquals("fl@workmail.com", person.workEmail);
+        assertEquals("sample@email.com", person.email);
+        assertEquals("sample@workmail.com", person.workEmail);
         assertEquals("05555555555", person.mobilePhone);
         assertEquals("05355353535", person.workPhone);
         assertEquals(LocalDate.of(2022,1,1), person.employmentStartDate);
@@ -95,14 +95,7 @@ public class PersonServiceTest {
     public class GivenServiceWithOnePerson {
         @BeforeEach
         public void setup() {
-            repo.create(new Person("firstName", "lastName", "fl@email.com",
-                    "fl@workmail.com", "05555555555", "05355353535", LocalDate.of(2022, 1, 1),
-                    ContractType.Definite, LocalDate.of(2023, 1, 1), "123", AccessType.Employee,
-                    LocalDate.of(2000, 1, 1), BloodType.APositive,
-                    EducationalLevel.Bachelor, EducationStatus.Student, "YTU",
-                    Gender.Male, "12345678910", LevelOfDisability.NotDisabled,
-                    MaritalStatus.Single, false, MilitaryService.Uncompleted,
-                    LocalDate.of(2024, 1, 1), "TR", 0, TourStatus.Completed));
+            repo.create(validPerson);
         }
 
         @Test
@@ -118,20 +111,13 @@ public class PersonServiceTest {
 
         @Test
         public void updatesPersonById() {
-            Person person = service.update(0, new Person("updated", "lastName", "fl@email.com",
-                    "fl@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
-                    ContractType.Definite , LocalDate.of(2023,1,1), "123", AccessType.Employee,
-                    LocalDate.of(2000,1,1), BloodType.APositive,
-                    EducationalLevel.Bachelor, EducationStatus.Student, "YTU",
-                    Gender.Male, "12345678910", LevelOfDisability.NotDisabled,
-                    MaritalStatus.Single, false, MilitaryService.Uncompleted,
-                    LocalDate.of(2024,1,1), "TR", 0, TourStatus.Completed));
+            Person person = service.update(0, validPerson.withFirstName("updated").withLastName("updated"));
             assertEquals("updated", person.firstName);
             assertEquals("updated", repo.read(0).firstName);
         }
 
         @Test
-        public void deletesUserById() {
+        public void deletesPersonById() {
             Person person = service.delete(0);
             assertEquals(0, repo.list().size());
             assertEquals(0, person.id);

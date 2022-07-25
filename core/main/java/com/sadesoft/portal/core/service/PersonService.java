@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
@@ -43,25 +42,25 @@ public class PersonService {
         validateExists(person.workEmail, "workEmail");
         validateExists(person.mobilePhone, "mobilePhone");
         validateExists(person.workPhone, "workPhone");
-        validateExists(person.employmentStartDate, String.valueOf(LocalDate.of(2022,1,1)));
+        validateExists(person.employmentStartDate, "employmentStartDate");
         validateExists(person.contractType, "contractType");
-        validateExists(person.contractEndDate, String.valueOf(LocalDate.of(2023,1,1)));
+        validateExists(person.contractEndDate, "contractEndDate");
         validateExists(person.workingDayId, "workingDayId");
         validateExists(person.accessType, "accessType");
-        validateExists(person.birthday, String.valueOf(LocalDate.of(2000,1,1)));
+        validateExists(person.birthday, "birthday");
         validateExists(person.bloodType, "bloodType");
         validateExists(person.educationalLevel, "educationalLevel");
         validateExists(person.educationStatus, "educationStatus");
         validateExists(person.educationalInstitution, "educationalInstitution");
         validateExists(person.gender, "gender");
-        validateExists(person.idNumber, "12345678910");
+        validateExists(person.idNumber, "idNumber");
         validateExists(person.levelOfDisability, "levelOfDisability");
-        validateExists(person.maritalStatus, "Single");
-        validateExists(person.partnerWorkStatus, "true");
+        validateExists(person.maritalStatus, "maritalStatus");
+        validateExists(person.partnerWorkStatus, "partnerWorkStatus");
         validateExists(person.militaryService, "militaryService");
-        validateExists(person.militaryServiceDelayDate, String.valueOf(LocalDate.of(2024,1,1)));
+        validateExists(person.militaryServiceDelayDate, "militaryServiceDelayDate");
         validateExists(person.nationality, "nationality");
-        validateExists(person.numberOfChildren, "0");
+        validateExists(person.numberOfChildren, "numberOfChildren");
         validateExists(person.tourStatus, "tourStatus");
     }
 
