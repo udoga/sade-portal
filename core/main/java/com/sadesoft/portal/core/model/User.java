@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.model;
 
+import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
 public class User implements Record, Cloneable {
@@ -10,10 +11,6 @@ public class User implements Record, Cloneable {
     public User() {
     }
 
-    public User(String username, String fullName) {
-        this(null, username, fullName);
-    }
-
     public User(Integer id, String username, String fullName) {
         this.id = id;
         this.username = username;
@@ -21,8 +18,21 @@ public class User implements Record, Cloneable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User)) return false;
+        User u = (User) o;
+        return Objects.equals(id, u.id) &&
+                Objects.equals(username, u.username) &&
+                Objects.equals(fullName, u.fullName);
+    }
+
+    @Override
     public String toString() {
-        return "User[id=" + id + " username=" + username + " fullName=" + fullName + "]";
+        return "User[" +
+                "id=" + id +
+                " username=" + username +
+                " fullName=" + fullName +
+                "]";
     }
 
     @Override
@@ -33,6 +43,14 @@ public class User implements Record, Cloneable {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User copy() {
+        try {
+            return (User) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public User withId(Integer id) {
@@ -51,13 +69,5 @@ public class User implements Record, Cloneable {
         User user = copy();
         user.fullName = fullName;
         return user;
-    }
-
-    private User copy() {
-        try {
-            return (User) clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

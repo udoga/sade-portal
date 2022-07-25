@@ -1,7 +1,8 @@
 package com.sadesoft.portal.core.model;
 
-import com.sadesoft.portal.base.repo.Record;
 import java.time.LocalDate;
+import java.util.Objects;
+import com.sadesoft.portal.base.repo.Record;
 
 public class Person implements Record, Cloneable {
     public Integer id = null;
@@ -91,58 +92,70 @@ public class Person implements Record, Cloneable {
         this.tourStatus = tourStatus;
     }
 
-    public Person(String firstName,
-                  String lastName,
-                  String email,
-                  String workEmail,
-                  String mobilePhone,
-                  String workPhone,
-                  LocalDate employmentStartDate,
-                  ContractType contractType,
-                  LocalDate contractEndDate,
-                  String workingDayId,
-                  AccessType accessType,
-                  LocalDate birthday,
-                  BloodType bloodType,
-                  EducationalLevel educationalLevel,
-                  EducationStatus educationStatus,
-                  String educationalInstitution,
-                  Gender gender,
-                  String idNumber,
-                  LevelOfDisability levelOfDisability,
-                  MaritalStatus maritalStatus,
-                  Boolean partnerWorkStatus,
-                  MilitaryService militaryService,
-                  LocalDate militaryServiceDelayDate,
-                  String nationality,
-                  Integer numberOfChildren,
-                  TourStatus tourStatus) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.workEmail = workEmail;
-        this.mobilePhone = mobilePhone;
-        this.workPhone = workPhone;
-        this.employmentStartDate = employmentStartDate;
-        this.contractType = contractType;
-        this.contractEndDate = contractEndDate;
-        this.workingDayId = workingDayId;
-        this.accessType = accessType;
-        this.birthday = birthday;
-        this.bloodType = bloodType;
-        this.educationalLevel = educationalLevel;
-        this.educationStatus = educationStatus;
-        this.educationalInstitution = educationalInstitution;
-        this.gender = gender;
-        this.idNumber = idNumber;
-        this.levelOfDisability = levelOfDisability;
-        this.maritalStatus = maritalStatus;
-        this.partnerWorkStatus = partnerWorkStatus;
-        this.militaryService = militaryService;
-        this.militaryServiceDelayDate = militaryServiceDelayDate;
-        this.nationality = nationality;
-        this.numberOfChildren = numberOfChildren;
-        this.tourStatus = tourStatus;
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Person)) return false;
+        Person p = (Person) o;
+        return Objects.equals(id, p.id) &&
+                Objects.equals(firstName, p.firstName) &&
+                Objects.equals(lastName, p.lastName) &&
+                Objects.equals(email, p.email) &&
+                Objects.equals(workEmail, p.workEmail) &&
+                Objects.equals(mobilePhone, p.mobilePhone) &&
+                Objects.equals(workPhone, p.workPhone) &&
+                Objects.equals(employmentStartDate, p.employmentStartDate) &&
+                Objects.equals(contractType, p.contractType) &&
+                Objects.equals(contractEndDate, p.contractEndDate) &&
+                Objects.equals(workingDayId, p.workingDayId) &&
+                Objects.equals(accessType, p.accessType) &&
+                Objects.equals(birthday, p.birthday) &&
+                Objects.equals(bloodType, p.bloodType) &&
+                Objects.equals(educationalLevel, p.educationalLevel) &&
+                Objects.equals(educationStatus, p.educationStatus) &&
+                Objects.equals(educationalInstitution, p.educationalInstitution) &&
+                Objects.equals(gender, p.gender) &&
+                Objects.equals(idNumber, p.idNumber) &&
+                Objects.equals(levelOfDisability, p.levelOfDisability) &&
+                Objects.equals(maritalStatus, p.maritalStatus) &&
+                Objects.equals(partnerWorkStatus, p.partnerWorkStatus) &&
+                Objects.equals(militaryService, p.militaryService) &&
+                Objects.equals(militaryServiceDelayDate, p.militaryServiceDelayDate) &&
+                Objects.equals(nationality, p.nationality) &&
+                Objects.equals(numberOfChildren, p.numberOfChildren) &&
+                Objects.equals(tourStatus, p.tourStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "Person[" +
+                "id=" + id +
+                " firstName=" + firstName +
+                " lastName=" + lastName +
+                " email=" + email +
+                " workEmail=" + workEmail +
+                " mobilePhone=" + mobilePhone +
+                " workPhone=" + workPhone +
+                " employmentStartDate=" + employmentStartDate +
+                " contractType=" + contractType +
+                " contractEndDate=" + contractEndDate +
+                " workingDayId=" + workingDayId +
+                " accessType=" + accessType +
+                " birthday=" + birthday +
+                " bloodType=" + bloodType +
+                " educationalLevel=" + educationalLevel +
+                " educationStatus=" + educationStatus +
+                " educationalInstitution=" + educationalInstitution +
+                " gender=" + gender +
+                " idNumber=" + idNumber +
+                " levelOfDisability=" + levelOfDisability +
+                " maritalStatus=" + maritalStatus +
+                " partnerWorkStatus=" + partnerWorkStatus +
+                " militaryService=" + militaryService +
+                " militaryServiceDelayDate=" + militaryServiceDelayDate +
+                " nationality=" + nationality +
+                " numberOfChildren=" + numberOfChildren +
+                " tourStatus=" + tourStatus +
+                "]";
     }
 
     @Override
@@ -153,6 +166,14 @@ public class Person implements Record, Cloneable {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Person copy() {
+        try {
+            return (Person) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Person withId(Integer id) {
@@ -191,9 +212,9 @@ public class Person implements Record, Cloneable {
         return person;
     }
 
-    public Person withWorkPhone(String workEmail) {
+    public Person withWorkPhone(String workPhone) {
         Person person = copy();
-        person.workEmail = workEmail;
+        person.workPhone = workPhone;
         return person;
     }
 
@@ -315,13 +336,5 @@ public class Person implements Record, Cloneable {
         Person person = copy();
         person.tourStatus = tourStatus;
         return person;
-    }
-
-    private Person copy() {
-        try {
-            return (Person) clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

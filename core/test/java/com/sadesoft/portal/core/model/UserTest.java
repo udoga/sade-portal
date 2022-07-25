@@ -1,9 +1,18 @@
 package com.sadesoft.portal.core.model;
 
+import com.sadesoft.portal.core.sample.UserSamples;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
+    private User validUser;
+
+    @BeforeEach
+    public void setup() {
+        validUser = UserSamples.validUser;
+    }
+
     @Test
     public void initializesWithoutFields() {
         User user = new User();
@@ -13,21 +22,25 @@ public class UserTest {
     }
 
     @Test
-    public void initializesWithFields() {
-        User user = new User("username", "Full Name");
-        assertNull(user.id);
-        assertEquals("username", user.username);
-        assertEquals("Full Name", user.fullName);
+    public void printsFields() {
+        assertEquals("User[id=null" +
+                " username=username" +
+                " fullName=Full Name" +
+                "]", validUser.toString());
     }
 
     @Test
     public void clonesWithFields() {
-        User user = new User("username", "Full Name");
-        assertEquals(1, user.withId(1).id);
-        assertEquals("username", user.withId(1).username);
-        assertEquals("new_username", user.withUsername("new_username").username);
-        assertEquals("new full name", user.withFullName("new full name").fullName);
-        assertNull(user.withFullName("new full name").id);
-        assertNull(user.withFullName(null).fullName);
+        assertNull(validUser.withId(null).id);
+        assertNull(validUser.withUsername(null).username);
+        assertNull(validUser.withFullName(null).fullName);
+    }
+
+    @Test
+    public void checksEquality() {
+        assertEquals(UserSamples.validUser, validUser.copy());
+        assertNotEquals(UserSamples.validUser, validUser.withId(0));
+        assertNotEquals(UserSamples.validUser, validUser.withUsername(null));
+        assertNotEquals(UserSamples.validUser, validUser.withFullName(null));
     }
 }

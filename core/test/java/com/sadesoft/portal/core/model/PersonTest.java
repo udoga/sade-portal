@@ -2,24 +2,15 @@ package com.sadesoft.portal.core.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
+import com.sadesoft.portal.core.sample.PersonSamples;
 
 public class PersonTest {
-    Person validPerson;
+    private Person validPerson;
 
     @BeforeEach
     public void setup() {
-        validPerson = new Person(1, "firstName", "lastName", "sample@email.com",
-                "sample@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
-                ContractType.Definite , LocalDate.of(2023,1,1), "123", AccessType.Employee,
-                LocalDate.of(2000,1,1), BloodType.APositive,
-                EducationalLevel.Bachelor, EducationStatus.Student, "YTU",
-                Gender.Male, "12345678910", LevelOfDisability.NotDisabled,
-                MaritalStatus.Single, false, MilitaryService.Uncompleted,
-                LocalDate.of(2024,1,1), "TR", 0, TourStatus.Completed);
+        validPerson = PersonSamples.validPerson;
     }
 
     @Test
@@ -55,34 +46,35 @@ public class PersonTest {
     }
 
     @Test
-    public void initializesWithFields() {
-        assertEquals(1, validPerson.id);
-        assertEquals("firstName", validPerson.firstName);
-        assertEquals("lastName", validPerson.lastName);
-        assertEquals("sample@email.com", validPerson.email);
-        assertEquals("sample@workmail.com", validPerson.workEmail);
-        assertEquals("05555555555", validPerson.mobilePhone);
-        assertEquals("05355353535", validPerson.workPhone);
-        assertEquals(LocalDate.of(2022,1,1), validPerson.employmentStartDate);
-        assertEquals(ContractType.Definite, validPerson.contractType);
-        assertEquals(LocalDate.of(2023,1,1), validPerson.contractEndDate);
-        assertEquals("123", validPerson.workingDayId);
-        assertEquals(AccessType.Employee, validPerson.accessType);
-        assertEquals(LocalDate.of(2000,1,1), validPerson.birthday);
-        assertEquals(BloodType.APositive, validPerson.bloodType);
-        assertEquals(EducationalLevel.Bachelor, validPerson.educationalLevel);
-        assertEquals(EducationStatus.Student, validPerson.educationStatus);
-        assertEquals("YTU", validPerson.educationalInstitution);
-        assertEquals(Gender.Male, validPerson.gender);
-        assertEquals("12345678910", validPerson.idNumber);
-        assertEquals(LevelOfDisability.NotDisabled, validPerson.levelOfDisability);
-        assertEquals(MaritalStatus.Single, validPerson.maritalStatus);
-        assertEquals(false, validPerson.partnerWorkStatus);
-        assertEquals(MilitaryService.Uncompleted, validPerson.militaryService);
-        assertEquals(LocalDate.of(2024,1,1), validPerson.militaryServiceDelayDate);
-        assertEquals("TR", validPerson.nationality);
-        assertEquals(0, validPerson.numberOfChildren);
-        assertEquals(TourStatus.Completed, validPerson.tourStatus);
+    public void printsFields() {
+        assertEquals("Person[id=null" +
+                " firstName=firstName" +
+                " lastName=lastName" +
+                " email=sample@email.com" +
+                " workEmail=sample@workmail.com" +
+                " mobilePhone=05555555555" +
+                " workPhone=05355353535" +
+                " employmentStartDate=2022-01-01" +
+                " contractType=Definite" +
+                " contractEndDate=2023-01-01" +
+                " workingDayId=123" +
+                " accessType=Employee" +
+                " birthday=2000-01-01" +
+                " bloodType=APositive" +
+                " educationalLevel=Bachelor" +
+                " educationStatus=Student" +
+                " educationalInstitution=YTU" +
+                " gender=Male" +
+                " idNumber=12345678910" +
+                " levelOfDisability=NotDisabled" +
+                " maritalStatus=Single" +
+                " partnerWorkStatus=false" +
+                " militaryService=Uncompleted" +
+                " militaryServiceDelayDate=2024-01-01" +
+                " nationality=TR" +
+                " numberOfChildren=0" +
+                " tourStatus=Completed" +
+                "]", validPerson.toString());
     }
 
     @Test
@@ -93,7 +85,7 @@ public class PersonTest {
         assertNull(validPerson.withEmail(null).email);
         assertNull(validPerson.withWorkEmail(null).workEmail);
         assertNull(validPerson.withMobilePhone(null).mobilePhone);
-        assertNull(validPerson.withFirstName(null).firstName);
+        assertNull(validPerson.withWorkPhone(null).workPhone);
         assertNull(validPerson.withEmploymentStartDate(null).employmentStartDate);
         assertNull(validPerson.withContractType(null).contractType);
         assertNull(validPerson.withContractEndDate(null).contractEndDate);
@@ -114,5 +106,37 @@ public class PersonTest {
         assertNull(validPerson.withNationality(null).nationality);
         assertNull(validPerson.withNumberOfChildren(null).numberOfChildren);
         assertNull(validPerson.withTourStatus(null).tourStatus);
+    }
+
+    @Test
+    public void checksEquality() {
+        assertEquals(validPerson, validPerson.copy());
+        assertNotEquals(validPerson, validPerson.withId(0));
+        assertNotEquals(validPerson, validPerson.withFirstName(null));
+        assertNotEquals(validPerson, validPerson.withLastName(null));
+        assertNotEquals(validPerson, validPerson.withEmail(null));
+        assertNotEquals(validPerson, validPerson.withWorkEmail(null));
+        assertNotEquals(validPerson, validPerson.withMobilePhone(null));
+        assertNotEquals(validPerson, validPerson.withWorkPhone(null));
+        assertNotEquals(validPerson, validPerson.withEmploymentStartDate(null));
+        assertNotEquals(validPerson, validPerson.withContractType(null));
+        assertNotEquals(validPerson, validPerson.withContractEndDate(null));
+        assertNotEquals(validPerson, validPerson.withWorkingDayId(null));
+        assertNotEquals(validPerson, validPerson.withAccessType(null));
+        assertNotEquals(validPerson, validPerson.withBirthday(null));
+        assertNotEquals(validPerson, validPerson.withBloodType(null));
+        assertNotEquals(validPerson, validPerson.withEducationalLevel(null));
+        assertNotEquals(validPerson, validPerson.withEducationStatus(null));
+        assertNotEquals(validPerson, validPerson.withEducationalInstitution(null));
+        assertNotEquals(validPerson, validPerson.withGender(null));
+        assertNotEquals(validPerson, validPerson.withIdNumber(null));
+        assertNotEquals(validPerson, validPerson.withLevelOfDisability(null));
+        assertNotEquals(validPerson, validPerson.withMaritalStatus(null));
+        assertNotEquals(validPerson, validPerson.withPartnerWorkStatus(null));
+        assertNotEquals(validPerson, validPerson.withMilitaryService(null));
+        assertNotEquals(validPerson, validPerson.withMilitaryServiceDelayDate(null));
+        assertNotEquals(validPerson, validPerson.withNationality(null));
+        assertNotEquals(validPerson, validPerson.withNumberOfChildren(null));
+        assertNotEquals(validPerson, validPerson.withTourStatus(null));
     }
 }

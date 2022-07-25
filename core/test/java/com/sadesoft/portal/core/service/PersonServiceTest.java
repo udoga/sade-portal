@@ -1,156 +1,128 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.core.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.repo.ListRepo;
-import java.time.LocalDate;
+import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.sample.PersonSamples;
 
 public class PersonServiceTest {
-    ListRepo<Person> repo;
-    PersonService service;
-    Person validPerson;
+    private ListRepo<Person> repo;
+    private PersonService service;
+    private Person validPerson;
 
     @BeforeEach
     public void setup() {
         repo = new ListRepo<>("Person");
         service = new PersonService(repo);
-        validPerson = new Person(0, "firstName", "lastName", "sample@email.com",
-                "sample@workmail.com", "05555555555", "05355353535", LocalDate.of(2022,1,1),
-                ContractType.Definite , LocalDate.of(2023,1,1), "123", AccessType.Employee,
-                LocalDate.of(2000,1,1), BloodType.APositive,
-                EducationalLevel.Bachelor, EducationStatus.Student, "YTU",
-                Gender.Male, "12345678910", LevelOfDisability.NotDisabled,
-                MaritalStatus.Single, false, MilitaryService.Uncompleted,
-                LocalDate.of(2024,1,1), "TR", 0, TourStatus.Completed);
+        validPerson = PersonSamples.validPerson;
     }
 
     @Test
     public void createsPerson() {
         Person person = service.create(validPerson);
+        assertEquals(validPerson.withId(0), person);
         assertEquals(1, repo.list().size());
-        assertEquals(0, person.id);
-        assertEquals("firstName", person.firstName);
-        assertEquals("lastName", person.lastName);
-        assertEquals("sample@email.com", person.email);
-        assertEquals("sample@workmail.com", person.workEmail);
-        assertEquals("05555555555", person.mobilePhone);
-        assertEquals("05355353535", person.workPhone);
-        assertEquals(LocalDate.of(2022,1,1), person.employmentStartDate);
-        assertEquals(ContractType.Definite, person.contractType);
-        assertEquals(LocalDate.of(2023,1,1), person.contractEndDate);
-        assertEquals("123", person.workingDayId);
-        assertEquals(AccessType.Employee, person.accessType);
-        assertEquals(LocalDate.of(2000,1,1), person.birthday);
-        assertEquals(BloodType.APositive, person.bloodType);
-        assertEquals(EducationalLevel.Bachelor, person.educationalLevel);
-        assertEquals(EducationStatus.Student, person.educationStatus);
-        assertEquals("YTU", person.educationalInstitution);
-        assertEquals(Gender.Male, person.gender);
-        assertEquals("12345678910", person.idNumber);
-        assertEquals(LevelOfDisability.NotDisabled, person.levelOfDisability);
-        assertEquals(MaritalStatus.Single, person.maritalStatus);
-        assertEquals(false, person.partnerWorkStatus);
-        assertEquals(MilitaryService.Uncompleted, person.militaryService);
-        assertEquals(LocalDate.of(2024,1,1), person.militaryServiceDelayDate);
-        assertEquals("TR", person.nationality);
-        assertEquals(0, person.numberOfChildren);
-        assertEquals(TourStatus.Completed, person.tourStatus);
+        assertEquals(person, repo.read(0));
     }
 
     @Test
-    public void whenCreatesPerson_validatesAllFieldsExist() {
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withFirstName(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withLastName(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withEmail(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withWorkEmail(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withMobilePhone(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withWorkPhone(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withEmploymentStartDate(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withContractType(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withContractEndDate(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withWorkingDayId(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withAccessType(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withBirthday(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withBloodType(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withEducationalLevel(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withEducationStatus(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withEducationalInstitution(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withGender(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withIdNumber(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withLevelOfDisability(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withMaritalStatus(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withPartnerWorkStatus(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withMilitaryService(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withMilitaryServiceDelayDate(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withNationality(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withNumberOfChildren(null)));
-        assertThrows(MissingFieldError.class, () -> service.create(validPerson.withTourStatus(null)));
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validPerson.withFirstName(null));
+        assertMissingFieldOnCreate(validPerson.withLastName(null));
+        assertMissingFieldOnCreate(validPerson.withEmail(null));
+        assertMissingFieldOnCreate(validPerson.withWorkEmail(null));
+        assertMissingFieldOnCreate(validPerson.withMobilePhone(null));
+        assertMissingFieldOnCreate(validPerson.withWorkPhone(null));
+        assertMissingFieldOnCreate(validPerson.withEmploymentStartDate(null));
+        assertMissingFieldOnCreate(validPerson.withContractType(null));
+        assertMissingFieldOnCreate(validPerson.withContractEndDate(null));
+        assertMissingFieldOnCreate(validPerson.withWorkingDayId(null));
+        assertMissingFieldOnCreate(validPerson.withAccessType(null));
+        assertMissingFieldOnCreate(validPerson.withBirthday(null));
+        assertMissingFieldOnCreate(validPerson.withBloodType(null));
+        assertMissingFieldOnCreate(validPerson.withEducationalLevel(null));
+        assertMissingFieldOnCreate(validPerson.withEducationStatus(null));
+        assertMissingFieldOnCreate(validPerson.withEducationalInstitution(null));
+        assertMissingFieldOnCreate(validPerson.withGender(null));
+        assertMissingFieldOnCreate(validPerson.withIdNumber(null));
+        assertMissingFieldOnCreate(validPerson.withLevelOfDisability(null));
+        assertMissingFieldOnCreate(validPerson.withMaritalStatus(null));
+        assertMissingFieldOnCreate(validPerson.withPartnerWorkStatus(null));
+        assertMissingFieldOnCreate(validPerson.withMilitaryService(null));
+        assertMissingFieldOnCreate(validPerson.withMilitaryServiceDelayDate(null));
+        assertMissingFieldOnCreate(validPerson.withNationality(null));
+        assertMissingFieldOnCreate(validPerson.withNumberOfChildren(null));
+        assertMissingFieldOnCreate(validPerson.withTourStatus(null));
+    }
+
+    private void assertMissingFieldOnCreate(Person person) {
+        assertThrows(MissingFieldError.class, () -> service.create(person));
     }
 
     @Nested
     public class GivenServiceWithOnePerson {
         @BeforeEach
         public void setup() {
-            repo.create(validPerson);
+            service.create(validPerson);
         }
 
         @Test
-        public void listPeople() {
+        public void listsPeople() {
             assertEquals(1, service.list().size());
-            assertEquals("firstName", service.list().get(0).firstName);
-        }
-
-        @Test
-        public void readsPersonById() {
-            assertEquals("firstName", service.read(0).firstName);
+            assertEquals(validPerson.withId(0), service.list().get(0));
+            assertEquals(validPerson.withId(0), service.read(0));
         }
 
         @Test
         public void updatesPersonById() {
-            Person person = service.update(0, validPerson.withFirstName("updated").withLastName("updated"));
-            assertEquals("updated", person.firstName);
-            assertEquals("updated", repo.read(0).firstName);
+            Person person = service.update(0, validPerson.withFirstName("updated"));
+            assertEquals(validPerson.withId(0).withFirstName("updated"), person);
+            assertEquals(person, repo.read(0));
         }
 
         @Test
         public void deletesPersonById() {
             Person person = service.delete(0);
-            assertEquals(0, repo.list().size());
-            assertEquals(0, person.id);
+            assertEquals(validPerson.withId(0), person);
+            assertEquals(0, service.list().size());
         }
 
         @Test
-        public void whenUpdatesPersonWithoutNecessaryInformation_throwError(){
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withFirstName(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withLastName(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withEmail(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withWorkEmail(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withMobilePhone(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withWorkPhone(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withEmploymentStartDate(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withContractType(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withContractEndDate(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withWorkingDayId(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withAccessType(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withBirthday(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withBloodType(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withEducationalLevel(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withEducationStatus(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withEducationalInstitution(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withGender(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withIdNumber(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withLevelOfDisability(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withMaritalStatus(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withPartnerWorkStatus(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withMilitaryService(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withMilitaryServiceDelayDate(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withNationality(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withNumberOfChildren(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withTourStatus(null)));
+        public void whenHasMissingFieldOnUpdate_throwsError(){
+            assertMissingFieldOnUpdate(validPerson.withFirstName(null));
+            assertMissingFieldOnUpdate(validPerson.withLastName(null));
+            assertMissingFieldOnUpdate(validPerson.withEmail(null));
+            assertMissingFieldOnUpdate(validPerson.withWorkEmail(null));
+            assertMissingFieldOnUpdate(validPerson.withMobilePhone(null));
+            assertMissingFieldOnUpdate(validPerson.withWorkPhone(null));
+            assertMissingFieldOnUpdate(validPerson.withEmploymentStartDate(null));
+            assertMissingFieldOnUpdate(validPerson.withContractType(null));
+            assertMissingFieldOnUpdate(validPerson.withContractEndDate(null));
+            assertMissingFieldOnUpdate(validPerson.withWorkingDayId(null));
+            assertMissingFieldOnUpdate(validPerson.withAccessType(null));
+            assertMissingFieldOnUpdate(validPerson.withBirthday(null));
+            assertMissingFieldOnUpdate(validPerson.withBloodType(null));
+            assertMissingFieldOnUpdate(validPerson.withEducationalLevel(null));
+            assertMissingFieldOnUpdate(validPerson.withEducationStatus(null));
+            assertMissingFieldOnUpdate(validPerson.withEducationalInstitution(null));
+            assertMissingFieldOnUpdate(validPerson.withGender(null));
+            assertMissingFieldOnUpdate(validPerson.withIdNumber(null));
+            assertMissingFieldOnUpdate(validPerson.withLevelOfDisability(null));
+            assertMissingFieldOnUpdate(validPerson.withMaritalStatus(null));
+            assertMissingFieldOnUpdate(validPerson.withPartnerWorkStatus(null));
+            assertMissingFieldOnUpdate(validPerson.withMilitaryService(null));
+            assertMissingFieldOnUpdate(validPerson.withMilitaryServiceDelayDate(null));
+            assertMissingFieldOnUpdate(validPerson.withNationality(null));
+            assertMissingFieldOnUpdate(validPerson.withNumberOfChildren(null));
+            assertMissingFieldOnUpdate(validPerson.withTourStatus(null));
+        }
+
+        private void assertMissingFieldOnUpdate(Person person) {
+            assertThrows(MissingFieldError.class, () -> service.update(0, person));
         }
     }
 }
