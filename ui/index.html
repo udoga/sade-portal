@@ -15,6 +15,9 @@
     <script src="controller/person-form-controller.js"></script>
     <script src="controller/person-list-controller.js"></script>
     <script src="controller/person-page-controller.js"></script>
+    <script src="controller/receipt-form-controller.js"></script>
+    <script src="controller/receipt-list-controller.js"></script>
+    <script src="controller/receipt-page-controller.js"></script>
     <script src="controller/user-form-controller.js"></script>
     <script src="controller/user-list-controller.js"></script>
     <script src="controller/user-page-controller.js"></script>
@@ -32,6 +35,7 @@
     <nav ng-class="getNavigationClass()">
       <a ng-click="navigate('home')" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
       <a ng-click="navigate('people')" ng-class="getLinkClass('/people')"><i class="fas fa-person"></i>People</a>
+      <a ng-click="navigate('receipts')" ng-class="getLinkClass('/receipts')"><i class="fas fa-receipt"></i>Receipts</a>
       <a ng-click="navigate('users')" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
     </nav>
     <main ng-class="getMainClass()">

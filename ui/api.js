@@ -21,6 +21,26 @@ function Api($http) {
     return $http.delete(this.url + "/people/" + id);
   }
 
+  this.listReceipts = function() {
+    return $http.get(this.url + "/receipts");
+  };
+
+  this.createReceipt = function(receipt) {
+    return $http.post(this.url + "/receipts/", receipt);
+  }
+
+  this.readReceipt = function(id) {
+    return $http.get(this.url + "/receipts/" + id);
+  }
+
+  this.updateReceipt = function(id, receipt) {
+    return $http.put(this.url + "/receipts/" + id, receipt);
+  }
+
+  this.deleteReceipt = function(id) {
+    return $http.delete(this.url + "/receipts/" + id);
+  }
+
   this.listUsers = function() {
     return $http.get(this.url + "/users");
   };

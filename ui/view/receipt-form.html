@@ -1,0 +1,17 @@
+<div ng-controller="ReceiptFormController">
+  <h2>Receipt Form</h2>
+  <form>
+    <div class="field">
+      <label>Receipt Date</label>
+      <input type="text" placeholder="Date" ng-model="receipt.receiptDate"/>
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <input type="text" placeholder="Category" ng-model="receipt.category"/>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#!receipts">Back</a>
+      <a class="green form button" href ng-click="save()">Save</a>
+    </div>
+  </form>
+</div>
