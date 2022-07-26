@@ -45,7 +45,7 @@ CREATE TABLE users(
 
 INSERT INTO people VALUES
     (default, 'first', 'last', 'personal@email.com', 'work@email.com', '+905553553535', '+905553335533', '2022-01-01',
-    'Definite', '2022-01-01', '123', 'Employee', '2000-01-01', 'OPositive', 'Bachelor', 'Student', 'YTU', 'Male',
+    'Definite', '2022-01-01', '123', 'Employee', '2000-01-01', 'APositive', 'Bachelor', 'Student', 'YTU', 'Male',
     '11111111110', 'NotDisabled', 'Single', false, 'Uncompleted', '2024-01-01', 'TR', 0, 'Completed');
 
 INSERT INTO projects VALUES

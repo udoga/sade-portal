@@ -17,7 +17,7 @@ CREATE TYPE access_type AS ENUM (
 );
 
 CREATE TYPE blood_type AS ENUM (
-    'ANegative', 'APositive', 'OPositive', 'ONegative', 'ABNegative', 'ABPositive', 'BNegative', 'BPositive'
+    'ANegative', 'APositive', 'ZeroPositive', 'ZeroNegative', 'ABNegative', 'ABPositive', 'BNegative', 'BPositive'
 );
 
 CREATE TYPE contract_type AS ENUM (
