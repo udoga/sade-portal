@@ -38,7 +38,7 @@ CREATE TABLE projects(
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE receipt(
+CREATE TABLE receipts(
     id SERIAL PRIMARY KEY NOT NULL,
     receipt_date DATE NOT NULL,
     category VARCHAR(255) NOT NULL,
@@ -71,7 +71,7 @@ INSERT INTO projects VALUES
     (default,  'First Project'),
     (default, 'Second Project');
 
-INSERT INTO receipt VALUES
+INSERT INTO receipts VALUES
 --        id, receipt_date, receipt_category,    amount, vat_rate, description
     (default, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
 

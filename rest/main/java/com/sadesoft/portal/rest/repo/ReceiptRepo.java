@@ -13,7 +13,7 @@ import com.sadesoft.portal.core.model.*;
 
 public class ReceiptRepo extends JdbcRepo<Receipt>{
     public ReceiptRepo(Connection connection) {
-        super(connection, "people", List.of(
+        super(connection, "receipts", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("receipt_date"),
                 new JdbcColumn("category", "receipt_category"),
@@ -29,8 +29,8 @@ public class ReceiptRepo extends JdbcRepo<Receipt>{
                 s.getInt(getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
                 ReceiptCategory.valueOf(s.getString(getColumnName(i++))),
-                BigDecimal.valueOf(Long.parseLong(s.getString(i++))),
-                Short.valueOf(s.getString(i++)),
+                s.getBigDecimal(getColumnName(i++)),
+                s.getShort(getColumnName(i++)),
                 s.getString(getColumnName(i))
         );
     }

@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
-DROP TABLE IF EXISTS receipt CASCADE;
+DROP TABLE IF EXISTS receipts CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS access_type CASCADE;
 DROP TYPE IF EXISTS blood_type CASCADE;
@@ -94,7 +94,7 @@ CREATE TABLE projects(
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE receipt(
+CREATE TABLE receipts(
     id SERIAL PRIMARY KEY NOT NULL,
     receipt_date DATE NOT NULL,
     category receipt_category NOT NULL,
@@ -127,7 +127,7 @@ INSERT INTO projects VALUES
     (default,  'First Project'),
     (default, 'Second Project');
 
-INSERT INTO receipt VALUES
+INSERT INTO receipts VALUES
 --        id, receipt_date, receipt_category,    amount, vat_rate, description
     (default, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
 
