@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.AccessType;
@@ -20,49 +22,67 @@ import com.sadesoft.portal.core.model.TourStatus;
 
 public class PersonRepo extends JdbcRepo<Person>{
     public PersonRepo(Connection connection) {
-        super(connection, "people",
-                List.of("id", "first_name", "last_name", "email", "work_email", "mobile_phone",
-                "work_phone", "employment_start_date", "contract_type", "contract_end_date", "working_day_id",
-                "access_type", "birthday", "blood_type", "educational_level", "education_status",
-                "educational_institution", "gender", "id_number", "level_of_disability", "marital_status",
-                "partner_work_status", "military_service", "military_service_delay_date", "nationality",
-                "number_of_children", "tour_status"),
-                List.of("access_type", "blood_type", "contract_type",
-                "educational_level", "education_status", "gender", "level_of_disability", "marital_status",
-                "military_service", "tour_status"));
+        super(connection, "people", List.of(
+                new JdbcColumn("id"),
+                new JdbcColumn("first_name"),
+                new JdbcColumn("last_name"),
+                new JdbcColumn("email"),
+                new JdbcColumn("work_email"),
+                new JdbcColumn("mobile_phone"),
+                new JdbcColumn("work_phone"),
+                new JdbcColumn("employment_start_date"),
+                new JdbcColumn("contract_type", "contract_type"),
+                new JdbcColumn("contract_end_date"),
+                new JdbcColumn("working_day_id"),
+                new JdbcColumn("access_type", "access_type"),
+                new JdbcColumn("birthday"),
+                new JdbcColumn("blood_type", "blood_type"),
+                new JdbcColumn("educational_level", "educational_level"),
+                new JdbcColumn("education_status", "education_status"),
+                new JdbcColumn("educational_institution"),
+                new JdbcColumn("gender", "gender"),
+                new JdbcColumn("id_number"),
+                new JdbcColumn("level_of_disability", "level_of_disability"),
+                new JdbcColumn("marital_status", "marital_status"),
+                new JdbcColumn("partner_work_status"),
+                new JdbcColumn("military_service", "military_service"),
+                new JdbcColumn("military_service_delay_date"),
+                new JdbcColumn("nationality"),
+                new JdbcColumn("number_of_children"),
+                new JdbcColumn("tour_status", "tour_status")));
     }
 
     @Override
     public Person toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Person(
-                s.getInt(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                getLocalDate(s, columnNames.get(i++)),
-                ContractType.valueOf(s.getString(columnNames.get(i++))),
-                getLocalDate(s, columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                AccessType.valueOf(s.getString(columnNames.get(i++))),
-                getLocalDate(s, columnNames.get(i++)),
-                BloodType.valueOf(s.getString(columnNames.get(i++))),
-                EducationalLevel.valueOf(s.getString(columnNames.get(i++))),
-                EducationStatus.valueOf(s.getString(columnNames.get(i++))),
-                s.getString(columnNames.get(i++)),
-                Gender.valueOf(s.getString(columnNames.get(i++))),
-                s.getString(columnNames.get(i++)),
-                LevelOfDisability.valueOf(s.getString(columnNames.get(i++))),
-                MaritalStatus.valueOf(s.getString(columnNames.get(i++))),
-                s.getBoolean(columnNames.get(i++)),
-                MilitaryService.valueOf(s.getString(columnNames.get(i++))),
-                getLocalDate(s, columnNames.get(i++)),
-                s.getString(columnNames.get(i++)),
-                s.getInt(columnNames.get(i++)),
-                TourStatus.valueOf(s.getString(columnNames.get(i)))
+                s.getInt(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                getLocalDate(s, getColumnName(i++)),
+                ContractType.valueOf(s.getString(getColumnName(i++))),
+                getLocalDate(s, getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                AccessType.valueOf(s.getString(getColumnName(i++))),
+                getLocalDate(s, getColumnName(i++)),
+                BloodType.valueOf(s.getString(getColumnName(i++))),
+                EducationalLevel.valueOf(s.getString(getColumnName(i++))),
+                EducationStatus.valueOf(s.getString(getColumnName(i++))),
+                s.getString(getColumnName(i++)),
+                Gender.valueOf(s.getString(getColumnName(i++))),
+                s.getString(getColumnName(i++)),
+                LevelOfDisability.valueOf(s.getString(getColumnName(i++))),
+                MaritalStatus.valueOf(s.getString(getColumnName(i++))),
+                s.getBoolean(getColumnName(i++)),
+                MilitaryService.valueOf(s.getString(getColumnName(i++))),
+                getLocalDate(s, getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getInt(getColumnName(i++)),
+                TourStatus.valueOf(s.getString(getColumnName(i)))
         );
     }
 

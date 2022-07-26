@@ -24,9 +24,8 @@
 
 ## Todos
 
+- add: core: PersonService consistency validations
 - fix: rest: error when updating records without id
-- add: rest: PersonService validation (null checks and consistency)
-- ref: rest: remove null checks from PersonRepo and empty checks from Enums
 - add: rest: pagination, sorting, filtering
 - add: rest: api authentication with token
 - add: ui: login page

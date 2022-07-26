@@ -5,20 +5,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.Project;
 
 public class ProjectRepo extends JdbcRepo<Project> {
     public ProjectRepo(Connection connection) {
-        super(connection, "projects", List.of("id", "name"), List.of());
+        super(connection, "projects", List.of(
+                new JdbcColumn("id"),
+                new JdbcColumn("name")));
     }
 
     @Override
     public Project toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Project(
-                s.getInt(columnNames.get(i++)),
-                s.getString(columnNames.get(i)));
+                s.getInt(getColumnName(i++)),
+                s.getString(getColumnName(i)));
     }
 
     @Override

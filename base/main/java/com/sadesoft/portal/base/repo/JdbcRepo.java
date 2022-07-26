@@ -13,14 +13,12 @@ import com.sadesoft.portal.base.error.RecordNotFound;
 public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
     protected final String tableName;
-    protected final List<String> columnNames;
-    protected final List<String> enumColumns;
+    protected final List<JdbcColumn> columns;
 
-    public JdbcRepo(Connection connection, String tableName, List<String> columnNames, List<String> enumColumns) {
+    public JdbcRepo(Connection connection, String tableName, List<JdbcColumn> columns) {
         this.connection = connection;
         this.tableName = tableName;
-        this.columnNames = columnNames;
-        this.enumColumns = enumColumns;
+        this.columns = columns;
     }
 
     @Override
@@ -82,7 +80,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     private T command(String sql, T record, boolean fill) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql, columnNames.toArray(new String[0]));
+        PreparedStatement statement = connection.prepareStatement(sql, getColumnNames().toArray(new String[0]));
         if (fill) fillStatement(statement, record);
         statement.executeUpdate();
         return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
@@ -99,8 +97,18 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return users;
     }
 
+    private List<String> getColumnNames() {
+        List<String> result = new ArrayList<>();
+        for (JdbcColumn column: columns) result.add(column.name);
+        return result;
+    }
+
+    protected String getColumnName(int index) {
+        return columns.get(index).name;
+    }
+
     private String getIdName() {
-        return columnNames.get(0);
+        return getColumnName(0);
     }
 
     private String createSelectSql(String whereSql) {
@@ -122,13 +130,13 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     private String repeat(String template, boolean includeId) {
         String delimiter = ", ";
         StringBuilder result = new StringBuilder();
-        for (String name: columnNames.subList(includeId? 0 : 1, columnNames.size()))
-            result.append(String.format(template, name, getQuestionMark(name))).append(delimiter);
+        for (JdbcColumn column: columns.subList(includeId? 0 : 1, columns.size()))
+            result.append(String.format(template, column.name, getQuestionMark(column))).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
     }
 
-    private String getQuestionMark(String columnName) {
-        if (isPostgresql() && enumColumns.contains(columnName)) return "?::" + columnName;
+    private String getQuestionMark(JdbcColumn column) {
+        if (isPostgresql() && !column.type.isEmpty()) return "?::" + column.type;
         return "?";
     }
 
