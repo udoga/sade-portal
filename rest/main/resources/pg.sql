@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS receipt CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS access_type CASCADE;
 DROP TYPE IF EXISTS blood_type CASCADE;
@@ -11,6 +12,7 @@ DROP TYPE IF EXISTS level_of_disability CASCADE;
 DROP TYPE IF EXISTS marital_status CASCADE;
 DROP TYPE IF EXISTS military_service CASCADE;
 DROP TYPE IF EXISTS tour_status CASCADE;
+DROP TYPE IF EXISTS receipt_category CASCADE;
 
 CREATE TYPE access_type AS ENUM (
     'Employee', 'Manager', 'Owner'
@@ -52,6 +54,11 @@ CREATE TYPE tour_status AS ENUM (
     'Completed', 'Canceled', 'Active', 'Passive'
 );
 
+CREATE TYPE receipt_category AS ENUM (
+    'Food', 'Communication', 'Transportation', 'Stationery', 'Technology', 'Vehicle', 'Office', 'Accomodation',
+    'Notary', 'Cargo', 'Balancing', 'Other'
+);
+
 CREATE TABLE people(
     id SERIAL PRIMARY KEY NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -87,6 +94,15 @@ CREATE TABLE projects(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE receipt(
+    id SERIAL PRIMARY KEY NOT NULL,
+    receipt_date DATE NOT NULL,
+    category receipt_category NOT NULL,
+    amount DECIMAL NOT NULL,
+    vat_rate SMALLINT NOT NULL,
+    description TEXT NOT NULL
+);
+
 CREATE TABLE users(
     id SERIAL PRIMARY KEY NOT NULL,
     username VARCHAR(255) NOT NULL,
@@ -94,7 +110,7 @@ CREATE TABLE users(
 );
 
 INSERT INTO people VALUES
---   id     ,  first_name,  last_name,                       email,               work_email,    mobile_phone,      work_phone, employment_start_date, contract_type, contract_end_date, working_day_id,   access_type,     birthday,     blood_type, educational_level, education_status, educational_institution,   gender,     id_number, level_of_disability, marital_status, partner_work_status, military_service, military_service_delay_date, nationality, number_of_children, tour_status
+--        id,  first_name,  last_name,                       email,               work_email,    mobile_phone,      work_phone, employment_start_date, contract_type, contract_end_date, working_day_id,   access_type,     birthday,     blood_type, educational_level, education_status, educational_institution,   gender,     id_number, level_of_disability, marital_status, partner_work_status, military_service, military_service_delay_date, nationality, number_of_children, tour_status
     (default,     'Tarik',     'Mert',       'tarikmert@email.com',     'tmert@workmail.com', '+905553553530', '+905553335530',          '2022-01-01',    'Definite',      '2022-01-01',          '100',    'Employee', '2000-01-01',    'APositive',        'Bachelor',        'Student',                   'YTU',   'Male', '11111111101',       'NotDisabled',       'Single',               false,    'Uncompleted',                '2024-01-01',        'TR',                  0, 'Completed'),
     (default,      'John',    'Smith',       'johnsmith@email.com',    'jsmith@workmail.com', '+905553553531', '+905553335531',          '2009-02-03',    'Definite',      '2025-02-03',          '101',       'Owner', '1969-05-12',    'ANegative',          'Master',       'Graduate',                   'ITU',   'Male', '11111111110',       'NotDisabled',      'Married',                true,      'Completed',                '2024-01-01',        'US',                  2,  'Canceled'),
     (default,   'Stephen', 'Thompson', 'stephenthompson@email.com', 'sthompson@workmail.com', '+905553553532', '+905553335532',          '2010-03-04',    'Definite',      '2024-03-04',          '102',     'Manager', '1972-06-25',    'BPositive',       'Doctorate',       'Graduate',                  'METU',   'Male', '11111111121',        'FirstLevel',     'Divorced',               false,       'Deserter',                '2024-01-01',        'GB',                  1,   'Passive'),
@@ -107,11 +123,15 @@ INSERT INTO people VALUES
     (default,      'Jeff',     'Cena',        'jeffcena@email.com',     'jcena@workmail.com', '+905553553539', '+905553335539',          '2011-06-26',    'Definite',      '2023-06-26',          '109',    'Employee', '1995-08-18',    'BPositive',        'Bachelor',       'Graduate',                   'GTU',   'Male', '11111111198',       'NotDisabled',       'Single',               false,      'Completed',                '2024-01-01',        'US',                  1, 'Completed');
 
 INSERT INTO projects VALUES
---   id     ,             name
+--        id,             name
     (default,  'First Project'),
     (default, 'Second Project');
 
+INSERT INTO receipt VALUES
+--        id, receipt_date, receipt_category,    amount, vat_rate, description
+    (default, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
+
 INSERT INTO users VALUES
---   id     ,      username,     full_name
+--        id,      username,     full_name
     (default,  'first.user',  'First User'),
     (default, 'second.user', 'Second User');
