@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 
+import com.sadesoft.portal.base.error.InvalidNameError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
@@ -22,12 +23,12 @@ public class PersonService {
     }
 
     public Person create(Person person) {
-        validateFields(person);
+        validate(person);
         return repo.create(person);
     }
 
     public Person update(int id, Person person) {
-        validateFields(person);
+        validate(person);
         return repo.update(id, person);
     }
 
@@ -35,7 +36,7 @@ public class PersonService {
         return repo.delete(id);
     }
 
-    private void validateFields(Person person) {
+    private void validate(Person person) {
         validateExists(person.firstName, "firstName");
         validateExists(person.lastName, "lastName");
         validateExists(person.email, "email");
@@ -62,9 +63,17 @@ public class PersonService {
         validateExists(person.nationality, "nationality");
         validateExists(person.numberOfChildren, "numberOfChildren");
         validateExists(person.tourStatus, "tourStatus");
+        validateName(person.firstName, "firstName");
+        validateName(person.lastName, "lastName");
     }
 
     private void validateExists(Object fieldValue, String fieldName) {
         if (fieldValue == null) throw new MissingFieldError("Person", fieldName);
+    }
+
+    private void validateName(String fieldValue, String fieldName) {
+        for (int i = 0; i < fieldValue.length(); i++)
+            if (!Character.isLetter(fieldValue.charAt(i)))
+                throw new InvalidNameError(fieldName, fieldValue.charAt(i), i);
     }
 }

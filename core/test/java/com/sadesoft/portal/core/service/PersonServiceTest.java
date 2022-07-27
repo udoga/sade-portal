@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.InvalidNameError;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -121,8 +123,26 @@ public class PersonServiceTest {
             assertMissingFieldOnUpdate(validPerson.withTourStatus(null));
         }
 
+        @Test
+        public void whenFirstNameContainsNumber_throwsError() {
+            assertInvalidName(validPerson.withFirstName("1"), "firstName", 0, '1');
+            assertInvalidName(validPerson.withFirstName("2"), "firstName", 0, '2');
+            assertInvalidName(validPerson.withFirstName("first1Name"), "firstName", 5, '1');
+            assertInvalidName(validPerson.withFirstName("'"), "firstName", 0, '\'');
+        }
+
+        @Test
+        public void whenLastNameContainsNumber_throwsError() {
+            assertInvalidName(validPerson.withLastName("1"), "lastName", 0, '1');
+        }
+
         private void assertMissingFieldOnUpdate(Person person) {
             assertThrows(MissingFieldError.class, () -> service.update(0, person));
+        }
+
+        private void assertInvalidName(Person person, String fieldName, int index, char c) {
+            var error = assertThrows(InvalidNameError.class, () -> service.create(person));
+            assertEquals(fieldName + " has invalid char '" + c + "' at index: " + index + ".", error.getMessage());
         }
     }
 }
