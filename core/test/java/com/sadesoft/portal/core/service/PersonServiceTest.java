@@ -1,8 +1,8 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidNameError;
+import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.InvalidCharacterError;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -124,6 +124,16 @@ public class PersonServiceTest {
         }
 
         @Test
+        public void whenFirstNameIsEmpty_throwsError() {
+            assertEmptyField(validPerson.withFirstName(""), "firstName");
+        }
+
+        @Test
+        public void whenLastNameIsEmpty_throwsError() {
+            assertEmptyField(validPerson.withLastName(""), "lastName");
+        }
+
+        @Test
         public void whenFirstNameContainsNumber_throwsError() {
             assertInvalidName(validPerson.withFirstName("1"), "firstName", 0, '1');
             assertInvalidName(validPerson.withFirstName("2"), "firstName", 0, '2');
@@ -140,8 +150,13 @@ public class PersonServiceTest {
             assertThrows(MissingFieldError.class, () -> service.update(0, person));
         }
 
+        private void assertEmptyField(Person person, String fieldName) {
+            var error = assertThrows(EmptyFieldError.class, () -> service.create(person));
+            assertEquals("Person '" + fieldName + "' field is empty.", error.getMessage());
+        }
+
         private void assertInvalidName(Person person, String fieldName, int index, char c) {
-            var error = assertThrows(InvalidNameError.class, () -> service.create(person));
+            var error = assertThrows(InvalidCharacterError.class, () -> service.create(person));
             assertEquals(fieldName + " has invalid char '" + c + "' at index: " + index + ".", error.getMessage());
         }
     }

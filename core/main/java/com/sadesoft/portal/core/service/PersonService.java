@@ -2,7 +2,8 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 
-import com.sadesoft.portal.base.error.InvalidNameError;
+import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.InvalidCharacterError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
@@ -63,17 +64,23 @@ public class PersonService {
         validateExists(person.nationality, "nationality");
         validateExists(person.numberOfChildren, "numberOfChildren");
         validateExists(person.tourStatus, "tourStatus");
-        validateName(person.firstName, "firstName");
-        validateName(person.lastName, "lastName");
+        validateCharacters(person.firstName, "firstName");
+        validateCharacters(person.lastName, "lastName");
+        validateFilled(person.firstName, "firstName");
+        validateFilled(person.lastName, "lastName");
     }
 
     private void validateExists(Object fieldValue, String fieldName) {
         if (fieldValue == null) throw new MissingFieldError("Person", fieldName);
     }
 
-    private void validateName(String fieldValue, String fieldName) {
+    private void validateFilled(String fieldValue, String fieldName) {
+        if (fieldValue.equals("")) throw new EmptyFieldError("Person", fieldName);
+    }
+
+    private void validateCharacters(String fieldValue, String fieldName) {
         for (int i = 0; i < fieldValue.length(); i++)
             if (!Character.isLetter(fieldValue.charAt(i)))
-                throw new InvalidNameError(fieldName, fieldValue.charAt(i), i);
+                throw new InvalidCharacterError(fieldName, fieldValue.charAt(i), i);
     }
 }
