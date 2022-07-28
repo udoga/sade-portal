@@ -5,14 +5,20 @@
       <th class="narrow">Id</th>
       <th>Receipt Date</th>
       <th>Category</th>
+      <th>Amount</th>
+      <th>Vat Rate</th>
+      <th>Description</th>
       <th class="narrow last">
         <a class="green header icon button" ng-href="#!receipts/new"><i class="fas fa-plus"></i>New</a>
       </th>
     </tr>
     <tr ng-repeat="receipt in receipts">
       <td class="narrow">{{receipt.id}}</td>
-      <td>{{receipt.receiptDate}}</td>
-      <td>{{receipt.category}}</td>
+      <td>{{ receipt.receiptDate }}</td>
+      <td>{{ receipt.category }}</td>
+      <td>{{ receipt.amount }}</td>
+      <td>{{ receipt.vatRate }}</td>
+      <td>{{ receipt.description }}</td>
       <td class="narrow last">
         <a title="Show" class="light-blue row button" ng-href="#!receipts/{{receipt.id}}">
           <i class="far fa-eye"></i>

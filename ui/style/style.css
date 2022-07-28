@@ -169,8 +169,11 @@ th.last, td.last {
 }
 
 .field label {
-  display: block;
   font-weight: bold;
+}
+
+form .field label {
+  display: block;
   margin-bottom: 6px;
 }
 

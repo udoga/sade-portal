@@ -1,15 +1,27 @@
 <div ng-controller="ReceiptPageController">
   <h2>Receipt</h2>
-  <div>
+  <div class="field">
     <label>Id:</label>
     <span>{{ receipt.id }}</span>
   </div>
-  <div>
+  <div class="field">
     <label>Receipt Date:</label>
     <span>{{ receipt.receiptDate }}</span>
   </div>
-  <div>
+  <div class="field">
     <label>Category:</label>
     <span>{{ receipt.category }}</span>
+  </div>
+  <div class="field">
+    <label>Amount:</label>
+    <span>{{ receipt.amount }}</span>
+  </div>
+  <div class="field">
+    <label>Vat Rate:</label>
+    <span>{{ receipt.vatRate }}</span>
+  </div>
+  <div class="field">
+    <label>Description:</label>
+    <span>{{ receipt.description }}</span>
   </div>
 </div>
