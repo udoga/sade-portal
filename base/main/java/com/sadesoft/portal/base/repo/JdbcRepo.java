@@ -66,6 +66,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     private <V> V call(Callable<V> callable) {
         try { return callable.call(); }
+        catch (RuntimeException e) { throw e; }
         catch (Exception e) { throw new RuntimeException(e); }
     }
 

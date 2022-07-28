@@ -5,23 +5,27 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.base.error.ClientError;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
 import com.sadesoft.portal.base.error.RecordNotFoundError;
 import com.sadesoft.portal.base.config.ServerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RestServer {
     private final ServerConfig config;
     private final List<RestController> controllers;
     private final Javalin server;
+    private final Logger logger;
 
     public RestServer(ServerConfig config, List<RestController> controllers) {
         this.config = config;
         this.controllers = controllers;
         this.server = Javalin.create();
+        this.logger = LoggerFactory.getLogger(RestServer.class);
         configure();
     }
 
@@ -55,13 +59,14 @@ public class RestServer {
     }
 
     private void configureErrors() {
-        server.exception(MissingFieldError.class, (e, c) -> handle(c, e, 400));
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
+        server.exception(ClientError.class, (e, c) -> handle(c, e, 400));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
     }
 
     private void handle(Context c, Exception e, int status) {
         if (status >= 500) e.printStackTrace();
+        else logger.info(e.getClass().getSimpleName() + ": " + e.getMessage());
         c.status(status);
         c.json(Map.of("status", status, "type", e.getClass().getSimpleName(), "message", e.getMessage()));
     }

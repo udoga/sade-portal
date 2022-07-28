@@ -1,6 +1,6 @@
 package com.sadesoft.portal.base.error;
 
-public class CopiedFieldError extends RuntimeException{
+public class CopiedFieldError extends ClientError {
     public CopiedFieldError(String field1, String field2) {
         super("Fields '" + field1 + "' and '" + field2 + "' should not be the same.");
     }
