@@ -38,10 +38,10 @@ public class PersonService {
     private void check(Person person) {
         checkMissingFields(person);
         checkEmptyFields(person);
-        checkInvalidCharacter(person);
-        checkInvalidEmail(person);
-        checkInvalidPhone(person);
-        checkCopiedFields("email", "workEmail", person.email, person.workEmail);
+        checkInvalidCharacters(person);
+        checkInvalidEmails(person);
+        checkInvalidPhones(person);
+        checkCopiedField(person.email, person.workEmail, "email", "workEmail");
     }
 
     private void checkMissingFields(Person person) {
@@ -77,45 +77,45 @@ public class PersonService {
         checkEmptyField(person.lastName, "lastName");
     }
 
-    private void checkInvalidCharacter(Person person) {
+    private void checkInvalidCharacters(Person person) {
         checkInvalidCharacter(person.firstName, "firstName");
         checkInvalidCharacter(person.lastName, "lastName");
     }
 
-    private void checkInvalidEmail(Person person) {
+    private void checkInvalidEmails(Person person) {
         checkInvalidEmail(person.email, "email");
         checkInvalidEmail(person.workEmail, "workEmail");
     }
 
-    private void checkInvalidPhone(Person person) {
+    private void checkInvalidPhones(Person person) {
         checkInvalidPhone(person.mobilePhone, "mobilePhone");
         checkInvalidPhone(person.workPhone, "workPhone");
     }
 
-    private void checkMissingField(Object fieldValue, String fieldName) {
-        if (fieldValue == null) throw new MissingFieldError("Person", fieldName);
+    private void checkMissingField(Object value, String field) {
+        if (value == null) throw new MissingFieldError(field);
     }
 
-    private void checkEmptyField(String fieldValue, String fieldName) {
-        if (fieldValue.equals("")) throw new EmptyFieldError("Person", fieldName);
+    private void checkEmptyField(String value, String field) {
+        if (value.isEmpty()) throw new EmptyFieldError(field);
     }
 
-    private void checkInvalidCharacter(String fieldValue, String fieldName) {
-        for (int i = 0; i < fieldValue.length(); i++)
-            if (!Character.isLetter(fieldValue.charAt(i)))
-                throw new InvalidCharacterError(fieldName, fieldValue.charAt(i), i);
+    private void checkInvalidCharacter(String value, String field) {
+        for (int i = 0; i < value.length(); i++)
+            if (!Character.isLetter(value.charAt(i)))
+                throw new InvalidCharacterError(field, value.charAt(i), i);
     }
 
-    private void checkInvalidEmail(String fieldValue, String fieldName) {
-        if (!fieldValue.matches("^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+$"))
-            throw new InvalidEmailError(fieldValue, fieldName);
+    private void checkInvalidEmail(String value, String field) {
+        if (!value.matches("^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+$"))
+            throw new InvalidEmailError(value, field);
     }
 
-    private void checkCopiedFields(String field1, String field2, String value1, String value2) {
+    private void checkInvalidPhone(String value, String field) {
+        if (!value.matches("^\\+\\d+ \\d+$")) throw new InvalidPhoneError(value, field);
+    }
+
+    private void checkCopiedField(String value1, String value2, String field1, String field2) {
         if (value1.equals(value2)) throw new CopiedFieldError(field1, field2);
-    }
-
-    private void checkInvalidPhone(String fieldValue, String fieldName) {
-        if (!fieldValue.matches("^\\+\\d+ \\d+$")) throw new InvalidPhoneError(fieldValue, fieldName);
     }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import com.sadesoft.portal.base.error.RecordNotFound;
+import com.sadesoft.portal.base.error.RecordNotFoundError;
 
 public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
@@ -85,7 +85,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     private T getFirst(List<T> objects, Integer id) {
-        if (objects.isEmpty()) throw new RecordNotFound(tableName, id);
+        if (objects.isEmpty()) throw new RecordNotFoundError(tableName, id);
         return objects.get(0);
     }
 

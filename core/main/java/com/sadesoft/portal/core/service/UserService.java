@@ -40,7 +40,7 @@ public class UserService {
         checkMissingField(user.fullName, "fullName");
     }
 
-    private void checkMissingField(String fieldValue, String fieldName) {
-        if (fieldValue == null || fieldValue.isEmpty()) throw new MissingFieldError("User", fieldName);
+    private void checkMissingField(String value, String field) {
+        if (value == null) throw new MissingFieldError(field);
     }
 }

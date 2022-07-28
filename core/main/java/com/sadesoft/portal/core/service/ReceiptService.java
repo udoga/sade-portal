@@ -42,7 +42,7 @@ public class ReceiptService {
         checkMissingField(receipt.description, "description");
     }
 
-    private void checkMissingField(Object fieldValue, String fieldName) {
-        if (fieldValue == null) throw new MissingFieldError("Receipt", fieldName);
+    private void checkMissingField(Object value, String field) {
+        if (value == null) throw new MissingFieldError(field);
     }
 }

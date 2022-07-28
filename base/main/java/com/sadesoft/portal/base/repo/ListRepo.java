@@ -2,7 +2,7 @@ package com.sadesoft.portal.base.repo;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.sadesoft.portal.base.error.RecordNotFound;
+import com.sadesoft.portal.base.error.RecordNotFoundError;
 
 public class ListRepo<T extends Record> implements Repo<T> {
     public final String tableName;
@@ -49,6 +49,6 @@ public class ListRepo<T extends Record> implements Repo<T> {
 
     private int findIndex(int id) {
         for (int i = 0; i < records.size(); i++) if (records.get(i).getId() == id) return i;
-        throw new RecordNotFound(tableName, id);
+        throw new RecordNotFoundError(tableName, id);
     }
 }

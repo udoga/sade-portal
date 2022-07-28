@@ -14,7 +14,7 @@ public class PersonServiceTest {
     private PersonService service;
     private Person validPerson;
 
-    private void assetValid(Person person) {
+    private void assertValid(Person person) {
         assertDoesNotThrow(() -> service.create(person));
     }
 
@@ -22,14 +22,14 @@ public class PersonServiceTest {
         assertThrows(MissingFieldError.class, () -> service.create(person));
     }
 
-    private void assertEmptyField(Person person, String fieldName) {
+    private void assertEmptyField(Person person, String field) {
         EmptyFieldError e = assertThrows(EmptyFieldError.class, () -> service.create(person));
-        assertEquals("Person '" + fieldName + "' field is empty.", e.getMessage());
+        assertEquals("Field '" + field + "' should not be empty.", e.getMessage());
     }
 
-    private void assertInvalidName(Person person, String fieldName, int index, char c) {
+    private void assertInvalidCharacter(Person person, String field, int index, char c) {
         InvalidCharacterError e = assertThrows(InvalidCharacterError.class, () -> service.create(person));
-        assertEquals(fieldName + " has invalid char '" + c + "' at index: " + index + ".", e.getMessage());
+        assertEquals("Field '" + field + "' has invalid char '" + c + "' at index: " + index + ".", e.getMessage());
     }
 
     private void assertInvalidEmail(Person person) {
@@ -82,7 +82,7 @@ public class PersonServiceTest {
         assertMissingField(validPerson.withWorkPhone(null));
         assertMissingField(validPerson.withEmploymentStartDate(null));
         assertMissingField(validPerson.withContractType(null));
-        assetValid(validPerson.withContractEndDate(null));
+        assertValid(validPerson.withContractEndDate(null));
         assertMissingField(validPerson.withWorkingDayId(null));
         assertMissingField(validPerson.withAccessType(null));
         assertMissingField(validPerson.withBirthday(null));
@@ -114,15 +114,15 @@ public class PersonServiceTest {
 
     @Test
     public void whenFirstNameContainsNumber_throwsError() {
-        assertInvalidName(validPerson.withFirstName("1"), "firstName", 0, '1');
-        assertInvalidName(validPerson.withFirstName("2"), "firstName", 0, '2');
-        assertInvalidName(validPerson.withFirstName("first1Name"), "firstName", 5, '1');
-        assertInvalidName(validPerson.withFirstName("'"), "firstName", 0, '\'');
+        assertInvalidCharacter(validPerson.withFirstName("1"), "firstName", 0, '1');
+        assertInvalidCharacter(validPerson.withFirstName("2"), "firstName", 0, '2');
+        assertInvalidCharacter(validPerson.withFirstName("first1Name"), "firstName", 5, '1');
+        assertInvalidCharacter(validPerson.withFirstName("'"), "firstName", 0, '\'');
     }
 
     @Test
     public void whenLastNameContainsNumber_throwsError() {
-        assertInvalidName(validPerson.withLastName("1"), "lastName", 0, '1');
+        assertInvalidCharacter(validPerson.withLastName("1"), "lastName", 0, '1');
     }
 
     @Test

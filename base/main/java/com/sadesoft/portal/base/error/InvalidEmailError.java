@@ -1,7 +1,7 @@
 package com.sadesoft.portal.base.error;
 
 public class InvalidEmailError extends RuntimeException{
-    public InvalidEmailError(String email, String fieldName) {
-        super("Invalid email '" + email + "' in field '" + fieldName + "'.");
+    public InvalidEmailError(String value, String field) {
+        super("Invalid email '" + value + "' in field '" + field + "'.");
     }
 }
