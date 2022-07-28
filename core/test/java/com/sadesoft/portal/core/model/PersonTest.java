@@ -52,8 +52,8 @@ public class PersonTest {
                 " lastName=lastName" +
                 " email=sample@email.com" +
                 " workEmail=sample@workmail.com" +
-                " mobilePhone=05555555555" +
-                " workPhone=05355353535" +
+                " mobilePhone=+90 5555555555" +
+                " workPhone=+90 5355353535" +
                 " employmentStartDate=2022-01-01" +
                 " contractType=Definite" +
                 " contractEndDate=2023-01-01" +

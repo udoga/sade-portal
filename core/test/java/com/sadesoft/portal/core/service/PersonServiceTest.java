@@ -1,14 +1,11 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.EmptyFieldError;
-import com.sadesoft.portal.base.error.InvalidCharacterError;
-import com.sadesoft.portal.base.error.InvalidEmailError;
+import com.sadesoft.portal.base.error.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.repo.ListRepo;
-import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.sample.PersonSamples;
 
@@ -161,6 +158,16 @@ public class PersonServiceTest {
             assertInvalidWorkEmail(validPerson.withWorkEmail("a"));
         }
 
+        @Test
+        public void whenPhoneNumberIsInvalid_throwsError() {
+            assertInvalidMobilePhone(validPerson.withMobilePhone("a"));
+        }
+
+        @Test
+        public void whenWorkNumberIsInvalid_throwsError() {
+            assertInvalidWorkPhone(validPerson.withWorkPhone("a"));
+        }
+
         private void assertMissingFieldOnUpdate(Person person) {
             assertThrows(MissingFieldError.class, () -> service.update(0, person));
         }
@@ -183,6 +190,16 @@ public class PersonServiceTest {
         private void assertInvalidWorkEmail(Person person) {
             var error = assertThrows(InvalidEmailError.class, () -> service.create(person));
             assertEquals("Invalid email '" + person.workEmail + "' in field 'workEmail'.", error.getMessage());
+        }
+
+        private void assertInvalidMobilePhone(Person person) {
+            var error = assertThrows(InvalidPhoneError.class, () -> service.create(person));
+            assertEquals("Invalid phone number '" + person.mobilePhone + "' in field 'mobilePhone'.", error.getMessage());
+        }
+
+        private void assertInvalidWorkPhone(Person person) {
+            var error = assertThrows(InvalidPhoneError.class, () -> service.create(person));
+            assertEquals("Invalid phone number '" + person.workPhone + "' in field 'workPhone'.", error.getMessage());
         }
     }
 }

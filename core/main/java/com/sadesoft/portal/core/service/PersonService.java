@@ -2,10 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 
-import com.sadesoft.portal.base.error.EmptyFieldError;
-import com.sadesoft.portal.base.error.InvalidCharacterError;
-import com.sadesoft.portal.base.error.InvalidEmailError;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.base.error.*;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
 
@@ -43,6 +40,7 @@ public class PersonService {
         checkEmptyFields(person);
         checkInvalidCharacter(person);
         checkInvalidEmail(person);
+        checkInvalidPhone(person);
     }
 
     private void checkMissingFields(Person person) {
@@ -89,6 +87,11 @@ public class PersonService {
         checkInvalidEmail(person.workEmail, "workEmail");
     }
 
+    private void checkInvalidPhone(Person person) {
+        checkInvalidPhone(person.mobilePhone, "mobilePhone");
+        checkInvalidPhone(person.workPhone, "workPhone");
+    }
+
     private void checkMissingField(Object fieldValue, String fieldName) {
         if (fieldValue == null) throw new MissingFieldError("Person", fieldName);
     }
@@ -106,5 +109,10 @@ public class PersonService {
     private void checkInvalidEmail(String fieldValue, String fieldName) {
         if (!fieldValue.matches("^[a-zA-Z\\d+_.-]+@[a-zA-Z\\d.-]+$"))
             throw new InvalidEmailError(fieldValue, fieldName);
+    }
+
+    private void checkInvalidPhone(String fieldValue, String fieldName) {
+        if (!fieldValue.matches("^\\+\\d+ \\d+$"))
+            throw new InvalidPhoneError(fieldValue, fieldName);
     }
 }
