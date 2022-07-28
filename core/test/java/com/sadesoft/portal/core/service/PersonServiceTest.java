@@ -38,6 +38,11 @@ public class PersonServiceTest {
         assertEquals("Invalid email '" + person.workEmail + "' in field 'workEmail'.", e.getMessage());
     }
 
+    private void assertCopiedField(Person person) {
+        CopiedFieldError e = assertThrows(CopiedFieldError.class, () -> service.create(person));
+        assertEquals("Fields '" + person.email + "' and '" + person.workEmail + "' should not be the same.", e.getMessage());
+    }
+
     private void assertInvalidMobilePhone(Person person) {
         InvalidPhoneError e = assertThrows(InvalidPhoneError.class, () -> service.create(person));
         assertEquals("Invalid phone number '" + person.mobilePhone + "' in field 'mobilePhone'.", e.getMessage());
@@ -131,8 +136,17 @@ public class PersonServiceTest {
     }
 
     @Test
+    public void whenEmailAndWorkEmailAreTheSame_throwsError() {
+        assertCopiedField(validPerson.withWorkEmail(validPerson.email));
+    }
+
+    @Test
     public void whenPhoneNumberIsInvalid_throwsError() {
         assertInvalidMobilePhone(validPerson.withMobilePhone("a"));
+        assertInvalidEmail(validPerson.withEmail("x"));
+        assertInvalidEmail(validPerson.withEmail("+9055555555555"));
+        assertInvalidEmail(validPerson.withEmail("+90 "));
+        assertInvalidEmail(validPerson.withEmail("90 5555555555"));
     }
 
     @Test

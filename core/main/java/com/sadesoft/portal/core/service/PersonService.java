@@ -85,6 +85,7 @@ public class PersonService {
     private void checkInvalidEmail(Person person) {
         checkInvalidEmail(person.email, "email");
         checkInvalidEmail(person.workEmail, "workEmail");
+        checkCopiedMail(person.email, person.workEmail);
     }
 
     private void checkInvalidPhone(Person person) {
@@ -111,8 +112,11 @@ public class PersonService {
             throw new InvalidEmailError(fieldValue, fieldName);
     }
 
+    private void checkCopiedMail(String email, String workEmail) {
+        if(email.equals(workEmail)) throw new CopiedFieldError(email, workEmail);
+    }
+
     private void checkInvalidPhone(String fieldValue, String fieldName) {
-        if (!fieldValue.matches("^\\+\\d+ \\d+$"))
-            throw new InvalidPhoneError(fieldValue, fieldName);
+        if (!fieldValue.matches("^\\+\\d+ \\d+$")) throw new InvalidPhoneError(fieldValue, fieldName);
     }
 }
