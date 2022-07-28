@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.InvalidCharacterError;
+import com.sadesoft.portal.base.error.InvalidEmailError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -146,6 +147,20 @@ public class PersonServiceTest {
             assertInvalidName(validPerson.withLastName("1"), "lastName", 0, '1');
         }
 
+        @Test
+        public void whenEmailIsInvalid_throwsError() {
+            assertInvalidEmail(validPerson.withEmail("s"));
+            assertInvalidEmail(validPerson.withEmail("x"));
+            assertInvalidEmail(validPerson.withEmail("ab"));
+            assertInvalidEmail(validPerson.withEmail("@"));
+            assertInvalidEmail(validPerson.withEmail("a@"));
+        }
+
+        @Test
+        public void whenWorkEmailIsInvalid_throwsError() {
+            assertInvalidWorkEmail(validPerson.withWorkEmail("a"));
+        }
+
         private void assertMissingFieldOnUpdate(Person person) {
             assertThrows(MissingFieldError.class, () -> service.update(0, person));
         }
@@ -158,6 +173,16 @@ public class PersonServiceTest {
         private void assertInvalidName(Person person, String fieldName, int index, char c) {
             var error = assertThrows(InvalidCharacterError.class, () -> service.create(person));
             assertEquals(fieldName + " has invalid char '" + c + "' at index: " + index + ".", error.getMessage());
+        }
+
+        private void assertInvalidEmail(Person person) {
+            var error = assertThrows(InvalidEmailError.class, () -> service.create(person));
+            assertEquals("Invalid email '" + person.email + "' in field 'email'.", error.getMessage());
+        }
+
+        private void assertInvalidWorkEmail(Person person) {
+            var error = assertThrows(InvalidEmailError.class, () -> service.create(person));
+            assertEquals("Invalid email '" + person.workEmail + "' in field 'workEmail'.", error.getMessage());
         }
     }
 }

@@ -22,12 +22,12 @@ public class UserService {
     }
 
     public User create(User user) {
-        validateFields(user);
+        check(user);
         return repo.create(user);
     }
 
     public User update(int id, User user) {
-        validateFields(user);
+        check(user);
         return repo.update(id, user);
     }
 
@@ -35,12 +35,12 @@ public class UserService {
         return repo.delete(id);
     }
 
-    private void validateFields(User user) {
-        validateExists(user.username, "username");
-        validateExists(user.fullName, "fullName");
+    private void check(User user) {
+        checkMissingField(user.username, "username");
+        checkMissingField(user.fullName, "fullName");
     }
 
-    private void validateExists(String fieldValue, String fieldName) {
+    private void checkMissingField(String fieldValue, String fieldName) {
         if (fieldValue == null || fieldValue.isEmpty()) throw new MissingFieldError("User", fieldName);
     }
 }
