@@ -88,7 +88,7 @@ public class PersonService {
 
     private void checkInvalidPhones(Person person) {
         checkInvalidPhone(person.mobilePhone, "mobilePhone");
-        checkInvalidPhone(person.workPhone, "workPhone");
+        if (!person.workPhone.isEmpty()) checkInvalidPhone(person.workPhone, "workPhone");
     }
 
     private void checkMissingField(Object value, String field) {

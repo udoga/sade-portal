@@ -146,15 +146,17 @@ public class PersonServiceTest {
     @Test
     public void whenPhoneNumberIsInvalid_throwsError() {
         assertInvalidMobilePhone(validPerson.withMobilePhone("a"));
-        assertInvalidEmail(validPerson.withEmail("x"));
-        assertInvalidEmail(validPerson.withEmail("+9055555555555"));
-        assertInvalidEmail(validPerson.withEmail("+90 "));
-        assertInvalidEmail(validPerson.withEmail("90 5555555555"));
+        assertInvalidMobilePhone(validPerson.withMobilePhone("x"));
+        assertInvalidMobilePhone(validPerson.withMobilePhone("+9055555555555"));
+        assertInvalidMobilePhone(validPerson.withMobilePhone("+90 "));
+        assertInvalidMobilePhone(validPerson.withMobilePhone("90 5555555555"));
+        assertInvalidMobilePhone(validPerson.withMobilePhone(""));
     }
 
     @Test
     public void whenWorkNumberIsInvalid_throwsError() {
         assertInvalidWorkPhone(validPerson.withWorkPhone("a"));
+        assertValid(validPerson.withWorkPhone(""));
     }
 
     @Nested
