@@ -13,7 +13,6 @@ public class PersonSamples {
             "+90 5555555555",
             "+90 5355353535",
             LocalDate.of(2022, 1, 1),
-            ContractType.Definite,
             LocalDate.of(2023, 1, 1),
             "123",
             AccessType.Employee,

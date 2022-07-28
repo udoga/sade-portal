@@ -11,7 +11,6 @@ import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.AccessType;
 import com.sadesoft.portal.core.model.BloodType;
-import com.sadesoft.portal.core.model.ContractType;
 import com.sadesoft.portal.core.model.EducationalLevel;
 import com.sadesoft.portal.core.model.EducationStatus;
 import com.sadesoft.portal.core.model.Gender;
@@ -31,7 +30,6 @@ public class PersonRepo extends JdbcRepo<Person>{
                 new JdbcColumn("mobile_phone"),
                 new JdbcColumn("work_phone"),
                 new JdbcColumn("employment_start_date"),
-                new JdbcColumn("contract_type", "contract_type"),
                 new JdbcColumn("contract_end_date"),
                 new JdbcColumn("working_day_id"),
                 new JdbcColumn("access_type", "access_type"),
@@ -64,7 +62,6 @@ public class PersonRepo extends JdbcRepo<Person>{
                 s.getString(getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
-                ContractType.valueOf(s.getString(getColumnName(i++))),
                 getLocalDate(s, getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 AccessType.valueOf(s.getString(getColumnName(i++))),
@@ -96,7 +93,6 @@ public class PersonRepo extends JdbcRepo<Person>{
         s.setString(i++, o.mobilePhone);
         s.setString(i++, o.workPhone);
         setLocalDate(s, i++, o.employmentStartDate);
-        s.setString(i++, o.contractType.name());
         setLocalDate(s, i++, o.contractEndDate);
         s.setString(i++, o.workingDayId);
         s.setString(i++, o.accessType.name());

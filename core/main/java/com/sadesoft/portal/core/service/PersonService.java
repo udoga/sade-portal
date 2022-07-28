@@ -52,7 +52,6 @@ public class PersonService {
         checkMissingField(person.mobilePhone, "mobilePhone");
         checkMissingField(person.workPhone, "workPhone");
         checkMissingField(person.employmentStartDate, "employmentStartDate");
-        checkMissingField(person.contractType, "contractType");
         checkMissingField(person.workingDayId, "workingDayId");
         checkMissingField(person.accessType, "accessType");
         checkMissingField(person.birthday, "birthday");
