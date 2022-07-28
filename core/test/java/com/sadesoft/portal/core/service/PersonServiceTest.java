@@ -14,6 +14,10 @@ public class PersonServiceTest {
     private PersonService service;
     private Person validPerson;
 
+    private void assetValid(Person person) {
+        assertDoesNotThrow(() -> service.create(person));
+    }
+
     private void assertMissingField(Person person) {
         assertThrows(MissingFieldError.class, () -> service.create(person));
     }
@@ -38,9 +42,9 @@ public class PersonServiceTest {
         assertEquals("Invalid email '" + person.workEmail + "' in field 'workEmail'.", e.getMessage());
     }
 
-    private void assertCopiedField(Person person) {
+    private void assertCopiedField(Person person, String field1, String field2) {
         CopiedFieldError e = assertThrows(CopiedFieldError.class, () -> service.create(person));
-        assertEquals("Fields '" + person.email + "' and '" + person.workEmail + "' should not be the same.", e.getMessage());
+        assertEquals("Fields '" + field1 + "' and '" + field2 + "' should not be the same.", e.getMessage());
     }
 
     private void assertInvalidMobilePhone(Person person) {
@@ -57,7 +61,7 @@ public class PersonServiceTest {
     public void setup() {
         repo = new ListRepo<>("Person");
         service = new PersonService(repo);
-        validPerson = PersonSamples.validPerson;
+        validPerson = PersonSamples.validPerson.copy();
     }
 
     @Test
@@ -78,7 +82,7 @@ public class PersonServiceTest {
         assertMissingField(validPerson.withWorkPhone(null));
         assertMissingField(validPerson.withEmploymentStartDate(null));
         assertMissingField(validPerson.withContractType(null));
-        assertMissingField(validPerson.withContractEndDate(null));
+        assetValid(validPerson.withContractEndDate(null));
         assertMissingField(validPerson.withWorkingDayId(null));
         assertMissingField(validPerson.withAccessType(null));
         assertMissingField(validPerson.withBirthday(null));
@@ -137,7 +141,7 @@ public class PersonServiceTest {
 
     @Test
     public void whenEmailAndWorkEmailAreTheSame_throwsError() {
-        assertCopiedField(validPerson.withWorkEmail(validPerson.email));
+        assertCopiedField(validPerson.withWorkEmail(validPerson.email), "email", "workEmail");
     }
 
     @Test

@@ -18,7 +18,7 @@ public class ReceiptServiceTest {
     public void setup() {
         repo = new ListRepo<>("Receipt");
         service = new ReceiptService(repo);
-        validReceipt = ReceiptSamples.validReceipt;
+        validReceipt = ReceiptSamples.validReceipt.copy();
     }
 
     @Test

@@ -18,7 +18,7 @@ public class UserServiceTest {
     public void setup() {
         repo = new ListRepo<>("User");
         service = new UserService(repo);
-        validUser = UserSamples.validUser;
+        validUser = UserSamples.validUser.copy();
     }
 
     @Test

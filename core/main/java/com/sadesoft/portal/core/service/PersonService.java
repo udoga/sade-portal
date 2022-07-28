@@ -41,6 +41,7 @@ public class PersonService {
         checkInvalidCharacter(person);
         checkInvalidEmail(person);
         checkInvalidPhone(person);
+        checkCopiedFields("email", "workEmail", person.email, person.workEmail);
     }
 
     private void checkMissingFields(Person person) {
@@ -52,7 +53,6 @@ public class PersonService {
         checkMissingField(person.workPhone, "workPhone");
         checkMissingField(person.employmentStartDate, "employmentStartDate");
         checkMissingField(person.contractType, "contractType");
-        checkMissingField(person.contractEndDate, "contractEndDate");
         checkMissingField(person.workingDayId, "workingDayId");
         checkMissingField(person.accessType, "accessType");
         checkMissingField(person.birthday, "birthday");
@@ -85,7 +85,6 @@ public class PersonService {
     private void checkInvalidEmail(Person person) {
         checkInvalidEmail(person.email, "email");
         checkInvalidEmail(person.workEmail, "workEmail");
-        checkCopiedMail(person.email, person.workEmail);
     }
 
     private void checkInvalidPhone(Person person) {
@@ -112,8 +111,8 @@ public class PersonService {
             throw new InvalidEmailError(fieldValue, fieldName);
     }
 
-    private void checkCopiedMail(String email, String workEmail) {
-        if(email.equals(workEmail)) throw new CopiedFieldError(email, workEmail);
+    private void checkCopiedFields(String field1, String field2, String value1, String value2) {
+        if (value1.equals(value2)) throw new CopiedFieldError(field1, field2);
     }
 
     private void checkInvalidPhone(String fieldValue, String fieldName) {
