@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sadesoft.portal.base.error.ClientError;
+import com.sadesoft.portal.base.error.InvalidDateError;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
@@ -60,6 +62,7 @@ public class RestServer {
 
     private void configureErrors() {
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
+        server.exception(InvalidFormatException.class, (e, c) -> handle(c, convert(e), 400));
         server.exception(ClientError.class, (e, c) -> handle(c, e, 400));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
     }
@@ -69,5 +72,11 @@ public class RestServer {
         else logger.info(e.getClass().getSimpleName() + ": " + e.getMessage());
         c.status(status);
         c.json(Map.of("status", status, "type", e.getClass().getSimpleName(), "message", e.getMessage()));
+    }
+
+    private Exception convert(InvalidFormatException e) {
+        if (e.getTargetType().getSimpleName().equals("LocalDate"))
+            return new InvalidDateError(e.getValue().toString());
+        return e;
     }
 }
