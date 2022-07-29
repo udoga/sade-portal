@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.InvalidDateError;
+import com.sadesoft.portal.base.error.InvalidEnumError;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
@@ -77,6 +78,8 @@ public class RestServer {
     private Exception convert(InvalidFormatException e) {
         if (e.getTargetType().getSimpleName().equals("LocalDate"))
             return new InvalidDateError(e.getValue().toString());
+        if (e.getTargetType().isEnum())
+            return new InvalidEnumError(e.getTargetType().getSimpleName(), e.getValue().toString());
         return e;
     }
 }
