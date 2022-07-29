@@ -19,7 +19,7 @@ CREATE TABLE people(
     blood_type VARCHAR(255) NOT NULL,
     educational_level VARCHAR(255) NOT NULL,
     education_status VARCHAR(255) NOT NULL,
-    educational_institution VARCHAR(255) NOT NULL,
+    educational_institution VARCHAR(150) NOT NULL,
     gender VARCHAR(255) NOT NULL,
     id_number VARCHAR(255) NOT NULL,
     level_of_disability VARCHAR(255) NOT NULL,

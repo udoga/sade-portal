@@ -14,6 +14,10 @@ public class PersonServiceTest {
     private PersonService service;
     private Person validPerson;
 
+    private String createString(int n, String s) {
+        return new String(new char[n]).replace("\0", s);
+    }
+
     private void assertValid(Person person) {
         assertDoesNotThrow(() -> service.create(person));
     }
@@ -55,6 +59,22 @@ public class PersonServiceTest {
     private void assertInvalidWorkPhone(Person person) {
         InvalidPhoneError e = assertThrows(InvalidPhoneError.class, () -> service.create(person));
         assertEquals("Invalid phone number '" + person.workPhone + "' in field 'workPhone'.", e.getMessage());
+    }
+
+    private void assertInvalidEducationalInstitution(Person person) {
+        InvalidLengthError e = assertThrows(InvalidLengthError.class, () -> service.create(person));
+        assertEquals("Invalid length '" + person.educationalInstitution.length() +
+                "' in field 'educationalInstitution'.", e.getMessage());
+    }
+
+    private void assertInvalidNationality(Person person) {
+        InvalidLengthError e = assertThrows(InvalidLengthError.class, () -> service.create(person));
+        assertEquals("Invalid length '" + person.nationality.length() + "' in field 'nationality'.", e.getMessage());
+    }
+
+    private void assertInvalidIdNumber(Person person) {
+        InvalidLengthError e = assertThrows(InvalidLengthError.class, () -> service.create(person));
+        assertEquals("Invalid length '" + person.idNumber.length() + "' in field 'idNumber'.", e.getMessage());
     }
 
     @BeforeEach
@@ -157,6 +177,28 @@ public class PersonServiceTest {
     public void whenWorkNumberIsInvalid_throwsError() {
         assertInvalidWorkPhone(validPerson.withWorkPhone("a"));
         assertValid(validPerson.withWorkPhone(""));
+    }
+
+    @Test
+    public void whenEducationalInstitutionLengthISInvalid_throwsError() {
+        assertInvalidEducationalInstitution(validPerson.withEducationalInstitution(createString(151, "a")));
+        assertValid(validPerson.withEducationalInstitution(createString(150, "a")));
+    }
+
+    @Test
+    public void whenNationalityIsInvalid_throwsError() {
+        assertInvalidNationality(validPerson.withNationality("A"));
+        assertValid(validPerson.withNationality("AA"));
+        assertInvalidNationality(validPerson.withNationality("AAA"));
+    }
+
+    @Test
+    public void whenIdNumberIsInvalid_throwsError() {
+        assertValid(validPerson.withNationality("AA").withIdNumber("1"));
+        assertInvalidIdNumber(validPerson.withNationality("TR").withIdNumber("1"));
+        assertInvalidIdNumber(validPerson.withNationality("TR").withIdNumber("1111111111"));
+        assertValid(validPerson.withNationality("TR").withIdNumber("11111111110"));
+        assertInvalidIdNumber(validPerson.withNationality("TR").withIdNumber("111111111111"));
     }
 
     @Nested

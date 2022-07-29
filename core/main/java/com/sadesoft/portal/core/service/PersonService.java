@@ -42,6 +42,7 @@ public class PersonService {
         checkInvalidEmails(person);
         checkInvalidPhones(person);
         checkCopiedField(person.email, person.workEmail, "email", "workEmail");
+        checkInvalidLengths(person);
     }
 
     private void checkMissingFields(Person person) {
@@ -91,6 +92,13 @@ public class PersonService {
         if (!person.workPhone.isEmpty()) checkInvalidPhone(person.workPhone, "workPhone");
     }
 
+    private void checkInvalidLengths(Person person) {
+        checkInvalidLength(person.educationalInstitution.length(), "educationalInstitution", 150, 2);
+        checkInvalidLength(person.nationality.length(), "nationality", 2, 2);
+        if (person.nationality.equals("TR"))
+            checkInvalidLength(person.idNumber.length(), "idNumber", 11, 11);
+    }
+
     private void checkMissingField(Object value, String field) {
         if (value == null) throw new MissingFieldError(field);
     }
@@ -116,5 +124,9 @@ public class PersonService {
 
     private void checkCopiedField(String value1, String value2, String field1, String field2) {
         if (value1.equals(value2)) throw new CopiedFieldError(field1, field2);
+    }
+
+    private void checkInvalidLength(int length, String field, int maxLength, int minLength) {
+        if (length > maxLength || length < minLength) throw new InvalidLengthError(length, field);
     }
 }
