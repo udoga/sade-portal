@@ -21,6 +21,7 @@ public class ListRepo<T extends Record> implements Repo<T> {
         return records;
     }
 
+    @Override
     public List<T> listPage(int pageNumber, int pageSize) {
         if (pageNumber <= 0) throw new RuntimeException("Page number should be greater than zero");
         int fromIndex = Math.min((pageNumber - 1) * pageSize, records.size());

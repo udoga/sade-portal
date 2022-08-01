@@ -27,4 +27,14 @@ public class RestController {
     protected void send(Context c, Object data) {
         c.json(Map.of("data", data));
     }
+
+    protected int getPageNo(Context c) {
+        String param = c.queryParam("pageNo");
+        return (param == null)? 1 : Integer.parseInt(param);
+    }
+
+    protected int getPageSize(Context c) {
+        String param = c.queryParam("pageSize");
+        return (param == null)? 10 : Integer.parseInt(param);
+    }
 }

@@ -10,6 +10,7 @@ public class ReceiptController extends RestController {
     public ReceiptController(String path, ReceiptService service) {
         super(path);
         add(HandlerType.GET, "", c -> send(c, service.list()));
+        add(HandlerType.GET, "", c -> send(c, service.listPage(getPageNo(c), getPageSize(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getReceipt(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getReceipt(c))));

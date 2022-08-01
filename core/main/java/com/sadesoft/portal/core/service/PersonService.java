@@ -17,6 +17,10 @@ public class PersonService {
         return repo.list();
     }
 
+    public List<Person> listPage(int pageNumber, int pageSize) {
+        return repo.listPage(pageNumber, pageSize);
+    }
+
     public Person read(int id) {
         return repo.read(id);
     }

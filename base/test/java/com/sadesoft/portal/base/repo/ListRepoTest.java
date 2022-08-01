@@ -140,7 +140,7 @@ public class ListRepoTest {
             RuntimeException e = assertThrows(RuntimeException.class, () -> repo.listPage(pageNumber, 1));
             assertEquals("Page number should be greater than zero", e.getMessage());
         }
-        
+
         private void assertPage(List<Integer> expectedIds, int pageNumber, int pageSize) {
             List<MockRecord> records = repo.listPage(pageNumber, pageSize);
             List<Integer> actualIds = records.stream().map(MockRecord::getId).collect(Collectors.toList());

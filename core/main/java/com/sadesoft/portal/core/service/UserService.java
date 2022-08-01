@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
+import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.User;
 
 public class UserService {
@@ -15,6 +16,10 @@ public class UserService {
 
     public List<User> list() {
         return repo.list();
+    }
+
+    public List<User> listPage(int pageNumber, int pageSize) {
+        return repo.listPage(pageNumber, pageSize);
     }
 
     public User read(int id) {
