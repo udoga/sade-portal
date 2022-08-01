@@ -1,6 +1,9 @@
 package com.sadesoft.portal.base.repo;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
@@ -129,6 +132,62 @@ public class ListRepoTest {
             assertEquals(1, repo.list().get(0).id);
             assertEquals(2, repo.list().get(1).id);
         }
+    }
+
+    @Nested
+    public class GivenListRepoWithTenRecords {
+        private void assertInvalidPageNumber(int pageNumber) {
+            RuntimeException e = assertThrows(RuntimeException.class, () -> repo.listPage(pageNumber, 1));
+            assertEquals("Page number should be greater than zero", e.getMessage());
+        }
+        
+        private void assertPage(List<Integer> expectedIds, int pageNumber, int pageSize) {
+            List<MockRecord> records = repo.listPage(pageNumber, pageSize);
+            List<Integer> actualIds = records.stream().map(MockRecord::getId).collect(Collectors.toList());
+            assertEquals(expectedIds, actualIds);
+        }
+
+        @BeforeEach
+        public void setup() {
+            for (int i = 0; i < 10; i++)
+                repo.create(new MockRecord(i, "name" + i));
+        }
+
+        @Test
+        public void whenPageNumberIsLessThanOne_throwsError() {
+            assertInvalidPageNumber(0);
+            assertInvalidPageNumber(-1);
+        }
+
+        @Test
+        public void whenPageSizeIsZero_returnsEmptyList() {
+            assertPage(List.of(), 1, 0);
+        }
+
+        @Test
+        public void whenPageSizeIsOne_returnsListWithSingleRecord() {
+            assertPage(List.of(0), 1, 1);
+            assertPage(List.of(1), 2, 1);
+        }
+
+        @Test
+        public void whenPageSizeIsTwo_returnsCorrectSubList() {
+            assertPage(List.of(0, 1), 1, 2);
+            assertPage(List.of(0, 1, 2), 1, 3);
+            assertPage(List.of(3, 4, 5), 2, 3);
+        }
+
+        @Test
+        public void whenLastPageRequested_returnsCorrectSublist() {
+            assertPage(List.of(9), 4, 3);
+            assertPage(List.of(8, 9), 3, 4);
+        }
+
+        @Test
+        public void whenNoneExistentPageIsRequested_returnsEmptyList() {
+            assertPage(List.of(), 5, 3);
+        }
+
     }
 
     private static class MockRecord implements Record {

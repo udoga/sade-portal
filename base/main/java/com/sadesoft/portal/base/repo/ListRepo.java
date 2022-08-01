@@ -2,6 +2,7 @@ package com.sadesoft.portal.base.repo;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.sadesoft.portal.base.error.RecordNotFoundError;
 
 public class ListRepo<T extends Record> implements Repo<T> {
@@ -18,6 +19,13 @@ public class ListRepo<T extends Record> implements Repo<T> {
     @Override
     public List<T> list() {
         return records;
+    }
+
+    public List<T> listPage(int pageNumber, int pageSize) {
+        if (pageNumber <= 0) throw new RuntimeException("Page number should be greater than zero");
+        int fromIndex = Math.min((pageNumber - 1) * pageSize, records.size());
+        int toIndex = Math.min(pageNumber * pageSize, records.size());
+        return records.subList(fromIndex, toIndex);
     }
 
     @Override
