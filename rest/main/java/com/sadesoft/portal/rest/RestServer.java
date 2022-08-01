@@ -2,18 +2,16 @@ package com.sadesoft.portal.rest;
 
 import java.util.List;
 import java.util.Map;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.sadesoft.portal.base.error.ClientError;
-import com.sadesoft.portal.base.error.InvalidDateError;
-import com.sadesoft.portal.base.error.InvalidEnumError;
+import com.sadesoft.portal.base.error.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.json.JavalinJackson;
-import com.sadesoft.portal.base.error.RecordNotFoundError;
 import com.sadesoft.portal.base.config.ServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +78,10 @@ public class RestServer {
             return new InvalidDateError(e.getValue().toString());
         if (e.getTargetType().isEnum())
             return new InvalidEnumError(e.getTargetType().getSimpleName(), e.getValue().toString());
+        if (e.getTargetType().getSimpleName().equals("Boolean"))
+            return new InvalidBoolError(e.getValue().toString());
+        if (Number.class.isAssignableFrom(e.getTargetType()))
+            return new InvalidNumberError(e.getValue().toString());
         return e;
     }
 }
