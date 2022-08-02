@@ -74,14 +74,13 @@ public class RestServer {
     }
 
     private Exception convert(InvalidFormatException e) {
-        if (e.getTargetType().getSimpleName().equals("LocalDate"))
-            return new InvalidDateError(e.getValue().toString());
-        if (e.getTargetType().isEnum())
-            return new InvalidEnumError(e.getTargetType().getSimpleName(), e.getValue().toString());
-        if (e.getTargetType().getSimpleName().equals("Boolean"))
-            return new InvalidBoolError(e.getValue().toString());
-        if (Number.class.isAssignableFrom(e.getTargetType()))
-            return new InvalidNumberError(e.getValue().toString());
+        Class<?> type = e.getTargetType();
+        String simpleTypeName = type.getSimpleName();
+        String value = e.getValue().toString();
+        if (simpleTypeName.equals("LocalDate")) return new InvalidDateError(value);
+        if (type.isEnum()) return new InvalidEnumError(simpleTypeName, value);
+        if (simpleTypeName.equals("Boolean")) return new InvalidBoolError(value);
+        if (Number.class.isAssignableFrom(type)) return new InvalidNumberError(value);
         return e;
     }
 }
