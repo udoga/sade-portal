@@ -24,8 +24,8 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     @Override
-    public List<T> listPage(int pageNumber, int pageSize) {
-        return call(() -> query(createSelectSql(" LIMIT " + (pageSize) + " OFFSET " + ((pageNumber-1) * pageSize))));
+    public List<T> listPage(int pageNo, int pageSize) {
+        return call(() -> query(createSelectSql(" LIMIT " + (pageSize) + " OFFSET " + ((pageNo-1) * pageSize))));
     }
 
     @Override

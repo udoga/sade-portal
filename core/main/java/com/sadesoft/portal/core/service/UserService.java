@@ -18,8 +18,8 @@ public class UserService {
         return repo.list();
     }
 
-    public List<User> listPage(int pageNumber, int pageSize) {
-        return repo.listPage(pageNumber, pageSize);
+    public List<User> listPage(int pageNo, int pageSize) {
+        return repo.listPage(pageNo, pageSize);
     }
 
     public User read(int id) {
