@@ -154,7 +154,7 @@ public class ListRepoTest {
         }
 
         @Test
-        public void whenPageNoIsLessThanOne_throwsError() {
+        public void whenPageNumberIsLessThanOne_throwsError() {
             assertInvalidPageNo(0);
             assertInvalidPageNo(-1);
         }

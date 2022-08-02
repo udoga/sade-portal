@@ -7,8 +7,8 @@ import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
 public class ReceiptController extends RestController {
-    public ReceiptController(String path, ReceiptService service) {
-        super(path);
+    public ReceiptController(ReceiptService service) {
+        super("/api/receipts");
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.GET, "", c -> send(c, service.listPage(getPageNo(c), getPageSize(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getReceipt(c))));

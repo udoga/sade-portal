@@ -115,8 +115,8 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return getColumnName(0);
     }
 
-    private String createSelectSql(String whereSql) {
-        return "select " + repeat("%1$s", true) + " from " + tableName + whereSql;
+    private String createSelectSql(String appendedSQL) {
+        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
     }
 
     private String createInsertSql() {

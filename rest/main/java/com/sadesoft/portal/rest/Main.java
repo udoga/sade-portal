@@ -38,10 +38,10 @@ public class Main {
         ProjectService projectService = new ProjectService(projectRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
-        PersonController personController = new PersonController("/api/people", personService);
-        ProjectController projectController = new ProjectController("/api/projects", projectService);
-        ReceiptController receiptController = new ReceiptController("/api/receipts", receiptService);
-        UserController userController = new UserController("/api/users", userService);
+        PersonController personController = new PersonController(personService);
+        ProjectController projectController = new ProjectController(projectService);
+        ReceiptController receiptController = new ReceiptController(receiptService);
+        UserController userController = new UserController(userService);
         List<RestController> controllers = List.of(personController, projectController, receiptController,
                 userController);
         RestServer server = new RestServer(serverConfig, controllers);

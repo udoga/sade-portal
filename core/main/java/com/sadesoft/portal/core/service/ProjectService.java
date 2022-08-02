@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 import com.sadesoft.portal.base.repo.Repo;
+import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.Project;
 
 public class ProjectService {
@@ -13,6 +14,10 @@ public class ProjectService {
 
     public List<Project> list() {
         return repo.list();
+    }
+
+    public List<Project> listPage(int pageNo, int pageSize) {
+        return repo.listPage(pageNo, pageSize);
     }
 
     public Project read(int id) {

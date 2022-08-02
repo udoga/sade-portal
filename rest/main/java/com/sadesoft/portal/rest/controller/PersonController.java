@@ -7,8 +7,8 @@ import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
 public class PersonController extends RestController {
-    public PersonController(String path, PersonService service) {
-        super(path);
+    public PersonController(PersonService service) {
+        super("/api/people");
         add(HandlerType.GET, "", c -> send(c, service.listPage(getPageNo(c), getPageSize(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getPerson(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
