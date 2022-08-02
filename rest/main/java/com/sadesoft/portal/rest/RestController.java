@@ -3,6 +3,8 @@ package com.sadesoft.portal.rest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.sadesoft.portal.base.util.StringUtil;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HandlerType;
@@ -29,12 +31,15 @@ public class RestController {
     }
 
     protected int getPageNo(Context c) {
-        String param = c.queryParam("pageNo");
-        return (param == null)? 1 : Integer.parseInt(param);
+        return StringUtil.getInteger(getQueryParameter(c, "pageNo", "1"));
     }
 
     protected int getPageSize(Context c) {
-        String param = c.queryParam("pageSize");
-        return (param == null)? 10 : Integer.parseInt(param);
+        return StringUtil.getInteger(getQueryParameter(c, "pageSize", "10"));
+    }
+
+    private String getQueryParameter(Context c, String key, String defaultValue) {
+        String param = c.queryParam(key);
+        return (param == null)? defaultValue : param;
     }
 }
