@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.InvalidVatRateError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
@@ -44,6 +45,11 @@ public class ReceiptService {
         checkMissingField(receipt.amount, "amount");
         checkMissingField(receipt.vatRate, "vatRate");
         checkMissingField(receipt.description, "description");
+        checkVatRate(receipt.vatRate);
+    }
+
+    private void checkVatRate(short vatRate) {
+        if (vatRate < 0 || vatRate > 100) throw new InvalidVatRateError(vatRate);
     }
 
     private void checkMissingField(Object value, String field) {

@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.InvalidVatRateError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,13 @@ public class ReceiptServiceTest {
 
     private void assertMissingFieldOnCreate(Receipt receipt) {
         assertThrows(MissingFieldError.class, () -> service.create(receipt));
+    }
+
+    @Test
+    public void whenVatRateIsInvalid_throwsError() {
+        assertThrows(InvalidVatRateError.class, () -> service.create(validReceipt.withVatRate((short) 101)));
+        assertDoesNotThrow(() -> service.create(validReceipt.withVatRate((short) 0)));
+        assertThrows(InvalidVatRateError.class, () -> service.create(validReceipt.withVatRate((short) -3)));
     }
 
     @Nested
