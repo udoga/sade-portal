@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidVatRateError;
+import com.sadesoft.portal.base.error.InvalidInputError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,9 +45,16 @@ public class ReceiptServiceTest {
 
     @Test
     public void whenVatRateIsInvalid_throwsError() {
-        assertThrows(InvalidVatRateError.class, () -> service.create(validReceipt.withVatRate((short) 101)));
+        assertInvalidVatRate(validReceipt.withVatRate((short) 101));
+        assertInvalidVatRate(validReceipt.withVatRate((short) -1));
         assertDoesNotThrow(() -> service.create(validReceipt.withVatRate((short) 0)));
-        assertThrows(InvalidVatRateError.class, () -> service.create(validReceipt.withVatRate((short) -3)));
+    }
+
+    @Test
+    private void assertInvalidVatRate(Receipt receipt) {
+        InvalidInputError e;
+        e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
+        assertEquals("Vat rate should be between 0-100", e.getMessage());
     }
 
     @Nested

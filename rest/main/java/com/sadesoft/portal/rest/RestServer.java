@@ -62,7 +62,7 @@ public class RestServer {
     private void configureErrors() {
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
         server.exception(InvalidFormatException.class, (e, c) -> handle(c, convert(e), 400));
-        server.exception(ClientError.class, (e, c) -> handle(c, e, 400));
+        server.exception(InvalidInputError.class, (e, c) -> handle(c, e, 400));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
     }
 
