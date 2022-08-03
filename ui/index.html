@@ -11,6 +11,9 @@
     <script src="library/angularjs/angular.min.js"></script>
     <script src="library/angularjs/angular-route.min.js"></script>
     <script src="library/fontawesome/js/all.js"></script>
+    <script src="controller/expense-form-controller.js"></script>
+    <script src="controller/expense-list-controller.js"></script>
+    <script src="controller/expense-page-controller.js"></script>
     <script src="controller/layout-controller.js"></script>
     <script src="controller/person-form-controller.js"></script>
     <script src="controller/person-list-controller.js"></script>
@@ -35,6 +38,7 @@
     <nav ng-class="getNavigationClass()">
       <a ng-click="navigate('home')" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
       <a ng-click="navigate('people')" ng-class="getLinkClass('/people')"><i class="fas fa-person"></i>People</a>
+      <a ng-click="navigate('expenses')" ng-class="getLinkClass('/expenses')"><i class="fas fa-credit-card"></i>Expenses</a>
       <a ng-click="navigate('receipts')" ng-class="getLinkClass('/receipts')"><i class="fas fa-receipt"></i>Receipts</a>
       <a ng-click="navigate('users')" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
     </nav>

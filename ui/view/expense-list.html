@@ -1,0 +1,35 @@
+<div ng-controller="ExpenseListController">
+  <h2>Expenses</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>Person Id</th>
+      <th>Form Date</th>
+      <th>Amount</th>
+      <th>Paid</th>
+      <th>Status</th>
+      <th class="narrow last">
+        <a class="green header icon button" ng-href="#!expenses/new"><i class="fas fa-plus"></i>New</a>
+      </th>
+    </tr>
+    <tr ng-repeat="expense in expenses">
+      <td class="narrow">{{expense.id}}</td>
+      <td>{{expense.personId}}</td>
+      <td>{{expense.formDate}}</td>
+      <td>{{expense.amount}} {{expense.currency}}</td>
+      <td>{{expense.paid}}</td>
+      <td>{{expense.status}}</td>
+      <td class="narrow last">
+        <a title="Show" class="light-blue row button" ng-href="#!expenses/{{expense.id}}">
+          <i class="far fa-eye"></i>
+        </a>
+        <a title="Edit" class="yellow row button" ng-href="#!expenses/{{expense.id}}/edit">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+        <a title="Delete" class="red row button" href ng-click="delete(expense.id)">
+          <i class="fas fa-trash"></i>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>

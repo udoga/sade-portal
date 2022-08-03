@@ -1,6 +1,26 @@
 function Api($http) {
   this.url = "/api";
 
+  this.listExpenses = function() {
+    return $http.get(this.url + "/expenses");
+  };
+
+  this.createExpense = function(expense) {
+    return $http.post(this.url + "/expenses/", expense);
+  }
+
+  this.readExpense = function(id) {
+    return $http.get(this.url + "/expenses/" + id);
+  }
+
+  this.updateExpense = function(id, expense) {
+    return $http.put(this.url + "/expenses/" + id, expense);
+  }
+
+  this.deleteExpense = function(id) {
+    return $http.delete(this.url + "/expenses/" + id);
+  }
+
   this.listPeople = function() {
     return $http.get(this.url + "/people");
   };

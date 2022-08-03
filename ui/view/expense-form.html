@@ -1,0 +1,37 @@
+<div ng-controller="ExpenseFormController">
+  <h2>Expense Form</h2>
+  <form>
+    <div class="field">
+      <label>Person Id</label>
+      <input type="text" placeholder="Person Id" ng-model="expense.personId"/>
+    </div>
+    <div class="field">
+      <label>Form Date</label>
+      <input type="text" placeholder="Form Date" ng-model="expense.formDate"/>
+    </div>
+    <div class="field">
+      <label>Amount</label>
+      <input type="text" placeholder="Amount" ng-model="expense.amount"/>
+    </div>
+    <div class="field">
+      <label>Currency</label>
+      <input type="text" placeholder="Currency" ng-model="expense.currency"/>
+    </div>
+    <div class="field">
+      <label>Paid</label>
+      <input type="text" placeholder="Paid" ng-model="expense.paid"/>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <input type="text" placeholder="Description" ng-model="expense.description"/>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <input type="text" placeholder="Status" ng-model="expense.status"/>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#!expenses">Back</a>
+      <a class="green form button" href ng-click="save()">Save</a>
+    </div>
+  </form>
+</div>

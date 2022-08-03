@@ -5,6 +5,10 @@ function Config($routeProvider) {
 
   $routeProvider.when("/", { redirectTo: '/home' });
   this.bind("/home", "home");
+  this.bind("/expenses", "expense-list");
+  this.bind("/expenses/new", "expense-form");
+  this.bind("/expenses/:id", "expense-page");
+  this.bind("/expenses/:id/edit", "expense-form");
   this.bind("/people", "person-list");
   this.bind("/people/new", "person-form");
   this.bind("/people/:id", "person-page");

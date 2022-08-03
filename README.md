@@ -24,10 +24,14 @@
 
 ## Todos
 
-- add: core: PersonService consistency validations
+- add: core: 'permission' model and services
+- add: core: 'leave' model and services
 - fix: rest: error when updating records without id
-- add: rest: pagination, sorting, filtering
+- add: rest: run pg.sql at startup
+- add: rest: sorting, filtering
 - add: rest: api authentication with token
+- add: rest: kolayik integration
+- add: ui: use vue instead of ng
 - add: ui: login page
 - add: ui: make tables responsive
 - add: ui: page selection to tables

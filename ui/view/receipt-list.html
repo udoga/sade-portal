@@ -3,6 +3,7 @@
   <table>
     <tr>
       <th class="narrow">Id</th>
+      <th>Expense Id</th>
       <th>Receipt Date</th>
       <th>Category</th>
       <th>Amount</th>
@@ -14,6 +15,7 @@
     </tr>
     <tr ng-repeat="receipt in receipts">
       <td class="narrow">{{receipt.id}}</td>
+      <td>{{ receipt.expenseId }}</td>
       <td>{{ receipt.receiptDate }}</td>
       <td>{{ receipt.category }}</td>
       <td>{{ receipt.amount }}</td>
