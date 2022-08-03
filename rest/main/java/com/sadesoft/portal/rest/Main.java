@@ -33,9 +33,8 @@ public class Main {
         ProjectController projectController = new ProjectController(projectService);
         ReceiptController receiptController = new ReceiptController(receiptService);
         UserController userController = new UserController(userService);
-        List<RestController> controllers = List.of(expenseController, personController, projectController,
-                receiptController, userController);
-        RestServer server = new RestServer(serverConfig, controllers);
+        RestServer server = new RestServer(serverConfig, List.of(expenseController, personController, projectController,
+                receiptController, userController));
         server.run();
     }
 }

@@ -1,6 +1,5 @@
 package com.sadesoft.portal.rest.repo;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,12 +8,14 @@ import java.util.List;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.model.Receipt;
+import com.sadesoft.portal.core.model.ReceiptCategory;
 
 public class ReceiptRepo extends JdbcRepo<Receipt>{
     public ReceiptRepo(Connection connection) {
         super(connection, "receipts", List.of(
                 new JdbcColumn("id"),
+                new JdbcColumn("expense_id"),
                 new JdbcColumn("receipt_date"),
                 new JdbcColumn("category", "receipt_category"),
                 new JdbcColumn("amount"),

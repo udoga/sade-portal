@@ -1,20 +1,3 @@
-DROP TABLE expenses IF EXISTS;
-DROP TABLE people IF EXISTS;
-DROP TABLE projects IF EXISTS;
-DROP TABLE receipt IF EXISTS;
-DROP TABLE users IF EXISTS;
-
-CREATE TABLE expenses(
-    id IDENTITY PRIMARY KEY NOT NULL,
-    person_id INT NOT NULL,
-    form_date DATE NOT NULL,
-    amount DECIMAL NOT NULL,
-    currency VARCHAR(255) NOT NULL,
-    paid BOOLEAN NOT NULL,
-    description VARCHAR(255) NOT NULL,
-    approval_status VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE people(
     id IDENTITY PRIMARY KEY NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -49,6 +32,24 @@ CREATE TABLE projects(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE users(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE expenses(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    person_id INT NOT NULL,
+    form_date DATE NOT NULL,
+    amount DECIMAL NOT NULL,
+    currency VARCHAR(255) NOT NULL,
+    paid BOOLEAN NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    approval_status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (person_id) REFERENCES people(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE receipts(
     id SERIAL PRIMARY KEY NOT NULL,
     expense_id INT NOT NULL,
@@ -56,19 +57,9 @@ CREATE TABLE receipts(
     category VARCHAR(255) NOT NULL,
     amount DECIMAL NOT NULL,
     vat_rate SMALLINT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    FOREIGN KEY (expense_id) REFERENCES people(id) ON DELETE RESTRICT
 );
-
-CREATE TABLE users(
-    id IDENTITY PRIMARY KEY NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    full_name VARCHAR(255) NOT NULL
-);
-
-INSERT INTO expenses VALUES
---        id, person_id,    form_date,      amount, currency,  paid,   description,     status
-    (default,         1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
-    (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
 
 INSERT INTO people VALUES
 --        id,  first_name,  last_name,                       email,               work_email,     mobile_phone,       work_phone, employment_start_date, contract_end_date, working_day_id,   access_type,     birthday,     blood_type, educational_level, education_status, educational_institution,   gender,     id_number, level_of_disability, marital_status, partner_work_status, military_service, military_service_delay_date, nationality, number_of_children, tour_status
@@ -88,11 +79,16 @@ INSERT INTO projects VALUES
     (default,  'First Project'),
     (default, 'Second Project');
 
-INSERT INTO receipts VALUES
---        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
-    (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
-
 INSERT INTO users VALUES
 --        id,      username,     full_name
     (default,  'first.user',  'First User'),
     (default, 'second.user', 'Second User');
+
+INSERT INTO expenses VALUES
+--        id, person_id,    form_date,      amount, currency,  paid,   description,     status
+    (default,         1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
+    (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
+
+INSERT INTO receipts VALUES
+--        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
+    (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
