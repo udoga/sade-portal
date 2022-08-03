@@ -51,6 +51,7 @@ CREATE TABLE projects(
 
 CREATE TABLE receipts(
     id SERIAL PRIMARY KEY NOT NULL,
+    expense_id INT NOT NULL,
     receipt_date DATE NOT NULL,
     category VARCHAR(255) NOT NULL,
     amount DECIMAL NOT NULL,
@@ -88,8 +89,8 @@ INSERT INTO projects VALUES
     (default, 'Second Project');
 
 INSERT INTO receipts VALUES
---        id, receipt_date, receipt_category,    amount, vat_rate, description
-    (default, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
+--        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
+    (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
 
 INSERT INTO users VALUES
 --        id,      username,     full_name

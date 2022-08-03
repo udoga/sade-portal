@@ -17,6 +17,7 @@ public class ReceiptTest {
     public void initializesWithoutFields() {
         Receipt receipt = new Receipt();
         assertNull(receipt.id);
+        assertNull(receipt.expenseId);
         assertNull(receipt.receiptDate);
         assertNull(receipt.category);
         assertNull(receipt.amount);
@@ -27,6 +28,7 @@ public class ReceiptTest {
     @Test
     public void printsFields() {
         assertEquals("Receipt[id=null" +
+                " expenseId=1" +
                 " receiptDate=2022-01-01" +
                 " category=Other" +
                 " amount=10.20" +
@@ -38,6 +40,7 @@ public class ReceiptTest {
     @Test
     public void clonesWithFields() {
         assertNull(validReceipt.withId(null).id);
+        assertNull(validReceipt.withExpenseId(null).expenseId);
         assertNull(validReceipt.withReceiptDate(null).receiptDate);
         assertNull(validReceipt.withReceiptCategory(null).category);
         assertNull(validReceipt.withAmount(null).amount);
@@ -49,6 +52,7 @@ public class ReceiptTest {
     public void checksEquality() {
         assertEquals(validReceipt, validReceipt.copy());
         assertNotEquals(validReceipt, validReceipt.withId(0));
+        assertNotEquals(validReceipt, validReceipt.withExpenseId(null));
         assertNotEquals(validReceipt, validReceipt.withReceiptDate(null));
         assertNotEquals(validReceipt, validReceipt.withReceiptCategory(null));
         assertNotEquals(validReceipt, validReceipt.withAmount(null));

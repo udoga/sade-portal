@@ -52,6 +52,7 @@ public class ReceiptServiceTest {
 
     @Test
     public void whenHasMissingField_throwsError() {
+        assertMissingField(validReceipt.withExpenseId(null));
         assertMissingField(validReceipt.withReceiptDate(null));
         assertMissingField(validReceipt.withReceiptCategory(null));
         assertMissingField(validReceipt.withAmount(null));

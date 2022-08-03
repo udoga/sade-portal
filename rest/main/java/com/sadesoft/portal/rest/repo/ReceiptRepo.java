@@ -27,6 +27,7 @@ public class ReceiptRepo extends JdbcRepo<Receipt>{
         int i = 0;
         return new Receipt(
                 s.getInt(getColumnName(i++)),
+                s.getInt(getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
                 ReceiptCategory.valueOf(s.getString(getColumnName(i++))),
                 s.getBigDecimal(getColumnName(i++)),
@@ -38,6 +39,7 @@ public class ReceiptRepo extends JdbcRepo<Receipt>{
     @Override
     protected void fillStatement(PreparedStatement s, Receipt o) throws SQLException {
         int i = 1;
+        s.setInt(i++, o.expenseId);
         setLocalDate(s, i++, o.receiptDate);
         s.setString(i++, o.category.name());
         s.setBigDecimal(i++, o.amount);

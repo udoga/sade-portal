@@ -7,14 +7,14 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Expense implements Record, Cloneable {
-    public Integer id;
-    public Integer personId;
-    public LocalDate formDate;
-    public BigDecimal amount;
-    public Currency currency;
-    public Boolean paid;
-    public String description;
-    public ApprovalStatus status;
+    public Integer id = null;
+    public Integer personId = null;
+    public LocalDate formDate = null;
+    public BigDecimal amount = null;
+    public Currency currency = null;
+    public Boolean paid = null;
+    public String description = null;
+    public ApprovalStatus status = null;
 
     public Expense(Integer id,
                    Integer personId,
