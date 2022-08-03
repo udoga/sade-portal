@@ -62,7 +62,7 @@ public class RestServer {
     private void configureErrors() {
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
         server.exception(InvalidFormatException.class, (e, c) -> handle(c, convert(e), 400));
-        server.exception(InvalidInputError.class, (e, c) -> handle(c, e, 400));
+        server.exception(ClientError.class, (e, c) -> handle(c, e, 400));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
     }
 
@@ -75,12 +75,12 @@ public class RestServer {
 
     private Exception convert(InvalidFormatException e) {
         Class<?> type = e.getTargetType();
-        String simpleTypeName = type.getSimpleName();
+        String typeName = type.getSimpleName();
         String value = e.getValue().toString();
-        if (simpleTypeName.equals("LocalDate")) return new InvalidDateError(value);
-        if (type.isEnum()) return new InvalidEnumError(simpleTypeName, value);
-        if (simpleTypeName.equals("Boolean")) return new InvalidBoolError(value);
         if (Number.class.isAssignableFrom(type)) return new InvalidNumberError(value);
+        if (type.isEnum()) return new InvalidEnumError(typeName, value);
+        if (typeName.equals("LocalDate")) return new InvalidDateError(value);
+        if (typeName.equals("Boolean")) return new InvalidBoolError(value);
         return e;
     }
 }

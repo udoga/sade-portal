@@ -49,7 +49,7 @@ public class ReceiptService {
     }
 
     private void checkVatRate(short vatRate) {
-        if (vatRate < 0 || vatRate > 100) throw new InvalidInputError("Vat rate should be between 0-100");
+        if (vatRate < 0 || vatRate > 100) throw new InvalidInputError("Vat rate should be between 0-100.");
     }
 
     private void checkMissingField(Object value, String field) {

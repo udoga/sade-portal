@@ -15,6 +15,19 @@ public class ReceiptServiceTest {
     private ReceiptService service;
     private Receipt validReceipt;
 
+    private void assertValid(Receipt receipt) {
+        assertDoesNotThrow(() -> service.create(receipt));
+    }
+
+    private void assertMissingField(Receipt receipt) {
+        assertThrows(MissingFieldError.class, () -> service.create(receipt));
+    }
+
+    private void assertInvalidVatRate(Receipt receipt) {
+        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
+        assertEquals("Vat rate should be between 0-100.", e.getMessage());
+    }
+
     @BeforeEach
     public void setup() {
         repo = new ListRepo<>("Receipt");
@@ -31,30 +44,20 @@ public class ReceiptServiceTest {
     }
 
     @Test
-    public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validReceipt.withReceiptDate(null));
-        assertMissingFieldOnCreate(validReceipt.withReceiptCategory(null));
-        assertMissingFieldOnCreate(validReceipt.withAmount(null));
-        assertMissingFieldOnCreate(validReceipt.withVatRate(null));
-        assertMissingFieldOnCreate(validReceipt.withDescription(null));
-    }
-
-    private void assertMissingFieldOnCreate(Receipt receipt) {
-        assertThrows(MissingFieldError.class, () -> service.create(receipt));
+    public void whenHasMissingField_throwsError() {
+        assertMissingField(validReceipt.withReceiptDate(null));
+        assertMissingField(validReceipt.withReceiptCategory(null));
+        assertMissingField(validReceipt.withAmount(null));
+        assertMissingField(validReceipt.withVatRate(null));
+        assertMissingField(validReceipt.withDescription(null));
     }
 
     @Test
     public void whenVatRateIsInvalid_throwsError() {
         assertInvalidVatRate(validReceipt.withVatRate((short) 101));
         assertInvalidVatRate(validReceipt.withVatRate((short) -1));
-        assertDoesNotThrow(() -> service.create(validReceipt.withVatRate((short) 0)));
-    }
-
-    @Test
-    private void assertInvalidVatRate(Receipt receipt) {
-        InvalidInputError e;
-        e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
-        assertEquals("Vat rate should be between 0-100", e.getMessage());
+        assertValid(validReceipt.withVatRate((short) 0));
+        assertValid(validReceipt.withVatRate((short) 100));
     }
 
     @Nested
@@ -87,15 +90,8 @@ public class ReceiptServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertMissingFieldOnUpdate(validReceipt.withReceiptDate(null));
-            assertMissingFieldOnUpdate(validReceipt.withReceiptCategory(null));
-            assertMissingFieldOnUpdate(validReceipt.withAmount(null));
-            assertMissingFieldOnUpdate(validReceipt.withVatRate(null));
-            assertMissingFieldOnUpdate(validReceipt.withDescription(null));
-        }
-
-        private void assertMissingFieldOnUpdate(Receipt receipt) {
-            assertThrows(MissingFieldError.class, () -> service.update(0, receipt));
+            assertThrows(MissingFieldError.class, () -> service.update(0, validReceipt.withReceiptDate(null)));
+            assertThrows(MissingFieldError.class, () -> service.update(0, validReceipt.withReceiptCategory(null)));
         }
     }
 }
