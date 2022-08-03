@@ -1,9 +1,12 @@
+DROP TABLE IF EXISTS expenses CASCADE;
 DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS receipts CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS access_type CASCADE;
+DROP TYPE IF EXISTS approval_status CASCADE;
 DROP TYPE IF EXISTS blood_type CASCADE;
+DROP TYPE IF EXISTS currency CASCADE;
 DROP TYPE IF EXISTS educational_level CASCADE;
 DROP TYPE IF EXISTS education_status CASCADE;
 DROP TYPE IF EXISTS gender CASCADE;
@@ -17,8 +20,16 @@ CREATE TYPE access_type AS ENUM (
     'Employee', 'Manager', 'Owner'
 );
 
+CREATE TYPE approval_status AS ENUM (
+    'Approved', 'Rejected', 'Waiting'
+);
+
 CREATE TYPE blood_type AS ENUM (
     'ANegative', 'APositive', 'ZeroPositive', 'ZeroNegative', 'ABNegative', 'ABPositive', 'BNegative', 'BPositive'
+);
+
+CREATE TYPE currency AS ENUM (
+    'TRY', 'EUR', 'USD'
 );
 
 CREATE TYPE educational_level AS ENUM (
@@ -52,6 +63,17 @@ CREATE TYPE tour_status AS ENUM (
 CREATE TYPE receipt_category AS ENUM (
     'Food', 'Communication', 'Transportation', 'Stationery', 'Technology', 'Vehicle', 'Office', 'Accomodation',
     'Notary', 'Cargo', 'Balancing', 'Other'
+);
+
+CREATE TABLE expenses(
+    id SERIAL PRIMARY KEY NOT NULL,
+    person_id INT NOT NULL,
+    form_date DATE NOT NULL,
+    amount DECIMAL NOT NULL,
+    currency currency NOT NULL,
+    paid BOOLEAN NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    approval_status approval_status NOT NULL
 );
 
 CREATE TABLE people(
@@ -115,6 +137,11 @@ INSERT INTO people VALUES
     (default,  'Jennifer',    'Curry',   'jennifercurry@email.com',    'jcurry@workmail.com', '+90 5553553537', '+90 5553335537',          '2015-09-29',      '2023-09-29',          '107',    'Employee', '1993-08-18', 'ZeroPositive',            'None',       'Graduate',                  'None', 'Female', '11111111176',       'NotDisabled',       'Single',               false,         'Exempt',                '2024-01-01',        'US',                  0, 'Completed'),
     (default,      'Emma',    'Stein',       'emmastein@email.com',    'estain@workmail.com', '+90 5553553538', '+90 5553335538',          '2015-07-23',      '2023-07-23',          '108',    'Employee', '1966-08-18',    'APositive',        'Bachelor',       'Graduate',                    'IU', 'Female', '11111111187',       'NotDisabled',      'Married',               false,         'Exempt',                '2024-01-01',        'US',                  2, 'Completed'),
     (default,      'Jeff',     'Cena',        'jeffcena@email.com',     'jcena@workmail.com', '+90 5553553539', '+90 5553335539',          '2011-06-26',      '2023-06-26',          '109',    'Employee', '1995-08-18',    'BPositive',        'Bachelor',       'Graduate',                   'GTU',   'Male', '11111111198',       'NotDisabled',       'Single',               false,      'Completed',                '2024-01-01',        'US',                  1, 'Completed');
+
+INSERT INTO expenses VALUES
+--        id, person_id,    form_date,      amount, currency,  paid,   description,     status
+    (default,         1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
+    (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
 
 INSERT INTO projects VALUES
 --        id,             name
