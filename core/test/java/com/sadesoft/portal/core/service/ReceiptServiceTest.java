@@ -10,6 +10,8 @@ import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.sample.ReceiptSamples;
 
+import java.math.BigDecimal;
+
 public class ReceiptServiceTest {
     private ListRepo<Receipt> repo;
     private ReceiptService service;
@@ -26,6 +28,11 @@ public class ReceiptServiceTest {
     private void assertInvalidVatRate(Receipt receipt) {
         InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
         assertEquals("Vat rate should be between 0-100.", e.getMessage());
+    }
+
+    private void assertInvalidAmount(Receipt receipt) {
+        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
+        assertEquals("Amount should be between 0-1000000.", e.getMessage());
     }
 
     @BeforeEach
@@ -58,6 +65,14 @@ public class ReceiptServiceTest {
         assertInvalidVatRate(validReceipt.withVatRate((short) -1));
         assertValid(validReceipt.withVatRate((short) 0));
         assertValid(validReceipt.withVatRate((short) 100));
+    }
+
+    @Test
+    public void whenAmountIsInvalid_throwsError() {
+        assertInvalidAmount(validReceipt.withAmount(BigDecimal.valueOf(-1)));
+        assertInvalidAmount(validReceipt.withAmount(BigDecimal.valueOf(1000001)));
+        assertValid(validReceipt.withAmount(BigDecimal.valueOf(0)));
+        assertValid(validReceipt.withAmount(BigDecimal.valueOf(1000000)));
     }
 
     @Nested

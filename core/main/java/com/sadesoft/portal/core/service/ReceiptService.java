@@ -4,6 +4,8 @@ import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ReceiptService {
@@ -46,10 +48,16 @@ public class ReceiptService {
         checkMissingField(receipt.vatRate, "vatRate");
         checkMissingField(receipt.description, "description");
         checkVatRate(receipt.vatRate);
+        checkAmount(receipt.amount);
     }
 
     private void checkVatRate(short vatRate) {
         if (vatRate < 0 || vatRate > 100) throw new InvalidInputError("Vat rate should be between 0-100.");
+    }
+
+    private void checkAmount(BigDecimal amount) {
+        int value = amount.intValue();
+        if (value < 0 || value > 1000000) throw new InvalidInputError("Amount should be between 0-1000000.");
     }
 
     private void checkMissingField(Object value, String field) {
