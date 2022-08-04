@@ -11,6 +11,7 @@ import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.service.*;
 import com.sadesoft.portal.rest.controller.*;
+import com.sadesoft.portal.rest.externalRepo.PersonKolayikRepo;
 import com.sadesoft.portal.rest.repo.*;
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
         Connection connection = new DatabaseConfig(props.getSection("database")).connect();
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
         Repo<Expense> expenseRepo = new ExpenseRepo(connection);
-        Repo<Person> personRepo = new PersonRepo(connection);
+        Repo<Person> personRepo = new PersonKolayikRepo();
         Repo<Project> projectRepo = new ProjectRepo(connection);
         Repo<Receipt> receiptRepo = new ReceiptRepo(connection);
         Repo<User> userRepo = new UserRepo(connection);

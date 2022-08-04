@@ -26,7 +26,6 @@
 
 - add: core: 'permission' model and services
 - add: core: 'leave' model and services
-- fix: rest: error when updating records without id
 - add: rest: run pg.sql at startup
 - add: rest: sorting, filtering
 - add: rest: api authentication with token

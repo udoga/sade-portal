@@ -40,6 +40,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T update(int id, T record) {
+        record.setId(id);
         return call(() -> command(createUpdateSql(), record, true));
     }
 
@@ -51,14 +52,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected abstract T toObject(ResultSet s) throws SQLException;
 
     protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;
-
-    protected char getChar(ResultSet set, String columnName) throws SQLException {
-        return set.getString(columnName).charAt(0);
-    }
-
-    protected void setChar(PreparedStatement s, int index, char c) throws SQLException {
-        s.setString(index, String.valueOf(c));
-    }
 
     protected LocalDate getLocalDate(ResultSet set, String columnName) throws SQLException {
         Date date = set.getDate(columnName);
