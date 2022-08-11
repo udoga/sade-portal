@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.externalRepo;
+package com.sadesoft.portal.rest.kolayik;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -62,7 +62,7 @@ CREATE TYPE tour_status AS ENUM (
 );
 
 CREATE TYPE receipt_category AS ENUM (
-    'Food', 'Communication', 'Transportation', 'Stationery', 'Technology', 'Vehicle', 'Office', 'Accomodation',
+    'Food', 'Communication', 'Transportation', 'Stationery', 'Technology', 'Vehicle', 'Office', 'Accommodation',
     'Notary', 'Cargo', 'Balancing', 'Other'
 );
 
