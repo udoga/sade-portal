@@ -33,25 +33,37 @@ public class Props {
         return new Props(result);
     }
 
-    public String get(String key) {
+    public String getString(String key) {
         String value = map.get(key);
         if (value == null) throw new RuntimeException("Property not found: key=" + key);
         return value;
     }
 
-    public String getOrDefault(String key, String defaultValue) {
+    public String getString(String key, String defaultValue) {
         return map.getOrDefault(key, defaultValue);
     }
 
     public int getInt(String key) {
-        String value = get(key);
-        return Integer.parseInt(value);
+        return Integer.parseInt(getString(key));
+    }
+
+    public int getInt(String key, int defaultValue) {
+        String value = getString(key, "");
+        return value.isEmpty()? defaultValue : Integer.parseInt(value);
     }
 
     public boolean getBool(String key) {
-        String value = get(key);
-        if (value.equals("true")) return true;
-        if (value.equals("false")) return false;
-        throw new RuntimeException("Invalid boolean: " + value);
+        return toBool(getString(key));
+    }
+
+    public boolean getBool(String key, boolean defaultValue) {
+        String value = getString(key, "");
+        return value.isEmpty()? defaultValue : toBool(value);
+    }
+
+    private boolean toBool(String s) {
+        if (s.equals("true")) return true;
+        if (s.equals("false")) return false;
+        throw new RuntimeException("Invalid boolean: " + s);
     }
 }

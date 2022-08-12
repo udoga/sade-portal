@@ -11,10 +11,10 @@ public class DatabaseConfig {
     public String driver;
 
     public DatabaseConfig(Props props) {
-        this.url = props.get("url");
-        this.username = props.getOrDefault("username", "");
-        this.password = props.getOrDefault("password", "");
-        this.driver = props.getOrDefault("driver", "");
+        this.url = props.getString("url");
+        this.username = props.getString("username", "");
+        this.password = props.getString("password", "");
+        this.driver = props.getString("driver", "");
     }
 
     public Connection connect() throws SQLException, ClassNotFoundException {
