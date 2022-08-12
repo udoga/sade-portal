@@ -24,7 +24,8 @@
 
 ## Todos
 
-- ref: core: use 'graduated' bool instead of EducationLevel
+- ref: core: Person: remove 'workingDayId' field
+- ref: core: Person: use 'graduated' bool instead of EducationLevel
 - del: core: 'project' model and services
 - add: core: 'permission' model and services
 - add: core: 'leave' model and services

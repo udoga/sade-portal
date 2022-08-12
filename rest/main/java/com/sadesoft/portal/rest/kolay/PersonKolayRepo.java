@@ -121,7 +121,7 @@ public class PersonKolayRepo implements Repo<Person> {
     }
 
     private Integer getInteger(JsonNode node) {
-        return isNull(node)? null : Integer.getInteger(node.asText());
+        return isNull(node)? null : node.asInt();
     }
 
     private Boolean getBoolean(JsonNode node) {
@@ -139,11 +139,12 @@ public class PersonKolayRepo implements Repo<Person> {
 
     private BloodType getBloodType(JsonNode node) {
         String s = getString(node);
-        return (s == null)? null : BloodType.valueOf(s.replace("-", "Negative").replace("+", "Positive"));
+        if (s == null) return null;
+        return BloodType.valueOf(s.replace("0", "Zero").replace("-", "Negative").replace("+", "Positive"));
     }
 
     private boolean isNull(JsonNode node) {
-        return (node == null || node.asText().equals("null"));
+        return (node == null || node.isNull());
     }
 
     private String capitalize(String s) {
