@@ -43,7 +43,8 @@ public class RestServer {
 
     private void configureServer() {
         server._conf.enableCorsForAllOrigins();
-        server._conf.addStaticFiles(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
+        if (!config.uiFolder.isEmpty())
+            server._conf.addStaticFiles(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
     }
 
     private void configureMapper() {
