@@ -108,7 +108,7 @@ public class PersonTest {
     @Test
     public void checksEquality() {
         assertEquals(validPerson, validPerson.copy());
-        assertNotEquals(validPerson, validPerson.withId(0));
+        assertNotEquals(validPerson, validPerson.withId("0"));
         assertNotEquals(validPerson, validPerson.withFirstName(null));
         assertNotEquals(validPerson, validPerson.withLastName(null));
         assertNotEquals(validPerson, validPerson.withEmail(null));

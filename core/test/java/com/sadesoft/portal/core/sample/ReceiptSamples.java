@@ -7,7 +7,7 @@ import com.sadesoft.portal.core.model.*;
 public class ReceiptSamples {
     public static Receipt validReceipt = new Receipt(
             null,
-            1,
+            "1",
             LocalDate.of(2022, 1, 1),
             ReceiptCategory.Other,
             new BigDecimal("10.20"),

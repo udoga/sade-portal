@@ -21,7 +21,7 @@ public class ProjectRepo extends JdbcRepo<Project> {
     public Project toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Project(
-                s.getInt(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 s.getString(getColumnName(i)));
     }
 
@@ -29,6 +29,6 @@ public class ProjectRepo extends JdbcRepo<Project> {
     protected void fillStatement(PreparedStatement s, Project p) throws SQLException {
         int i = 1;
         s.setString(i++, p.name);
-        if (p.id != null) s.setInt(i, p.id);
+        if (p.id != null) setId(s, i, p.id);
     }
 }

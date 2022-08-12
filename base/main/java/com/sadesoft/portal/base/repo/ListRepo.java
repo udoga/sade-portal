@@ -31,19 +31,19 @@ public class ListRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T create(T record) {
-        record.setId(nextId++);
+        record.setId(String.valueOf(nextId++));
         records.add(record);
         return record;
     }
 
     @Override
-    public T read(int id) {
+    public T read(String id) {
         int index = findIndex(id);
         return records.get(index);
     }
 
     @Override
-    public T update(int id, T record) {
+    public T update(String id, T record) {
         int index = findIndex(id);
         record.setId(id);
         records.set(index, record);
@@ -51,13 +51,13 @@ public class ListRepo<T extends Record> implements Repo<T> {
     }
 
     @Override
-    public T delete(int id) {
+    public T delete(String id) {
         int index = findIndex(id);
         return records.remove(index);
     }
 
-    private int findIndex(int id) {
-        for (int i = 0; i < records.size(); i++) if (records.get(i).getId() == id) return i;
+    private int findIndex(String id) {
+        for (int i = 0; i < records.size(); i++) if (id.equals(records.get(i).getId())) return i;
         throw new RecordNotFoundError(tableName, id);
     }
 }

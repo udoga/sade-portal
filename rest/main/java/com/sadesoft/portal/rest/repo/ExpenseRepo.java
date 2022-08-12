@@ -27,8 +27,8 @@ public class ExpenseRepo extends JdbcRepo<Expense>{
     public Expense toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Expense(
-                s.getInt(getColumnName(i++)),
-                s.getInt(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
                 s.getBigDecimal(getColumnName(i++)),
                 Currency.valueOf(s.getString(getColumnName(i++))),
@@ -41,13 +41,13 @@ public class ExpenseRepo extends JdbcRepo<Expense>{
     @Override
     protected void fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
-        s.setInt(i++, o.personId);
+        setId(s, i++, o.personId);
         setLocalDate(s, i++, o.formDate);
         s.setBigDecimal(i++, o.amount);
         s.setString(i++, o.currency.name());
         s.setBoolean(i++, o.paid);
         s.setString(i++, o.description);
         s.setString(i++, o.status.name());
-        if (o.id != null) s.setInt(i, o.id);
+        if (o.id != null) setId(s, i, o.id);
     }
 }

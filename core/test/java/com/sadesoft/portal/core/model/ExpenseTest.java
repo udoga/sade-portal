@@ -56,7 +56,7 @@ public class ExpenseTest {
     @Test
     public void checksEquality() {
         assertEquals(validExpense, validExpense.copy());
-        assertNotEquals(validExpense, validExpense.withId(0));
+        assertNotEquals(validExpense, validExpense.withId("0"));
         assertNotEquals(validExpense, validExpense.withPersonId(null));
         assertNotEquals(validExpense, validExpense.withFormDate(null));
         assertNotEquals(validExpense, validExpense.withAmount(null));

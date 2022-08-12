@@ -51,7 +51,7 @@ public class ReceiptTest {
     @Test
     public void checksEquality() {
         assertEquals(validReceipt, validReceipt.copy());
-        assertNotEquals(validReceipt, validReceipt.withId(0));
+        assertNotEquals(validReceipt, validReceipt.withId("0"));
         assertNotEquals(validReceipt, validReceipt.withExpenseId(null));
         assertNotEquals(validReceipt, validReceipt.withReceiptDate(null));
         assertNotEquals(validReceipt, validReceipt.withReceiptCategory(null));

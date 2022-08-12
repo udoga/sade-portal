@@ -45,9 +45,9 @@ public class ReceiptServiceTest {
     @Test
     public void createsReceipt() {
         Receipt receipt = service.create(validReceipt);
-        assertEquals(validReceipt.withId(0), receipt);
+        assertEquals(validReceipt.withId("0"), receipt);
         assertEquals(1, repo.list().size());
-        assertEquals(receipt, repo.read(0));
+        assertEquals(receipt, repo.read("0"));
     }
 
     @Test
@@ -86,28 +86,28 @@ public class ReceiptServiceTest {
         @Test
         public void listsReceipts() {
             assertEquals(1, service.list().size());
-            assertEquals(validReceipt.withId(0), service.list().get(0));
-            assertEquals(validReceipt.withId(0), service.read(0));
+            assertEquals(validReceipt.withId("0"), service.list().get(0));
+            assertEquals(validReceipt.withId("0"), service.read("0"));
         }
 
         @Test
         public void updatesReceiptById() {
-            Receipt receipt = service.update(0, validReceipt.withDescription("updated"));
-            assertEquals(validReceipt.withId(0).withDescription("updated"), receipt);
-            assertEquals(receipt, repo.read(0));
+            Receipt receipt = service.update("0", validReceipt.withDescription("updated"));
+            assertEquals(validReceipt.withId("0").withDescription("updated"), receipt);
+            assertEquals(receipt, repo.read("0"));
         }
 
         @Test
         public void deletesReceiptById() {
-            Receipt receipt = service.delete(0);
-            assertEquals(validReceipt.withId(0), receipt);
+            Receipt receipt = service.delete("0");
+            assertEquals(validReceipt.withId("0"), receipt);
             assertEquals(0, service.list().size());
         }
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update(0, validReceipt.withReceiptDate(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validReceipt.withReceiptCategory(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validReceipt.withReceiptDate(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validReceipt.withReceiptCategory(null)));
         }
     }
 }

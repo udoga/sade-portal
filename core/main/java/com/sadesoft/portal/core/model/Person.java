@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
 public class Person implements Record, Cloneable {
-    public Integer id = null;
+    public String id = null;
     public String firstName = null;
     public String lastName = null;
     public String email = null;
@@ -35,7 +35,7 @@ public class Person implements Record, Cloneable {
     public Person () {
     }
 
-    public Person(Integer id,
+    public Person(String id,
                   String firstName,
                   String lastName,
                   String email,
@@ -154,12 +154,12 @@ public class Person implements Record, Cloneable {
     }
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -171,7 +171,7 @@ public class Person implements Record, Cloneable {
         }
     }
 
-    public Person withId(Integer id) {
+    public Person withId(String id) {
         Person person = copy();
         person.id = id;
         return person;

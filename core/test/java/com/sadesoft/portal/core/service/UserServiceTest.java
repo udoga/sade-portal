@@ -24,9 +24,9 @@ public class UserServiceTest {
     @Test
     public void createsUser() {
         User user = service.create(validUser);
-        assertEquals(validUser.withId(0), user);
+        assertEquals(validUser.withId("0"), user);
         assertEquals(1, repo.list().size());
-        assertEquals(user, repo.read(0));
+        assertEquals(user, repo.read("0"));
     }
 
     @Test
@@ -50,20 +50,20 @@ public class UserServiceTest {
         public void listsUsers() {
             assertEquals(1, service.list().size());
             assertEquals(validUser, service.list().get(0));
-            assertEquals(validUser, service.read(0));
+            assertEquals(validUser, service.read("0"));
         }
 
         @Test
         public void updatesUserById() {
-            User user = service.update(0, validUser.withUsername("updated"));
-            assertEquals(validUser.withId(0).withUsername("updated"), user);
-            assertEquals(user, service.read(0));
+            User user = service.update("0", validUser.withUsername("updated"));
+            assertEquals(validUser.withId("0").withUsername("updated"), user);
+            assertEquals(user, service.read("0"));
         }
 
         @Test
         public void deletesUserById() {
-            User user = service.delete(0);
-            assertEquals(validUser.withId(0), user);
+            User user = service.delete("0");
+            assertEquals(validUser.withId("0"), user);
             assertEquals(0, service.list().size());
         }
 
@@ -74,7 +74,7 @@ public class UserServiceTest {
         }
 
         private void assertMissingFieldOnUpdate(User user) {
-            assertThrows(MissingFieldError.class, () -> service.update(0, user));
+            assertThrows(MissingFieldError.class, () -> service.update("0", user));
         }
     }
 }

@@ -24,6 +24,8 @@
 
 ## Todos
 
+- ref: core: use 'graduated' bool instead of EducationLevel
+- del: core: 'project' model and services
 - add: core: 'permission' model and services
 - add: core: 'leave' model and services
 - add: rest: run pg.sql at startup

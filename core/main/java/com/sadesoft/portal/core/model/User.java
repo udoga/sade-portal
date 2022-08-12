@@ -4,14 +4,14 @@ import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
 public class User implements Record, Cloneable {
-    public Integer id = null;
+    public String id = null;
     public String username = null;
     public String fullName = null;
 
     public User() {
     }
 
-    public User(Integer id, String username, String fullName) {
+    public User(String id, String username, String fullName) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
@@ -36,12 +36,12 @@ public class User implements Record, Cloneable {
     }
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -53,7 +53,7 @@ public class User implements Record, Cloneable {
         }
     }
 
-    public User withId(Integer id) {
+    public User withId(String id) {
         User user = copy();
         user.id = id;
         return user;

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ExpenseSamples {
     public static Expense validExpense = new Expense(
             null,
-            1,
+            "1",
             LocalDate.of(2022, 1, 1),
             new BigDecimal("1000.10"),
             Currency.EUR,

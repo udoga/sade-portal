@@ -34,24 +34,32 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     @Override
-    public T read(int id) {
+    public T read(String id) {
         return call(() -> getFirst(query(createSelectSql(" where " + getIdName() + " = " + id)), id));
     }
 
     @Override
-    public T update(int id, T record) {
+    public T update(String id, T record) {
         record.setId(id);
         return call(() -> command(createUpdateSql(), record, true));
     }
 
     @Override
-    public T delete(int id) {
+    public T delete(String id) {
         return call(() -> command(createDeleteSql(id), read(id), false));
     }
 
     protected abstract T toObject(ResultSet s) throws SQLException;
 
     protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;
+
+    protected String getId(ResultSet set, String columnName) throws SQLException {
+        return String.valueOf(set.getInt(columnName));
+    }
+
+    protected void setId(PreparedStatement s, int index, String id) throws SQLException {
+        s.setInt(index, Integer.parseInt(id));
+    }
 
     protected LocalDate getLocalDate(ResultSet set, String columnName) throws SQLException {
         Date date = set.getDate(columnName);
@@ -83,7 +91,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
     }
 
-    private T getFirst(List<T> objects, Integer id) {
+    private T getFirst(List<T> objects, String id) {
         if (objects.isEmpty()) throw new RecordNotFoundError(tableName, id);
         return objects.get(0);
     }
@@ -120,8 +128,8 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return "update " + tableName + " set " + repeat("%1$s = %2$s", false) + " where " + getIdName() + " = ?";
     }
 
-    private String createDeleteSql(Integer id) {
-        return "delete from " + tableName + " where " + getIdName() + " = " + id.toString();
+    private String createDeleteSql(String id) {
+        return "delete from " + tableName + " where " + getIdName() + " = " + id;
     }
 
     private String repeat(String template, boolean includeId) {

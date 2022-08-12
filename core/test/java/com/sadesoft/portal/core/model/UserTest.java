@@ -39,7 +39,7 @@ public class UserTest {
     @Test
     public void checksEquality() {
         assertEquals(UserSamples.validUser, validUser.copy());
-        assertNotEquals(UserSamples.validUser, validUser.withId(0));
+        assertNotEquals(UserSamples.validUser, validUser.withId("0"));
         assertNotEquals(UserSamples.validUser, validUser.withUsername(null));
         assertNotEquals(UserSamples.validUser, validUser.withFullName(null));
     }

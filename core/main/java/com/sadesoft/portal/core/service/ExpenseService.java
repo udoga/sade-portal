@@ -22,7 +22,7 @@ public class ExpenseService {
         return repo.listPage(pageNo, pageSize);
     }
 
-    public Expense read(int id) {
+    public Expense read(String id) {
         return repo.read(id);
     }
 
@@ -31,12 +31,12 @@ public class ExpenseService {
         return repo.create(expense);
     }
 
-    public Expense update(int id, Expense expense) {
+    public Expense update(String id, Expense expense) {
         check(expense);
         return repo.update(id, expense);
     }
 
-    public Expense delete(int id) {
+    public Expense delete(String id) {
         return repo.delete(id);
     }
 

@@ -87,9 +87,9 @@ public class PersonServiceTest {
     @Test
     public void createsPerson() {
         Person person = service.create(validPerson);
-        assertEquals(validPerson.withId(0), person);
+        assertEquals(validPerson.withId("0"), person);
         assertEquals(1, repo.list().size());
-        assertEquals(person, repo.read(0));
+        assertEquals(person, repo.read("0"));
     }
 
     @Test
@@ -211,28 +211,28 @@ public class PersonServiceTest {
         @Test
         public void listsPeople() {
             assertEquals(1, service.list().size());
-            assertEquals(validPerson.withId(0), service.list().get(0));
-            assertEquals(validPerson.withId(0), service.read(0));
+            assertEquals(validPerson.withId("0"), service.list().get(0));
+            assertEquals(validPerson.withId("0"), service.read("0"));
         }
 
         @Test
         public void updatesPersonById() {
-            Person person = service.update(0, validPerson.withFirstName("updated"));
-            assertEquals(validPerson.withId(0).withFirstName("updated"), person);
-            assertEquals(person, repo.read(0));
+            Person person = service.update("0", validPerson.withFirstName("updated"));
+            assertEquals(validPerson.withId("0").withFirstName("updated"), person);
+            assertEquals(person, repo.read("0"));
         }
 
         @Test
         public void deletesPersonById() {
-            Person person = service.delete(0);
-            assertEquals(validPerson.withId(0), person);
+            Person person = service.delete("0");
+            assertEquals(validPerson.withId("0"), person);
             assertEquals(0, service.list().size());
         }
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withFirstName(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validPerson.withLastName(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validPerson.withFirstName(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validPerson.withLastName(null)));
         }
     }
 }

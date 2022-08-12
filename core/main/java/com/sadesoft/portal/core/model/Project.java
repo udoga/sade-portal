@@ -3,13 +3,13 @@ package com.sadesoft.portal.core.model;
 import com.sadesoft.portal.base.repo.Record;
 
 public class Project implements Record {
-    public Integer id = null;
+    public String id = null;
     public String name = null;
 
     public Project() {
     }
 
-    public Project(Integer id, String name) {
+    public Project(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -20,12 +20,12 @@ public class Project implements Record {
     }
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

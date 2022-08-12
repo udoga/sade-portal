@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 import com.sadesoft.portal.base.repo.Repo;
-import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.Project;
 
 public class ProjectService {
@@ -20,7 +19,7 @@ public class ProjectService {
         return repo.listPage(pageNo, pageSize);
     }
 
-    public Project read(int id) {
+    public Project read(String id) {
         return repo.read(id);
     }
 
@@ -28,11 +27,11 @@ public class ProjectService {
         return repo.create(project);
     }
 
-    public Project update(int id, Project project) {
+    public Project update(String id, Project project) {
         return repo.update(id, project);
     }
 
-    public Project delete(int id) {
+    public Project delete(String id) {
         return repo.delete(id);
     }
 }

@@ -6,7 +6,7 @@ public interface Repo<T extends Record> {
     List<T> list();
     List<T> listPage(int pageNo, int pageSize);
     T create(T record);
-    T read(int id);
-    T update(int id, T record);
-    T delete(int id);
+    T read(String id);
+    T update(String id, T record);
+    T delete(String id);
 }

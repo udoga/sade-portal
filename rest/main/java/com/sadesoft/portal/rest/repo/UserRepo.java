@@ -22,7 +22,7 @@ public class UserRepo extends JdbcRepo<User> {
     public User toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new User(
-                s.getInt(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 s.getString(getColumnName(i)));
     }
@@ -32,6 +32,6 @@ public class UserRepo extends JdbcRepo<User> {
         int i = 1;
         s.setString(i++, u.username);
         s.setString(i++, u.fullName);
-        if (u.id != null) s.setInt(i, u.id);
+        if (u.id != null) setId(s, i, u.id);
     }
 }

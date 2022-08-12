@@ -54,7 +54,7 @@ public class PersonRepo extends JdbcRepo<Person>{
     public Person toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Person(
-                s.getInt(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 s.getString(getColumnName(i++)),
@@ -111,6 +111,6 @@ public class PersonRepo extends JdbcRepo<Person>{
         s.setString(i++, o.nationality);
         s.setInt(i++, o.numberOfChildren);
         s.setString(i++, o.tourStatus.name());
-        if (o.id != null) s.setInt(i, o.id);
+        if (o.id != null) setId(s, i, o.id);
     }
 }

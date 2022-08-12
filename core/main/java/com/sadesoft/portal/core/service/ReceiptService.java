@@ -23,7 +23,7 @@ public class ReceiptService {
         return repo.listPage(pageNo, pageSize);
     }
 
-    public Receipt read(int id) {
+    public Receipt read(String id) {
         return repo.read(id);
     }
 
@@ -32,12 +32,12 @@ public class ReceiptService {
         return repo.create(receipt);
     }
 
-    public Receipt update(int id, Receipt receipt) {
+    public Receipt update(String id, Receipt receipt) {
         check(receipt);
         return repo.update(id, receipt);
     }
 
-    public Receipt delete(int id) {
+    public Receipt delete(String id) {
         return repo.delete(id);
     }
 

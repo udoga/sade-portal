@@ -35,9 +35,9 @@ public class ExpenseServiceTest {
     @Test
     public void createsExpense() {
         Expense expense = service.create(validExpense);
-        assertEquals(validExpense.withId(0), expense);
+        assertEquals(validExpense.withId("0"), expense);
         assertEquals(1, repo.list().size());
-        assertEquals(expense, repo.read(0));
+        assertEquals(expense, repo.read("0"));
     }
 
     @Test
@@ -66,28 +66,28 @@ public class ExpenseServiceTest {
         @Test
         public void listsExpenses() {
             assertEquals(1, service.list().size());
-            assertEquals(validExpense.withId(0), service.list().get(0));
-            assertEquals(validExpense.withId(0), service.read(0));
+            assertEquals(validExpense.withId("0"), service.list().get(0));
+            assertEquals(validExpense.withId("0"), service.read("0"));
         }
 
         @Test
         public void updatesExpenseById() {
-            Expense expense = service.update(0, validExpense.withDescription("updated"));
-            assertEquals(validExpense.withId(0).withDescription("updated"), expense);
-            assertEquals(expense, repo.read(0));
+            Expense expense = service.update("0", validExpense.withDescription("updated"));
+            assertEquals(validExpense.withId("0").withDescription("updated"), expense);
+            assertEquals(expense, repo.read("0"));
         }
 
         @Test
         public void deletesExpenseById() {
-            Expense expense = service.delete(0);
-            assertEquals(validExpense.withId(0), expense);
+            Expense expense = service.delete("0");
+            assertEquals(validExpense.withId("0"), expense);
             assertEquals(0, service.list().size());
         }
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update(0, validExpense.withPersonId(null)));
-            assertThrows(MissingFieldError.class, () -> service.update(0, validExpense.withFormDate(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withPersonId(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withFormDate(null)));
         }
     }
 }

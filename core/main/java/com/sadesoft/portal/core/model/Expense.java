@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Expense implements Record, Cloneable {
-    public Integer id = null;
-    public Integer personId = null;
+    public String id = null;
+    public String personId = null;
     public LocalDate formDate = null;
     public BigDecimal amount = null;
     public Currency currency = null;
@@ -16,8 +16,8 @@ public class Expense implements Record, Cloneable {
     public String description = null;
     public ApprovalStatus status = null;
 
-    public Expense(Integer id,
-                   Integer personId,
+    public Expense(String id,
+                   String personId,
                    LocalDate formDate,
                    BigDecimal amount,
                    Currency currency,
@@ -66,12 +66,12 @@ public class Expense implements Record, Cloneable {
     }
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,13 +83,13 @@ public class Expense implements Record, Cloneable {
         }
     }
 
-    public Expense withId(Integer id) {
+    public Expense withId(String id) {
         Expense expense = copy();
         expense.id = id;
         return expense;
     }
 
-    public Expense withPersonId(Integer personId) {
+    public Expense withPersonId(String personId) {
         Expense expense = copy();
         expense.personId = personId;
         return expense;

@@ -21,7 +21,7 @@ public class PersonService {
         return repo.listPage(pageNo, pageSize);
     }
 
-    public Person read(int id) {
+    public Person read(String id) {
         return repo.read(id);
     }
 
@@ -30,12 +30,12 @@ public class PersonService {
         return repo.create(person);
     }
 
-    public Person update(int id, Person person) {
+    public Person update(String id, Person person) {
         check(person);
         return repo.update(id, person);
     }
 
-    public Person delete(int id) {
+    public Person delete(String id) {
         return repo.delete(id);
     }
 

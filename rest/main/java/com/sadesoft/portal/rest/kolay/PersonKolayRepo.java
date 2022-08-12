@@ -41,17 +41,17 @@ public class PersonKolayRepo implements Repo<Person> {
     }
 
     @Override
-    public Person read(int id) {
+    public Person read(String id) {
         return getPerson(fetchNode(serviceUrl + "/view/" + id, "GET", "person"));
     }
 
     @Override
-    public Person update(int id, Person record) {
+    public Person update(String id, Person record) {
         return null;
     }
 
     @Override
-    public Person delete(int id) {
+    public Person delete(String id) {
         return null;
     }
 
@@ -72,7 +72,7 @@ public class PersonKolayRepo implements Repo<Person> {
         catch (Exception e) { throw new RuntimeException(e); }
     }
 
-    private HttpRequest getHttpRequest(String url, String operation){
+    private HttpRequest getHttpRequest(String url, String operation) {
         return HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .method(operation, HttpRequest.BodyPublishers.noBody())
@@ -81,7 +81,7 @@ public class PersonKolayRepo implements Repo<Person> {
 
     private Person getPerson(JsonNode node) {
         return new Person(
-                null,
+                getString(node.findValue("id")),
                 getString(node.findValue("firstName")),
                 getString(node.findValue("lastName")),
                 getString(node.findValue("email")),

@@ -27,8 +27,8 @@ public class ReceiptRepo extends JdbcRepo<Receipt>{
     public Receipt toObject(ResultSet s) throws SQLException {
         int i = 0;
         return new Receipt(
-                s.getInt(getColumnName(i++)),
-                s.getInt(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
                 ReceiptCategory.valueOf(s.getString(getColumnName(i++))),
                 s.getBigDecimal(getColumnName(i++)),
@@ -40,12 +40,12 @@ public class ReceiptRepo extends JdbcRepo<Receipt>{
     @Override
     protected void fillStatement(PreparedStatement s, Receipt o) throws SQLException {
         int i = 1;
-        s.setInt(i++, o.expenseId);
+        setId(s, i++, o.expenseId);
         setLocalDate(s, i++, o.receiptDate);
         s.setString(i++, o.category.name());
         s.setBigDecimal(i++, o.amount);
         s.setShort(i++, o.vatRate);
         s.setString(i++, o.description);
-        if (o.id != null) s.setInt(i, o.id);
+        if (o.id != null) setId(s, i, o.id);
     }
 }

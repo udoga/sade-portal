@@ -22,8 +22,8 @@ public class RestController {
         this.methods.add(new RestMethod(type, path, handler));
     }
 
-    protected int getId(Context c) {
-        return Integer.parseInt(c.pathParam("id"));
+    protected String getId(Context c) {
+        return c.pathParam("id");
     }
 
     protected void send(Context c, Object data) {

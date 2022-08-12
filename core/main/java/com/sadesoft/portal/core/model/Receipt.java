@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Receipt implements Record, Cloneable {
-    public Integer id = null;
-    public Integer expenseId = null;
+    public String id = null;
+    public String expenseId = null;
     public LocalDate receiptDate = null;
     public ReceiptCategory category = null;
     public BigDecimal amount = null;
@@ -17,8 +17,8 @@ public class Receipt implements Record, Cloneable {
     public Receipt() {
     }
 
-    public Receipt(Integer id,
-                   Integer expenseId,
+    public Receipt(String id,
+                   String expenseId,
                    LocalDate receiptDate,
                    ReceiptCategory category,
                    BigDecimal amount,
@@ -60,12 +60,12 @@ public class Receipt implements Record, Cloneable {
     }
 
     @Override
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,13 +77,13 @@ public class Receipt implements Record, Cloneable {
         }
     }
 
-    public Receipt withId(Integer id) {
+    public Receipt withId(String id) {
         Receipt receipt = copy();
         receipt.id = id;
         return receipt;
     }
 
-    public Receipt withExpenseId(Integer expenseId) {
+    public Receipt withExpenseId(String expenseId) {
         Receipt receipt = copy();
         receipt.expenseId = expenseId;
         return receipt;

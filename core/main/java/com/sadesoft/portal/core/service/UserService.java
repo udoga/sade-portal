@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.base.repo.Repo;
-import com.sadesoft.portal.core.model.Person;
 import com.sadesoft.portal.core.model.User;
 
 public class UserService {
@@ -22,7 +21,7 @@ public class UserService {
         return repo.listPage(pageNo, pageSize);
     }
 
-    public User read(int id) {
+    public User read(String id) {
         return repo.read(id);
     }
 
@@ -31,12 +30,12 @@ public class UserService {
         return repo.create(user);
     }
 
-    public User update(int id, User user) {
+    public User update(String id, User user) {
         check(user);
         return repo.update(id, user);
     }
 
-    public User delete(int id) {
+    public User delete(String id) {
         return repo.delete(id);
     }
 
