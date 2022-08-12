@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest;
+package com.sadesoft.portal.rest.javalin;
 
 import java.util.List;
 import java.util.Map;

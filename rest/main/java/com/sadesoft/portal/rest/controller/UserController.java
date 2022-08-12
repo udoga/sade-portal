@@ -2,7 +2,7 @@ package com.sadesoft.portal.rest.controller;
 
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.service.UserService;
-import com.sadesoft.portal.rest.RestController;
+import com.sadesoft.portal.rest.javalin.RestController;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 

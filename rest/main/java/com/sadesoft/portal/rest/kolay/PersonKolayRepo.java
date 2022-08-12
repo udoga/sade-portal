@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.kolayik;
+package com.sadesoft.portal.rest.kolay;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,14 +14,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonKolayikRepo implements Repo<Person> {
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final HttpClient client = HttpClient.newHttpClient();
-    private final String serviceUrl = "http://localhost:8080/person/";
+public class PersonKolayRepo implements Repo<Person> {
+    private final ObjectMapper mapper;
+    private final HttpClient client;
+    private final String serviceUrl;
+
+    public PersonKolayRepo(KolayConfig config) {
+        this.mapper = new ObjectMapper();
+        this.client = HttpClient.newHttpClient();
+        this.serviceUrl = config.url + "/person";
+    }
 
     @Override
     public List<Person> list() {
-        return getPeople(fetchNode(serviceUrl + "list", "POST", "items"));
+        return getPeople(fetchNode(serviceUrl + "/list", "POST", "items"));
     }
 
     @Override
@@ -36,7 +42,7 @@ public class PersonKolayikRepo implements Repo<Person> {
 
     @Override
     public Person read(int id) {
-        return getPerson(fetchNode(serviceUrl + "view/" + id, "GET", "person"));
+        return getPerson(fetchNode(serviceUrl + "/view/" + id, "GET", "person"));
     }
 
     @Override
