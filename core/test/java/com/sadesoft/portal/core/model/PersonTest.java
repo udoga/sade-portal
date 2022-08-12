@@ -29,7 +29,7 @@ public class PersonTest {
         assertNull(person.accessType);
         assertNull(person.birthday);
         assertNull(person.bloodType);
-        assertNull(person.educationalLevel);
+        assertNull(person.educationLevel);
         assertNull(person.educationStatus);
         assertNull(person.educationalInstitution);
         assertNull(person.gender);
@@ -59,7 +59,7 @@ public class PersonTest {
                 " accessType=Employee" +
                 " birthday=2000-01-01" +
                 " bloodType=APositive" +
-                " educationalLevel=Bachelor" +
+                " educationLevel=Bachelor" +
                 " educationStatus=Student" +
                 " educationalInstitution=YTU" +
                 " gender=Male" +
@@ -90,7 +90,7 @@ public class PersonTest {
         assertNull(validPerson.withAccessType(null).accessType);
         assertNull(validPerson.withBirthday(null).birthday);
         assertNull(validPerson.withBloodType(null).bloodType);
-        assertNull(validPerson.withEducationalLevel(null).educationalLevel);
+        assertNull(validPerson.withEducationLevel(null).educationLevel);
         assertNull(validPerson.withEducationStatus(null).educationStatus);
         assertNull(validPerson.withEducationalInstitution(null).educationalInstitution);
         assertNull(validPerson.withGender(null).gender);
@@ -121,7 +121,7 @@ public class PersonTest {
         assertNotEquals(validPerson, validPerson.withAccessType(null));
         assertNotEquals(validPerson, validPerson.withBirthday(null));
         assertNotEquals(validPerson, validPerson.withBloodType(null));
-        assertNotEquals(validPerson, validPerson.withEducationalLevel(null));
+        assertNotEquals(validPerson, validPerson.withEducationLevel(null));
         assertNotEquals(validPerson, validPerson.withEducationStatus(null));
         assertNotEquals(validPerson, validPerson.withEducationalInstitution(null));
         assertNotEquals(validPerson, validPerson.withGender(null));

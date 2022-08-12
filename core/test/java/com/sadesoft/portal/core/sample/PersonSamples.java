@@ -18,7 +18,7 @@ public class PersonSamples {
             AccessType.Employee,
             LocalDate.of(2000, 1, 1),
             BloodType.APositive,
-            EducationalLevel.Bachelor,
+            EducationLevel.Bachelor,
             EducationStatus.Student,
             "YTU",
             Gender.Male,

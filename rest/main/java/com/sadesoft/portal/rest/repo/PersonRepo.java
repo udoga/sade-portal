@@ -8,16 +8,8 @@ import java.util.List;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.model.Person;
-import com.sadesoft.portal.core.model.AccessType;
-import com.sadesoft.portal.core.model.BloodType;
-import com.sadesoft.portal.core.model.EducationalLevel;
-import com.sadesoft.portal.core.model.EducationStatus;
-import com.sadesoft.portal.core.model.Gender;
-import com.sadesoft.portal.core.model.LevelOfDisability;
-import com.sadesoft.portal.core.model.MaritalStatus;
-import com.sadesoft.portal.core.model.MilitaryService;
-import com.sadesoft.portal.core.model.TourStatus;
+import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.model.EducationLevel;
 
 public class PersonRepo extends JdbcRepo<Person>{
     public PersonRepo(Connection connection) {
@@ -35,7 +27,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 new JdbcColumn("access_type", "access_type"),
                 new JdbcColumn("birthday"),
                 new JdbcColumn("blood_type", "blood_type"),
-                new JdbcColumn("educational_level", "educational_level"),
+                new JdbcColumn("education_level", "education_level"),
                 new JdbcColumn("education_status", "education_status"),
                 new JdbcColumn("educational_institution"),
                 new JdbcColumn("gender", "gender"),
@@ -67,7 +59,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 AccessType.valueOf(s.getString(getColumnName(i++))),
                 getLocalDate(s, getColumnName(i++)),
                 BloodType.valueOf(s.getString(getColumnName(i++))),
-                EducationalLevel.valueOf(s.getString(getColumnName(i++))),
+                EducationLevel.valueOf(s.getString(getColumnName(i++))),
                 EducationStatus.valueOf(s.getString(getColumnName(i++))),
                 s.getString(getColumnName(i++)),
                 Gender.valueOf(s.getString(getColumnName(i++))),
@@ -98,7 +90,7 @@ public class PersonRepo extends JdbcRepo<Person>{
         s.setString(i++, o.accessType.name());
         setLocalDate(s, i++, o.birthday);
         s.setString(i++, o.bloodType.name());
-        s.setString(i++, o.educationalLevel.name());
+        s.setString(i++, o.educationLevel.name());
         s.setString(i++, o.educationStatus.name());
         s.setString(i++, o.educationalInstitution);
         s.setString(i++, o.gender.name());

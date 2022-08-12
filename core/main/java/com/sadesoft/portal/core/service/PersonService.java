@@ -61,7 +61,7 @@ public class PersonService {
         checkMissingField(person.accessType, "accessType");
         checkMissingField(person.birthday, "birthday");
         checkMissingField(person.bloodType, "bloodType");
-        checkMissingField(person.educationalLevel, "educationalLevel");
+        checkMissingField(person.educationLevel, "educationLevel");
         checkMissingField(person.educationStatus, "educationStatus");
         checkMissingField(person.educationalInstitution, "educationalInstitution");
         checkMissingField(person.gender, "gender");

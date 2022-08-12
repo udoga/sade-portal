@@ -18,7 +18,7 @@ public class Person implements Record, Cloneable {
     public AccessType accessType = null;
     public LocalDate birthday = null;
     public BloodType bloodType = null;
-    public EducationalLevel educationalLevel = null;
+    public EducationLevel educationLevel = null;
     public EducationStatus educationStatus = null;
     public String educationalInstitution = null;
     public Gender gender = null;
@@ -48,7 +48,7 @@ public class Person implements Record, Cloneable {
                   AccessType accessType,
                   LocalDate birthday,
                   BloodType bloodType,
-                  EducationalLevel educationalLevel,
+                  EducationLevel educationLevel,
                   EducationStatus educationStatus,
                   String educationalInstitution,
                   Gender gender,
@@ -74,7 +74,7 @@ public class Person implements Record, Cloneable {
         this.accessType = accessType;
         this.birthday = birthday;
         this.bloodType = bloodType;
-        this.educationalLevel = educationalLevel;
+        this.educationLevel = educationLevel;
         this.educationStatus = educationStatus;
         this.educationalInstitution = educationalInstitution;
         this.gender = gender;
@@ -106,7 +106,7 @@ public class Person implements Record, Cloneable {
                 Objects.equals(accessType, p.accessType) &&
                 Objects.equals(birthday, p.birthday) &&
                 Objects.equals(bloodType, p.bloodType) &&
-                Objects.equals(educationalLevel, p.educationalLevel) &&
+                Objects.equals(educationLevel, p.educationLevel) &&
                 Objects.equals(educationStatus, p.educationStatus) &&
                 Objects.equals(educationalInstitution, p.educationalInstitution) &&
                 Objects.equals(gender, p.gender) &&
@@ -137,7 +137,7 @@ public class Person implements Record, Cloneable {
                 " accessType=" + accessType +
                 " birthday=" + birthday +
                 " bloodType=" + bloodType +
-                " educationalLevel=" + educationalLevel +
+                " educationLevel=" + educationLevel +
                 " educationStatus=" + educationStatus +
                 " educationalInstitution=" + educationalInstitution +
                 " gender=" + gender +
@@ -249,9 +249,9 @@ public class Person implements Record, Cloneable {
         return person;
     }
 
-    public Person withEducationalLevel(EducationalLevel educationalLevel) {
+    public Person withEducationLevel(EducationLevel educationLevel) {
         Person person = copy();
-        person.educationalLevel = educationalLevel;
+        person.educationLevel = educationLevel;
         return person;
     }
 

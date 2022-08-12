@@ -94,7 +94,7 @@ public class PersonKolayRepo implements Repo<Person> {
                 getEnum(node.findValue("accessType"), AccessType.class),
                 getDate(node.findValue("birthday")),
                 getBloodType(node.findValue("bloodType")),
-                getEnum(node.findValue("educationalLevel"), EducationalLevel.class),
+                getEnum(node.findValue("educationLevel"), EducationLevel.class),
                 getEnum(node.findValue("educationStatus"), EducationStatus.class),
                 getString(node.findValue("educationalInstitution")),
                 getEnum(node.findValue("gender"), Gender.class),

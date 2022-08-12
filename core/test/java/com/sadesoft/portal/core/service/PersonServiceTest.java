@@ -106,7 +106,7 @@ public class PersonServiceTest {
         assertMissingField(validPerson.withAccessType(null));
         assertMissingField(validPerson.withBirthday(null));
         assertMissingField(validPerson.withBloodType(null));
-        assertMissingField(validPerson.withEducationalLevel(null));
+        assertMissingField(validPerson.withEducationLevel(null));
         assertMissingField(validPerson.withEducationStatus(null));
         assertMissingField(validPerson.withEducationalInstitution(null));
         assertMissingField(validPerson.withGender(null));
