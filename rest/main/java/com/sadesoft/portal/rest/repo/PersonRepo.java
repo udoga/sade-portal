@@ -28,7 +28,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 new JdbcColumn("birthday"),
                 new JdbcColumn("blood_type", "blood_type"),
                 new JdbcColumn("education_level", "education_level"),
-                new JdbcColumn("education_status", "education_status"),
+                new JdbcColumn("graduated", "graduated"),
                 new JdbcColumn("educational_institution"),
                 new JdbcColumn("gender", "gender"),
                 new JdbcColumn("id_number"),
@@ -60,7 +60,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 getLocalDate(s, getColumnName(i++)),
                 BloodType.valueOf(s.getString(getColumnName(i++))),
                 EducationLevel.valueOf(s.getString(getColumnName(i++))),
-                EducationStatus.valueOf(s.getString(getColumnName(i++))),
+                s.getBoolean(getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 Gender.valueOf(s.getString(getColumnName(i++))),
                 s.getString(getColumnName(i++)),
@@ -91,7 +91,7 @@ public class PersonRepo extends JdbcRepo<Person>{
         setLocalDate(s, i++, o.birthday);
         s.setString(i++, o.bloodType.name());
         s.setString(i++, o.educationLevel.name());
-        s.setString(i++, o.educationStatus.name());
+        s.setBoolean(i++, o.graduated);
         s.setString(i++, o.educationalInstitution);
         s.setString(i++, o.gender.name());
         s.setString(i++, o.idNumber);

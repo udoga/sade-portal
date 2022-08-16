@@ -19,7 +19,7 @@ public class PersonSamples {
             LocalDate.of(2000, 1, 1),
             BloodType.APositive,
             EducationLevel.Bachelor,
-            EducationStatus.Student,
+            false,
             "YTU",
             Gender.Male,
             "12345678910",

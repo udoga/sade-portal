@@ -13,6 +13,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PersonKolayRepo implements Repo<Person> {
     private final ObjectMapper mapper;
@@ -95,7 +96,7 @@ public class PersonKolayRepo implements Repo<Person> {
                 getDate(node.findValue("birthday")),
                 getBloodType(node.findValue("bloodType")),
                 getEnum(node.findValue("educationLevel"), EducationLevel.class),
-                getEnum(node.findValue("educationStatus"), EducationStatus.class),
+                isGraduated(node.findValue("educationStatus")),
                 getString(node.findValue("educationalInstitution")),
                 getEnum(node.findValue("gender"), Gender.class),
                 getString(node.findValue("idNumber")),
@@ -108,6 +109,10 @@ public class PersonKolayRepo implements Repo<Person> {
                 getInteger(node.findValue("numberOfChildren")),
                 getEnum(node.findValue("tourStatus"), TourStatus.class)
         );
+    }
+
+    private Boolean isGraduated(JsonNode educationStatus) {
+        return Objects.equals(getString(educationStatus), "Graduate");
     }
 
     private List<Person> getPeople(JsonNode nodes) {
