@@ -111,8 +111,11 @@ public class PersonKolayRepo implements Repo<Person> {
         );
     }
 
-    private Boolean isGraduated(JsonNode educationStatus) {
-        return Objects.equals(getString(educationStatus), "Graduate");
+    private Boolean isGraduated(JsonNode node) {
+        String str = getString(node);
+        if (Objects.equals(str, "graduate")) return true;
+        if (Objects.equals(str, "student"))  return false;
+        return null;
     }
 
     private List<Person> getPeople(JsonNode nodes) {
