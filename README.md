@@ -22,6 +22,13 @@
 - rest: REST API dependencies and adapters for custom databases.
 - ui: Web user interface with AngularJS.
 
+## Postman 
+
+- To use the Postman mock servers to simulate KolayIK API:
+- Change "kolay.enabled" to true from default.properties
+- Use Postman server URL for "kolay.url" in default.properties
+- Currently, the mock server only has "person/list" and "person/view" data.
+
 ## Todos
 
 - ref: core: Person: remove 'workingDayId' field
