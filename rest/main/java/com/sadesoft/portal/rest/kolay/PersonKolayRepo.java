@@ -3,6 +3,7 @@ package com.sadesoft.portal.rest.kolay;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
 
@@ -28,7 +29,7 @@ public class PersonKolayRepo implements Repo<Person> {
 
     @Override
     public List<Person> list() {
-        return getPeople(fetchNode(serviceUrl + "/list", "POST", "items"));
+        return getPeople(fetchNode(serviceUrl + "/list", "POST", null, "items"));
     }
 
     @Override
@@ -38,26 +39,27 @@ public class PersonKolayRepo implements Repo<Person> {
 
     @Override
     public Person create(Person record) {
-        return null;
+        return getPerson(fetchNode(serviceUrl + "/create/", "POST", toJson(record), "person"));
     }
 
     @Override
     public Person read(String id) {
-        return getPerson(fetchNode(serviceUrl + "/view/" + id, "GET", "person"));
+        return getPerson(fetchNode(serviceUrl + "/view/" + id, "GET", null, "person"));
     }
 
     @Override
     public Person update(String id, Person record) {
-        return null;
+        return getPerson(fetchNode(serviceUrl + "/update/", "PUT", toJson(record), "person"));
     }
 
     @Override
-    public Person delete(String id) {
-        return null;
+    public Person delete(String id)  {
+        throw new ClientError("KolayIK API doesn't support delete operation.");
     }
 
-    private JsonNode fetchNode(String url, String method, String nodeName) {
-        HttpRequest request = getHttpRequest(url, method);
+    private JsonNode fetchNode(String url, String method, String body, String nodeName) {
+        HttpRequest.BodyPublisher publisher = getPublisher(body);
+        HttpRequest request = getHttpRequest(url, method, publisher);
         HttpResponse<String> httpResponse = getHttpResponse(request);
         JsonNode rootNode = getRootNode(httpResponse);
         return rootNode.findValue("data").findValue(nodeName);
@@ -73,11 +75,15 @@ public class PersonKolayRepo implements Repo<Person> {
         catch (Exception e) { throw new RuntimeException(e); }
     }
 
-    private HttpRequest getHttpRequest(String url, String operation) {
+    private HttpRequest getHttpRequest(String url, String method, HttpRequest.BodyPublisher publisher) {
         return HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .method(operation, HttpRequest.BodyPublishers.noBody())
+                .method(method, publisher)
                 .build();
+    }
+
+    private HttpRequest.BodyPublisher getPublisher(String body) {
+        return (body == null) ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(body);
     }
 
     private Person getPerson(JsonNode node) {
@@ -109,6 +115,10 @@ public class PersonKolayRepo implements Repo<Person> {
                 getInteger(node.findValue("numberOfChildren")),
                 getEnum(node.findValue("tourStatus"), TourStatus.class)
         );
+    }
+
+    private String toJson(Person person) {
+        return "";
     }
 
     private Boolean isGraduated(JsonNode node) {
