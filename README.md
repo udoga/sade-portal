@@ -22,7 +22,7 @@
 - rest: REST API dependencies and adapters for custom databases.
 - ui: Web user interface with AngularJS.
 
-## Kolay IK Integration 
+## Kolay IK Integration
 
 - The application can use Kolay IK API instead of local database.
 - There is a mock Kolay IK API we created in Postman cloud.
@@ -33,8 +33,6 @@
 ## Todos
 
 - ref: core: Person: remove 'workingDayId' field
-- ref: core: Person: use 'graduated' bool instead of EducationLevel
-- del: core: 'project' model and services
 - add: core: 'permission' model and services
 - add: core: 'leave' model and services
 - add: rest: run pg.sql at startup
