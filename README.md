@@ -22,12 +22,13 @@
 - rest: REST API dependencies and adapters for custom databases.
 - ui: Web user interface with AngularJS.
 
-## Postman 
+## Kolay IK Integration 
 
-- To use the Postman mock servers to simulate KolayIK API:
-- Change "kolay.enabled" to true from default.properties
-- Use Postman server URL for "kolay.url" in default.properties
-- Currently, the mock server only has "person/list" and "person/view" data.
+- The application can use Kolay IK API instead of local database.
+- There is a mock Kolay IK API we created in Postman cloud.
+- Change "kolay.enabled" to true in default.properties to use it.
+- Current "kolay.url" points to the mock Kolay IK API.
+- To make changes in mock API, contact developers and get access.
 
 ## Todos
 
