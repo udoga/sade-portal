@@ -29,9 +29,9 @@ public class LeaveRepo extends JdbcRepo<Leave> {
         int i = 0;
         return new Leave(
                 getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 LeaveType.valueOf(s.getString(getColumnName(i++))),
-                s.getString(getColumnName(i++)),
+                getId(s, getColumnName(i++)),
                 getLocalDateTime(s, getColumnName(i++)),
                 getLocalDateTime(s, getColumnName(i++)),
                 s.getInt(getColumnName(i++)),
@@ -42,9 +42,9 @@ public class LeaveRepo extends JdbcRepo<Leave> {
     @Override
     protected void fillStatement(PreparedStatement s, Leave l) throws SQLException {
         int i = 1;
-        s.setString(i++, l.personId);
+        setId(s, i++, l.personId);
         s.setString(i++, l.leaveType.name());
-        s.setString(i++, l.replacementPersonId);
+        setId(s, i++, l.replacementPersonId);
         setLocalDateTime(s, i++, l.startTime);
         setLocalDateTime(s, i++, l.endTime);
         s.setInt(i++, l.dayCount);

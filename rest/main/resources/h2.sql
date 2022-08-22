@@ -55,8 +55,8 @@ CREATE TABLE leaves(
     person_id INT NOT NULL,
     leave_type VARCHAR(255) NOT NULL,
     replacement_person_id INT NOT NULL,
-    start_time DATE NOT NULL,
-    end_time DATE NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
     day_count INT NOT NULL,
     description VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
@@ -103,9 +103,9 @@ INSERT INTO expenses VALUES
     (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
 
 INSERT INTO leaves VALUES
---        id, person_id,          leave_type,    replacementPersonId,      startTime,        endTime,   dayCount,   description,     status
-    (default,         1,    'MaternityLeave',                      1,   '2022-01-01',   '2022-05-05',          5,    'Example1', 'Approved'),
-    (default,         2,    'PaternityLeave',                      2,   '2022-01-01',   '2022-06-06',          6,    'Example2', 'Rejected');
+--        id, person_id,          leave_type,    replacement_person_id,            start_time,                end_time,     day_count,   description,    status
+    (default,         1,    'MaternityLeave',                      1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
+    (default,         2,    'PaternityLeave',                      2,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
 
 INSERT INTO receipts VALUES
 --        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
