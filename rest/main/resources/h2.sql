@@ -50,6 +50,19 @@ CREATE TABLE expenses(
     FOREIGN KEY (person_id) REFERENCES people(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE leaves(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    person_id INT NOT NULL,
+    leave_type VARCHAR(255) NOT NULL,
+    replacement_person_id INT NOT NULL,
+    start_time DATE NOT NULL,
+    end_time DATE NOT NULL,
+    day_count INT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (person_id) REFERENCES people(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE receipts(
     id SERIAL PRIMARY KEY NOT NULL,
     expense_id INT NOT NULL,
@@ -88,6 +101,11 @@ INSERT INTO expenses VALUES
 --        id, person_id,    form_date,      amount, currency,  paid,   description,     status
     (default,         1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
     (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
+
+INSERT INTO leaves VALUES
+--        id, person_id,          leave_type,    replacementPersonId,      startTime,        endTime,   dayCount,   description,     status
+    (default,         1,    'MaternityLeave',                      1,   '2022-01-01',   '2022-05-05',          5,    'Example1', 'Approved'),
+    (default,         2,    'PaternityLeave',                      2,   '2022-01-01',   '2022-06-06',          6,    'Example2', 'Rejected');
 
 INSERT INTO receipts VALUES
 --        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description

@@ -2,6 +2,7 @@ package com.sadesoft.portal.base.repo;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -68,6 +69,15 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected void setLocalDate(PreparedStatement s, int index, LocalDate date) throws SQLException {
         s.setDate(index, (date == null)? null : java.sql.Date.valueOf(date));
+    }
+
+    protected LocalDateTime getLocalDateTime(ResultSet set, String columnName) throws SQLException {
+        Timestamp t = set.getTimestamp(columnName);
+        return (t == null)? null : t.toLocalDateTime();
+    }
+
+    protected void setLocalDateTime(PreparedStatement s, int index, LocalDateTime time) throws SQLException {
+        s.setTimestamp(index, (time == null)? null : java.sql.Timestamp.valueOf(time));
     }
 
     private <V> V call(Callable<V> callable) {

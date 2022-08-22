@@ -2,12 +2,9 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.Leave;
-
-
 import java.util.List;
 
 public class LeaveService {
-
     private final Repo<Leave> repo;
 
     public LeaveService(Repo<Leave> repo) {
@@ -22,20 +19,19 @@ public class LeaveService {
         return repo.listPage(pageNo, pageSize);
     }
 
-
-    public Leave create(Leave leave) {
-        return null;
+    public Leave read(String id) {
+        return repo.read(id);
     }
 
-    public Leave read(String id) {
-        return null;
+    public Leave create(Leave leave) {
+        return repo.create(leave);
     }
 
     public Leave update(String id, Leave leave) {
-        return null;
+        return repo.update(id, leave);
     }
 
     public Leave delete(String id) {
-        return null;
+        return repo.delete(id);
     }
 }

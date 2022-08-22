@@ -20,21 +20,21 @@ public class Main {
         KolayConfig kolayConfig = new KolayConfig(props.getSection("kolay"));
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
         Repo<Expense> expenseRepo = new ExpenseRepo(connection);
+        Repo<Leave> leaveRepo = new LeaveRepo(connection);
         Repo<Person> personRepo = kolayConfig.enabled? new PersonKolayRepo(kolayConfig) : new PersonRepo(connection);
         Repo<Receipt> receiptRepo = new ReceiptRepo(connection);
-        Repo<Leave> leaveRepo = new LeaveRepo(connection);
         Repo<User> userRepo = new UserRepo(connection);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
+        LeaveService LeaveService = new LeaveService(leaveRepo);
         PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        LeaveService LeaveService = new LeaveService(leaveRepo);
         UserService userService = new UserService(userRepo);
-        ExpenseController expenseController = new ExpenseController(expenseService);
         PersonController personController = new PersonController(personService);
         ReceiptController receiptController = new ReceiptController(receiptService);
+        ExpenseController expenseController = new ExpenseController(expenseService);
         LeaveController leaveController = new LeaveController(LeaveService);
         UserController userController = new UserController(userService);
-        RestServer server = new RestServer(serverConfig, List.of(expenseController, personController,leaveController,
+        RestServer server = new RestServer(serverConfig, List.of(expenseController, leaveController, personController,
                 receiptController, userController));
         server.run();
     }

@@ -1,12 +1,12 @@
 package com.sadesoft.portal.core.model;
 
-
 import com.sadesoft.portal.base.repo.Record;
 
 import java.time.LocalDateTime;
 
-public class Leave implements Record, Cloneable{
+public class Leave implements Record, Cloneable {
     public String id = null;
+    public String personId = null;
     public LeaveType leaveType = null;
     public String replacementPersonId = null;
     public LocalDateTime startTime = null;
@@ -19,6 +19,7 @@ public class Leave implements Record, Cloneable{
     }
 
     public Leave(String id,
+                 String personId,
                  LeaveType leaveType,
                  String replacementPersonId,
                  LocalDateTime startTime,
@@ -27,6 +28,7 @@ public class Leave implements Record, Cloneable{
                  String description,
                  ApprovalStatus status) {
         this.id = id;
+        this.personId = personId;
         this.leaveType = leaveType;
         this.replacementPersonId = replacementPersonId;
         this.startTime = startTime;
