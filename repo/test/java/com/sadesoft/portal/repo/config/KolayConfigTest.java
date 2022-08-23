@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.kolay;
+package com.sadesoft.portal.repo.config;
 
 import java.util.Map;
 import com.sadesoft.portal.base.config.Props;

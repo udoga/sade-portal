@@ -1,4 +1,5 @@
 rootProject.name = 'sade-portal'
 include 'base'
 include 'core'
+include 'repo'
 include 'rest'

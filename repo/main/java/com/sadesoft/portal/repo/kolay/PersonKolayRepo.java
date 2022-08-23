@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.kolay;
+package com.sadesoft.portal.repo.kolay;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.repo.config.KolayConfig;
 
 import java.net.URI;
 import java.net.http.HttpClient;

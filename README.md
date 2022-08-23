@@ -17,10 +17,11 @@
 
 ## Modules
 
-- base: General classes that can be reusable for unrelated projects.
-- core: Core classes specific to this application.
-- rest: REST API dependencies and adapters for custom databases.
-- ui: Web user interface with AngularJS.
+- base: Classes that can be reusable for unrelated projects.
+- core: Classes and business rules specific to this application.
+- repo: Adapters for databases or external data sources.
+- rest: REST API plugin by using Javalin.
+- ui: Web user interface by using AngularJS.
 
 ## Kolay IK Integration
 

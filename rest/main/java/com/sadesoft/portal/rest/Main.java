@@ -8,10 +8,11 @@ import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.service.*;
+import com.sadesoft.portal.repo.config.*;
+import com.sadesoft.portal.repo.kolay.*;
+import com.sadesoft.portal.repo.local.*;
 import com.sadesoft.portal.rest.controller.*;
 import com.sadesoft.portal.rest.javalin.RestServer;
-import com.sadesoft.portal.rest.kolay.*;
-import com.sadesoft.portal.rest.repo.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {

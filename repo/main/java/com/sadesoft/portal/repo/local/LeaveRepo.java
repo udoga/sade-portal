@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.repo;
+package com.sadesoft.portal.repo.local;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
@@ -50,7 +50,6 @@ public class LeaveRepo extends JdbcRepo<Leave> {
         s.setInt(i++, l.dayCount);
         s.setString(i++, l.description);
         s.setString(i++, l.status.name());
-
         if (l.id != null) setId(s, i, l.id);
     }
 }

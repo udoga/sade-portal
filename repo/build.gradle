@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group 'com.sadesoft.portal'
+version '0.0.0'
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main.java.srcDir("main/java")
+    test.java.srcDir("test/java")
+    main.resources.srcDir("main/resources")
+    test.resources.srcDir("test/resources")
+}
+
+dependencies {
+    implementation project(":base")
+    implementation project(":core")
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
