@@ -101,9 +101,10 @@ nav a:hover, nav a.active {
   background: var(--navigation-hover-color);
 }
 
-nav svg {
-  width: 25px;
+nav i {
+  width: 22px;
   padding-right: 10px;
+  text-align: center;
 }
 
 main {
