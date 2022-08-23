@@ -1,0 +1,41 @@
+<div ng-controller="LeaveFormController">
+    <h2>Leave Form</h2>
+    <form>
+        <div class="field">
+            <label>Person ID</label>
+            <input type="text" placeholder="Person ID" ng-model="leave.personId"/>
+        </div>
+        <div class="field">
+            <label>Leave Type</label>
+            <input type="text" placeholder="Leave Type" ng-model="leave.leaveType"/>
+        </div>
+        <div class="field">
+            <label>Replacement Person ID</label>
+            <input type="text" placeholder="Replacement Person ID" ng-model="leave.replacementPersonId"/>
+        </div>
+        <div class="field">
+            <label>Start Time</label>
+            <input type="text" placeholder="Start Time" ng-model="leave.startTime"/>
+        </div>
+        <div class="field">
+            <label>End Time</label>
+            <input type="text" placeholder="End Time" ng-model="leave.endTime"/>
+        </div>
+        <div class="field">
+            <label>Day Count</label>
+            <input type="text" placeholder="Day Count" ng-model="leave.dayCount"/>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <input type="text" placeholder="Description" ng-model="leave.description"/>
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <input type="text" placeholder="Status" ng-model="leave.status"/>
+        </div>
+        <div class="options">
+            <a class="white form button" href="#!leaves">Back</a>
+            <a class="green form button" href ng-click="save()">Save</a>
+        </div>
+    </form>
+</div>

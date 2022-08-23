@@ -9,6 +9,10 @@ function Config($routeProvider) {
   this.bind("/expenses/new", "expense-form");
   this.bind("/expenses/:id", "expense-page");
   this.bind("/expenses/:id/edit", "expense-form");
+  this.bind("/leaves", "leave-list");
+  this.bind("/leaves/new", "leave-form");
+  this.bind("/leaves/:id", "leave-page");
+  this.bind("/leaves/:id/edit", "leave-form");
   this.bind("/people", "person-list");
   this.bind("/people/new", "person-form");
   this.bind("/people/:id", "person-page");

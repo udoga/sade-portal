@@ -80,4 +80,24 @@ function Api($http) {
   this.deleteUser = function(id) {
     return $http.delete(this.url + "/users/" + id);
   }
+
+  this.listLeaves = function() {
+    return $http.get(this.url + "/leaves");
+  }
+
+  this.createLeave = function(user) {
+    return $http.post(this.url + "/leaves/", user);
+  }
+
+  this.readLeave = function(id) {
+    return $http.get(this.url + "/leaves/" + id);
+  }
+
+  this.updateLeave = function(id, user) {
+    return $http.put(this.url + "/leaves/" + id, user);
+  }
+
+  this.deleteLeave = function(id) {
+    return $http.delete(this.url + "/leaves/" + id);
+  }
 }
