@@ -39,12 +39,12 @@
       <a class="right"><i class="fas fa-cog"></i></a>
     </header>
     <nav ng-class="getNavigationClass()">
-      <a ng-click="navigate('home')" ng-class="getLinkClass('/home')"><i class="fas fa-home"></i>Home</a>
-      <a ng-click="navigate('people')" ng-class="getLinkClass('/people')"><i class="fas fa-person"></i>People</a>
-      <a ng-click="navigate('expenses')" ng-class="getLinkClass('/expenses')"><i class="fas fa-credit-card"></i>Expenses</a>
+      <a ng-click="navigate('home')" ng-class="getLinkClass('/home')"><i class="fa-solid fa-home"></i>Home</a>
+      <a ng-click="navigate('people')" ng-class="getLinkClass('/people')"><i class="fa-solid fa-person"></i>People</a>
+      <a ng-click="navigate('expenses')" ng-class="getLinkClass('/expenses')"><i class="fa-solid fa-credit-card"></i>Expenses</a>
       <a ng-click="navigate('leaves')" ng-class="getLinkClass('/leaves')"><i class="fa-solid fa-umbrella-beach"></i>Leaves</a>
-      <a ng-click="navigate('receipts')" ng-class="getLinkClass('/receipts')"><i class="fas fa-receipt"></i>Receipts</a>
-      <a ng-click="navigate('users')" ng-class="getLinkClass('/users')"><i class="fas fa-user"></i>Users</a>
+      <a ng-click="navigate('receipts')" ng-class="getLinkClass('/receipts')"><i class="fa-solid fa-receipt"></i>Receipts</a>
+      <a ng-click="navigate('users')" ng-class="getLinkClass('/users')"><i class="fa-solid fa-user"></i>Users</a>
     </nav>
     <main ng-class="getMainClass()">
       <div ng-view></div>
@@ -52,4 +52,3 @@
     <div class="overlay" ng-hide="!isOverlayVisible()" ng-click="closeNavigation()"></div>
   </body>
 </html>
-<i class="fa-solid fa-umbrella-beach"></i>

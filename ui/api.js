@@ -85,16 +85,16 @@ function Api($http) {
     return $http.get(this.url + "/leaves");
   }
 
-  this.createLeave = function(user) {
-    return $http.post(this.url + "/leaves/", user);
+  this.createLeave = function(leave) {
+    return $http.post(this.url + "/leaves/", leave);
   }
 
   this.readLeave = function(id) {
     return $http.get(this.url + "/leaves/" + id);
   }
 
-  this.updateLeave = function(id, user) {
-    return $http.put(this.url + "/leaves/" + id, user);
+  this.updateLeave = function(id, leave) {
+    return $http.put(this.url + "/leaves/" + id, leave);
   }
 
   this.deleteLeave = function(id) {
