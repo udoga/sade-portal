@@ -1,7 +1,6 @@
 package com.sadesoft.portal.rest;
 
 import java.sql.Connection;
-import java.util.List;
 
 import com.sadesoft.portal.base.config.*;
 import com.sadesoft.portal.base.repo.Repo;
@@ -25,18 +24,20 @@ public class Main {
         Repo<Person> personRepo = kolayConfig.enabled? new PersonKolayRepo(kolayConfig) : new PersonRepo(connection);
         Repo<Receipt> receiptRepo = new ReceiptRepo(connection);
         Repo<User> userRepo = new UserRepo(connection);
+
         ExpenseService expenseService = new ExpenseService(expenseRepo);
-        LeaveService LeaveService = new LeaveService(leaveRepo);
+        LeaveService leaveService = new LeaveService(leaveRepo);
         PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
-        PersonController personController = new PersonController(personService);
-        ReceiptController receiptController = new ReceiptController(receiptService);
-        ExpenseController expenseController = new ExpenseController(expenseService);
-        LeaveController leaveController = new LeaveController(LeaveService);
-        UserController userController = new UserController(userService);
-        RestServer server = new RestServer(serverConfig, List.of(expenseController, leaveController, personController,
-                receiptController, userController));
+
+        RestServer server = new RestServer(serverConfig);
+        server.enrol(new PersonController(personService));
+        server.enrol(new ReceiptController(receiptService));
+        server.enrol(new ExpenseController(expenseService));
+        server.enrol(new LeaveController(leaveService));
+        server.enrol(new UserController(userService));
+
         server.run();
     }
 }

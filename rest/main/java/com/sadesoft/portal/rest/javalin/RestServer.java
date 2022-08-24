@@ -1,6 +1,5 @@
 package com.sadesoft.portal.rest.javalin;
 
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,16 +17,19 @@ import org.slf4j.LoggerFactory;
 
 public class RestServer {
     private final ServerConfig config;
-    private final List<RestController> controllers;
     private final Javalin server;
     private final Logger logger;
 
-    public RestServer(ServerConfig config, List<RestController> controllers) {
+    public RestServer(ServerConfig config) {
         this.config = config;
-        this.controllers = controllers;
         this.server = Javalin.create();
         this.logger = LoggerFactory.getLogger(RestServer.class);
         configure();
+    }
+
+    public void enrol(RestController controller){
+        for (RestMethod method: controller.methods)
+            server.addHandler(method.type, controller.path + method.path, method.handler);
     }
 
     public void run() {
@@ -37,7 +39,6 @@ public class RestServer {
     private void configure() {
         configureServer();
         configureMapper();
-        configureHandlers();
         configureErrors();
     }
 
@@ -52,12 +53,6 @@ public class RestServer {
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         server._conf.jsonMapper(new JavalinJackson(mapper));
-    }
-
-    private void configureHandlers() {
-        for (RestController controller: controllers)
-            for (RestMethod method: controller.methods)
-                server.addHandler(method.type, controller.path + method.path, method.handler);
     }
 
     private void configureErrors() {
