@@ -3,31 +3,41 @@
   <form>
     <div class="field">
       <label>Person Id</label>
-      <input type="text" placeholder="Person Id" ng-model="expense.personId"/>
+      <input type="number" placeholder="Person Id" ng-model="expense.personId"/>
     </div>
     <div class="field">
       <label>Form Date</label>
-      <input type="text" placeholder="Form Date" ng-model="expense.formDate"/>
+      <input type="date" placeholder="Form Date" ng-model="expense.formDate"/>
     </div>
     <div class="field">
       <label>Amount</label>
-      <input type="text" placeholder="Amount" ng-model="expense.amount"/>
+      <input type="number" min="0" value="0" step="0.01" placeholder="Amount" ng-model="expense.amount"/>
     </div>
     <div class="field">
       <label>Currency</label>
-      <input type="text" placeholder="Currency" ng-model="expense.currency"/>
+      <input list="currency" placeholder="Currency" ng-model="expense.currency"/>
+      <datalist id="currency">
+        <option value="TRY">
+        <option value="EUR">
+        <option value="USD">
+
+      </datalist>
     </div>
     <div class="field">
       <label>Paid</label>
-      <input type="text" placeholder="Paid" ng-model="expense.paid"/>
+      <input type="checkbox" placeholder="Paid" ng-model="expense.paid"/>
     </div>
     <div class="field">
       <label>Description</label>
-      <input type="text" placeholder="Description" ng-model="expense.description"/>
+      <textarea placeholder="Description" ng-model="expense.description"></textarea>
     </div>
     <div class="field">
       <label>Status</label>
-      <input type="text" placeholder="Status" ng-model="expense.status"/>
+      <input list="status" placeholder="Status" ng-model="expense.status"/>
+      <datalist id="status">
+        <option value="Approved">
+        <option value="Rejected">
+      </datalist>
     </div>
     <div class="options">
       <a class="white form button" href="#!expenses">Back</a>
