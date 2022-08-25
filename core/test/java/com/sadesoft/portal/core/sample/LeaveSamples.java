@@ -16,5 +16,5 @@ public class LeaveSamples {
             LocalDateTime.of(2022,5,4,9,19),
             5,
             "descriptionExample",
-            ApprovalStatus.Approved);
+            null);
 }

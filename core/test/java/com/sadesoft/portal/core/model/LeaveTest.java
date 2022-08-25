@@ -38,7 +38,7 @@ public class LeaveTest {
                 " endTime=2022-05-04T09:19" +
                 " dayCount=descriptionExample" +
                 " description=descriptionExample" +
-                " status=Approved]", validLeave.toString());
+                " status=null]", validLeave.toString());
     }
 
     @Test
@@ -65,6 +65,6 @@ public class LeaveTest {
         assertNotEquals(validLeave, validLeave.withEndTime(null));
         assertNotEquals(validLeave, validLeave.withDayCount(null));
         assertNotEquals(validLeave, validLeave.withDescription(null));
-        assertNotEquals(validLeave, validLeave.withStatus(null));
+        assertNotEquals(validLeave, validLeave.withStatus(ApprovalStatus.Approved));
     }
 }

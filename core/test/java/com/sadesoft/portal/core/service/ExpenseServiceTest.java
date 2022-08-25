@@ -52,7 +52,7 @@ public class ExpenseServiceTest {
     }
 
     @Test
-    public void whenHasEmptyFieldOnCreate_throwsError() {
+    public void whenDescriptionIsEmpty_throwsError() {
         assertEmptyField(validExpense.withDescription(""), "description");
     }
 
