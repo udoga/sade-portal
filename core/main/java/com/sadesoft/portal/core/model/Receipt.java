@@ -35,8 +35,7 @@ public class Receipt implements Record, Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Receipt)) return false;
-        Receipt u = (Receipt) o;
+        if (!(o instanceof Receipt u)) return false;
         return Objects.equals(id, u.id) &&
                 Objects.equals(expenseId, u.expenseId) &&
                 Objects.equals(receiptDate, u.receiptDate) &&

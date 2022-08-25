@@ -19,8 +19,7 @@ public class User implements Record, Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof User)) return false;
-        User u = (User) o;
+        if (!(o instanceof User u)) return false;
         return Objects.equals(id, u.id) &&
                 Objects.equals(username, u.username) &&
                 Objects.equals(fullName, u.fullName);

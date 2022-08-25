@@ -91,8 +91,7 @@ public class Person implements Record, Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Person)) return false;
-        Person p = (Person) o;
+        if (!(o instanceof Person p)) return false;
         return Objects.equals(id, p.id) &&
                 Objects.equals(firstName, p.firstName) &&
                 Objects.equals(lastName, p.lastName) &&
