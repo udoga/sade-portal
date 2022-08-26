@@ -35,7 +35,7 @@
 
 - ref: core: Person: remove 'workingDayId' field
 - add: core: 'permission' model and services
-- add: core: 'leave' model and services
+- add: core:  add 'status' field to Person
 - add: rest: run pg.sql at startup
 - add: rest: sorting, filtering
 - add: rest: api authentication with token
