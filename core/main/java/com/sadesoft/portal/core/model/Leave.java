@@ -49,7 +49,8 @@ public class Leave implements Record, Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Leave l)) return false;
+        if (!(o instanceof Leave)) return false;
+        Leave l = (Leave) o;
         return Objects.equals(id, l.id) &&
                 Objects.equals(personId, l.personId) &&
                 Objects.equals(leaveType, l.leaveType) &&

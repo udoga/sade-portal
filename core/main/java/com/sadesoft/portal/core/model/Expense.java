@@ -39,7 +39,8 @@ public class Expense implements Record, Cloneable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Expense e)) return false;
+        if (!(o instanceof Expense)) return false;
+        Expense e = (Expense) o;
         return Objects.equals(id, e.id) &&
                 Objects.equals(personId, e.personId) &&
                 Objects.equals(formDate, e.formDate) &&
