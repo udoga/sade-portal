@@ -1,5 +1,6 @@
 package com.sadesoft.portal.repo.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.repo.kolay.KolayPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class KolayPersonTest {
     private KolayPerson kolayPerson;
+    ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void setup() {
@@ -208,5 +210,15 @@ public class KolayPersonTest {
         assertNotEquals(kolayPerson, kolayPerson.withLevelOfDisability(null));
         assertNotEquals(kolayPerson, kolayPerson.withNumberOfChildren(null));
         assertNotEquals(kolayPerson, kolayPerson.withBloodType(null));
+    }
+
+    @Test
+    public void convertsToJson() {
+        assertEquals(mapper.valueToTree(kolayPerson), kolayPerson.toJson());
+    }
+
+    @Test
+    public void convertsFromJson() {
+        assertEquals(kolayPerson, KolayPerson.fromJson(mapper.valueToTree(kolayPerson)));
     }
 }

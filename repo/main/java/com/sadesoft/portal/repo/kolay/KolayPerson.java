@@ -1,5 +1,8 @@
 package com.sadesoft.portal.repo.kolay;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.repo.Record;
 
 import java.util.Objects;
@@ -74,28 +77,40 @@ public class KolayPerson implements Record, Cloneable {
         this.workEmail = workEmail;
         this.mobilePhone = mobilePhone;
         this.workPhone = workPhone;
-        this.employmentStartDate = employmentStartDate;
-        this.contractEndDate = contractEndDate;
-        this.accessType = accessType;
-        this.birthday = birthday;
-        this.bloodType = bloodType;
-        this.educationLevel = educationLevel;
-        this.educationalInstitution = educationalInstitution;
         this.gender = gender;
+        this.accessType = accessType;
+        this.nationality = nationality;
         this.idNumber = idNumber;
-        this.levelOfDisability = levelOfDisability;
+        this.employmentStartDate = employmentStartDate;
+        this.contractType=contractType;
+        this.contractEndDate = contractEndDate;
+        this.birthday = birthday;
         this.maritalStatus = maritalStatus;
         this.partnerWorkStatus = partnerWorkStatus;
         this.militaryService = militaryService;
         this.militaryServiceDelayDate = militaryServiceDelayDate;
-        this.nationality = nationality;
-        this.numberOfChildren = numberOfChildren;
-        this.tourStatus = tourStatus;
-        this.contractType=contractType;
+        this.educationLevel = educationLevel;
+        this.educationStatus=educationStatus;
+        this.educationalInstitution = educationalInstitution;
         this.status=status;
+        this.tourStatus = tourStatus;
         this.createdAt=createdAt;
         this.updatedAt=updatedAt;
-        this.educationStatus=educationStatus;
+        this.levelOfDisability = levelOfDisability;
+        this.numberOfChildren = numberOfChildren;
+        this.bloodType = bloodType;
+    }
+
+    public static KolayPerson fromJson(JsonNode node) {
+        try {
+            return new ObjectMapper().treeToValue(node, KolayPerson.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public JsonNode toJson() {
+        return new ObjectMapper().valueToTree(this);
     }
 
     @Override
@@ -185,6 +200,10 @@ public class KolayPerson implements Record, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getString(JsonNode node) {
+        return (node == null || Objects.equals(node.asText(), "null"))? null: node.asText();
     }
 
     public KolayPerson withId(String id) {
