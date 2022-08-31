@@ -146,8 +146,7 @@ public class KolayPerson implements Record, Cloneable {
     }
 
     public Boolean toGraduated(String es) {
-        if (es == null) return null;
-        return !Objects.equals(es, "student");
+        return es == null? null : Objects.equals(es, "graduated");
     }
 
     public LocalDate toLocalDate(String date) {
@@ -163,8 +162,10 @@ public class KolayPerson implements Record, Cloneable {
     }
 
     public BloodType toBloodType(String bt) {
-        if (bt == null) return null;
-        return BloodType.ABNegative;
+        return bt == null? null : BloodType.valueOf(bt
+                .replace("0", "Zero")
+                .replace("-", "Negative")
+                .replace("+", "Positive"));
     }
 
     public String toPersonPhoneNumber(String num) {

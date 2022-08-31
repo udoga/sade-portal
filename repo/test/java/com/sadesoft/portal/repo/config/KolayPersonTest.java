@@ -245,6 +245,18 @@ public class KolayPersonTest {
     }
 
     @Test
+    void convertsBloodType() {
+        assertEquals(BloodType.ANegative,    kolayPerson.toBloodType("A-"));
+        assertEquals(BloodType.APositive,    kolayPerson.toBloodType("A+"));
+        assertEquals(BloodType.ZeroNegative, kolayPerson.toBloodType("0-"));
+        assertEquals(BloodType.ZeroPositive, kolayPerson.toBloodType("0+"));
+        assertEquals(BloodType.ABNegative,   kolayPerson.toBloodType("AB-"));
+        assertEquals(BloodType.ABPositive,   kolayPerson.toBloodType("AB+"));
+        assertEquals(BloodType.BNegative,    kolayPerson.toBloodType("B-"));
+        assertEquals(BloodType.BPositive,    kolayPerson.toBloodType("B+"));
+    }
+
+    @Test
     public void convertsToJson() {
         assertEquals(mapper.valueToTree(kolayPerson), kolayPerson.toJson());
     }
