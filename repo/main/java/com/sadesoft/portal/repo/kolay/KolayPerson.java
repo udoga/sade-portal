@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.model.*;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class KolayPerson implements Record, Cloneable {
@@ -113,6 +115,62 @@ public class KolayPerson implements Record, Cloneable {
         return new ObjectMapper().valueToTree(this);
     }
 
+    public Person toPerson() {
+        return new Person(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.email,
+                this.workEmail,
+                toPersonPhoneNumber(this.mobilePhone),
+                toPersonPhoneNumber(this.workPhone),
+                toLocalDate(this.employmentStartDate),
+                toLocalDate(this.contractEndDate),
+                null,
+                toEnum(this.accessType, AccessType.class),
+                toLocalDate(this.birthday),
+                toBloodType(this.bloodType),
+                toEnum(this.educationLevel, EducationLevel.class),
+                toGraduated(this.educationStatus),
+                this.educationalInstitution,
+                toEnum(this.gender, Gender.class),
+                this.idNumber,
+                toEnum(this.levelOfDisability, LevelOfDisability.class),
+                toEnum(this.maritalStatus, MaritalStatus.class),
+                this.partnerWorkStatus,
+                toEnum(this.militaryService, MilitaryService.class),
+                toLocalDate(this.militaryServiceDelayDate),
+                this.nationality,
+                this.numberOfChildren,
+                toEnum(this.tourStatus, TourStatus.class));
+    }
+
+    public Boolean toGraduated(String es) {
+        if (es == null) return null;
+        return !Objects.equals(es, "student");
+    }
+
+    public LocalDate toLocalDate(String date) {
+        return date == null? null : LocalDate.parse(date);
+    }
+
+    public <T extends Enum<T>> T toEnum(String str, Class<T> type) {
+        return str == null? null : T.valueOf(type, capitalize(str));
+    }
+
+    public String capitalize(String str) {
+        return (str.substring(0, 1).toUpperCase() + str.substring(1));
+    }
+
+    public BloodType toBloodType(String bt) {
+        if (bt == null) return null;
+        return BloodType.ABNegative;
+    }
+
+    public String toPersonPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -200,10 +258,6 @@ public class KolayPerson implements Record, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String getString(JsonNode node) {
-        return (node == null || Objects.equals(node.asText(), "null"))? null: node.asText();
     }
 
     public KolayPerson withId(String id) {

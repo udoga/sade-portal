@@ -1,9 +1,12 @@
 package com.sadesoft.portal.repo.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.repo.kolay.KolayPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -210,6 +213,35 @@ public class KolayPersonTest {
         assertNotEquals(kolayPerson, kolayPerson.withLevelOfDisability(null));
         assertNotEquals(kolayPerson, kolayPerson.withNumberOfChildren(null));
         assertNotEquals(kolayPerson, kolayPerson.withBloodType(null));
+    }
+
+    @Test
+    void convertsToPerson() {
+        assertEquals(new Person().withId("1"), new KolayPerson().withId("1").toPerson());
+        assertEquals(new Person().withFirstName("a"), new KolayPerson().withFirstName("a").toPerson());
+        assertEquals(new Person().withLastName("a"), new KolayPerson().withLastName("a").toPerson());
+        assertEquals(new Person().withEmail("a@gmail.com"), new KolayPerson().withEmail("a@gmail.com").toPerson());
+        assertEquals(new Person().withWorkEmail("a2@gmail.com"), new KolayPerson().withWorkEmail("a2@gmail.com").toPerson());
+        assertEquals(new Person().withMobilePhone("+90 5320000000"), new KolayPerson().withMobilePhone("+905320000000").toPerson());
+        assertEquals(new Person().withWorkPhone("+90 5320000001"), new KolayPerson().withWorkPhone("+905320000001").toPerson());
+        assertEquals(new Person().withEmploymentStartDate(LocalDate.parse("2020-08-13")), new KolayPerson().withEmploymentStartDate("2020-08-13").toPerson());
+        assertEquals(new Person().withContractEndDate(LocalDate.parse("2020-08-13")), new KolayPerson().withContractEndDate("2020-08-13").toPerson());
+        assertEquals(new Person().withAccessType(AccessType.Employee), new KolayPerson().withAccessType("employee").toPerson());
+        assertEquals(new Person().withBirthday(LocalDate.parse("2020-08-13")), new KolayPerson().withBirthday("2020-08-13").toPerson());
+        assertEquals(new Person().withBloodType(BloodType.ABNegative), new KolayPerson().withBloodType("AB-").toPerson());
+        assertEquals(new Person().withEducationLevel(EducationLevel.Bachelor), new KolayPerson().withEducationLevel("bachelor").toPerson());
+        assertEquals(new Person().withGraduated(false), new KolayPerson().withEducationStatus("student").toPerson());
+        assertEquals(new Person().withEducationalInstitution("a"), new KolayPerson().withEducationalInstitution("a").toPerson());
+        assertEquals(new Person().withGender(Gender.Male), new KolayPerson().withGender("male").toPerson());
+        assertEquals(new Person().withIdNumber("12"), new KolayPerson().withIdNumber("12").toPerson());
+        assertEquals(new Person().withLevelOfDisability(LevelOfDisability.NotDisabled), new KolayPerson().withLevelOfDisability("notDisabled").toPerson());
+        assertEquals(new Person().withMaritalStatus(MaritalStatus.Single), new KolayPerson().withMaritalStatus("single").toPerson());
+        assertEquals(new Person().withPartnerWorkStatus(false), new KolayPerson().withPartnerWorkStatus(false).toPerson());
+        assertEquals(new Person().withMilitaryService(MilitaryService.Exempt), new KolayPerson().withMilitaryService("exempt").toPerson());
+        assertEquals(new Person().withMilitaryServiceDelayDate(LocalDate.parse("2020-08-13")), new KolayPerson().withMilitaryServiceDelayDate("2020-08-13").toPerson());
+        assertEquals(new Person().withNationality("TR"), new KolayPerson().withNationality("TR").toPerson());
+        assertEquals(new Person().withNumberOfChildren(2), new KolayPerson().withNumberOfChildren(2).toPerson());
+        assertEquals(new Person().withTourStatus(TourStatus.Completed), new KolayPerson().withTourStatus("completed").toPerson());
     }
 
     @Test
