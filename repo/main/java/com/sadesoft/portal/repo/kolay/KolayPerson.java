@@ -126,7 +126,6 @@ public class KolayPerson implements Record, Cloneable {
                 toPersonPhoneNumber(this.workPhone),
                 toLocalDate(this.employmentStartDate),
                 toLocalDate(this.contractEndDate),
-                null,
                 toEnum(this.accessType, AccessType.class),
                 toLocalDate(this.birthday),
                 toBloodType(this.bloodType),

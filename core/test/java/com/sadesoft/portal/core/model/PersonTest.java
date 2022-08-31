@@ -25,7 +25,6 @@ public class PersonTest {
         assertNull(person.workPhone);
         assertNull(person.employmentStartDate);
         assertNull(person.contractEndDate);
-        assertNull(person.workingDayId);
         assertNull(person.accessType);
         assertNull(person.birthday);
         assertNull(person.bloodType);
@@ -55,7 +54,6 @@ public class PersonTest {
                 " workPhone=+90 5355353535" +
                 " employmentStartDate=2022-01-01" +
                 " contractEndDate=2023-01-01" +
-                " workingDayId=123" +
                 " accessType=Employee" +
                 " birthday=2000-01-01" +
                 " bloodType=APositive" +
@@ -86,7 +84,6 @@ public class PersonTest {
         assertNull(validPerson.withWorkPhone(null).workPhone);
         assertNull(validPerson.withEmploymentStartDate(null).employmentStartDate);
         assertNull(validPerson.withContractEndDate(null).contractEndDate);
-        assertNull(validPerson.withWorkingDayId(null).workingDayId);
         assertNull(validPerson.withAccessType(null).accessType);
         assertNull(validPerson.withBirthday(null).birthday);
         assertNull(validPerson.withBloodType(null).bloodType);
@@ -117,7 +114,6 @@ public class PersonTest {
         assertNotEquals(validPerson, validPerson.withWorkPhone(null));
         assertNotEquals(validPerson, validPerson.withEmploymentStartDate(null));
         assertNotEquals(validPerson, validPerson.withContractEndDate(null));
-        assertNotEquals(validPerson, validPerson.withWorkingDayId(null));
         assertNotEquals(validPerson, validPerson.withAccessType(null));
         assertNotEquals(validPerson, validPerson.withBirthday(null));
         assertNotEquals(validPerson, validPerson.withBloodType(null));

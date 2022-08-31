@@ -98,7 +98,6 @@ public class PersonKolayRepo implements Repo<Person> {
                 getString(node.findValue("workPhone")),
                 getDate(node.findValue("employmentStartDate")),
                 getDate(node.findValue("contractEndDate")),
-                null,
                 getEnum(node.findValue("accessType"), AccessType.class),
                 getDate(node.findValue("birthday")),
                 getBloodType(node.findValue("bloodType")),

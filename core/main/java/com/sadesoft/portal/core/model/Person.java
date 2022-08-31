@@ -14,7 +14,6 @@ public class Person implements Record, Cloneable {
     public String workPhone = null;
     public LocalDate employmentStartDate = null;
     public LocalDate contractEndDate = null;
-    public String workingDayId = null;
     public AccessType accessType = null;
     public LocalDate birthday = null;
     public BloodType bloodType = null;
@@ -44,7 +43,6 @@ public class Person implements Record, Cloneable {
                   String workPhone,
                   LocalDate employmentStartDate,
                   LocalDate contractEndDate,
-                  String workingDayId,
                   AccessType accessType,
                   LocalDate birthday,
                   BloodType bloodType,
@@ -70,7 +68,6 @@ public class Person implements Record, Cloneable {
         this.workPhone = workPhone;
         this.employmentStartDate = employmentStartDate;
         this.contractEndDate = contractEndDate;
-        this.workingDayId = workingDayId;
         this.accessType = accessType;
         this.birthday = birthday;
         this.bloodType = bloodType;
@@ -102,7 +99,6 @@ public class Person implements Record, Cloneable {
                 Objects.equals(workPhone, p.workPhone) &&
                 Objects.equals(employmentStartDate, p.employmentStartDate) &&
                 Objects.equals(contractEndDate, p.contractEndDate) &&
-                Objects.equals(workingDayId, p.workingDayId) &&
                 Objects.equals(accessType, p.accessType) &&
                 Objects.equals(birthday, p.birthday) &&
                 Objects.equals(bloodType, p.bloodType) &&
@@ -133,7 +129,6 @@ public class Person implements Record, Cloneable {
                 " workPhone=" + workPhone +
                 " employmentStartDate=" + employmentStartDate +
                 " contractEndDate=" + contractEndDate +
-                " workingDayId=" + workingDayId +
                 " accessType=" + accessType +
                 " birthday=" + birthday +
                 " bloodType=" + bloodType +
@@ -222,12 +217,6 @@ public class Person implements Record, Cloneable {
     public Person withContractEndDate(LocalDate contractEndDate) {
         Person person = copy();
         person.contractEndDate = contractEndDate;
-        return person;
-    }
-
-    public Person withWorkingDayId(String workingDayId) {
-        Person person = copy();
-        person.workingDayId = workingDayId;
         return person;
     }
 

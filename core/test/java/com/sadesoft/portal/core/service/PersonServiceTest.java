@@ -102,7 +102,6 @@ public class PersonServiceTest {
         assertMissingField(validPerson.withWorkPhone(null));
         assertMissingField(validPerson.withEmploymentStartDate(null));
         assertValid(validPerson.withContractEndDate(null));
-        assertMissingField(validPerson.withWorkingDayId(null));
         assertMissingField(validPerson.withAccessType(null));
         assertMissingField(validPerson.withBirthday(null));
         assertMissingField(validPerson.withBloodType(null));

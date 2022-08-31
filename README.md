@@ -33,7 +33,6 @@
 
 ## Todos
 
-- ref: core: Person: remove 'workingDayId' field
 - add: core: 'permission' model and services
 - add: core:  add 'status' field to Person
 - add: rest: run pg.sql at startup

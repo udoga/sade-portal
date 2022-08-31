@@ -14,7 +14,6 @@ public class PersonSamples {
             "+90 5355353535",
             LocalDate.of(2022, 1, 1),
             LocalDate.of(2023, 1, 1),
-            "123",
             AccessType.Employee,
             LocalDate.of(2000, 1, 1),
             BloodType.APositive,

@@ -23,7 +23,6 @@ public class PersonRepo extends JdbcRepo<Person>{
                 new JdbcColumn("work_phone"),
                 new JdbcColumn("employment_start_date"),
                 new JdbcColumn("contract_end_date"),
-                new JdbcColumn("working_day_id"),
                 new JdbcColumn("access_type", "access_type"),
                 new JdbcColumn("birthday"),
                 new JdbcColumn("blood_type", "blood_type"),
@@ -55,7 +54,6 @@ public class PersonRepo extends JdbcRepo<Person>{
                 s.getString(getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
                 getLocalDate(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
                 AccessType.valueOf(s.getString(getColumnName(i++))),
                 getLocalDate(s, getColumnName(i++)),
                 BloodType.valueOf(s.getString(getColumnName(i++))),
@@ -86,7 +84,6 @@ public class PersonRepo extends JdbcRepo<Person>{
         s.setString(i++, o.workPhone);
         setLocalDate(s, i++, o.employmentStartDate);
         setLocalDate(s, i++, o.contractEndDate);
-        s.setString(i++, o.workingDayId);
         s.setString(i++, o.accessType.name());
         setLocalDate(s, i++, o.birthday);
         s.setString(i++, o.bloodType.name());
