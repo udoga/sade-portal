@@ -17,7 +17,8 @@ public class KolayPersonTest {
 
     @BeforeEach
     public void setup() {
-        kolayPerson = new KolayPerson( null,
+        kolayPerson = new KolayPerson(
+            "0",
             "firstName",
             "lastName",
             "sample@email.com",
@@ -48,7 +49,7 @@ public class KolayPersonTest {
             "A+");
 
         person = new Person(
-                null,
+                "0",
                 "firstName",
                 "lastName",
                 "sample@email.com",
@@ -78,7 +79,7 @@ public class KolayPersonTest {
 
     @Test
     public void initializesWithFields() {
-        assertNull(kolayPerson.id);
+        assertEquals("0",                   kolayPerson.id);
         assertEquals("firstName",           kolayPerson.firstName);
         assertEquals("lastName",            kolayPerson.lastName);
         assertEquals("sample@email.com",    kolayPerson.email);
@@ -145,7 +146,8 @@ public class KolayPersonTest {
 
     @Test
     public void printsFields() {
-        assertEquals("KolayPerson[id=null" +
+        assertEquals("KolayPerson[" +
+                "id=0" +
                 " firstName=firstName" +
                 " lastName=lastName" +
                 " email=sample@email.com" +
@@ -213,7 +215,7 @@ public class KolayPersonTest {
     @Test
     public void checksEquality() {
         assertEquals(kolayPerson, kolayPerson.copy());
-        assertNotEquals(kolayPerson, kolayPerson.withId("0"));
+        assertNotEquals(kolayPerson, kolayPerson.withId(null));
         assertNotEquals(kolayPerson, kolayPerson.withFirstName(null));
         assertNotEquals(kolayPerson, kolayPerson.withLastName(null));
         assertNotEquals(kolayPerson, kolayPerson.withEmail(null));
@@ -251,7 +253,7 @@ public class KolayPersonTest {
 
     @Test
     void whenKolayPersonFieldIsNull_personFieldIsAlsoNull() {
-        assertEquals(person.withId("0"), kolayPerson.withId("0").toPerson());
+        assertEquals(person.withId(null), kolayPerson.withId(null).toPerson());
         assertEquals(person.withFirstName(null), kolayPerson.withFirstName(null).toPerson());
         assertEquals(person.withLastName(null), kolayPerson.withLastName(null).toPerson());
         assertEquals(person.withEmail(null), kolayPerson.withEmail(null).toPerson());
@@ -279,7 +281,7 @@ public class KolayPersonTest {
     }
 
     @Test
-    void convertsBloodType() {
+    void convertsToBloodType() {
         assertEquals(BloodType.ANegative,    kolayPerson.withBloodType("A-").toPerson().bloodType);
         assertEquals(BloodType.APositive,    kolayPerson.withBloodType("A+").toPerson().bloodType);
         assertEquals(BloodType.ZeroNegative, kolayPerson.withBloodType("0-").toPerson().bloodType);
@@ -288,18 +290,6 @@ public class KolayPersonTest {
         assertEquals(BloodType.ABPositive,   kolayPerson.withBloodType("AB+").toPerson().bloodType);
         assertEquals(BloodType.BNegative,    kolayPerson.withBloodType("B-").toPerson().bloodType);
         assertEquals(BloodType.BPositive,    kolayPerson.withBloodType("B+").toPerson().bloodType);
-    }
-
-    @Test
-    void convertsToPersonBloodType() {
-        assertEquals("A-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ANegative)).bloodType);
-        assertEquals("A+",    KolayPerson.fromPerson(person.withBloodType(BloodType.APositive)).bloodType);
-        assertEquals("0-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroNegative)).bloodType);
-        assertEquals("0+",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroPositive)).bloodType);
-        assertEquals("AB-",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABNegative)).bloodType);
-        assertEquals("AB+",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABPositive)).bloodType);
-        assertEquals("B-",    KolayPerson.fromPerson(person.withBloodType(BloodType.BNegative)).bloodType);
-        assertEquals("B+",    KolayPerson.fromPerson(person.withBloodType(BloodType.BPositive)).bloodType);
     }
 
     @Test
@@ -332,6 +322,18 @@ public class KolayPersonTest {
         assertEquals(kp.withLevelOfDisability(null), KolayPerson.fromPerson(person.withLevelOfDisability(null)));
         assertEquals(kp.withNumberOfChildren(null), KolayPerson.fromPerson(person.withNumberOfChildren(null)));
         assertEquals(kp.withBloodType(null), KolayPerson.fromPerson(person.withBloodType(null)));
+    }
+
+    @Test
+    void convertsToKolayBloodType() {
+        assertEquals("A-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ANegative)).bloodType);
+        assertEquals("A+",    KolayPerson.fromPerson(person.withBloodType(BloodType.APositive)).bloodType);
+        assertEquals("0-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroNegative)).bloodType);
+        assertEquals("0+",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroPositive)).bloodType);
+        assertEquals("AB-",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABNegative)).bloodType);
+        assertEquals("AB+",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABPositive)).bloodType);
+        assertEquals("B-",    KolayPerson.fromPerson(person.withBloodType(BloodType.BNegative)).bloodType);
+        assertEquals("B+",    KolayPerson.fromPerson(person.withBloodType(BloodType.BPositive)).bloodType);
     }
 
     @Test

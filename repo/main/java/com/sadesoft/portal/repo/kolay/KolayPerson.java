@@ -43,35 +43,36 @@ public class KolayPerson implements Record, Cloneable {
     public KolayPerson () {
     }
 
-    public KolayPerson(String id,
-                  String firstName,
-                  String lastName,
-                  String email,
-                  String workEmail,
-                  String mobilePhone,
-                  String workPhone,
-                  String gender,
-                  String accessType,
-                  String nationality,
-                  String idNumber,
-                  String employmentStartDate,
-                  String contractType,
-                  String contractEndDate,
-                  String birthday,
-                  String maritalStatus,
-                  String partnerWorkStatus,
-                  String militaryService,
-                  String militaryServiceDelayDate,
-                  String educationLevel,
-                  String educationStatus,
-                  String educationalInstitution,
-                  String status,
-                  String tourStatus,
-                  String createdAt,
-                  String updatedAt,
-                  String levelOfDisability,
-                  Integer numberOfChildren,
-                  String bloodType) {
+    public KolayPerson(
+            String id,
+            String firstName,
+            String lastName,
+            String email,
+            String workEmail,
+            String mobilePhone,
+            String workPhone,
+            String gender,
+            String accessType,
+            String nationality,
+            String idNumber,
+            String employmentStartDate,
+            String contractType,
+            String contractEndDate,
+            String birthday,
+            String maritalStatus,
+            String partnerWorkStatus,
+            String militaryService,
+            String militaryServiceDelayDate,
+            String educationLevel,
+            String educationStatus,
+            String educationalInstitution,
+            String status,
+            String tourStatus,
+            String createdAt,
+            String updatedAt,
+            String levelOfDisability,
+            Integer numberOfChildren,
+            String bloodType) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -111,6 +112,39 @@ public class KolayPerson implements Record, Cloneable {
         }
     }
 
+    public static KolayPerson fromPerson(Person p) {
+        return new KolayPerson(
+                p.id,
+                p.firstName,
+                p.lastName,
+                p.email,
+                p.workEmail,
+                toKolayPhoneNumber(p.mobilePhone),
+                toKolayPhoneNumber(p.workPhone),
+                toKolayEnumString(p.gender),
+                toKolayEnumString(p.accessType),
+                p.nationality,
+                p.idNumber,
+                toKolayDateString(p.employmentStartDate),
+                toKolayContractType(p.contractEndDate),
+                toKolayDateString(p.contractEndDate),
+                toKolayDateString(p.birthday),
+                toKolayEnumString(p.maritalStatus),
+                toKolayPartnerWorkStatus(p.partnerWorkStatus),
+                toKolayEnumString(p.militaryService),
+                toKolayDateString(p.militaryServiceDelayDate),
+                toKolayEnumString(p.educationLevel),
+                toKolayEducationStatus(p.graduated),
+                p.educationalInstitution,
+                toKolayStatus(p.active),
+                toKolayEnumString(p.tourStatus),
+                null,
+                null,
+                toKolayEnumString(p.levelOfDisability),
+                p.numberOfChildren,
+                toKolayBloodType(p.bloodType));
+    }
+
     public JsonNode toJson() {
         return new ObjectMapper().valueToTree(this);
     }
@@ -145,72 +179,39 @@ public class KolayPerson implements Record, Cloneable {
                 toEnum(this.tourStatus, TourStatus.class));
     }
 
-    public static KolayPerson fromPerson(Person p){
-        return new KolayPerson( null,
-                p.firstName,
-                p.lastName,
-                p.email,
-                p.workEmail,
-                toKolayPhoneNumber(p.mobilePhone),
-                toKolayPhoneNumber(p.workPhone),
-                toKolayEnumString(p.gender),
-                toKolayEnumString(p.accessType),
-                p.nationality,
-                p.idNumber,
-                toString(p.employmentStartDate),
-                toKolayContractType(p.contractEndDate),
-                toString(p.contractEndDate),
-                toString(p.birthday),
-                toKolayEnumString(p.maritalStatus),
-                toKolayPartnerWorkStatus(p.partnerWorkStatus),
-                toKolayEnumString(p.militaryService),
-                toString(p.militaryServiceDelayDate),
-                toKolayEnumString(p.educationLevel),
-                toKolayEducationStatus(p.graduated),
-                p.educationalInstitution,
-                toKolayStatus(p.active),
-                toKolayEnumString(p.tourStatus),
-                null,
-                null,
-                toKolayEnumString(p.levelOfDisability),
-                p.numberOfChildren,
-                toKolayBloodType(p.bloodType));
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        KolayPerson that = (KolayPerson) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(firstName, that.firstName) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(email, that.email) &&
-                Objects.equals(workEmail, that.workEmail) &&
-                Objects.equals(mobilePhone, that.mobilePhone) &&
-                Objects.equals(workPhone, that.workPhone) &&
-                Objects.equals(gender, that.gender) &&
-                Objects.equals(accessType, that.accessType) &&
-                Objects.equals(nationality, that.nationality) &&
-                Objects.equals(idNumber, that.idNumber) &&
-                Objects.equals(employmentStartDate, that.employmentStartDate) &&
-                Objects.equals(contractType, that.contractType) &&
-                Objects.equals(contractEndDate, that.contractEndDate) &&
-                Objects.equals(birthday, that.birthday) &&
-                Objects.equals(maritalStatus, that.maritalStatus) &&
-                Objects.equals(partnerWorkStatus, that.partnerWorkStatus) &&
-                Objects.equals(militaryService, that.militaryService) &&
-                Objects.equals(militaryServiceDelayDate, that.militaryServiceDelayDate) &&
-                Objects.equals(educationLevel, that.educationLevel) &&
-                Objects.equals(educationStatus, that.educationStatus) &&
-                Objects.equals(educationalInstitution, that.educationalInstitution) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(tourStatus, that.tourStatus) &&
-                Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt) &&
-                Objects.equals(levelOfDisability, that.levelOfDisability) &&
-                Objects.equals(numberOfChildren, that.numberOfChildren) &&
-                Objects.equals(bloodType, that.bloodType);
+        if (!(o instanceof KolayPerson)) return false;
+        KolayPerson p = (KolayPerson) o;
+        return Objects.equals(id, p.id) &&
+                Objects.equals(firstName, p.firstName) &&
+                Objects.equals(lastName, p.lastName) &&
+                Objects.equals(email, p.email) &&
+                Objects.equals(workEmail, p.workEmail) &&
+                Objects.equals(mobilePhone, p.mobilePhone) &&
+                Objects.equals(workPhone, p.workPhone) &&
+                Objects.equals(gender, p.gender) &&
+                Objects.equals(accessType, p.accessType) &&
+                Objects.equals(nationality, p.nationality) &&
+                Objects.equals(idNumber, p.idNumber) &&
+                Objects.equals(employmentStartDate, p.employmentStartDate) &&
+                Objects.equals(contractType, p.contractType) &&
+                Objects.equals(contractEndDate, p.contractEndDate) &&
+                Objects.equals(birthday, p.birthday) &&
+                Objects.equals(maritalStatus, p.maritalStatus) &&
+                Objects.equals(partnerWorkStatus, p.partnerWorkStatus) &&
+                Objects.equals(militaryService, p.militaryService) &&
+                Objects.equals(militaryServiceDelayDate, p.militaryServiceDelayDate) &&
+                Objects.equals(educationLevel, p.educationLevel) &&
+                Objects.equals(educationStatus, p.educationStatus) &&
+                Objects.equals(educationalInstitution, p.educationalInstitution) &&
+                Objects.equals(status, p.status) &&
+                Objects.equals(tourStatus, p.tourStatus) &&
+                Objects.equals(createdAt, p.createdAt) &&
+                Objects.equals(updatedAt, p.updatedAt) &&
+                Objects.equals(levelOfDisability, p.levelOfDisability) &&
+                Objects.equals(numberOfChildren, p.numberOfChildren) &&
+                Objects.equals(bloodType, p.bloodType);
     }
 
     @Override
@@ -277,12 +278,12 @@ public class KolayPerson implements Record, Cloneable {
     }
 
     private Boolean toGraduated(String es) {
-        return es == null? null : Objects.equals(es, "graduated");
+        return es == null? null : Objects.equals(es, "graduate");
     }
 
     private static String toKolayEducationStatus(Boolean graduated) {
         if (graduated == null) return null;
-        return graduated? "graduated" : "student";
+        return graduated? "graduate" : "student";
     }
 
     private static String toKolayContractType(LocalDate date) {
@@ -301,7 +302,7 @@ public class KolayPerson implements Record, Cloneable {
         return value == null? null : uncapitalize(value.toString());
     }
 
-    private static <T> String toString(T value) {
+    private static <T> String toKolayDateString(T value) {
         return value == null? null : value.toString();
     }
 
