@@ -26,7 +26,7 @@ public class KolayPerson implements Record, Cloneable {
     public String contractEndDate = null;
     public String birthday = null;
     public String maritalStatus = null;
-    public Boolean partnerWorkStatus = null;
+    public String partnerWorkStatus = null;
     public String militaryService = null;
     public String militaryServiceDelayDate = null;
     public String educationLevel = null;
@@ -59,7 +59,7 @@ public class KolayPerson implements Record, Cloneable {
                   String contractEndDate,
                   String birthday,
                   String maritalStatus,
-                  Boolean partnerWorkStatus,
+                  String partnerWorkStatus,
                   String militaryService,
                   String militaryServiceDelayDate,
                   String educationLevel,
@@ -122,13 +122,13 @@ public class KolayPerson implements Record, Cloneable {
                 this.lastName,
                 this.email,
                 this.workEmail,
-                toPersonPhoneNumber(this.mobilePhone),
-                toPersonPhoneNumber(this.workPhone),
+                toPhoneNumber(this.mobilePhone),
+                toPhoneNumber(this.workPhone),
                 toLocalDate(this.employmentStartDate),
                 toLocalDate(this.contractEndDate),
                 toEnum(this.accessType, AccessType.class),
                 toLocalDate(this.birthday),
-                toPersonBloodType(this.bloodType),
+                toBloodType(this.bloodType),
                 toEnum(this.educationLevel, EducationLevel.class),
                 toGraduated(this.educationStatus),
                 this.educationalInstitution,
@@ -136,7 +136,7 @@ public class KolayPerson implements Record, Cloneable {
                 this.idNumber,
                 toEnum(this.levelOfDisability, LevelOfDisability.class),
                 toEnum(this.maritalStatus, MaritalStatus.class),
-                this.partnerWorkStatus,
+                toPartnerWorkStatus(this.partnerWorkStatus),
                 toEnum(this.militaryService, MilitaryService.class),
                 toLocalDate(this.militaryServiceDelayDate),
                 this.nationality,
@@ -150,30 +150,30 @@ public class KolayPerson implements Record, Cloneable {
                 p.lastName,
                 p.email,
                 p.workEmail,
-                toKolayPersonPhoneNumber(p.mobilePhone),
-                toKolayPersonPhoneNumber(p.workPhone),
-                enumToString(p.gender),
-                enumToString(p.accessType),
+                toKolayPhoneNumber(p.mobilePhone),
+                toKolayPhoneNumber(p.workPhone),
+                toKolayEnumString(p.gender),
+                toKolayEnumString(p.accessType),
                 p.nationality,
                 p.idNumber,
                 toString(p.employmentStartDate),
-                toContractType(p.contractEndDate),
+                toKolayContractType(p.contractEndDate),
                 toString(p.contractEndDate),
                 toString(p.birthday),
-                enumToString(p.maritalStatus),
-                p.partnerWorkStatus,
-                enumToString(p.militaryService),
+                toKolayEnumString(p.maritalStatus),
+                toKolayPartnerWorkStatus(p.partnerWorkStatus),
+                toKolayEnumString(p.militaryService),
                 toString(p.militaryServiceDelayDate),
-                enumToString(p.educationLevel),
-                toEducationStatus(p.graduated),
+                toKolayEnumString(p.educationLevel),
+                toKolayEducationStatus(p.graduated),
                 p.educationalInstitution,
                 null,
-                enumToString(p.tourStatus),
+                toKolayEnumString(p.tourStatus),
                 null,
                 null,
-                enumToString(p.levelOfDisability),
+                toKolayEnumString(p.levelOfDisability),
                 p.numberOfChildren,
-                toBloodType(p.bloodType));
+                toKolayBloodType(p.bloodType));
     }
 
     @Override
@@ -257,16 +257,25 @@ public class KolayPerson implements Record, Cloneable {
         this.id = id;
     }
 
+    private static String toKolayPartnerWorkStatus(Boolean stat) {
+        if (stat == null) return null;
+        return stat? "working" : "notWorking";
+    }
+
+    private Boolean toPartnerWorkStatus(String stat) {
+        return stat == null? null : stat.equals("working");
+    }
+
     private Boolean toGraduated(String es) {
         return es == null? null : Objects.equals(es, "graduated");
     }
 
-    private static String toEducationStatus(Boolean graduated) {
+    private static String toKolayEducationStatus(Boolean graduated) {
         if (graduated == null) return null;
         return graduated? "graduated" : "student";
     }
 
-    private static String toContractType(LocalDate date) {
+    private static String toKolayContractType(LocalDate date) {
         return date == null? "indefinite" : "definite";
     }
 
@@ -278,12 +287,34 @@ public class KolayPerson implements Record, Cloneable {
         return str == null? null : T.valueOf(type, capitalize(str));
     }
 
-    private static <T> String enumToString(T value) {
+    private static <T> String toKolayEnumString(T value) {
         return value == null? null : uncapitalize(value.toString());
     }
 
     private static <T> String toString(T value) {
         return value == null? null : value.toString();
+    }
+
+    private BloodType toBloodType(String bt) {
+        return bt == null? null : BloodType.valueOf(bt
+                .replace("0", "Zero")
+                .replace("-", "Negative")
+                .replace("+", "Positive"));
+    }
+
+    private static String toKolayBloodType(BloodType bt) {
+        return bt == null? null : (bt.toString()
+                .replace("Zero", "0")
+                .replace("Negative", "-")
+                .replace("Positive", "+"));
+    }
+
+    private String toPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
+    }
+
+    private static String toKolayPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + num.substring(4));
     }
 
     private String capitalize(String str) {
@@ -292,28 +323,6 @@ public class KolayPerson implements Record, Cloneable {
 
     private static String uncapitalize(String str) {
         return (str.substring(0, 1).toLowerCase() + str.substring(1));
-    }
-
-    private BloodType toPersonBloodType(String bt) {
-        return bt == null? null : BloodType.valueOf(bt
-                .replace("0", "Zero")
-                .replace("-", "Negative")
-                .replace("+", "Positive"));
-    }
-
-    private static String toBloodType(BloodType bt) {
-        return bt == null? null : (bt.toString()
-                .replace("Zero", "0")
-                .replace("Negative", "-")
-                .replace("Positive", "+"));
-    }
-
-    private String toPersonPhoneNumber(String num) {
-        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
-    }
-
-    private static String toKolayPersonPhoneNumber(String num) {
-        return num == null? null : (num.substring(0, 3) + num.substring(4));
     }
 
     public KolayPerson copy() {
@@ -420,7 +429,7 @@ public class KolayPerson implements Record, Cloneable {
         return kolayPerson;
     }
 
-    public KolayPerson withPartnerWorkStatus(Boolean partnerWorkStatus) {
+    public KolayPerson withPartnerWorkStatus(String partnerWorkStatus) {
         KolayPerson kolayPerson = copy();
         kolayPerson.partnerWorkStatus = partnerWorkStatus;
         return kolayPerson;

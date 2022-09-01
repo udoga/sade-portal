@@ -33,7 +33,7 @@ public class KolayPersonTest {
             "2023-01-01",
             "2000-01-01",
             "single",
-            false,
+            "notWorking",
             "uncompleted",
             "2024-01-01",
             "bachelor",
@@ -93,7 +93,7 @@ public class KolayPersonTest {
         assertEquals("2023-01-01",          kolayPerson.contractEndDate);
         assertEquals("2000-01-01",          kolayPerson.birthday);
         assertEquals("single",              kolayPerson.maritalStatus);
-        assertEquals(false,                 kolayPerson.partnerWorkStatus);
+        assertEquals("notWorking",          kolayPerson.partnerWorkStatus);
         assertEquals("uncompleted",         kolayPerson.militaryService);
         assertEquals("2024-01-01",          kolayPerson.militaryServiceDelayDate);
         assertEquals("bachelor",            kolayPerson.educationLevel);
@@ -160,7 +160,7 @@ public class KolayPersonTest {
                 " contractEndDate=2023-01-01" +
                 " birthday=2000-01-01" +
                 " maritalStatus=single" +
-                " partnerWorkStatus=false" +
+                " partnerWorkStatus=notWorking" +
                 " militaryService=uncompleted" +
                 " militaryServiceDelayDate=2024-01-01" +
                 " educationLevel=bachelor" +
