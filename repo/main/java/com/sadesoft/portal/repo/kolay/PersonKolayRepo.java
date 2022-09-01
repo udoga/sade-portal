@@ -1,36 +1,27 @@
 package com.sadesoft.portal.repo.kolay;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.base.RestClient;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.repo.config.KolayConfig;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class PersonKolayRepo implements Repo<Person> {
-    private final ObjectMapper mapper;
-    private final HttpClient client;
-    private final String serviceUrl;
+    private final RestClient client;
 
     public PersonKolayRepo(KolayConfig config) {
-        this.mapper = new ObjectMapper();
-        this.client = HttpClient.newHttpClient();
-        this.serviceUrl = config.url + "/person";
+        this.client = new RestClient(config.url + "/person");
     }
 
     @Override
     public List<Person> list() {
-        return getPeople(fetchNode(serviceUrl + "/list", "POST", null, "items"));
+        return getPeople(client.respond("/list", "POST", null).findValue("data").findValue("items"));
     }
 
     @Override
@@ -40,51 +31,22 @@ public class PersonKolayRepo implements Repo<Person> {
 
     @Override
     public Person create(Person record) {
-        return getPerson(fetchNode(serviceUrl + "/create/", "POST", toJson(record), "person"));
+        return getPerson(client.respond("/create/", "POST", toJson(record)).findValue("data").findValue("person"));
     }
 
     @Override
     public Person read(String id) {
-        return getPerson(fetchNode(serviceUrl + "/view/" + id, "GET", null, "person"));
+        return getPerson(client.respond("/view/" + id, "GET", null).findValue("data").findValue("person"));
     }
 
     @Override
     public Person update(String id, Person record) {
-        return getPerson(fetchNode(serviceUrl + "/update/", "PUT", toJson(record), "person"));
+        return getPerson(client.respond("/update/", "PUT", toJson(record)).findValue("data").findValue("person"));
     }
 
     @Override
     public Person delete(String id)  {
         throw new ClientError("KolayIK API doesn't support delete operation.");
-    }
-
-    private JsonNode fetchNode(String url, String method, String body, String nodeName) {
-        HttpRequest.BodyPublisher publisher = getPublisher(body);
-        HttpRequest request = getHttpRequest(url, method, publisher);
-        HttpResponse<String> httpResponse = getHttpResponse(request);
-        JsonNode rootNode = getRootNode(httpResponse);
-        return rootNode.findValue("data").findValue(nodeName);
-    }
-
-    private JsonNode getRootNode(HttpResponse<String> response) {
-        try { return mapper.readTree(response.body()); }
-        catch (JsonProcessingException e) { throw new RuntimeException(e); }
-    }
-
-    private HttpResponse<String> getHttpResponse(HttpRequest request) {
-        try { return client.send(request, HttpResponse.BodyHandlers.ofString()); }
-        catch (Exception e) { throw new RuntimeException(e); }
-    }
-
-    private HttpRequest getHttpRequest(String url, String method, HttpRequest.BodyPublisher publisher) {
-        return HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .method(method, publisher)
-                .build();
-    }
-
-    private HttpRequest.BodyPublisher getPublisher(String body) {
-        return (body == null) ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(body);
     }
 
     private Person getPerson(JsonNode node) {
