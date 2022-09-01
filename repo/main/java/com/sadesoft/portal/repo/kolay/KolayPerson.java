@@ -128,7 +128,7 @@ public class KolayPerson implements Record, Cloneable {
                 toLocalDate(this.contractEndDate),
                 toEnum(this.accessType, AccessType.class),
                 toLocalDate(this.birthday),
-                toBloodType(this.bloodType),
+                toPersonBloodType(this.bloodType),
                 toEnum(this.educationLevel, EducationLevel.class),
                 toGraduated(this.educationStatus),
                 this.educationalInstitution,
@@ -144,31 +144,36 @@ public class KolayPerson implements Record, Cloneable {
                 toEnum(this.tourStatus, TourStatus.class));
     }
 
-    public Boolean toGraduated(String es) {
-        return es == null? null : Objects.equals(es, "graduated");
-    }
-
-    public LocalDate toLocalDate(String date) {
-        return date == null? null : LocalDate.parse(date);
-    }
-
-    public <T extends Enum<T>> T toEnum(String str, Class<T> type) {
-        return str == null? null : T.valueOf(type, capitalize(str));
-    }
-
-    public String capitalize(String str) {
-        return (str.substring(0, 1).toUpperCase() + str.substring(1));
-    }
-
-    public BloodType toBloodType(String bt) {
-        return bt == null? null : BloodType.valueOf(bt
-                .replace("0", "Zero")
-                .replace("-", "Negative")
-                .replace("+", "Positive"));
-    }
-
-    public String toPersonPhoneNumber(String num) {
-        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
+    public static KolayPerson fromPerson(Person p){
+        return new KolayPerson( null,
+                p.firstName,
+                p.lastName,
+                p.email,
+                p.workEmail,
+                toKolayPersonPhoneNumber(p.mobilePhone),
+                toKolayPersonPhoneNumber(p.workPhone),
+                enumToString(p.gender),
+                enumToString(p.accessType),
+                p.nationality,
+                p.idNumber,
+                toString(p.employmentStartDate),
+                toContractType(p.contractEndDate),
+                toString(p.contractEndDate),
+                toString(p.birthday),
+                enumToString(p.maritalStatus),
+                p.partnerWorkStatus,
+                enumToString(p.militaryService),
+                toString(p.militaryServiceDelayDate),
+                enumToString(p.educationLevel),
+                toEducationStatus(p.graduated),
+                p.educationalInstitution,
+                null,
+                enumToString(p.tourStatus),
+                null,
+                null,
+                enumToString(p.levelOfDisability),
+                p.numberOfChildren,
+                toBloodType(p.bloodType));
     }
 
     @Override
@@ -250,6 +255,65 @@ public class KolayPerson implements Record, Cloneable {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    private Boolean toGraduated(String es) {
+        return es == null? null : Objects.equals(es, "graduated");
+    }
+
+    private static String toEducationStatus(Boolean graduated) {
+        if (graduated == null) return null;
+        return graduated? "graduated" : "student";
+    }
+
+    private static String toContractType(LocalDate date) {
+        return date == null? "indefinite" : "definite";
+    }
+
+    private LocalDate toLocalDate(String date) {
+        return date == null? null : LocalDate.parse(date);
+    }
+
+    private <T extends Enum<T>> T toEnum(String str, Class<T> type) {
+        return str == null? null : T.valueOf(type, capitalize(str));
+    }
+
+    private static <T> String enumToString(T value) {
+        return value == null? null : uncapitalize(value.toString());
+    }
+
+    private static <T> String toString(T value) {
+        return value == null? null : value.toString();
+    }
+
+    private String capitalize(String str) {
+        return (str.substring(0, 1).toUpperCase() + str.substring(1));
+    }
+
+    private static String uncapitalize(String str) {
+        return (str.substring(0, 1).toLowerCase() + str.substring(1));
+    }
+
+    private BloodType toPersonBloodType(String bt) {
+        return bt == null? null : BloodType.valueOf(bt
+                .replace("0", "Zero")
+                .replace("-", "Negative")
+                .replace("+", "Positive"));
+    }
+
+    private static String toBloodType(BloodType bt) {
+        return bt == null? null : (bt.toString()
+                .replace("Zero", "0")
+                .replace("Negative", "-")
+                .replace("Positive", "+"));
+    }
+
+    private String toPersonPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
+    }
+
+    private static String toKolayPersonPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + num.substring(4));
     }
 
     public KolayPerson copy() {

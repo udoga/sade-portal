@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class KolayPersonTest {
     private KolayPerson kolayPerson;
+    private Person person;
     ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
@@ -21,8 +22,8 @@ public class KolayPersonTest {
             "lastName",
             "sample@email.com",
             "sample@workmail.com",
-            "+90 5555555555",
-            "+90 5355353535",
+            "+905555555555",
+            "+905355353535",
             "male",
             "employee",
             "TR",
@@ -45,6 +46,33 @@ public class KolayPersonTest {
             "notDisabled",
             0,
             "A+");
+
+        person = new Person(
+                null,
+                "firstName",
+                "lastName",
+                "sample@email.com",
+                "sample@workmail.com",
+                "+90 5555555555",
+                "+90 5355353535",
+                LocalDate.of(2022, 1, 1),
+                LocalDate.of(2023, 1, 1),
+                AccessType.Employee,
+                LocalDate.of(2000, 1, 1),
+                BloodType.APositive,
+                EducationLevel.Bachelor,
+                false,
+                "YTU",
+                Gender.Male,
+                "12345678910",
+                LevelOfDisability.NotDisabled,
+                MaritalStatus.Single,
+                false,
+                MilitaryService.Uncompleted,
+                LocalDate.of(2024,1,1),
+                "TR",
+                0,
+                TourStatus.Completed);
     }
 
     @Test
@@ -54,8 +82,8 @@ public class KolayPersonTest {
         assertEquals("lastName",            kolayPerson.lastName);
         assertEquals("sample@email.com",    kolayPerson.email);
         assertEquals("sample@workmail.com", kolayPerson.workEmail);
-        assertEquals("+90 5555555555",      kolayPerson.mobilePhone);
-        assertEquals("+90 5355353535",      kolayPerson.workPhone);
+        assertEquals("+905555555555",       kolayPerson.mobilePhone);
+        assertEquals("+905355353535",       kolayPerson.workPhone);
         assertEquals("male",                kolayPerson.gender);
         assertEquals("employee",            kolayPerson.accessType);
         assertEquals("TR",                  kolayPerson.nationality);
@@ -121,8 +149,8 @@ public class KolayPersonTest {
                 " lastName=lastName" +
                 " email=sample@email.com" +
                 " workEmail=sample@workmail.com" +
-                " mobilePhone=+90 5555555555" +
-                " workPhone=+90 5355353535" +
+                " mobilePhone=+905555555555" +
+                " workPhone=+905355353535" +
                 " gender=male" +
                 " accessType=employee" +
                 " nationality=TR" +
@@ -217,43 +245,99 @@ public class KolayPersonTest {
 
     @Test
     void convertsToPerson() {
-        assertEquals(new Person().withId("1"), new KolayPerson().withId("1").toPerson());
-        assertEquals(new Person().withFirstName("a"), new KolayPerson().withFirstName("a").toPerson());
-        assertEquals(new Person().withLastName("a"), new KolayPerson().withLastName("a").toPerson());
-        assertEquals(new Person().withEmail("a@gmail.com"), new KolayPerson().withEmail("a@gmail.com").toPerson());
-        assertEquals(new Person().withWorkEmail("a2@gmail.com"), new KolayPerson().withWorkEmail("a2@gmail.com").toPerson());
-        assertEquals(new Person().withMobilePhone("+90 5320000000"), new KolayPerson().withMobilePhone("+905320000000").toPerson());
-        assertEquals(new Person().withWorkPhone("+90 5320000001"), new KolayPerson().withWorkPhone("+905320000001").toPerson());
-        assertEquals(new Person().withEmploymentStartDate(LocalDate.parse("2020-08-13")), new KolayPerson().withEmploymentStartDate("2020-08-13").toPerson());
-        assertEquals(new Person().withContractEndDate(LocalDate.parse("2020-08-13")), new KolayPerson().withContractEndDate("2020-08-13").toPerson());
-        assertEquals(new Person().withAccessType(AccessType.Employee), new KolayPerson().withAccessType("employee").toPerson());
-        assertEquals(new Person().withBirthday(LocalDate.parse("2020-08-13")), new KolayPerson().withBirthday("2020-08-13").toPerson());
-        assertEquals(new Person().withBloodType(BloodType.ABNegative), new KolayPerson().withBloodType("AB-").toPerson());
-        assertEquals(new Person().withEducationLevel(EducationLevel.Bachelor), new KolayPerson().withEducationLevel("bachelor").toPerson());
-        assertEquals(new Person().withGraduated(false), new KolayPerson().withEducationStatus("student").toPerson());
-        assertEquals(new Person().withEducationalInstitution("a"), new KolayPerson().withEducationalInstitution("a").toPerson());
-        assertEquals(new Person().withGender(Gender.Male), new KolayPerson().withGender("male").toPerson());
-        assertEquals(new Person().withIdNumber("12"), new KolayPerson().withIdNumber("12").toPerson());
-        assertEquals(new Person().withLevelOfDisability(LevelOfDisability.NotDisabled), new KolayPerson().withLevelOfDisability("notDisabled").toPerson());
-        assertEquals(new Person().withMaritalStatus(MaritalStatus.Single), new KolayPerson().withMaritalStatus("single").toPerson());
-        assertEquals(new Person().withPartnerWorkStatus(false), new KolayPerson().withPartnerWorkStatus(false).toPerson());
-        assertEquals(new Person().withMilitaryService(MilitaryService.Exempt), new KolayPerson().withMilitaryService("exempt").toPerson());
-        assertEquals(new Person().withMilitaryServiceDelayDate(LocalDate.parse("2020-08-13")), new KolayPerson().withMilitaryServiceDelayDate("2020-08-13").toPerson());
-        assertEquals(new Person().withNationality("TR"), new KolayPerson().withNationality("TR").toPerson());
-        assertEquals(new Person().withNumberOfChildren(2), new KolayPerson().withNumberOfChildren(2).toPerson());
-        assertEquals(new Person().withTourStatus(TourStatus.Completed), new KolayPerson().withTourStatus("completed").toPerson());
+        assertEquals(person, kolayPerson.toPerson());
+    }
+
+    @Test
+    void whenKolayPersonFieldIsNull_personFieldIsAlsoNull() {
+        assertEquals(person.withId("0"), kolayPerson.withId("0").toPerson());
+        assertEquals(person.withFirstName(null), kolayPerson.withFirstName(null).toPerson());
+        assertEquals(person.withLastName(null), kolayPerson.withLastName(null).toPerson());
+        assertEquals(person.withEmail(null), kolayPerson.withEmail(null).toPerson());
+        assertEquals(person.withWorkEmail(null), kolayPerson.withWorkEmail(null).toPerson());
+        assertEquals(person.withMobilePhone(null), kolayPerson.withMobilePhone(null).toPerson());
+        assertEquals(person.withWorkPhone(null), kolayPerson.withWorkPhone(null).toPerson());
+        assertEquals(person.withGender(null), kolayPerson.withGender(null).toPerson());
+        assertEquals(person.withAccessType(null), kolayPerson.withAccessType(null).toPerson());
+        assertEquals(person.withNationality(null), kolayPerson.withNationality(null).toPerson());
+        assertEquals(person.withIdNumber(null), kolayPerson.withIdNumber(null).toPerson());
+        assertEquals(person.withEmploymentStartDate(null), kolayPerson.withEmploymentStartDate(null).toPerson());
+        assertEquals(person.withContractEndDate(null), kolayPerson.withContractEndDate(null).toPerson());
+        assertEquals(person.withBirthday(null), kolayPerson.withBirthday(null).toPerson());
+        assertEquals(person.withMaritalStatus(null), kolayPerson.withMaritalStatus(null).toPerson());
+        assertEquals(person.withPartnerWorkStatus(null), kolayPerson.withPartnerWorkStatus(null).toPerson());
+        assertEquals(person.withMilitaryService(null), kolayPerson.withMilitaryService(null).toPerson());
+        assertEquals(person.withMilitaryServiceDelayDate(null), kolayPerson.withMilitaryServiceDelayDate(null).toPerson());
+        assertEquals(person.withEducationLevel(null), kolayPerson.withEducationLevel(null).toPerson());
+        assertEquals(person.withGraduated(null), kolayPerson.withEducationStatus(null).toPerson());
+        assertEquals(person.withEducationalInstitution(null), kolayPerson.withEducationalInstitution(null).toPerson());
+        assertEquals(person.withTourStatus(null), kolayPerson.withTourStatus(null).toPerson());
+        assertEquals(person.withLevelOfDisability(null), kolayPerson.withLevelOfDisability(null).toPerson());
+        assertEquals(person.withNumberOfChildren(null), kolayPerson.withNumberOfChildren(null).toPerson());
+        assertEquals(person.withBloodType(null), kolayPerson.withBloodType(null).toPerson());
     }
 
     @Test
     void convertsBloodType() {
-        assertEquals(BloodType.ANegative,    kolayPerson.toBloodType("A-"));
-        assertEquals(BloodType.APositive,    kolayPerson.toBloodType("A+"));
-        assertEquals(BloodType.ZeroNegative, kolayPerson.toBloodType("0-"));
-        assertEquals(BloodType.ZeroPositive, kolayPerson.toBloodType("0+"));
-        assertEquals(BloodType.ABNegative,   kolayPerson.toBloodType("AB-"));
-        assertEquals(BloodType.ABPositive,   kolayPerson.toBloodType("AB+"));
-        assertEquals(BloodType.BNegative,    kolayPerson.toBloodType("B-"));
-        assertEquals(BloodType.BPositive,    kolayPerson.toBloodType("B+"));
+        assertEquals(BloodType.ANegative,    kolayPerson.withBloodType("A-").toPerson().bloodType);
+        assertEquals(BloodType.APositive,    kolayPerson.withBloodType("A+").toPerson().bloodType);
+        assertEquals(BloodType.ZeroNegative, kolayPerson.withBloodType("0-").toPerson().bloodType);
+        assertEquals(BloodType.ZeroPositive, kolayPerson.withBloodType("0+").toPerson().bloodType);
+        assertEquals(BloodType.ABNegative,   kolayPerson.withBloodType("AB-").toPerson().bloodType);
+        assertEquals(BloodType.ABPositive,   kolayPerson.withBloodType("AB+").toPerson().bloodType);
+        assertEquals(BloodType.BNegative,    kolayPerson.withBloodType("B-").toPerson().bloodType);
+        assertEquals(BloodType.BPositive,    kolayPerson.withBloodType("B+").toPerson().bloodType);
+    }
+
+    @Test
+    void convertsToPersonBloodType() {
+        assertEquals("A-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ANegative)).bloodType);
+        assertEquals("A+",    KolayPerson.fromPerson(person.withBloodType(BloodType.APositive)).bloodType);
+        assertEquals("0-",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroNegative)).bloodType);
+        assertEquals("0+",    KolayPerson.fromPerson(person.withBloodType(BloodType.ZeroPositive)).bloodType);
+        assertEquals("AB-",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABNegative)).bloodType);
+        assertEquals("AB+",   KolayPerson.fromPerson(person.withBloodType(BloodType.ABPositive)).bloodType);
+        assertEquals("B-",    KolayPerson.fromPerson(person.withBloodType(BloodType.BNegative)).bloodType);
+        assertEquals("B+",    KolayPerson.fromPerson(person.withBloodType(BloodType.BPositive)).bloodType);
+    }
+
+    @Test
+    void convertsFromPerson() {
+        assertEquals(clear(kolayPerson), KolayPerson.fromPerson(person));
+    }
+
+    @Test
+    void whenPersonFieldIsNull_KolayPersonFieldIsAlsoNull() {
+        KolayPerson kp = clear(kolayPerson);
+        assertEquals(kp.withFirstName(null), KolayPerson.fromPerson(person.withFirstName(null)));
+        assertEquals(kp.withLastName(null), KolayPerson.fromPerson(person.withLastName(null)));
+        assertEquals(kp.withEmail(null), KolayPerson.fromPerson(person.withEmail(null)));
+        assertEquals(kp.withWorkEmail(null), KolayPerson.fromPerson(person.withWorkEmail(null)));
+        assertEquals(kp.withMobilePhone(null), KolayPerson.fromPerson(person.withMobilePhone(null)));
+        assertEquals(kp.withWorkPhone(null), KolayPerson.fromPerson(person.withWorkPhone(null)));
+        assertEquals(kp.withGender(null), KolayPerson.fromPerson(person.withGender(null)));
+        assertEquals(kp.withNationality(null), KolayPerson.fromPerson(person.withNationality(null)));
+        assertEquals(kp.withIdNumber(null), KolayPerson.fromPerson(person.withIdNumber(null)));
+        assertEquals(kp.withEmploymentStartDate(null), KolayPerson.fromPerson(person.withEmploymentStartDate(null)));
+        assertEquals(kp.withBirthday(null), KolayPerson.fromPerson(person.withBirthday(null)));
+        assertEquals(kp.withMaritalStatus(null), KolayPerson.fromPerson(person.withMaritalStatus(null)));
+        assertEquals(kp.withPartnerWorkStatus(null), KolayPerson.fromPerson(person.withPartnerWorkStatus(null)));
+        assertEquals(kp.withMilitaryService(null), KolayPerson.fromPerson(person.withMilitaryService(null)));
+        assertEquals(kp.withMilitaryServiceDelayDate(null), KolayPerson.fromPerson(person.withMilitaryServiceDelayDate(null)));
+        assertEquals(kp.withEducationLevel(null), KolayPerson.fromPerson(person.withEducationLevel(null)));
+        assertEquals(kp.withEducationStatus(null), KolayPerson.fromPerson(person.withGraduated(null)));
+        assertEquals(kp.withEducationalInstitution(null), KolayPerson.fromPerson(person.withEducationalInstitution(null)));
+        assertEquals(kp.withTourStatus(null), KolayPerson.fromPerson(person.withTourStatus(null)));
+        assertEquals(kp.withLevelOfDisability(null), KolayPerson.fromPerson(person.withLevelOfDisability(null)));
+        assertEquals(kp.withNumberOfChildren(null), KolayPerson.fromPerson(person.withNumberOfChildren(null)));
+        assertEquals(kp.withBloodType(null), KolayPerson.fromPerson(person.withBloodType(null)));
+    }
+
+    @Test
+    void whenPersonContractEndDateIsNull_kolayPersonContractTypeIsIndefinite() {
+        Person person = this.person.withContractEndDate(null);
+        KolayPerson expected = clear(this.kolayPerson).withContractType("indefinite").withContractEndDate(null);
+        assertEquals(expected, KolayPerson.fromPerson(person));
     }
 
     @Test
@@ -264,5 +348,9 @@ public class KolayPersonTest {
     @Test
     public void convertsFromJson() {
         assertEquals(kolayPerson, KolayPerson.fromJson(mapper.valueToTree(kolayPerson)));
+    }
+
+    private KolayPerson clear(KolayPerson p) {
+        return p.withCreatedAt(null).withUpdatedAt(null).withStatus(null);
     }
 }
