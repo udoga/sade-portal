@@ -1,6 +1,7 @@
 package com.sadesoft.portal.repo.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.base.error.InvalidPhoneError;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.repo.kolay.KolayPerson;
 import org.junit.jupiter.api.BeforeEach;
@@ -290,6 +291,22 @@ public class KolayPersonTest {
         assertEquals(BloodType.ABPositive,   kolayPerson.withBloodType("AB+").toPerson().bloodType);
         assertEquals(BloodType.BNegative,    kolayPerson.withBloodType("B-").toPerson().bloodType);
         assertEquals(BloodType.BPositive,    kolayPerson.withBloodType("B+").toPerson().bloodType);
+    }
+
+    @Test
+    void whenKolayPhoneStringIsInvalid_throwsError() {
+        assertThrows(InvalidPhoneError.class, () -> kolayPerson.withMobilePhone("a").toPerson());
+        assertThrows(InvalidPhoneError.class, () -> kolayPerson.withMobilePhone("b").toPerson());
+        assertThrows(InvalidPhoneError.class, () -> kolayPerson.withMobilePhone("aaaaaaaaaa").toPerson());
+        assertThrows(InvalidPhoneError.class, () -> kolayPerson.withMobilePhone("+905555").toPerson());
+    }
+
+    @Test
+    void whenKolayEnumStringIsInvalid_throwsError() {
+        assertThrows(RuntimeException.class, () -> kolayPerson.withPartnerWorkStatus("a").toPerson());
+        assertThrows(RuntimeException.class, () -> kolayPerson.withEducationStatus("a").toPerson());
+        assertThrows(RuntimeException.class, () -> kolayPerson.withStatus("a").toPerson());
+        assertThrows(RuntimeException.class, () -> kolayPerson.withBloodType("a").toPerson());
     }
 
     @Test

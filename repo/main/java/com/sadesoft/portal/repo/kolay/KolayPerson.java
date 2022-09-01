@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.kolay;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.base.error.InvalidPhoneError;
 import com.sadesoft.portal.base.repo.Record;
 import com.sadesoft.portal.core.model.*;
 
@@ -259,26 +260,56 @@ public class KolayPerson implements Record, Cloneable {
         this.id = id;
     }
 
+    private String toPhoneNumber(String num) {
+        if (num == null) return null;
+        if (!num.matches("^\\+\\d+$") || num.length() < 8) throw new InvalidPhoneError(num,"");
+        return (num.substring(0, 3) + " " + num.substring(3));
+    }
+
+    private Boolean toPartnerWorkStatus(String s) {
+        if (s == null) return null;
+        if (s.equals("working")) return true;
+        if (s.equals("notWorking")) return false;
+        throw new RuntimeException("Invalid partner work status: " + s);
+    }
+
+    private Boolean toGraduated(String s) {
+        if (s == null) return null;
+        if (s.equals("graduate")) return true;
+        if (s.equals("student")) return false;
+        throw new RuntimeException("Invalid education status: " + s);
+    }
+
+    private Boolean toActive(String s) {
+        if (s == null) return null;
+        if (s.equals("active")) return true;
+        if (s.equals("terminated")) return false;
+        throw new RuntimeException("Invalid status: " + s);
+    }
+
+    private BloodType toBloodType(String s) {
+        return s == null? null : BloodType.valueOf(s
+                .replace("0", "Zero")
+                .replace("-", "Negative")
+                .replace("+", "Positive"));
+    }
+
+    private LocalDate toLocalDate(String date) {
+        return date == null? null : LocalDate.parse(date);
+    }
+
+    private <T extends Enum<T>> T toEnum(String str, Class<T> type) {
+        return str == null? null : T.valueOf(type, capitalize(str));
+    }
+
     private static String toKolayPartnerWorkStatus(Boolean stat) {
         if (stat == null) return null;
         return stat? "working" : "notWorking";
     }
 
-    private Boolean toPartnerWorkStatus(String stat) {
-        return stat == null? null : stat.equals("working");
-    }
-
-    private Boolean toActive(String stat) {
-        return stat == null? null : stat.equals("active");
-    }
-
     private static String toKolayStatus(Boolean stat) {
         if (stat == null) return null;
         return stat? "active" : "terminated";
-    }
-
-    private Boolean toGraduated(String es) {
-        return es == null? null : Objects.equals(es, "graduate");
     }
 
     private static String toKolayEducationStatus(Boolean graduated) {
@@ -290,12 +321,15 @@ public class KolayPerson implements Record, Cloneable {
         return date == null? "indefinite" : "definite";
     }
 
-    private LocalDate toLocalDate(String date) {
-        return date == null? null : LocalDate.parse(date);
+    private static String toKolayBloodType(BloodType bt) {
+        return bt == null? null : (bt.toString()
+                .replace("Zero", "0")
+                .replace("Negative", "-")
+                .replace("Positive", "+"));
     }
 
-    private <T extends Enum<T>> T toEnum(String str, Class<T> type) {
-        return str == null? null : T.valueOf(type, capitalize(str));
+    private static String toKolayPhoneNumber(String num) {
+        return num == null? null : (num.substring(0, 3) + num.substring(4));
     }
 
     private static <T> String toKolayEnumString(T value) {
@@ -304,28 +338,6 @@ public class KolayPerson implements Record, Cloneable {
 
     private static <T> String toKolayDateString(T value) {
         return value == null? null : value.toString();
-    }
-
-    private BloodType toBloodType(String bt) {
-        return bt == null? null : BloodType.valueOf(bt
-                .replace("0", "Zero")
-                .replace("-", "Negative")
-                .replace("+", "Positive"));
-    }
-
-    private static String toKolayBloodType(BloodType bt) {
-        return bt == null? null : (bt.toString()
-                .replace("Zero", "0")
-                .replace("Negative", "-")
-                .replace("Positive", "+"));
-    }
-
-    private String toPhoneNumber(String num) {
-        return num == null? null : (num.substring(0, 3) + " " + num.substring(3));
-    }
-
-    private static String toKolayPhoneNumber(String num) {
-        return num == null? null : (num.substring(0, 3) + num.substring(4));
     }
 
     private String capitalize(String str) {
