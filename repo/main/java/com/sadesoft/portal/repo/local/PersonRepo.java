@@ -38,6 +38,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 new JdbcColumn("military_service_delay_date"),
                 new JdbcColumn("nationality"),
                 new JdbcColumn("number_of_children"),
+                new JdbcColumn("active"),
                 new JdbcColumn("tour_status", "tour_status")));
     }
 
@@ -69,6 +70,7 @@ public class PersonRepo extends JdbcRepo<Person>{
                 getLocalDate(s, getColumnName(i++)),
                 s.getString(getColumnName(i++)),
                 s.getInt(getColumnName(i++)),
+                s.getBoolean(getColumnName(i++)),
                 TourStatus.valueOf(s.getString(getColumnName(i)))
         );
     }
@@ -99,6 +101,7 @@ public class PersonRepo extends JdbcRepo<Person>{
         setLocalDate(s, i++, o.militaryServiceDelayDate);
         s.setString(i++, o.nationality);
         s.setInt(i++, o.numberOfChildren);
+        s.setBoolean(i++, o.active);
         s.setString(i++, o.tourStatus.name());
         if (o.id != null) setId(s, i, o.id);
     }

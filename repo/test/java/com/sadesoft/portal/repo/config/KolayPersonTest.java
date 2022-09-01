@@ -72,6 +72,7 @@ public class KolayPersonTest {
                 LocalDate.of(2024,1,1),
                 "TR",
                 0,
+                true,
                 TourStatus.Completed);
     }
 
@@ -351,6 +352,6 @@ public class KolayPersonTest {
     }
 
     private KolayPerson clear(KolayPerson p) {
-        return p.withCreatedAt(null).withUpdatedAt(null).withStatus(null);
+        return p.withCreatedAt(null).withUpdatedAt(null);
     }
 }

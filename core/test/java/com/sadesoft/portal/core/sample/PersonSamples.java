@@ -29,5 +29,6 @@ public class PersonSamples {
             LocalDate.of(2024,1,1),
             "TR",
             0,
+            true,
             TourStatus.Completed);
 }

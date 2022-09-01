@@ -141,6 +141,7 @@ public class KolayPerson implements Record, Cloneable {
                 toLocalDate(this.militaryServiceDelayDate),
                 this.nationality,
                 this.numberOfChildren,
+                toActive(this.status),
                 toEnum(this.tourStatus, TourStatus.class));
     }
 
@@ -167,7 +168,7 @@ public class KolayPerson implements Record, Cloneable {
                 toKolayEnumString(p.educationLevel),
                 toKolayEducationStatus(p.graduated),
                 p.educationalInstitution,
-                null,
+                toKolayStatus(p.active),
                 toKolayEnumString(p.tourStatus),
                 null,
                 null,
@@ -264,6 +265,15 @@ public class KolayPerson implements Record, Cloneable {
 
     private Boolean toPartnerWorkStatus(String stat) {
         return stat == null? null : stat.equals("working");
+    }
+
+    private Boolean toActive(String stat) {
+        return stat == null? null : stat.equals("active");
+    }
+
+    private static String toKolayStatus(Boolean stat) {
+        if (stat == null) return null;
+        return stat? "active" : "terminated";
     }
 
     private Boolean toGraduated(String es) {

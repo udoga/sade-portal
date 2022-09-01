@@ -75,6 +75,7 @@ public class PersonKolayRepo implements Repo<Person> {
                 getDate(node.findValue("militaryServiceDelayDate")),
                 getString(node.findValue("nationality")),
                 getInteger(node.findValue("numberOfChildren")),
+                getBoolean(node.findValue("active")),
                 getEnum(node.findValue("tourStatus"), TourStatus.class)
         );
     }

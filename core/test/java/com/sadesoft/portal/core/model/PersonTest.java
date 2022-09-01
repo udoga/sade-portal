@@ -40,6 +40,7 @@ public class PersonTest {
         assertNull(person.militaryServiceDelayDate);
         assertNull(person.nationality);
         assertNull(person.numberOfChildren);
+        assertNull(person.active);
         assertNull(person.tourStatus);
     }
 
@@ -69,6 +70,7 @@ public class PersonTest {
                 " militaryServiceDelayDate=2024-01-01" +
                 " nationality=TR" +
                 " numberOfChildren=0" +
+                " active=true" +
                 " tourStatus=Completed" +
                 "]", validPerson.toString());
     }
@@ -99,6 +101,7 @@ public class PersonTest {
         assertNull(validPerson.withMilitaryServiceDelayDate(null).militaryServiceDelayDate);
         assertNull(validPerson.withNationality(null).nationality);
         assertNull(validPerson.withNumberOfChildren(null).numberOfChildren);
+        assertNull(validPerson.withActive(null).active);
         assertNull(validPerson.withTourStatus(null).tourStatus);
     }
 
@@ -129,6 +132,7 @@ public class PersonTest {
         assertNotEquals(validPerson, validPerson.withMilitaryServiceDelayDate(null));
         assertNotEquals(validPerson, validPerson.withNationality(null));
         assertNotEquals(validPerson, validPerson.withNumberOfChildren(null));
+        assertNotEquals(validPerson, validPerson.withActive(null));
         assertNotEquals(validPerson, validPerson.withTourStatus(null));
     }
 }

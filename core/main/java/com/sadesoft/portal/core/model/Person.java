@@ -29,6 +29,7 @@ public class Person implements Record, Cloneable {
     public LocalDate militaryServiceDelayDate = null;
     public String nationality = null;
     public Integer numberOfChildren = null;
+    public Boolean active = null;
     public TourStatus tourStatus = null;
 
     public Person () {
@@ -58,6 +59,7 @@ public class Person implements Record, Cloneable {
                   LocalDate militaryServiceDelayDate,
                   String nationality,
                   Integer numberOfChildren,
+                  Boolean active,
                   TourStatus tourStatus) {
         this.id = id;
         this.firstName = firstName;
@@ -83,6 +85,7 @@ public class Person implements Record, Cloneable {
         this.militaryServiceDelayDate = militaryServiceDelayDate;
         this.nationality = nationality;
         this.numberOfChildren = numberOfChildren;
+        this.active = active;
         this.tourStatus = tourStatus;
     }
 
@@ -114,6 +117,7 @@ public class Person implements Record, Cloneable {
                 Objects.equals(militaryServiceDelayDate, p.militaryServiceDelayDate) &&
                 Objects.equals(nationality, p.nationality) &&
                 Objects.equals(numberOfChildren, p.numberOfChildren) &&
+                Objects.equals(active, p.active) &&
                 Objects.equals(tourStatus, p.tourStatus);
     }
 
@@ -144,6 +148,7 @@ public class Person implements Record, Cloneable {
                 " militaryServiceDelayDate=" + militaryServiceDelayDate +
                 " nationality=" + nationality +
                 " numberOfChildren=" + numberOfChildren +
+                " active=" + active +
                 " tourStatus=" + tourStatus +
                 "]";
     }
@@ -307,6 +312,12 @@ public class Person implements Record, Cloneable {
     public Person withNumberOfChildren(Integer numberOfChildren) {
         Person person = copy();
         person.numberOfChildren = numberOfChildren;
+        return person;
+    }
+
+    public Person withActive(Boolean active) {
+        Person person = copy();
+        person.active = active;
         return person;
     }
 
