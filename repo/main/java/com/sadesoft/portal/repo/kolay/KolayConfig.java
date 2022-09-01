@@ -1,4 +1,4 @@
-package com.sadesoft.portal.repo.config;
+package com.sadesoft.portal.repo.kolay;
 
 import com.sadesoft.portal.base.config.Props;
 

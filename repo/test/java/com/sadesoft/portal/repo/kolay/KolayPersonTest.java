@@ -1,9 +1,8 @@
-package com.sadesoft.portal.repo.config;
+package com.sadesoft.portal.repo.kolay;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.error.InvalidPhoneError;
 import com.sadesoft.portal.core.model.*;
-import com.sadesoft.portal.repo.kolay.KolayPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

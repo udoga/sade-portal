@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base;
+package com.sadesoft.portal.base.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,7 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class RestClient {
+public class RestClient implements RestResponder {
     private final String serviceUrl;
     private final HttpClient client;
     private final ObjectMapper mapper;
@@ -20,6 +20,7 @@ public class RestClient {
         this.mapper = new ObjectMapper();
     }
 
+    @Override
     public JsonNode respond(String url, String method, String body) {
         HttpRequest.BodyPublisher publisher = getPublisher(body);
         HttpRequest request = getHttpRequest(serviceUrl + url, method, publisher);

@@ -1,11 +1,10 @@
 package com.sadesoft.portal.repo.kolay;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sadesoft.portal.base.RestClient;
+import com.sadesoft.portal.base.rest.RestClient;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
-import com.sadesoft.portal.repo.config.KolayConfig;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
