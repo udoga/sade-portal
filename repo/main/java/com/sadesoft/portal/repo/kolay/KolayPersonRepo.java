@@ -3,15 +3,15 @@ package com.sadesoft.portal.repo.kolay;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sadesoft.portal.base.rest.RestClient;
 import com.sadesoft.portal.base.error.ClientError;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.repo.PersonRepo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class KolayPersonRepo implements Repo<Person> {
+public class KolayPersonRepo implements PersonRepo {
     private final RestClient client;
 
     public KolayPersonRepo(KolayConfig config) {

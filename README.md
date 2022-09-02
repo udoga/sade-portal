@@ -19,7 +19,7 @@
 
 - base: Classes that can be reusable for unrelated projects.
 - core: Classes and business rules specific to this application.
-- repo: Adapters for databases or external data sources.
+- repo: Repository implementations for local databases and Kolay IK.
 - rest: REST API plugin by using Javalin.
 - ui: Web user interface by using AngularJS.
 
@@ -34,17 +34,16 @@
 ## Todos
 
 - add: core: 'permission' model and services
-- add: core:  add 'status' field to Person
+- add: repo: full kolayik integration
 - add: rest: run pg.sql at startup
 - add: rest: sorting, filtering
 - add: rest: api authentication with token
-- add: rest: kolayik integration
+- fix: ui: empty date time fields in edit forms
 - add: ui: use vue instead of ng
 - add: ui: login page
 - add: ui: make tables responsive
 - add: ui: page selection to tables
 - add: ui: message boxes
-- add: ui: date picker
 - add: ui: tree menu
 - add: ui: language selection
 - add: ui: user manual

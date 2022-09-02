@@ -1,11 +1,11 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.core.mock.MockReceiptRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.sadesoft.portal.base.repo.ListRepo;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.sample.ReceiptSamples;
@@ -13,7 +13,7 @@ import com.sadesoft.portal.core.sample.ReceiptSamples;
 import java.math.BigDecimal;
 
 public class ReceiptServiceTest {
-    private ListRepo<Receipt> repo;
+    private MockReceiptRepo repo;
     private ReceiptService service;
     private Receipt validReceipt;
 
@@ -37,7 +37,7 @@ public class ReceiptServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("Receipt");
+        repo = new MockReceiptRepo();
         service = new ReceiptService(repo);
         validReceipt = ReceiptSamples.validReceipt.copy();
     }

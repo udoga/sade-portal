@@ -3,7 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.ListRepo;
+import com.sadesoft.portal.core.mock.MockLeaveRepo;
 import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Leave;
 import com.sadesoft.portal.core.sample.LeaveSamples;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LeaveServiceTest {
-    private ListRepo<Leave> repo;
+    private MockLeaveRepo repo;
     private LeaveService service;
     private Leave validLeave;
 
@@ -34,7 +34,7 @@ public class LeaveServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("Leave");
+        repo = new MockLeaveRepo();
         service = new LeaveService(repo);
         validLeave = LeaveSamples.validLeave.copy();
     }

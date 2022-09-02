@@ -3,13 +3,13 @@ package com.sadesoft.portal.core.service;
 import java.util.List;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.repo.UserRepo;
 
 public class UserService {
-    private final Repo<User> repo;
+    private final UserRepo repo;
 
-    public UserService(Repo<User> repo) {
+    public UserService(UserRepo repo) {
         this.repo = repo;
     }
 

@@ -1,16 +1,16 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.*;
+import com.sadesoft.portal.core.mock.MockPersonRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.sadesoft.portal.base.repo.ListRepo;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.sample.PersonSamples;
 
 public class PersonServiceTest {
-    private ListRepo<Person> repo;
+    private MockPersonRepo repo;
     private PersonService service;
     private Person validPerson;
 
@@ -79,7 +79,7 @@ public class PersonServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("Person");
+        repo = new MockPersonRepo();
         service = new PersonService(repo);
         validPerson = PersonSamples.validPerson.copy();
     }

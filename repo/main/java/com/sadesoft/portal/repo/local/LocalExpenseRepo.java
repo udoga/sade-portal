@@ -9,8 +9,9 @@ import java.util.List;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.repo.ExpenseRepo;
 
-public class LocalExpenseRepo extends JdbcRepo<Expense>{
+public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     public LocalExpenseRepo(Connection connection) {
         super(connection, "expenses", List.of(
                 new JdbcColumn("id"),

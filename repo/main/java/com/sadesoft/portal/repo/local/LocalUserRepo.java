@@ -9,8 +9,9 @@ import java.util.List;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.repo.UserRepo;
 
-public class LocalUserRepo extends JdbcRepo<User> {
+public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
     public LocalUserRepo(Connection connection) {
         super(connection, "users", List.of(
                 new JdbcColumn("id"),

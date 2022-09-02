@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.ListRepo;
+import com.sadesoft.portal.core.mock.MockExpenseRepo;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.sample.ExpenseSamples;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExpenseServiceTest {
-    private ListRepo<Expense> repo;
+    private MockExpenseRepo repo;
     private ExpenseService service;
     private Expense validExpense;
 
@@ -27,7 +27,7 @@ public class ExpenseServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("Expense");
+        repo = new MockExpenseRepo();
         service = new ExpenseService(repo);
         validExpense = ExpenseSamples.validExpense.copy();
     }

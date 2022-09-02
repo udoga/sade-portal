@@ -3,13 +3,13 @@ package com.sadesoft.portal.core.service;
 import java.util.List;
 
 import com.sadesoft.portal.base.error.*;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.repo.PersonRepo;
 
 public class PersonService {
-    private final Repo<Person> repo;
+    private final PersonRepo repo;
 
-    public PersonService(Repo<Person> repo) {
+    public PersonService(PersonRepo repo) {
         this.repo = repo;
     }
 

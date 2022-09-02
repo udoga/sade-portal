@@ -3,16 +3,16 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.ApprovalStatus;
-import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.model.Leave;
+import com.sadesoft.portal.core.repo.LeaveRepo;
+
 import java.util.List;
 
 public class LeaveService {
-    private final Repo<Leave> repo;
+    private final LeaveRepo repo;
 
-    public LeaveService(Repo<Leave> repo) {
+    public LeaveService(LeaveRepo repo) {
         this.repo = repo;
     }
 

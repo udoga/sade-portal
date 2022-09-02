@@ -1,22 +1,22 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.mock.MockUserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import com.sadesoft.portal.base.repo.ListRepo;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.sample.UserSamples;
 
 public class UserServiceTest {
-    private ListRepo<User> repo;
+    private MockUserRepo repo;
     private UserService service;
     private User validUser;
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("User");
+        repo = new MockUserRepo();
         service = new UserService(repo);
         validUser = UserSamples.validUser.copy();
     }

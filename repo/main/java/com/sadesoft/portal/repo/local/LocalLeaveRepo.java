@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.repo.LeaveRepo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class LocalLeaveRepo extends JdbcRepo<Leave> {
+public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     public LocalLeaveRepo(Connection connection) {
         super(connection, "leaves", List.of(
                 new JdbcColumn("id"),

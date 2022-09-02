@@ -2,15 +2,15 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.Expense;
+import com.sadesoft.portal.core.repo.ExpenseRepo;
 
 import java.util.List;
 
 public class ExpenseService {
-    private final Repo<Expense> repo;
+    private final ExpenseRepo repo;
 
-    public ExpenseService(Repo<Expense> repo) {
+    public ExpenseService(ExpenseRepo repo) {
         this.repo = repo;
     }
 

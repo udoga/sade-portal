@@ -2,16 +2,16 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.repo.Repo;
 import com.sadesoft.portal.core.model.*;
+import com.sadesoft.portal.core.repo.ReceiptRepo;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public class ReceiptService {
-    private final Repo<Receipt> repo;
+    private final ReceiptRepo repo;
 
-    public ReceiptService(Repo<Receipt> repo) {
+    public ReceiptService(ReceiptRepo repo) {
         this.repo = repo;
     }
 
