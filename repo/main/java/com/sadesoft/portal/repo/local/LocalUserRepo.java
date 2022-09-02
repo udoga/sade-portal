@@ -10,8 +10,8 @@ import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.User;
 
-public class UserRepo extends JdbcRepo<User> {
-    public UserRepo(Connection connection) {
+public class LocalUserRepo extends JdbcRepo<User> {
+    public LocalUserRepo(Connection connection) {
         super(connection, "users", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("username"),

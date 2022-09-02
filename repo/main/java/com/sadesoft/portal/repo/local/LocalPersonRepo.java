@@ -11,8 +11,8 @@ import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.model.EducationLevel;
 
-public class PersonRepo extends JdbcRepo<Person>{
-    public PersonRepo(Connection connection) {
+public class LocalPersonRepo extends JdbcRepo<Person> {
+    public LocalPersonRepo(Connection connection) {
         super(connection, "people", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("first_name"),

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PersonKolayRepo implements Repo<Person> {
+public class KolayPersonRepo implements Repo<Person> {
     private final RestClient client;
 
-    public PersonKolayRepo(KolayConfig config) {
+    public KolayPersonRepo(KolayConfig config) {
         this.client = new RestClient(config.url + "/person");
     }
 

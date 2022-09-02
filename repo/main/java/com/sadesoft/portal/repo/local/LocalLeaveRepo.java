@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class LeaveRepo extends JdbcRepo<Leave> {
-    public LeaveRepo(Connection connection) {
+public class LocalLeaveRepo extends JdbcRepo<Leave> {
+    public LocalLeaveRepo(Connection connection) {
         super(connection, "leaves", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("person_id"),

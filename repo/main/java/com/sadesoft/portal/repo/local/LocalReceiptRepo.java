@@ -11,8 +11,8 @@ import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.Receipt;
 import com.sadesoft.portal.core.model.ReceiptCategory;
 
-public class ReceiptRepo extends JdbcRepo<Receipt>{
-    public ReceiptRepo(Connection connection) {
+public class LocalReceiptRepo extends JdbcRepo<Receipt>{
+    public LocalReceiptRepo(Connection connection) {
         super(connection, "receipts", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("expense_id"),

@@ -8,7 +8,7 @@ import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.service.*;
 import com.sadesoft.portal.repo.kolay.KolayConfig;
-import com.sadesoft.portal.repo.kolay.PersonKolayRepo;
+import com.sadesoft.portal.repo.kolay.KolayPersonRepo;
 import com.sadesoft.portal.repo.local.*;
 import com.sadesoft.portal.rest.controller.*;
 import com.sadesoft.portal.rest.javalin.RestServer;
@@ -19,11 +19,11 @@ public class Main {
         Connection connection = new DatabaseConfig(props.getSection("database")).connect();
         KolayConfig kolayConfig = new KolayConfig(props.getSection("kolay"));
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
-        Repo<Expense> expenseRepo = new ExpenseRepo(connection);
-        Repo<Leave> leaveRepo = new LeaveRepo(connection);
-        Repo<Person> personRepo = kolayConfig.enabled? new PersonKolayRepo(kolayConfig) : new PersonRepo(connection);
-        Repo<Receipt> receiptRepo = new ReceiptRepo(connection);
-        Repo<User> userRepo = new UserRepo(connection);
+        Repo<Expense> expenseRepo = new LocalExpenseRepo(connection);
+        Repo<Leave> leaveRepo = new LocalLeaveRepo(connection);
+        Repo<Person> personRepo = kolayConfig.enabled? new KolayPersonRepo(kolayConfig) : new LocalPersonRepo(connection);
+        Repo<Receipt> receiptRepo = new LocalReceiptRepo(connection);
+        Repo<User> userRepo = new LocalUserRepo(connection);
 
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         LeaveService leaveService = new LeaveService(leaveRepo);
