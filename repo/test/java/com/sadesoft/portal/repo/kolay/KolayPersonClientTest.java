@@ -29,32 +29,31 @@ public class KolayPersonClientTest {
     }
 
     private static class MockRestResponder implements RestResponder {
-        ObjectMapper mapper = new ObjectMapper();
+        private final ObjectMapper mapper = new ObjectMapper();
 
         @Override
         public JsonNode respond(String url, String method, String body) {
-            String jsonString = """
-                    {
-                      "error": false,
-                      "data": {
-                        "total": 2,
-                        "perPage": 60,
-                        "currentPage": 1,
-                        "lastPage": 1,
-                        "items": [
-                          {
-                            "id": "0",
-                            "firstName": "John",
-                            "lastName": "Doe"
-                          },
-                          {
-                            "id": "1",
-                            "firstName": "John",
-                            "lastName": "Ipsum"
-                          }
-                        ]
-                      }
-                    }""";
+            String jsonString = "{\n" +
+                    "  \"error\": false,\n" +
+                    "  \"data\": {\n" +
+                    "    \"total\": 2,\n" +
+                    "    \"perPage\": 60,\n" +
+                    "    \"currentPage\": 1,\n" +
+                    "    \"lastPage\": 1,\n" +
+                    "    \"items\": [\n" +
+                    "      {\n" +
+                    "        \"id\": \"0\",\n" +
+                    "        \"firstName\": \"John\",\n" +
+                    "        \"lastName\": \"Doe\"\n" +
+                    "      },\n" +
+                    "      {\n" +
+                    "        \"id\": \"1\",\n" +
+                    "        \"firstName\": \"John\",\n" +
+                    "        \"lastName\": \"Ipsum\"\n" +
+                    "      }\n" +
+                    "    ]\n" +
+                    "  }\n" +
+                    "}";
 
             try { return mapper.readTree(jsonString); }
             catch (JsonProcessingException e) { throw new RuntimeException(e); }
