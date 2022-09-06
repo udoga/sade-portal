@@ -21,9 +21,9 @@ public class RestClient implements RestResponder {
     }
 
     @Override
-    public JsonNode respond(String url, String method, String body) {
-        HttpRequest.BodyPublisher publisher = getPublisher(body);
-        HttpRequest request = getHttpRequest(serviceUrl + url, method, publisher);
+    public JsonNode respond(RestRequest r) {
+        HttpRequest.BodyPublisher publisher = getPublisher(r.body);
+        HttpRequest request = getHttpRequest(serviceUrl + r.url, r.method, publisher);
         HttpResponse<String> httpResponse = getHttpResponse(request);
         return getRootNode(httpResponse);
     }

@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.kolay;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sadesoft.portal.base.rest.RestClient;
 import com.sadesoft.portal.base.error.ClientError;
+import com.sadesoft.portal.base.rest.RestRequest;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.repo.PersonRepo;
 
@@ -20,7 +21,7 @@ public class KolayPersonRepo implements PersonRepo {
 
     @Override
     public List<Person> list() {
-        return getPeople(client.respond("/list", "POST", null).findValue("data").findValue("items"));
+        return getPeople(client.respond(new RestRequest("/list", "POST", null)).findValue("data").findValue("items"));
     }
 
     @Override
@@ -30,17 +31,17 @@ public class KolayPersonRepo implements PersonRepo {
 
     @Override
     public Person create(Person record) {
-        return getPerson(client.respond("/create/", "POST", toJson(record)).findValue("data").findValue("person"));
+        return getPerson(client.respond(new RestRequest("/create/", "POST", toJson(record))).findValue("data").findValue("person"));
     }
 
     @Override
     public Person read(String id) {
-        return getPerson(client.respond("/view/" + id, "GET", null).findValue("data").findValue("person"));
+        return getPerson(client.respond(new RestRequest("/view/" + id, "GET", null)).findValue("data").findValue("person"));
     }
 
     @Override
     public Person update(String id, Person record) {
-        return getPerson(client.respond("/update/", "PUT", toJson(record)).findValue("data").findValue("person"));
+        return getPerson(client.respond(new RestRequest("/update/", "PUT", toJson(record))).findValue("data").findValue("person"));
     }
 
     @Override
