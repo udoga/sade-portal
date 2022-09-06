@@ -14,8 +14,13 @@ public class KolayPersonClient {
     }
 
     public List<KolayPerson> listPeople() {
-        JsonNode node = responder.respond(null, null, null);
+        JsonNode node = responder.respond("/person/list", "POST", "");
         return getKolayPeople(node.findValue("data").findValue("items"));
+    }
+
+    public KolayPerson viewPerson(String id) {
+        JsonNode node = responder.respond("/person/view/" + id, "GET", "");
+        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
     }
 
     private List<KolayPerson> getKolayPeople(JsonNode nodes) {
