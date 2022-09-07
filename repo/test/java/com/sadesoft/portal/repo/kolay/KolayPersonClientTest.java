@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KolayPersonClientTest {
     private List<KolayPerson> people;
@@ -82,7 +83,7 @@ public class KolayPersonClientTest {
         @Test
         void viewsBulkPerson() {
             responder.saveBulkResponse(people);
-            assertEquals(people, client.viewBulkPerson(people.stream().map(p -> p.id).toList()));
+            assertEquals(people, client.viewBulkPerson(people.stream().map(p -> p.id).collect(Collectors.toList())));
             assertEquals(1, responder.getRequestCount());
             assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
         }
@@ -111,7 +112,7 @@ public class KolayPersonClientTest {
 
         private String createPeopleJson(List<KolayPerson> people, String title) {
             return "{ \"" + title + "\":["
-                    + String.join(",", people.stream().map(p -> p.toJson().toString()).toList())
+                    + people.stream().map(p -> p.toJson().toString()).collect(Collectors.joining(","))
                     + "]}";
         }
 
@@ -131,8 +132,9 @@ public class KolayPersonClientTest {
             return "{ \"error\": false," + " \"data\":" + data + "}";
         }
 
+
         private String createIdListJson(List<KolayPerson> people) {
-            return "\"person_ids\" : [" + String.join(",", people.stream().map(p -> p.id).toList()) + "]";
+            return "\"person_ids\" : [" + people.stream().map(p -> p.id).collect(Collectors.joining(",")) + "]";
         }
     }
 }

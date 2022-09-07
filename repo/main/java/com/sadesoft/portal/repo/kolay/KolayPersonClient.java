@@ -6,6 +6,7 @@ import com.sadesoft.portal.base.rest.RestResponder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KolayPersonClient {
     private final RestResponder responder;
@@ -44,7 +45,7 @@ public class KolayPersonClient {
     }
 
     private String createIdListJson(List<String> ids) {
-        return "\"person_ids\" : [" + String.join(",", ids.stream().toList()) + "]";
+        return "\"person_ids\" : [" + String.join(",", ids) + "]";
     }
 
     private List<KolayPerson> getKolayPeople(JsonNode nodes) {

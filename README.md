@@ -2,7 +2,7 @@
 
 ## Basic Setup
 
-1. Install Java (>= 9) and Gradle (>= 6.9.1).
+1. Install Java (>= 11) and Gradle (>= 6.9.1).
 2. Start application from command line: `gradle run`
 3. Open browser: http://localhost:7000
 
