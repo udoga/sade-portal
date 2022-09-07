@@ -34,8 +34,17 @@ public class KolayPersonClient {
         return KolayPerson.fromJson(node.findValue("data").findValue("person"));
     }
 
+    public List<KolayPerson> viewBulkPerson(List<String> ids) {
+        JsonNode node = responder.respond(new RestRequest("/person/bulk-view" , "POST", createIdListJson(ids)));
+        return getKolayPeople(node.findValue("data").findValue("persons"));
+    }
+
     private String createPersonJson(KolayPerson person) {
         return "{ \"person\":" + person.toJson()+ " }";
+    }
+
+    private String createIdListJson(List<String> ids) {
+        return "\"person_ids\" : [" + String.join(",", ids.stream().toList()) + "]";
     }
 
     private List<KolayPerson> getKolayPeople(JsonNode nodes) {

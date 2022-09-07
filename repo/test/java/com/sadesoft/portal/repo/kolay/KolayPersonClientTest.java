@@ -63,26 +63,34 @@ public class KolayPersonClientTest {
         void setUp() {
             people.add(new KolayPerson().withId("0").withFirstName("Emma").withLastName("Doe"));
             people.add(new KolayPerson().withId("1").withFirstName("John").withLastName("Ipsum"));
-            responder.saveListResponse(people);
-            responder.saveViewResponse(people.get(0));
-            responder.saveViewResponse(people.get(1));
         }
 
         @Test
         void fetchesPeopleList() {
+            responder.saveListResponse(people);
             assertEquals(people, client.listPeople());
         }
 
         @Test
         void viewsPersonById() {
+            responder.saveViewResponse(people.get(0));
+            responder.saveViewResponse(people.get(1));
             assertEquals(people.get(0), client.viewPerson(people.get(0).id));
             assertEquals(people.get(1), client.viewPerson(people.get(1).id));
+        }
+
+        @Test
+        void viewsBulkPerson() {
+            responder.saveBulkResponse(people);
+            assertEquals(people, client.viewBulkPerson(people.stream().map(p -> p.id).toList()));
+            assertEquals(1, responder.getRequestCount());
+            assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
         }
     }
 
     private static class MockPersonResponder extends MockRestResponder {
         public void saveListResponse(List<KolayPerson> people) {
-            save(new RestRequest("/person/list", "POST", ""), createPeopleResponseJson(people));
+            save(new RestRequest("/person/list", "POST", ""), createPeopleResponseJson(people, "items"));
         }
 
         public void saveViewResponse(KolayPerson p) {
@@ -97,29 +105,34 @@ public class KolayPersonClientTest {
             save(new RestRequest("/person/update", "PUT", createPersonJson(p.withUpdatedAt(null))), createPersonResponseJson(p));
         }
 
-        private String createPeopleJson(List<KolayPerson> people) {
-            return String.join(",", people.stream().map(p -> p.toJson().toString()).toList());
+        public void saveBulkResponse(List<KolayPerson> people) {
+            save(new RestRequest("/person/bulk-view", "POST", createIdListJson(people)), createPeopleResponseJson(people, "persons"));
         }
 
-        private String createPeopleResponseJson(List<KolayPerson> people) {
-            return "{\n" +
-                    "  \"error\": false,\n" +
-                    "  \"data\": {\n" +
-                    "    \"total\": 2,\n" +
-                    "    \"perPage\": 60,\n" +
-                    "    \"currentPage\": 1,\n" +
-                    "    \"lastPage\": 1,\n" +
-                    "    \"items\": [" + createPeopleJson(people) + "]\n" +
-                    "  }\n" +
-                    "}";
+        private String createPeopleJson(List<KolayPerson> people, String title) {
+            return "{ \"" + title + "\":["
+                    + String.join(",", people.stream().map(p -> p.toJson().toString()).toList())
+                    + "]}";
         }
 
-        private String createPersonResponseJson(KolayPerson person) {
-            return "{ \"error\": false," + " \"data\":" + createPersonJson(person) + "}";
+        private String createPeopleResponseJson(List<KolayPerson> people, String title) {
+            return createResponseJson(createPeopleJson(people, title));
         }
 
         private String createPersonJson(KolayPerson person) {
             return "{ \"person\":" + person.toJson() + " }";
+        }
+
+        private String createPersonResponseJson(KolayPerson person) {
+            return createResponseJson(createPersonJson(person));
+        }
+
+        private String createResponseJson(String data) {
+            return "{ \"error\": false," + " \"data\":" + data + "}";
+        }
+
+        private String createIdListJson(List<KolayPerson> people) {
+            return "\"person_ids\" : [" + String.join(",", people.stream().map(p -> p.id).toList()) + "]";
         }
     }
 }
