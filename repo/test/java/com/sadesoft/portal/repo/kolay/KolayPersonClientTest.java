@@ -44,6 +44,14 @@ public class KolayPersonClientTest {
         assertEquals(responder.interactions.get(0).request, responder.requests.get(0));
     }
 
+    @Test
+    void whenUpdatesPerson_returnsResponseFromResponder() {
+        responder.saveUpdateResponse(person.withId("0"));
+        assertEquals(person.withId("0"), client.updatePerson(person.withId("0")));
+        assertEquals(1, responder.requests.size());
+        assertEquals(responder.interactions.get(0).request, responder.requests.get(0));
+    }
+
     @Nested
     public class GivenResponderWithTwoPeople {
         @BeforeEach
@@ -90,6 +98,10 @@ public class KolayPersonClientTest {
 
         public void saveCreateResponse(KolayPerson p) {
             save(new RestRequest("/person/create", "POST", createPersonJson(p.withId(null))), createPersonResponseJson(p));
+        }
+
+        public void saveUpdateResponse(KolayPerson p) {
+            save(new RestRequest("/person/update", "PUT", createPersonJson(p)), createPersonResponseJson(p));
         }
 
         private void save(RestRequest r, String response) {

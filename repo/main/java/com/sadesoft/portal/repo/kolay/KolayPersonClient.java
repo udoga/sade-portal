@@ -29,6 +29,11 @@ public class KolayPersonClient {
         return KolayPerson.fromJson(node.findValue("data").findValue("person"));
     }
 
+    public KolayPerson updatePerson(KolayPerson person) {
+        JsonNode node = responder.respond(new RestRequest("/person/update" , "PUT", createPersonJson(person)));
+        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+    }
+
     private String createPersonJson(KolayPerson person) {
         return "{ \"person\":" + person.toJson()+ " }";
     }
