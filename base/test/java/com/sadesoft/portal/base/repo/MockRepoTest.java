@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.error.RecordNotFoundError;
 import com.sadesoft.portal.base.util.TestUtil;
 
-public class ListRepoTest {
-    ListRepo<MockRecord> repo;
+public class MockRepoTest {
+    MockRepo<MockRecord> repo;
 
     private void assertNotFound(Executable e, String id) {
         TestUtil.assertException(RecordNotFoundError.class, "Record not found in " + repo.tableName + ": id=" + id, e);
@@ -19,7 +19,7 @@ public class ListRepoTest {
 
     @BeforeEach
     public void setup() {
-        repo = new ListRepo<>("MockRecords");
+        repo = new MockRepo<>("MockRecords");
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ListRepoTest {
     }
 
     @Nested
-    public class GivenListRepoWithTwoRecords {
+    public class GivenMockRepoWithTwoRecords {
         @BeforeEach
         public void setup() {
             repo.create(new MockRecord("name0"));
@@ -135,7 +135,7 @@ public class ListRepoTest {
     }
 
     @Nested
-    public class GivenListRepoWithTenRecords {
+    public class GivenMockRepoWithTenRecords {
         private void assertInvalidPageNo(int pageNo) {
             RuntimeException e = assertThrows(RuntimeException.class, () -> repo.listPage(pageNo, 1));
             assertEquals("Page number should be greater than zero", e.getMessage());

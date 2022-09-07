@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.sadesoft.portal.base.error.RecordNotFoundError;
 
-public class ListRepo<T extends Record> implements Repo<T> {
+public class MockRepo<T extends Record> implements Repo<T> {
     public final String tableName;
     private final ArrayList<T> records;
     private int nextId;
 
-    public ListRepo(String tableName) {
+    public MockRepo(String tableName) {
         this.tableName = tableName;
         this.records = new ArrayList<>();
         this.nextId = 0;
