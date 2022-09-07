@@ -1,10 +1,7 @@
 package com.sadesoft.portal.repo.kolay;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sadesoft.portal.base.rest.MockRestResponder;
 import com.sadesoft.portal.base.rest.RestRequest;
-import com.sadesoft.portal.base.rest.RestResponder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,18 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class KolayPersonClientTest {
     private List<KolayPerson> people;
-    private MockRestResponder responder;
+    private MockPersonResponder responder;
     private KolayPersonClient client;
     private KolayPerson person;
 
     @BeforeEach
     public void setUp() {
         people = new ArrayList<>();
-        responder = new MockRestResponder();
+        responder = new MockPersonResponder();
         client = new KolayPersonClient(responder);
         person = new KolayPerson().withFirstName("Sample");
     }
@@ -38,18 +34,27 @@ public class KolayPersonClientTest {
 
     @Test
     void whenCreatesPerson_returnsResponseFromResponder() {
-        responder.saveCreateResponse(person.withId("0"));
-        assertEquals(person.withId("0"), client.createPerson(person));
-        assertEquals(1, responder.requests.size());
-        assertEquals(responder.interactions.get(0).request, responder.requests.get(0));
+        KolayPerson createdPerson = person.withId("0");
+        responder.saveCreateResponse(createdPerson);
+        assertEquals(createdPerson, client.createPerson(person));
+        assertEquals(1, responder.getRequestCount());
+        assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
+    }
+
+    @Test
+    void whenUpdatesPerson_sendsUpdateRequest() {
+        KolayPerson updatedPerson = person.withId("0").withUpdatedAt("2022-01-01");
+        responder.saveUpdateResponse(updatedPerson);
+        assertEquals(updatedPerson, client.updatePerson(person.withId("0")));
+        assertEquals(1, responder.getRequestCount());
+        assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
     }
 
     @Test
     void whenUpdatesPerson_returnsResponseFromResponder() {
-        responder.saveUpdateResponse(person.withId("0"));
-        assertEquals(person.withId("0"), client.updatePerson(person.withId("0")));
-        assertEquals(1, responder.requests.size());
-        assertEquals(responder.interactions.get(0).request, responder.requests.get(0));
+        KolayPerson updatedPerson = person.withId("0").withUpdatedAt("2022-02-02");
+        responder.saveUpdateResponse(updatedPerson);
+        assertEquals(updatedPerson, client.updatePerson(person.withId("0")));
     }
 
     @Nested
@@ -75,19 +80,7 @@ public class KolayPersonClientTest {
         }
     }
 
-    private static class MockRestResponder implements RestResponder {
-        private final List<Interaction> interactions = new ArrayList<>();
-        private final List<RestRequest> requests = new ArrayList<>();
-
-        @Override
-        public JsonNode respond(RestRequest r) {
-            requests.add(r);
-            for (Interaction interaction : interactions)
-                if (Objects.equals(r, interaction.request))
-                    return interaction.response;
-            return null;
-        }
-
+    private static class MockPersonResponder extends MockRestResponder {
         public void saveListResponse(List<KolayPerson> people) {
             save(new RestRequest("/person/list", "POST", ""), createPeopleResponseJson(people));
         }
@@ -101,11 +94,7 @@ public class KolayPersonClientTest {
         }
 
         public void saveUpdateResponse(KolayPerson p) {
-            save(new RestRequest("/person/update", "PUT", createPersonJson(p)), createPersonResponseJson(p));
-        }
-
-        private void save(RestRequest r, String response) {
-            interactions.add(new Interaction(r, response));
+            save(new RestRequest("/person/update", "PUT", createPersonJson(p.withUpdatedAt(null))), createPersonResponseJson(p));
         }
 
         private String createPeopleJson(List<KolayPerson> people) {
@@ -131,24 +120,6 @@ public class KolayPersonClientTest {
 
         private String createPersonJson(KolayPerson person) {
             return "{ \"person\":" + person.toJson() + " }";
-        }
-    }
-
-    private static class Interaction {
-        public final RestRequest request;
-        public final JsonNode response;
-
-        Interaction(RestRequest r, String response) {
-            this.request = r;
-            this.response = toJsonNode(response);
-        }
-
-        private JsonNode toJsonNode(String response) {
-            try {
-                return new ObjectMapper().readTree(response);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
