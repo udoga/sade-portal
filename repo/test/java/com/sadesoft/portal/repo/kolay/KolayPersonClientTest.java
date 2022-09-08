@@ -1,5 +1,7 @@
 package com.sadesoft.portal.repo.kolay;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.sadesoft.portal.base.rest.JsonMapper;
 import com.sadesoft.portal.base.rest.MockRestResponder;
 import com.sadesoft.portal.base.rest.RestRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,10 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class KolayPersonClientTest {
     private List<KolayPerson> people;
+    private JsonMapper mapper;
     private MockPersonResponder responder;
     private KolayPersonClient client;
     private KolayPerson person;
@@ -21,8 +25,9 @@ public class KolayPersonClientTest {
     @BeforeEach
     public void setUp() {
         people = new ArrayList<>();
-        responder = new MockPersonResponder();
-        client = new KolayPersonClient(responder);
+        mapper = new JsonMapper();
+        responder = new MockPersonResponder(mapper);
+        client = new KolayPersonClient(responder, mapper);
         person = new KolayPerson().withFirstName("Sample");
     }
 
@@ -98,12 +103,18 @@ public class KolayPersonClientTest {
     }
 
     private static class MockPersonResponder extends MockRestResponder {
+        private final JsonMapper mapper;
+
+        public MockPersonResponder(JsonMapper mapper) {
+            this.mapper = mapper;
+        }
+
         public void saveListResponse(List<KolayPerson> people) {
-            save(new RestRequest("/person/list", "POST", ""), createPeopleResponseJson(people, "items"));
+            save(new RestRequest("/person/list", "POST", null), createPeopleResponseJson(people, "items"));
         }
 
         public void saveViewResponse(KolayPerson p) {
-            save(new RestRequest("/person/view/" + p.id, "GET", ""), createPersonResponseJson(p));
+            save(new RestRequest("/person/view/" + p.id, "GET", null), createPersonResponseJson(p));
         }
 
         public void saveCreateResponse(KolayPerson p) {
@@ -122,39 +133,32 @@ public class KolayPersonClientTest {
             save(new RestRequest("/person/terminate", "POST", createTerminationJson(t)), createPersonResponseJson(p));
         }
 
-        private String createTerminationJson(KolayTermination termination) {
-            return "{ \"personId\":" + termination.personId + "," +
-                    " \"date\":" + termination.date + "," +
-                    " \"reasonCode\":" + termination.reasonCode + "," +
-                    " \"details\":" + termination.details + "," +
-                    " }";
+        private JsonNode createTerminationJson(KolayTermination termination) {
+           return mapper.toJson(termination);
         }
 
-        private String createPeopleJson(List<KolayPerson> people, String title) {
-            return "{ \"" + title + "\":["
-                    + people.stream().map(p -> p.toJson().toString()).collect(Collectors.joining(","))
-                    + "]}";
+        private JsonNode createPeopleJson(List<KolayPerson> people, String title) {
+            return mapper.toJson(Map.of(title, people));
         }
 
-        private String createPeopleResponseJson(List<KolayPerson> people, String title) {
+        private JsonNode createPeopleResponseJson(List<KolayPerson> people, String title) {
             return createResponseJson(createPeopleJson(people, title));
         }
 
-        private String createPersonJson(KolayPerson person) {
-            return "{ \"person\":" + person.toJson() + " }";
+        private JsonNode createPersonJson(KolayPerson person) {
+            return mapper.toJson(Map.of("person", person));
         }
 
-        private String createPersonResponseJson(KolayPerson person) {
+        private JsonNode createPersonResponseJson(KolayPerson person) {
             return createResponseJson(createPersonJson(person));
         }
 
-        private String createResponseJson(String data) {
-            return "{ \"error\": false," + " \"data\":" + data + "}";
+        private JsonNode createResponseJson(JsonNode data) {
+            return mapper.toJson(Map.of("error", false, "data", data));
         }
 
-
-        private String createIdListJson(List<KolayPerson> people) {
-            return "\"person_ids\" : [" + people.stream().map(p -> p.id).collect(Collectors.joining(",")) + "]";
+        private JsonNode createIdListJson(List<KolayPerson> people) {
+            return mapper.toJson(Map.of("person_ids", people.stream().map(p -> p.id).collect(Collectors.toList())));
         }
     }
 }

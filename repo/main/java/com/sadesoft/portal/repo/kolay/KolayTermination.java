@@ -1,10 +1,10 @@
 package com.sadesoft.portal.repo.kolay;
 
 public class KolayTermination {
-    String personId;
-    String date;
-    String reasonCode;
-    String details;
+    public String personId;
+    public String date;
+    public String reasonCode;
+    public String details;
 
     public KolayTermination(String personId, String date, String reasonCode, String details) {
         this.personId = personId;

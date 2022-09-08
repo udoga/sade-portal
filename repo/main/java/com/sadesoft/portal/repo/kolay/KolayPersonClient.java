@@ -1,69 +1,68 @@
 package com.sadesoft.portal.repo.kolay;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sadesoft.portal.base.rest.JsonMapper;
 import com.sadesoft.portal.base.rest.RestRequest;
 import com.sadesoft.portal.base.rest.RestResponder;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class KolayPersonClient {
     private final RestResponder responder;
+    private final JsonMapper mapper;
 
-    public KolayPersonClient(RestResponder responder) {
+    public KolayPersonClient(RestResponder responder, JsonMapper mapper) {
         this.responder = responder;
+        this.mapper = mapper;
     }
 
     public List<KolayPerson> listPeople() {
-        JsonNode node = responder.respond(new RestRequest("/person/list", "POST", ""));
-        return getKolayPeople(node.findValue("data").findValue("items"));
+        return getKolayPeople(getResponse("/person/list", "POST", null), "items");
     }
 
     public KolayPerson createPerson(KolayPerson person) {
-        JsonNode node = responder.respond(new RestRequest("/person/create" , "POST", createPersonJson(person)));
-        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+        return getKolayPerson(getResponse("/person/create", "POST", createPersonJson(person)));
     }
 
     public KolayPerson viewPerson(String id) {
-        JsonNode node = responder.respond(new RestRequest("/person/view/" + id, "GET", ""));
-        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+        return getKolayPerson(getResponse("/person/view/" + id, "GET", null));
     }
 
     public KolayPerson updatePerson(KolayPerson person) {
-        JsonNode node = responder.respond(new RestRequest("/person/update" , "PUT", createPersonJson(person)));
-        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+        return getKolayPerson(getResponse("/person/update" , "PUT", createPersonJson(person)));
     }
 
     public List<KolayPerson> viewBulkPerson(List<String> ids) {
-        JsonNode node = responder.respond(new RestRequest("/person/bulk-view" , "POST", createIdListJson(ids)));
-        return getKolayPeople(node.findValue("data").findValue("persons"));
+        return getKolayPeople(getResponse("/person/bulk-view" , "POST", createIdListJson(ids)), "persons");
     }
 
     public KolayPerson terminateEmployee(KolayTermination termination) {
-        JsonNode node = responder.respond(new RestRequest("/person/terminate" , "POST", createTerminationJson(termination)));
-        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+        return getKolayPerson(getResponse("/person/terminate" , "POST", createTerminationJson(termination)));
     }
 
-    private String createPersonJson(KolayPerson person) {
-        return "{ \"person\":" + person.toJson()+ " }";
+    private JsonNode createPersonJson(KolayPerson person) {
+        return mapper.toJson(Map.of("person", person));
     }
 
-    private String createTerminationJson(KolayTermination termination) {
-        return "{ \"personId\":" + termination.personId + "," +
-                " \"date\":" + termination.date + "," +
-                " \"reasonCode\":" + termination.reasonCode + "," +
-                " \"details\":" + termination.details + "," +
-                " }";
+    private JsonNode createTerminationJson(KolayTermination termination) {
+        return mapper.toJson(termination);
     }
 
-    private String createIdListJson(List<String> ids) {
-        return "\"person_ids\" : [" + String.join(",", ids) + "]";
+    private JsonNode createIdListJson(List<String> ids) {
+        return mapper.toJson(Map.of("person_ids", ids));
     }
 
-    private List<KolayPerson> getKolayPeople(JsonNode nodes) {
-        List<KolayPerson> people = new ArrayList<>();
-        for (JsonNode node: nodes) people.add(KolayPerson.fromJson(node));
-        return people;
+    private KolayPerson getKolayPerson(JsonNode response) {
+        return mapper.toObject(response.findValue("data").findValue("person"), KolayPerson.class);
+    }
+
+    private List<KolayPerson> getKolayPeople(JsonNode response, String title) {
+        return Arrays.asList(mapper.toObject(response.findValue("data").findValue(title), KolayPerson[].class));
+    }
+
+    private JsonNode getResponse(String url, String method, JsonNode body) {
+        return responder.respond(new RestRequest(url, method, body));
     }
 }

@@ -1,6 +1,7 @@
 package com.sadesoft.portal.repo.kolay;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sadesoft.portal.base.rest.JsonMapper;
 import com.sadesoft.portal.base.rest.RestClient;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.rest.RestRequest;
@@ -13,10 +14,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class KolayPersonRepo implements PersonRepo {
+    private final JsonMapper mapper;
     private final RestClient client;
 
     public KolayPersonRepo(KolayConfig config) {
-        this.client = new RestClient(config.url + "/person");
+        this.mapper = new JsonMapper();
+        this.client = new RestClient(config.url + "/person", mapper);
     }
 
     @Override
@@ -80,8 +83,8 @@ public class KolayPersonRepo implements PersonRepo {
         );
     }
 
-    private String toJson(Person person) {
-        return "";
+    private JsonNode toJson(Person person) {
+        return null;
     }
 
     private Boolean isGraduated(JsonNode node) {

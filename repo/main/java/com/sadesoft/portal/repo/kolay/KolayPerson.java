@@ -1,8 +1,5 @@
 package com.sadesoft.portal.repo.kolay;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.error.InvalidPhoneError;
 import com.sadesoft.portal.base.repo.Record;
 import com.sadesoft.portal.core.model.*;
@@ -105,14 +102,6 @@ public class KolayPerson implements Record, Cloneable {
         this.bloodType = bloodType;
     }
 
-    public static KolayPerson fromJson(JsonNode node) {
-        try {
-            return new ObjectMapper().treeToValue(node, KolayPerson.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static KolayPerson fromPerson(Person p) {
         return new KolayPerson(
                 p.id,
@@ -144,10 +133,6 @@ public class KolayPerson implements Record, Cloneable {
                 toKolayEnumString(p.levelOfDisability),
                 p.numberOfChildren,
                 toKolayBloodType(p.bloodType));
-    }
-
-    public JsonNode toJson() {
-        return new ObjectMapper().valueToTree(this);
     }
 
     public Person toPerson() {

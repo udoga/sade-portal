@@ -31,7 +31,7 @@ public class MockRestResponder implements RestResponder {
         return requests.size();
     }
 
-    public void save(RestRequest r, String response) {
+    public void save(RestRequest r, JsonNode response) {
         interactions.add(new RestInteraction(r, response));
     }
 }

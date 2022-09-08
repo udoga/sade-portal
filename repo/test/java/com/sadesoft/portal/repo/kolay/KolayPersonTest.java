@@ -1,6 +1,5 @@
 package com.sadesoft.portal.repo.kolay;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sadesoft.portal.base.error.InvalidPhoneError;
 import com.sadesoft.portal.core.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class KolayPersonTest {
     private KolayPerson kolayPerson;
     private Person person;
-    ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void setup() {
@@ -357,16 +355,6 @@ public class KolayPersonTest {
         Person person = this.person.withContractEndDate(null);
         KolayPerson expected = clear(this.kolayPerson).withContractType("indefinite").withContractEndDate(null);
         assertEquals(expected, KolayPerson.fromPerson(person));
-    }
-
-    @Test
-    public void convertsToJson() {
-        assertEquals(mapper.valueToTree(kolayPerson), kolayPerson.toJson());
-    }
-
-    @Test
-    public void convertsFromJson() {
-        assertEquals(kolayPerson, KolayPerson.fromJson(mapper.valueToTree(kolayPerson)));
     }
 
     private KolayPerson clear(KolayPerson p) {

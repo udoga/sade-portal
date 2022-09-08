@@ -1,13 +1,15 @@
 package com.sadesoft.portal.base.rest;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.Objects;
 
 public class RestRequest {
     public final String url;
     public final String method;
-    public final String body;
+    public final JsonNode body;
 
-    public RestRequest(String url, String method, String body) {
+    public RestRequest(String url, String method, JsonNode body) {
         this.url = url;
         this.method = method;
         this.body = body;
