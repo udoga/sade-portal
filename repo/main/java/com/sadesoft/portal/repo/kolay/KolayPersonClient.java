@@ -5,7 +5,6 @@ import com.sadesoft.portal.base.rest.JsonMapper;
 import com.sadesoft.portal.base.rest.RestRequest;
 import com.sadesoft.portal.base.rest.RestResponder;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,27 +30,27 @@ public class KolayPersonClient {
     }
 
     public KolayPerson updatePerson(KolayPerson person) {
-        return getKolayPerson(getResponse("/person/update" , "PUT", createPersonJson(person)));
+        return getKolayPerson(getResponse("/person/update", "PUT", createPersonJson(person)));
     }
 
     public List<KolayPerson> viewBulkPerson(List<String> ids) {
-        return getKolayPeople(getResponse("/person/bulk-view" , "POST", createIdListJson(ids)), "persons");
+        return getKolayPeople(getResponse("/person/bulk-view", "POST", createIdListJson(ids)), "persons");
     }
 
     public KolayPerson terminateEmployee(KolayTermination termination) {
-        return getKolayPerson(getResponse("/person/terminate" , "POST", createTerminationJson(termination)));
+        return getKolayPerson(getResponse("/person/terminate", "POST", mapper.objectToJson(termination)));
     }
 
     private JsonNode createPersonJson(KolayPerson person) {
         return mapper.objectToJson(Map.of("person", person));
     }
 
-    private JsonNode createTerminationJson(KolayTermination termination) {
-        return mapper.objectToJson(termination);
-    }
-
     private JsonNode createIdListJson(List<String> ids) {
         return mapper.objectToJson(Map.of("person_ids", ids));
+    }
+
+    private JsonNode getResponse(String url, String method, JsonNode body) {
+        return responder.respond(new RestRequest(url, method, body));
     }
 
     private KolayPerson getKolayPerson(JsonNode response) {
@@ -59,10 +58,6 @@ public class KolayPersonClient {
     }
 
     private List<KolayPerson> getKolayPeople(JsonNode response, String title) {
-        return Arrays.asList(mapper.jsonToObject(response.findValue("data").findValue(title), KolayPerson[].class));
-    }
-
-    private JsonNode getResponse(String url, String method, JsonNode body) {
-        return responder.respond(new RestRequest(url, method, body));
+        return mapper.jsonToList(response.findValue("data").findValue(title), KolayPerson[].class);
     }
 }

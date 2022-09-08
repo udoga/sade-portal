@@ -1,34 +1,30 @@
 package com.sadesoft.portal.repo.kolay;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.sadesoft.portal.base.rest.JsonMapper;
-import com.sadesoft.portal.base.rest.MockRestResponder;
-import com.sadesoft.portal.base.rest.RestRequest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class KolayPersonClientTest {
-    private List<KolayPerson> people;
     private JsonMapper mapper;
-    private MockPersonResponder responder;
+    private KolayPersonResponder responder;
     private KolayPersonClient client;
     private KolayPerson person;
+    private List<KolayPerson> people;
 
     @BeforeEach
     public void setUp() {
-        people = new ArrayList<>();
         mapper = new JsonMapper();
-        responder = new MockPersonResponder(mapper);
+        responder = new KolayPersonResponder(mapper);
         client = new KolayPersonClient(responder, mapper);
         person = new KolayPerson().withFirstName("Sample");
+        people = new ArrayList<>();
     }
 
     @Test
@@ -39,7 +35,7 @@ public class KolayPersonClientTest {
     }
 
     @Test
-    void whenCreatesPerson_returnsResponseFromResponder() {
+    void whenCreatesPerson_sendsCreateRequest() {
         KolayPerson createdPerson = person.withId("0");
         responder.saveCreateResponse(createdPerson);
         assertEquals(createdPerson, client.createPerson(person));
@@ -66,9 +62,11 @@ public class KolayPersonClientTest {
     @Test
     void terminatesEmployee() {
         KolayPerson terminatedPerson = person.withStatus("terminated");
-        KolayTermination termination = new KolayTermination("0" ,"2022-02-02", "5", "details");
+        KolayTermination termination = new KolayTermination("0", "2022-02-02", "5", "details");
         responder.saveTerminateResponse(terminatedPerson, termination);
         assertEquals(terminatedPerson, client.terminateEmployee(termination));
+        assertEquals(1, responder.getRequestCount());
+        assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
     }
 
     @Nested
@@ -99,66 +97,6 @@ public class KolayPersonClientTest {
             assertEquals(people, client.viewBulkPerson(people.stream().map(p -> p.id).collect(Collectors.toList())));
             assertEquals(1, responder.getRequestCount());
             assertEquals(responder.getInteraction(0).request, responder.getRequest(0));
-        }
-    }
-
-    private static class MockPersonResponder extends MockRestResponder {
-        private final JsonMapper mapper;
-
-        public MockPersonResponder(JsonMapper mapper) {
-            this.mapper = mapper;
-        }
-
-        public void saveListResponse(List<KolayPerson> people) {
-            save(new RestRequest("/person/list", "POST", null), createPeopleResponseJson(people, "items"));
-        }
-
-        public void saveViewResponse(KolayPerson p) {
-            save(new RestRequest("/person/view/" + p.id, "GET", null), createPersonResponseJson(p));
-        }
-
-        public void saveCreateResponse(KolayPerson p) {
-            save(new RestRequest("/person/create", "POST", createPersonJson(p.withId(null))), createPersonResponseJson(p));
-        }
-
-        public void saveUpdateResponse(KolayPerson p) {
-            save(new RestRequest("/person/update", "PUT", createPersonJson(p.withUpdatedAt(null))), createPersonResponseJson(p));
-        }
-
-        public void saveBulkResponse(List<KolayPerson> people) {
-            save(new RestRequest("/person/bulk-view", "POST", createIdListJson(people)), createPeopleResponseJson(people, "persons"));
-        }
-
-        public void saveTerminateResponse(KolayPerson p, KolayTermination t) {
-            save(new RestRequest("/person/terminate", "POST", createTerminationJson(t)), createPersonResponseJson(p));
-        }
-
-        private JsonNode createTerminationJson(KolayTermination termination) {
-           return mapper.objectToJson(termination);
-        }
-
-        private JsonNode createPeopleJson(List<KolayPerson> people, String title) {
-            return mapper.objectToJson(Map.of(title, people));
-        }
-
-        private JsonNode createPeopleResponseJson(List<KolayPerson> people, String title) {
-            return createResponseJson(createPeopleJson(people, title));
-        }
-
-        private JsonNode createPersonJson(KolayPerson person) {
-            return mapper.objectToJson(Map.of("person", person));
-        }
-
-        private JsonNode createPersonResponseJson(KolayPerson person) {
-            return createResponseJson(createPersonJson(person));
-        }
-
-        private JsonNode createResponseJson(JsonNode data) {
-            return mapper.objectToJson(Map.of("error", false, "data", data));
-        }
-
-        private JsonNode createIdListJson(List<KolayPerson> people) {
-            return mapper.objectToJson(Map.of("person_ids", people.stream().map(p -> p.id).collect(Collectors.toList())));
         }
     }
 }

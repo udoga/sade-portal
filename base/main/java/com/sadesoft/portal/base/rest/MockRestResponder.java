@@ -7,16 +7,27 @@ import java.util.List;
 import java.util.Objects;
 
 public class MockRestResponder implements RestResponder {
-    private final List<RestInteraction> interactions = new ArrayList<>();
-    private final List<RestRequest> requests = new ArrayList<>();
+    private final String url;
+    private final List<RestInteraction> interactions;
+    private final List<RestRequest> requests;
+
+    public MockRestResponder(String url) {
+        this.url = url;
+        this.interactions = new ArrayList<>();
+        this.requests = new ArrayList<>();
+    }
 
     @Override
     public JsonNode respond(RestRequest r) {
         requests.add(r);
-        for (RestInteraction interaction : interactions)
-            if (Objects.equals(r, interaction.request))
-                return interaction.response;
+        for (RestInteraction i : interactions)
+            if (Objects.equals(r, i.request))
+                return i.response;
         return null;
+    }
+
+    public void save(String url, String method, JsonNode body, JsonNode response) {
+        interactions.add(new RestInteraction(new RestRequest(this.url + url, method, body), response));
     }
 
     public RestInteraction getInteraction(int i) {
@@ -29,9 +40,5 @@ public class MockRestResponder implements RestResponder {
 
     public int getRequestCount() {
         return requests.size();
-    }
-
-    public void save(RestRequest r, JsonNode response) {
-        interactions.add(new RestInteraction(r, response));
     }
 }
