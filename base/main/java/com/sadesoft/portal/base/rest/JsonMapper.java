@@ -11,7 +11,7 @@ public class JsonMapper {
         this.mapper = new ObjectMapper();
     }
 
-    public <T> T toObject(JsonNode node, Class<T> c) {
+    public <T> T jsonToObject(JsonNode node, Class<T> c) {
         try {
             return mapper.treeToValue(node, c);
         } catch (JsonProcessingException e) {
@@ -19,7 +19,15 @@ public class JsonMapper {
         }
     }
 
-    public JsonNode toJson(Object o) {
+    public JsonNode objectToJson(Object o) {
         return mapper.valueToTree(o);
+    }
+
+    public JsonNode stringToJson(String s){
+        try {
+            return mapper.readTree(s);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

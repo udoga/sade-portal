@@ -7,12 +7,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class RestClient implements RestResponder {
+public class HttpRestResponder implements RestResponder {
     private final String serviceUrl;
     private final HttpClient client;
     private final JsonMapper mapper;
 
-    public RestClient(String serviceUrl, JsonMapper mapper) {
+    public HttpRestResponder(String serviceUrl, JsonMapper mapper) {
         this.serviceUrl = serviceUrl;
         this.client = HttpClient.newHttpClient();
         this.mapper = mapper;
@@ -23,7 +23,7 @@ public class RestClient implements RestResponder {
         HttpRequest.BodyPublisher publisher = getPublisher(r.body);
         HttpRequest request = getHttpRequest(serviceUrl + r.url, r.method, publisher);
         HttpResponse<String> httpResponse = getHttpResponse(request);
-        return mapper.toJson(httpResponse.body());
+        return mapper.stringToJson(httpResponse.body());
     }
 
     private HttpRequest.BodyPublisher getPublisher(JsonNode body) {

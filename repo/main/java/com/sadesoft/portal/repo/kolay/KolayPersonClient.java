@@ -43,23 +43,23 @@ public class KolayPersonClient {
     }
 
     private JsonNode createPersonJson(KolayPerson person) {
-        return mapper.toJson(Map.of("person", person));
+        return mapper.objectToJson(Map.of("person", person));
     }
 
     private JsonNode createTerminationJson(KolayTermination termination) {
-        return mapper.toJson(termination);
+        return mapper.objectToJson(termination);
     }
 
     private JsonNode createIdListJson(List<String> ids) {
-        return mapper.toJson(Map.of("person_ids", ids));
+        return mapper.objectToJson(Map.of("person_ids", ids));
     }
 
     private KolayPerson getKolayPerson(JsonNode response) {
-        return mapper.toObject(response.findValue("data").findValue("person"), KolayPerson.class);
+        return mapper.jsonToObject(response.findValue("data").findValue("person"), KolayPerson.class);
     }
 
     private List<KolayPerson> getKolayPeople(JsonNode response, String title) {
-        return Arrays.asList(mapper.toObject(response.findValue("data").findValue(title), KolayPerson[].class));
+        return Arrays.asList(mapper.jsonToObject(response.findValue("data").findValue(title), KolayPerson[].class));
     }
 
     private JsonNode getResponse(String url, String method, JsonNode body) {

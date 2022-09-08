@@ -134,11 +134,11 @@ public class KolayPersonClientTest {
         }
 
         private JsonNode createTerminationJson(KolayTermination termination) {
-           return mapper.toJson(termination);
+           return mapper.objectToJson(termination);
         }
 
         private JsonNode createPeopleJson(List<KolayPerson> people, String title) {
-            return mapper.toJson(Map.of(title, people));
+            return mapper.objectToJson(Map.of(title, people));
         }
 
         private JsonNode createPeopleResponseJson(List<KolayPerson> people, String title) {
@@ -146,7 +146,7 @@ public class KolayPersonClientTest {
         }
 
         private JsonNode createPersonJson(KolayPerson person) {
-            return mapper.toJson(Map.of("person", person));
+            return mapper.objectToJson(Map.of("person", person));
         }
 
         private JsonNode createPersonResponseJson(KolayPerson person) {
@@ -154,11 +154,11 @@ public class KolayPersonClientTest {
         }
 
         private JsonNode createResponseJson(JsonNode data) {
-            return mapper.toJson(Map.of("error", false, "data", data));
+            return mapper.objectToJson(Map.of("error", false, "data", data));
         }
 
         private JsonNode createIdListJson(List<KolayPerson> people) {
-            return mapper.toJson(Map.of("person_ids", people.stream().map(p -> p.id).collect(Collectors.toList())));
+            return mapper.objectToJson(Map.of("person_ids", people.stream().map(p -> p.id).collect(Collectors.toList())));
         }
     }
 }
