@@ -40,8 +40,21 @@ public class KolayPersonClient {
         return getKolayPeople(node.findValue("data").findValue("persons"));
     }
 
+    public KolayPerson terminateEmployee(KolayTermination termination) {
+        JsonNode node = responder.respond(new RestRequest("/person/terminate" , "POST", createTerminationJson(termination)));
+        return KolayPerson.fromJson(node.findValue("data").findValue("person"));
+    }
+
     private String createPersonJson(KolayPerson person) {
         return "{ \"person\":" + person.toJson()+ " }";
+    }
+
+    private String createTerminationJson(KolayTermination termination) {
+        return "{ \"personId\":" + termination.personId + "," +
+                " \"date\":" + termination.date + "," +
+                " \"reasonCode\":" + termination.reasonCode + "," +
+                " \"details\":" + termination.details + "," +
+                " }";
     }
 
     private String createIdListJson(List<String> ids) {

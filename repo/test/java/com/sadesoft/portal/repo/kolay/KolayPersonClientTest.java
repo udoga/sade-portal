@@ -58,6 +58,14 @@ public class KolayPersonClientTest {
         assertEquals(updatedPerson, client.updatePerson(person.withId("0")));
     }
 
+    @Test
+    void terminatesEmployee() {
+        KolayPerson terminatedPerson = person.withStatus("terminated");
+        KolayTermination termination = new KolayTermination("0" ,"2022-02-02", "5", "details");
+        responder.saveTerminateResponse(terminatedPerson, termination);
+        assertEquals(terminatedPerson, client.terminateEmployee(termination));
+    }
+
     @Nested
     public class GivenResponderWithTwoPeople {
         @BeforeEach
@@ -108,6 +116,18 @@ public class KolayPersonClientTest {
 
         public void saveBulkResponse(List<KolayPerson> people) {
             save(new RestRequest("/person/bulk-view", "POST", createIdListJson(people)), createPeopleResponseJson(people, "persons"));
+        }
+
+        public void saveTerminateResponse(KolayPerson p, KolayTermination t) {
+            save(new RestRequest("/person/terminate", "POST", createTerminationJson(t)), createPersonResponseJson(p));
+        }
+
+        private String createTerminationJson(KolayTermination termination) {
+            return "{ \"personId\":" + termination.personId + "," +
+                    " \"date\":" + termination.date + "," +
+                    " \"reasonCode\":" + termination.reasonCode + "," +
+                    " \"details\":" + termination.details + "," +
+                    " }";
         }
 
         private String createPeopleJson(List<KolayPerson> people, String title) {
