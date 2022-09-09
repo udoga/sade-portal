@@ -5,6 +5,7 @@ import com.sadesoft.portal.base.repo.Record;
 import com.sadesoft.portal.core.model.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class KolayPerson implements Record, Cloneable {
@@ -37,6 +38,9 @@ public class KolayPerson implements Record, Cloneable {
     public String levelOfDisability = null;
     public Integer numberOfChildren = null;
     public String bloodType = null;
+    public List<KolayUnit> unitList = null;
+    public List<KolayData> dataList = null;
+
 
     public KolayPerson () {
     }
@@ -70,7 +74,9 @@ public class KolayPerson implements Record, Cloneable {
             String updatedAt,
             String levelOfDisability,
             Integer numberOfChildren,
-            String bloodType) {
+            String bloodType,
+            List<KolayUnit> unitList,
+            List<KolayData> dataList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -100,6 +106,8 @@ public class KolayPerson implements Record, Cloneable {
         this.levelOfDisability = levelOfDisability;
         this.numberOfChildren = numberOfChildren;
         this.bloodType = bloodType;
+        this.unitList = unitList;
+        this.dataList = dataList;
     }
 
     public static KolayPerson fromPerson(Person p) {
@@ -132,7 +140,9 @@ public class KolayPerson implements Record, Cloneable {
                 null,
                 toKolayEnumString(p.levelOfDisability),
                 p.numberOfChildren,
-                toKolayBloodType(p.bloodType));
+                toKolayBloodType(p.bloodType),
+                null,
+                null);
     }
 
     public Person toPerson() {
@@ -197,7 +207,9 @@ public class KolayPerson implements Record, Cloneable {
                 Objects.equals(updatedAt, p.updatedAt) &&
                 Objects.equals(levelOfDisability, p.levelOfDisability) &&
                 Objects.equals(numberOfChildren, p.numberOfChildren) &&
-                Objects.equals(bloodType, p.bloodType);
+                Objects.equals(bloodType, p.bloodType) &&
+                Objects.equals(unitList, p.unitList) &&
+                Objects.equals(dataList, p.dataList);
     }
 
     @Override
@@ -232,6 +244,8 @@ public class KolayPerson implements Record, Cloneable {
                 " levelOfDisability=" + levelOfDisability +
                 " numberOfChildren=" + numberOfChildren +
                 " bloodType=" + bloodType +
+                " unitList=" + unitList +
+                " dataList=" + dataList +
                 ']';
     }
 
@@ -512,6 +526,18 @@ public class KolayPerson implements Record, Cloneable {
     public KolayPerson withBloodType(String bloodType) {
         KolayPerson kolayPerson = copy();
         kolayPerson.bloodType = bloodType;
+        return kolayPerson;
+    }
+
+    public KolayPerson withUnitList(List<KolayUnit> unitList) {
+        KolayPerson kolayPerson = copy();
+        kolayPerson.unitList = unitList;
+        return kolayPerson;
+    }
+
+    public KolayPerson withDataList(List<KolayData> dataList) {
+        KolayPerson kolayPerson = copy();
+        kolayPerson.dataList = dataList;
         return kolayPerson;
     }
 }

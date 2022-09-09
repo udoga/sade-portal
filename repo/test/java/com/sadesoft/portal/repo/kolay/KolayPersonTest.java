@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,7 +45,9 @@ public class KolayPersonTest {
             "2022-02-04 11:09:19",
             "notDisabled",
             0,
-            "A+");
+            "A+",
+            new ArrayList<KolayUnit>(),
+            new ArrayList<KolayData>());
 
         person = new Person(
                 "0",
@@ -106,6 +109,8 @@ public class KolayPersonTest {
         assertEquals("notDisabled",         kolayPerson.levelOfDisability);
         assertEquals(0,                     kolayPerson.numberOfChildren);
         assertEquals("A+",                  kolayPerson.bloodType);
+        assertEquals(new ArrayList<KolayUnit>(),     kolayPerson.unitList);
+        assertEquals(new ArrayList<KolayData>(),     kolayPerson.dataList);
     }
 
     @Test
@@ -140,6 +145,8 @@ public class KolayPersonTest {
         assertNull(kp.levelOfDisability);
         assertNull(kp.numberOfChildren);
         assertNull(kp.bloodType);
+        assertNull(kp.unitList);
+        assertNull(kp.dataList);
     }
 
     @Test
@@ -174,6 +181,8 @@ public class KolayPersonTest {
                 " levelOfDisability=notDisabled" +
                 " numberOfChildren=0" +
                 " bloodType=A+" +
+                " unitList=[]" +
+                " dataList=[]" +
                 "]", kolayPerson.toString());
     }
 
@@ -208,6 +217,8 @@ public class KolayPersonTest {
         assertNull(kolayPerson.withLevelOfDisability(null).levelOfDisability);
         assertNull(kolayPerson.withNumberOfChildren(null).numberOfChildren);
         assertNull(kolayPerson.withBloodType(null).bloodType);
+        assertNull(kolayPerson.withUnitList(null).unitList);
+        assertNull(kolayPerson.withDataList(null).dataList);
     }
 
     @Test
@@ -242,6 +253,8 @@ public class KolayPersonTest {
         assertNotEquals(kolayPerson, kolayPerson.withLevelOfDisability(null));
         assertNotEquals(kolayPerson, kolayPerson.withNumberOfChildren(null));
         assertNotEquals(kolayPerson, kolayPerson.withBloodType(null));
+        assertNotEquals(kolayPerson, kolayPerson.withUnitList(null));
+        assertNotEquals(kolayPerson, kolayPerson.withDataList(null));
     }
 
     @Test
@@ -358,6 +371,6 @@ public class KolayPersonTest {
     }
 
     private KolayPerson clear(KolayPerson p) {
-        return p.withCreatedAt(null).withUpdatedAt(null);
+        return p.withCreatedAt(null).withUpdatedAt(null).withUnitList(null).withDataList(null);
     }
 }
