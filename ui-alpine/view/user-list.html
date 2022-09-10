@@ -1,0 +1,31 @@
+<div x-data="new UserListController(new UserApi())">
+  <h2>Users</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>Username</th>
+      <th>Full Name</th>
+      <th class="narrow last">
+        <a class="green header icon button"><i class="fas fa-plus"></i>New</a>
+      </th>
+    </tr>
+    <template x-for="user in users" x-on:users-event.window="users = $event.detail">
+      <tr>
+        <td x-text="user.id" class="narrow"></td>
+        <td x-text="user.username"></td>
+        <td x-text="user.fullName"></td>
+        <td class="narrow last">
+          <a title="Show" class="light-blue row button">
+            <i class="far fa-eye"></i>
+          </a>
+          <a title="Edit" class="yellow row button">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <a title="Delete" class="red row button" x-on:click="remove(user.id)">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+    </template>
+  </table>
+</div>
