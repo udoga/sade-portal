@@ -1,0 +1,14 @@
+<div x-data="new LayoutController()">
+  <header>
+    <a class="left"><i class="fas fa-bars"></i></a>
+    <h1>Sade Portal</h1>
+    <a class="right"><i class="fas fa-power-off"></i></a>
+    <a class="right"><i class="fas fa-cog"></i></a>
+  </header>
+  <nav class="opened">
+    <a x-on:click="navigate('home')"><i class="fa-solid fa-home"></i>Home</a>
+    <a x-on:click="navigate('users')"><i class="fa-solid fa-user"></i>Users</a>
+  </nav>
+  <main class="shifted" x-ref="main">
+  </main>
+</div>

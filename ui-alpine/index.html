@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sade Portal</title>
+    <link rel="icon" href="image/favicon.ico">
+    <link rel="stylesheet" href="style/reset.css"/>
+    <link rel="stylesheet" href="style/style.css"/>
+    <script src="https://kit.fontawesome.com/0af4976317.js"></script>
+    <script src="https://unpkg.com/axios"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="controller/HomeController.js"></script>
+    <script src="controller/LayoutController.js"></script>
+    <script src="controller/UsersController.js"></script>
+  </head>
+  <body x-data="{}" x-html="(await axios.get('/view/layout.html')).data">
+  </body>
+</html>
