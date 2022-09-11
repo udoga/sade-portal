@@ -7,6 +7,7 @@ class LayoutController {
 
   constructor(httpApi) {
     this.httpApi = httpApi;
+    this.onResize();
   }
 
   onResize = function() {
