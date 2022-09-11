@@ -1,6 +1,6 @@
 class HttpApi {
-  get = function(url) {
-     return fetch(url);
+  get = function(url, options) {
+     return fetch(url, options);
   }
 
   post = function(url, options) {

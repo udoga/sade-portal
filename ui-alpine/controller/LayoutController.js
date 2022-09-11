@@ -1,11 +1,12 @@
 class LayoutController {
+  httpApi = null;
   isWide = true;
   hasNavigation = true;
   isShifted = true;
   hasOverlay = false;
 
-  constructor(router) {
-    this.onResize();
+  constructor(httpApi) {
+    this.httpApi = httpApi;
   }
 
   onResize = function() {
@@ -28,7 +29,7 @@ class LayoutController {
   }
 
   loadView = function(element, viewPath) {
-    axios.get(viewPath).then(response => { element.innerHTML = response.data; });
+    this.httpApi.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
     if (!this.isWide) this.setNavigation(false);
   }
 }
