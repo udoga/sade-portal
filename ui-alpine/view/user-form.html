@@ -1,0 +1,17 @@
+<div x-data="new UserFormController(router, userApi)">
+  <h2>User Form</h2>
+  <form @user-event.window="user = $event.detail">
+    <div class="field">
+      <label>Username</label>
+      <input type="text" placeholder="Username" x-model="user.username"/>
+    </div>
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" placeholder="Full Name" x-model="user.fullName"/>
+    </div>
+    <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="save()">Save</a>
+    </div>
+  </form>
+</div>

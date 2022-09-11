@@ -4,20 +4,12 @@ class LayoutController {
   isShifted = true;
   hasOverlay = false;
 
-  constructor() {
+  constructor(router) {
     this.onResize();
-    this.onHashChange();
   }
 
   onResize = function() {
     if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
-  }
-
-  onHashChange = function() {
-    if (!location.hash) history.pushState(null, null, "#/home");
-    else if (location.hash === "#/home") this.loadView("home");
-    else if (location.hash === "#/users") this.loadView("user-list");
-    else this.loadView("not-found");
   }
 
   toggleWide = function() {
@@ -35,8 +27,8 @@ class LayoutController {
     this.hasOverlay = !this.isWide && this.hasNavigation;
   }
 
-  loadView = function(viewName) {
-    axios.get('/view/' + (viewName) + '.html').then((response) => { this.$refs.main.innerHTML = response.data; });
+  loadView = function(element, viewPath) {
+    axios.get(viewPath).then(response => { element.innerHTML = response.data; });
     if (!this.isWide) this.setNavigation(false);
   }
 }

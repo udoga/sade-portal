@@ -1,4 +1,4 @@
-<div x-data="new LayoutController()" @resize.window="onResize()" @hashchange.window="onHashChange()">
+<div x-data="new LayoutController(router)" @resize.window="onResize()">
   <header>
     <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
     <h1>Sade Portal</h1>
@@ -7,9 +7,9 @@
   </header>
   <nav :class="{ opened: hasNavigation }">
     <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
-    <a href="#/users"><i class="fa-solid fa-user"></i>Users</a>
+    <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
   </nav>
-  <main :class="{ shifted: isShifted }" x-ref="main">
+  <main :class="{ shifted: isShifted }" @route-event.window="loadView($el, $event.detail)">
   </main>
   <div class="overlay" x-show="hasOverlay" @click="setNavigation(false)">
   </div>
