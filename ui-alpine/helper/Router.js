@@ -12,6 +12,7 @@ class Router {
     else if (location.hash === "#/home") this.emit("home");
     else if (location.hash === "#/user-list") this.emit("user-list");
     else if (location.hash.startsWith("#/user-form")) this.emit("user-form");
+    else if (location.hash.startsWith("#/user-page")) this.emit("user-page");
     else this.emit("not-found");
   }
 
