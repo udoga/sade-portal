@@ -3,8 +3,9 @@
 ## Basic Setup
 
 1. Install Java (>= 11) and Gradle (>= 6.9.1).
-2. Start application from command line: `gradle run`
-3. Open browser: http://localhost:7000
+2. Make configurations (optional): [default.properties](rest/main/resources/default.properties)
+3. Start application from command line: `gradle run`
+4. Open browser: http://localhost:7000
 
 ## IntelliJ IDEA
 
@@ -21,7 +22,8 @@
 - core: Classes and business rules specific to this application.
 - repo: Repository implementations for local databases and Kolay IK.
 - rest: REST API plugin by using Javalin.
-- ui: Web user interface by using AngularJS.
+- ui-ng: Web user interface by using AngularJS.
+- ui-x: Web user interface by using AlpineJS.
 
 ## Kolay IK Integration
 
@@ -39,7 +41,6 @@
 - add: rest: sorting, filtering
 - add: rest: api authentication with token
 - fix: ui: empty date time fields in edit forms
-- add: ui: use vue instead of ng
 - add: ui: login page
 - add: ui: make tables responsive
 - add: ui: page selection to tables
