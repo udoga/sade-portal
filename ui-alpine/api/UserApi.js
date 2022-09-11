@@ -1,5 +1,5 @@
 class UserApi extends RestApi {
-  constructor() {
-    super("/api/users/");
+  constructor(httpApi) {
+    super(httpApi, "/api/users/");
   }
 }
