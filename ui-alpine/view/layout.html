@@ -1,16 +1,16 @@
-<div x-data="new LayoutController()" x-on:resize.window="onResize()" x-on:hashchange.window="onHashChange()">
+<div x-data="new LayoutController()" @resize.window="onResize()" @hashchange.window="onHashChange()">
   <header>
-    <a class="left" x-on:click="toggleNavigation()"><i class="fas fa-bars"></i></a>
+    <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
     <h1>Sade Portal</h1>
     <a class="right"><i class="fas fa-power-off"></i></a>
     <a class="right"><i class="fas fa-cog"></i></a>
   </header>
-  <nav x-bind:class="hasNavigation? 'opened' : ''">
+  <nav :class="{ opened: hasNavigation }">
     <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
     <a href="#/users"><i class="fa-solid fa-user"></i>Users</a>
   </nav>
-  <main x-bind:class="isShifted? 'shifted' : ''" x-ref="main">
+  <main :class="{ shifted: isShifted }" x-ref="main">
   </main>
-  <div class="overlay" x-show="hasOverlay" x-on:click="setNavigation(false)">
+  <div class="overlay" x-show="hasOverlay" @click="setNavigation(false)">
   </div>
 </div>
