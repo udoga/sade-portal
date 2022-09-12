@@ -1,0 +1,37 @@
+package com.sadesoft.portal.repo.local;
+
+import com.sadesoft.portal.base.repo.JdbcColumn;
+import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.model.Permission;
+import com.sadesoft.portal.core.repo.PermissionRepo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+public class LocalPermissionRepo extends JdbcRepo<Permission> implements PermissionRepo {
+    public LocalPermissionRepo(Connection connection) {
+        super(connection, "permissions", List.of(
+                new JdbcColumn("id"),
+                new JdbcColumn("name"))
+        );
+    }
+
+    @Override
+    protected Permission toObject(ResultSet s) throws SQLException {
+        int i = 0;
+        return new Permission(
+                getId(s, getColumnName(i++)),
+                s.getString(getColumnName(i++))
+        );
+    }
+
+    @Override
+    protected void fillStatement(PreparedStatement s, Permission o) throws SQLException {
+        int i = 1;
+        s.setString(i++, o.name);
+        if (o.id != null) setId(s, i, o.id);
+    }
+}

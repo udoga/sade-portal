@@ -24,12 +24,14 @@ public class Main {
         PersonRepo personRepo = kolayConfig.enabled? new KolayPersonRepo(kolayConfig) : new LocalPersonRepo(connection);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(connection);
         UserRepo userRepo = new LocalUserRepo(connection);
+        PermissionRepo permissionRepo = new LocalPermissionRepo(connection);
 
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         LeaveService leaveService = new LeaveService(leaveRepo);
         PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
+        PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(serverConfig);
         server.enrol(new PersonController(personService));
@@ -37,6 +39,7 @@ public class Main {
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new LeaveController(leaveService));
         server.enrol(new UserController(userService));
+        server.enrol(new PermissionController(permissionService));
 
         server.run();
     }

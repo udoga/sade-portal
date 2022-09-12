@@ -64,7 +64,7 @@ CREATE TABLE leaves(
 );
 
 CREATE TABLE receipts(
-    id SERIAL PRIMARY KEY NOT NULL,
+    id IDENTITY PRIMARY KEY NOT NULL,
     expense_id INT NOT NULL,
     receipt_date DATE NOT NULL,
     category VARCHAR(255) NOT NULL,
@@ -72,6 +72,11 @@ CREATE TABLE receipts(
     vat_rate SMALLINT NOT NULL,
     description TEXT NOT NULL,
     FOREIGN KEY (expense_id) REFERENCES people(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE permissions(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
 );
 
 INSERT INTO people VALUES
@@ -110,3 +115,8 @@ INSERT INTO leaves VALUES
 INSERT INTO receipts VALUES
 --        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
     (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
+
+INSERT INTO permissions  VALUES
+--        id,            name
+    (default,   'person_read'),
+    (default, 'person_update');

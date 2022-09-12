@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS people CASCADE;
 DROP TABLE IF EXISTS leaves CASCADE;
+DROP TABLE IF EXISTS permissions CASCADE;
 
 DROP TYPE IF EXISTS receipt_category CASCADE;
 DROP TYPE IF EXISTS leave_type CASCADE;
@@ -142,6 +143,11 @@ CREATE TABLE receipts(
     description TEXT NOT NULL
 );
 
+CREATE TABLE permissions(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 INSERT INTO people VALUES
 --        id,  first_name,  last_name,                       email,               work_email,     mobile_phone,       work_phone, employment_start_date, contract_end_date,    access_type,     birthday,     blood_type, education_level, graduated,   educational_institution,    gender,     id_number, level_of_disability, marital_status, partner_work_status, military_service, military_service_delay_date, nationality, number_of_children,    active,  tour_status
     (default,     'Tarik',     'Mert',       'tarikmert@email.com',     'tmert@workmail.com', '+90 5553553530', '+90 5553335530',          '2022-01-01',      '2022-01-01',     'Employee', '2000-01-01',    'APositive',      'Bachelor',      false,                     'YTU',   'Male', '11111111101',       'NotDisabled',       'Single',               false,    'Uncompleted',                '2024-01-01',        'TR',                  0,      true,  'Completed'),
@@ -178,3 +184,8 @@ INSERT INTO leaves VALUES
 INSERT INTO receipts VALUES
 --        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
     (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
+
+INSERT INTO permissions  VALUES
+--        id,            name
+    (default,   'person_read'),
+    (default, 'person_update');
