@@ -1,0 +1,39 @@
+<div x-data="new ReceiptListController(receiptApi)">
+    <h2>Receipts</h2>
+    <table>
+        <tr>
+            <th class="narrow">Id</th>
+            <th>Expense Id</th>
+            <th>Receipt Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Vat Rate</th>
+            <th>Description</th>
+            <th class="narrow last">
+                <a class="green header icon button" href="#/receipt-form"><i class="fas fa-plus"></i>New</a>
+            </th>
+        </tr>
+        <template x-for="receipt in receipts" @receipts-event.window="receipts = $event.detail">
+        <tr>
+            <td x-text="receipt.id" class="narrow"></td>
+            <td x-text="receipt.expenseId"></td>
+            <td x-text="receipt.receiptDate"></td>
+            <td x-text="receipt.category"></td>
+            <td x-text="receipt.amount"></td>
+            <td x-text="receipt.vatRate"></td>
+            <td x-text="receipt.description"></td>
+            <td class="narrow last">
+                <a title="Show" class="light-blue row button" :href="'#/receipt-page/' + receipt.id">
+                    <i class="far fa-eye"></i>
+                </a>
+                <a title="Edit" class="yellow row button" :href="'#/receipt-form/' + receipt.id">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+                <a title="Delete" class="red row button" @click="remove(receipt.id)">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        </template>
+    </table>
+</div>

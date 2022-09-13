@@ -8,6 +8,7 @@
   <nav :class="{ opened: hasNavigation }">
     <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
     <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
+    <a href="#/receipt-list"><i class="fa-solid fa-receipt"></i>Receipts</a>
   </nav>
   <main :class="{ shifted: isShifted }" @route-event.window="loadView($el, $event.detail)">
   </main>
