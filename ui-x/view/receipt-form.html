@@ -1,6 +1,6 @@
 <div x-data="new ReceiptFormController(router, receiptApi)">
     <h2>Receipt Form</h2>
-    <form @receipt-event.window="receipt = $event.detail">
+    <form @receipt-event.window="Object.assign(receipt, $event.detail);">
         <div class="field">
             <label>Expense Id</label>
             <input type="text" placeholder="Expense Id" x-model="receipt.expenseId"/>

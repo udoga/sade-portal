@@ -1,6 +1,6 @@
 <div x-data="new UserFormController(router, userApi)">
   <h2>User Form</h2>
-  <form @user-event.window="user = $event.detail">
+  <form @user-event.window="Object.assign(user, $event.detail);">
     <div class="field">
       <label>Username</label>
       <input type="text" placeholder="Username" x-model="user.username"/>
