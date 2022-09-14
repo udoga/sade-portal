@@ -1,7 +1,6 @@
 class FormController {
   router = null;
   api = null;
-  record = {};
   name = null;
 
   constructor(router, api, name) {
@@ -21,11 +20,11 @@ class FormController {
   }
 
   create = function() {
-    this.api.create(this.record).then((json) => this.quit());
+    this.api.create(this.getRecord()).then((json) => this.quit());
   }
 
   update = function() {
-    this.api.update(this.router.getId(), this.record).then((json) => this.quit());
+    this.api.update(this.router.getId(), this.getRecord()).then((json) => this.quit());
   }
 
   quit = function() {

@@ -1,8 +1,11 @@
 class ReceiptFormController extends FormController {
-  receipt = null;
+  receipt = {};
 
   constructor(router, api) {
     super(router, api, "receipt");
-    this.receipt = this.record;
+  }
+
+  getRecord = function() {
+    return this.receipt;
   }
 }

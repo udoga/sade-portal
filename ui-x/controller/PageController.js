@@ -2,7 +2,6 @@ class PageController {
   router = null;
   api = null;
   name = null;
-  record = {};
 
   constructor(router, api, name) {
     this.router = router;
@@ -16,7 +15,7 @@ class PageController {
   }
 
   remove = function() {
-    this.api.delete(this.record.id).then((json) => this.router.route("#/" + this.name + "-list"));
+    this.api.delete(this.getRecord().id).then((json) => this.router.route("#/" + this.name + "-list"));
   }
 
   emit = function(data) {

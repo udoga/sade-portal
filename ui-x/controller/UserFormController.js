@@ -1,8 +1,11 @@
 class UserFormController extends FormController {
-  user = null;
+  user = {};
 
   constructor(router, api) {
     super(router, api, "user");
-    this.user = this.record;
+  }
+
+  getRecord = function() {
+    return this.user;
   }
 }
