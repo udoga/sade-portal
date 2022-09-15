@@ -1,0 +1,39 @@
+<div x-data="new LeaveListController(leaveApi)">
+    <h2>Leaves</h2>
+    <table>
+        <tr>
+            <th class="narrow">ID</th>
+            <th>Person ID</th>
+            <th>Leave Type</th>
+            <th>Replacement Person ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Status</th>
+            <th class="narrow last">
+                <a class="green header icon button" href="#/leave-form"><i class="fas fa-plus"></i>New</a>
+            </th>
+        </tr>
+        <template x-for="leave in leaves" @leaves-event.window="leaves = $event.detail">
+            <tr>
+                <td x-text="leave.id" class="narrow"></td>
+                <td x-text="leave.personId"></td>
+                <td x-text="leave.leaveType"></td>
+                <td x-text="leave.replacementPersonId"></td>
+                <td x-text="leave.startTime"></td>
+                <td x-text="leave.endTime"></td>
+                <td x-text="leave.status"></td>
+                <td class="narrow last">
+                    <a title="Show" class="light-blue row button" :href="'#/leave-page/' + leave.id">
+                        <i class="far fa-eye"></i>
+                    </a>
+                    <a title="Edit" class="yellow row button" :href="'#/leave-form/' + leave.id">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a title="Delete" class="red row button" @click="remove(leave.id)">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>

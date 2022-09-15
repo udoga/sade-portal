@@ -1,0 +1,46 @@
+<div x-data="new LeavePageController(router, leaveApi)">
+    <h2>Leave</h2>
+    <div @leave-event.window="leave = $event.detail">
+        <div class="field">
+            <label>Id:</label>
+            <span x-text="leave.id"></span>
+        </div>
+        <div class="field">
+            <label>Person ID:</label>
+            <span x-text="leave.personId"></span>
+        </div>
+        <div class="field">
+            <label>Leave Type:</label>
+            <span x-text="leave.leaveType"></span>
+        </div>
+        <div class="field">
+            <label>Replacement Person Id:</label>
+            <span x-text="leave.replacementPersonId"></span>
+        </div>
+        <div class="field">
+            <label>Start Time:</label>
+            <span x-text="leave.startTime"></span>
+        </div>
+        <div class="field">
+            <label>End Time:</label>
+            <span x-text="leave.endTime"></span>
+        </div>
+        <div class="field">
+            <label>Day Count:</label>
+            <span x-text="leave.dayCount"></span>
+        </div>
+        <div class="field">
+            <label>Description:</label>
+            <span x-text="leave.description"></span>
+        </div>
+        <div class="field">
+            <label>Status:</label>
+            <span x-text="leave.status"></span>
+        </div>
+        <div class="options">
+            <a class="white form button" href="#/leave-list">Back</a>
+            <a class="yellow form button" :href="'#/leave-form/' + leave.id">Edit</a>
+            <a class="red form button" @click="remove()">Delete</a>
+        </div>
+    </div>
+</div>

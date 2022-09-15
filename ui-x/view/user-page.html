@@ -1,22 +1,22 @@
 <div x-data="new UserPageController(router, userApi)">
   <h2>User</h2>
   <div @user-event.window="user = $event.detail">
-    <div class="field">
-      <label>Id:</label>
-      <span x-text="user.id"></span>
+      <div class="field">
+        <label>Id:</label>
+        <span x-text="user.id"></span>
+      </div>
+      <div class="field">
+        <label>Username:</label>
+        <span x-text="user.username"></span>
+      </div>
+      <div class="field">
+        <label>Full Name:</label>
+        <span x-text="user.fullName"></span>
+      </div>
+    <div class="options">
+      <a class="white form button" href="#/user-list">Back</a>
+      <a class="yellow form button" :href="'#/user-form/' + user.id">Edit</a>
+      <a class="red form button" @click="remove()">Delete</a>
     </div>
-    <div class="field">
-      <label>Username:</label>
-      <span x-text="user.username"></span>
-    </div>
-    <div class="field">
-      <label>Full Name:</label>
-      <span x-text="user.fullName"></span>
-    </div>
-  </div>
-  <div class="options">
-    <a class="white form button" href="#/user-list">Back</a>
-    <a class="yellow form button" :href="'#/user-form/' + user.id">Edit</a>
-    <a class="red form button" @click="remove()">Delete</a>
   </div>
 </div>

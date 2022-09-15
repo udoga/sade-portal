@@ -19,6 +19,9 @@ class Router {
     else if (location.hash === "#/person-list") this.emit("person-list");
     else if (location.hash.startsWith("#/person-form")) this.emit("person-form");
     else if (location.hash.startsWith("#/person-page")) this.emit("person-page");
+    else if (location.hash === "#/leave-list") this.emit("leave-list");
+    else if (location.hash.startsWith("#/leave-form")) this.emit("leave-form");
+    else if (location.hash.startsWith("#/leave-page")) this.emit("leave-page");
     else this.emit("not-found");
   }
 

@@ -26,7 +26,7 @@ class RestApi {
     return this.httpApi.put(this.url + id, {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
-    }).then(response => response.json());
+    }).then(response => {response.json()});
   }
 
   delete = function(id) {
