@@ -22,8 +22,7 @@
 - core: Classes and business rules specific to this application.
 - repo: Repository implementations for local databases and Kolay IK.
 - rest: REST API plugin by using Javalin.
-- ui-ng: Web user interface by using AngularJS.
-- ui-x: Web user interface by using AlpineJS.
+- ui: Web user interface by using AlpineJS.
 
 ## Kolay IK Integration
 
