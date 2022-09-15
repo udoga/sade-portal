@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Sade Portal</title>
@@ -40,7 +40,7 @@
     <script src="controller/ExpensePageController.js"></script>
     <script src="controller/LayoutController.js"></script>
     <script src="main.js"></script>
-  </head>
-  <body x-data="{}" x-html="(await httpApi.get('/view/layout.html')).text()" @hashchange.window="router.notify()">
-  </body>
+</head>
+<body x-data="{}" x-html="(await httpApi.get('/view/layout.html')).text()" @hashchange.window="router.notify()">
+</body>
 </html>
