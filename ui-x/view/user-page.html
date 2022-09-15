@@ -1,6 +1,6 @@
 <div x-data="new UserPageController(router, userApi)">
   <h2>User</h2>
-  <div @user-event.window="Object.assign(user, $event.detail);">
+  <div @user-event.window="user = $event.detail">
     <div class="field">
       <label>Id:</label>
       <span x-text="user.id"></span>

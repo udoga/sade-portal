@@ -1,0 +1,114 @@
+<div x-data="new PersonPageController(router, personApi)">
+    <h2>Person</h2>
+    <div @person-event.window="person = $event.detail">
+        <div class="field">
+            <label>Id:</label>
+            <span x-text="person.id"></span>
+        </div>
+        <div class="field">
+            <label>First Name:</label>
+            <span x-text="person.firstName"></span>
+        </div>
+        <div class="field">
+            <label>Last Name:</label>
+            <span x-text="person.lastName"></span>
+        </div>
+        <div class="field">
+            <label>Email:</label>
+            <span x-text="person.email"></span>
+        </div>
+        <div class="field">
+            <label>Work Email:</label>
+            <span x-text="person.workEmail"></span>
+        </div>
+        <div class="field">
+            <label>Mobile Phone:</label>
+            <span x-text="person.mobilePhone"></span>
+        </div>
+        <div class="field">
+            <label>Work Phone:</label>
+            <span x-text="person.workPhone"></span>
+        </div>
+        <div class="field">
+            <label>Employment Start Date:</label>
+            <span x-text="person.employmentStartDate"></span>
+        </div>
+        <div class="field">
+            <label>Contract End Date:</label>
+            <span x-text="person.contractEndDate"></span>
+        </div>
+        <div class="field">
+            <label>Access Type:</label>
+            <span x-text="person.accessType"></span>
+        </div>
+        <div class="field">
+            <label>Birthday:</label>
+            <span x-text="person.birthday"></span>
+        </div>
+        <div class="field">
+            <label>Blood Type:</label>
+            <span  x-text="person.bloodType"></span>
+        </div>
+        <div class="field">
+            <label>Education Level:</label>
+            <span x-text="person.educationLevel"></span>
+        </div>
+        <div class="field">
+            <label>Graduated:</label>
+            <span x-text="person.graduated"></span>
+        </div>
+        <div class="field">
+            <label>Educational Institution:</label>
+            <span x-text="person.educationalInstitution"></span>
+        </div>
+        <div class="field">
+            <label>Gender:</label>
+            <span x-text="person.gender"></span>
+        </div>
+        <div class="field">
+            <label>Id Number:</label>
+            <span x-text="person.idNumber"></span>
+        </div>
+        <div class="field">
+            <label>Level of Disability:</label>
+            <span x-text="person.levelOfDisability"></span>
+        </div>
+        <div class="field">
+            <label>Marital Status:</label>
+            <span x-text="person.maritalStatus"></span>
+        </div>
+        <div class="field">
+            <label>Partner Work Status:</label>
+            <span x-text="person.partnerWorkStatus"></span>
+        </div>
+        <div class="field">
+            <label>Military Service:</label>
+            <span x-text="person.militaryService"></span>
+        </div>
+        <div class="field">
+            <label>Military Service Delay Date:</label>
+            <span x-text="person.militaryServiceDelayDate"></span>
+        </div>
+        <div class="field">
+            <label>Nationality:</label>
+            <span x-text="person.nationality"></span>
+        </div>
+        <div class="field">
+            <label>Number of Children:</label>
+            <span x-text="person.numberOfChildren"></span>
+        </div>
+        <div class="field">
+            <label>Active:</label>
+            <span x-text="person.active"></span>
+        </div>
+        <div class="field">
+            <label>Tour Status:</label>
+            <span x-text="person.tourStatus"></span>
+        </div>
+        <div class="options">
+            <a class="white form button" href="#/person-list">Back</a>
+            <a class="yellow form button" :href="'#/person-form/' + person.id">Edit</a>
+            <a class="red form button" @click="remove()">Delete</a>
+        </div>
+    </div>
+</div>

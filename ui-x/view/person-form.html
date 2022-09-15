@@ -1,0 +1,170 @@
+<div x-data="new PersonFormController(router, personApi)">
+    <h2>Person Form</h2>
+    <form @person-event.window="person = $event.detail">
+        <div class="field">
+            <label>First Name</label>
+            <input type="text" placeholder="First Name" x-model="person.firstName"/>
+        </div>
+        <div class="field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Last Name" x-model="person.lastName"/>
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" placeholder="Email" x-model="person.email"/>
+        </div>
+        <div class="field">
+            <label>Work Email</label>
+            <input type="email" placeholder="Work Email" x-model="person.workEmail"/>
+        </div>
+        <div class="field">
+            <label>Mobile Phone</label>
+            <input type="tel" placeholder="Mobile Phone" x-model="person.mobilePhone"/>
+        </div>
+        <div class="field">
+            <label>Work Phone</label>
+            <input type="tel" placeholder="Work Phone" x-model="person.workPhone"/>
+        </div>
+        <div class="field">
+            <label>Employment Start Date</label>
+            <input type="date" placeholder="Employment Start Date" x-model="person.employmentStartDate"/>
+        </div>
+        <div class="field">
+            <label>Contract End Date</label>
+            <input type="date" placeholder="Contract End Date" x-model="person.contractEndDate"/>
+        </div>
+        <div class="field">
+            <label>Access Type</label>
+            <input list="accesstype" placeholder="Access Type" x-model="person.accessType"/>
+            <datalist id="accesstype">
+                <option>Employee</option>
+                <option>Manager</option>
+                <option>Owner</option>
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Birthday</label>
+            <input type="date" placeholder="Birthday" x-model="person.birthday"/>
+        </div>
+        <div class="field">
+            <label>Blood Type</label>
+            <input list="bloodtype" placeholder="Blood Type" x-model="person.bloodType"/>
+            <datalist id="bloodtype">
+                <option>ANegative</option>
+                <option>APositive</option>
+                <option>ZeroPositive</option>
+                <option>ZeroNegative</option>
+                <option>ABNegative</option>
+                <option>ABPositive</option>
+                <option>BNegative</option>
+                <option>BPositive</option>
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Education Level</label>
+            <input list="educationlevel" placeholder="Education Level" x-model="person.educationLevel"/>
+            <datalist id="educationlevel">
+                <option>Primary</option>
+                <option>Secondary</option>
+                <option>High_School</option>
+                <option>Associate</option>
+                <option>Bachelor</option>
+                <option>Master</option>
+                <option>None</option>
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Graduated</label>
+            <input type="checkbox" placeholder="Graduated" x-model="person.graduated"/>
+        </div>
+        <div class="field">
+            <label>Educational Institution</label>
+            <input type="text" placeholder="Educational Institution" x-model="person.educationalInstitution"/>
+        </div>
+        <div class="field">
+            <label>Gender</label>
+            <input list="gender" placeholder="Gender" x-model="person.gender"/>
+            <datalist id="gender">
+                <option value="Female">
+                <option value="Male">
+                <option value="Unspecified">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Id Number</label>
+            <input type="text" min="0" placeholder="Id Number" x-model="person.idNumber"/>
+        </div>
+        <div class="field">
+            <label>Level of Disability</label>
+            <input list="levelofdisability" placeholder="Level of Disability" x-model="person.levelOfDisability"/>
+            <datalist id="levelofdisability">
+                <option value="NotDisabled">
+                <option value="ThirdLevel">
+                <option value="SecondLevel">
+                <option value="FirstLevel">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Marital Status</label>
+            <input list="maritalstatus" placeholder="Marital Status" x-model="person.maritalStatus"/>
+            <datalist id="maritalstatus">
+                <option value="Married">
+                <option value="Single">
+                <option value="Divorced">
+                <option value="Unspecified">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Partner Work Status</label>
+            <input type="checkbox" placeholder="Partner Work Status" x-model="person.partnerWorkStatus"/>
+        </div>
+        <div class="field">
+            <label>Military Service</label>
+            <input list="militaryservice" placeholder="Military Service" x-model="person.militaryService"/>
+            <datalist id="militaryservice">
+                <option value="Completed">
+                <option value="Uncompleted">
+                <option value="Deserter">
+                <option value="Exempt">
+                <option value="Delayed">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Military Service Delay Date</label>
+            <input type="date" placeholder="Military Service Delay Date" x-model="person.militaryServiceDelayDate"/>
+        </div>
+        <div class="field">
+            <label>Nationality</label>
+            <input list="nationality" placeholder="Nationality" x-model="person.nationality"/>
+            <datalist id="nationality">
+                <option value="TR">
+                <option value="US">
+                <option value="GB">
+                <option value="MT">
+                <option value="PL">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Number of Children</label>
+            <input type="number" min="0" placeholder="Number of Children" x-model="person.numberOfChildren"/>
+        </div>
+        <div class="field">
+            <label>Tour Status</label>
+            <input list="tourstatus" placeholder="Tour Status" x-model="person.tourStatus"/>
+            <datalist id="tourstatus">
+                <option value="Completed">
+                <option value="Canceled">
+                <option value="Active">
+                <option value="Passive">
+            </datalist>
+        </div>
+        <div class="field">
+            <label>Active</label>
+            <input type="checkbox" placeholder="Active" x-model="person.active"/>
+        </div>
+        <div class="options">
+            <a class="white form button" @click="quit()">Back</a>
+            <a class="green form button" @click="save()">Save</a>
+        </div>
+    </form>
+</div>
