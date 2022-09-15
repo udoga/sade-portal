@@ -35,7 +35,7 @@ public class LeaveService {
 
     public Leave update(String id, Leave leave) {
         check(leave);
-        return repo.update(id, leave);
+        return repo.update(id, leave.withStatus(ApprovalStatus.Waiting));
     }
 
     public Leave delete(String id) {

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class LeaveSamples {
     public static Leave validLeave = new Leave(
-            "5",
+            null,
             "4",
             LeaveType.AnnualLeave,
             "6",

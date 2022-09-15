@@ -30,7 +30,7 @@ public class LeaveTest {
 
     @Test
     public void printsFields() {
-        assertEquals("Leave[id=5" +
+        assertEquals("Leave[id=null" +
                 " personId=4" +
                 " leaveType=AnnualLeave" +
                 " replacementPersonId=6" +
@@ -57,7 +57,7 @@ public class LeaveTest {
     @Test
     public void checksEquality() {
         assertEquals(validLeave, validLeave.copy());
-        assertNotEquals(validLeave, validLeave.withId(null));
+        assertNotEquals(validLeave, validLeave.withId("0"));
         assertNotEquals(validLeave, validLeave.withPersonId(null));
         assertNotEquals(validLeave, validLeave.withLeaveType(null));
         assertNotEquals(validLeave, validLeave.withReplacementPersonId(null));

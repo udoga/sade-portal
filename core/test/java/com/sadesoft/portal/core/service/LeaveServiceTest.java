@@ -83,9 +83,17 @@ public class LeaveServiceTest {
 
         @Test
         public void updatesLeaveById() {
-            Leave leave = service.update("0", validLeave.withDescription("updated"));
-            assertEquals(validLeave.withId("0").withDescription("updated"), leave);
-            assertEquals(leave, repo.read("0"));
+            Leave leave = repo.read("0");
+            Leave updatedLeave = service.update("0", validLeave.withDescription("updated"));
+            assertEquals(leave.withDescription("updated"), updatedLeave);
+            assertEquals(updatedLeave, repo.read("0"));
+        }
+
+        @Test
+        public void whenUpdatesLeave_makesStatusWaiting() {
+            repo.update("0", repo.read("0").withStatus(ApprovalStatus.Approved));
+            Leave leave = service.update("0", validLeave);
+            assertEquals(validLeave.withId("0").withStatus(ApprovalStatus.Waiting), leave);
         }
 
         @Test
