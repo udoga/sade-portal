@@ -66,7 +66,7 @@ public class RestServer {
         if (status >= 500) e.printStackTrace();
         else logger.info(e.getClass().getSimpleName() + ": " + e.getMessage());
         c.status(status);
-        c.json(Map.of("status", status, "type", e.getClass().getSimpleName(), "message", e.getMessage()));
+        c.json(Map.of("error", new RestError(status, e.getClass().getSimpleName(), e.getMessage())));
     }
 
     private Exception convert(InvalidFormatException e) {
