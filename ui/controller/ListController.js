@@ -1,6 +1,7 @@
 class ListController {
   api = null;
   name = null;
+  error = {};
 
   constructor(api, name) {
     this.api = api;
@@ -9,14 +10,22 @@ class ListController {
   }
 
   load = function() {
-    this.api.list().then((json) => { this.emit(json.data); });
+    this.api.list().then((json) => this.handle(json));
+  }
+
+  handle = function(json) {
+    json.data? this.emitData(json.data) : this.emitError(json.error);
   }
 
   remove = function(id) {
-    this.api.delete(id).then((response) => { this.load(); });
+    this.api.delete(id).then((response) =>  this.load() );
   }
 
-  emit = function(data) {
+  emitData = function(data) {
     window.dispatchEvent(new CustomEvent( this.name + "-event", { detail: data }));
+  }
+
+  emitError = function(data) {
+    window.dispatchEvent(new CustomEvent( "error-event", { detail: data }));
   }
 }

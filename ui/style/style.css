@@ -315,3 +315,8 @@ a.button.light-blue:active {
   background: #2e9aba;
   border-color: #006684;
 }
+
+.error-alert {
+  color: red;
+  padding-bottom: 10px;
+}
