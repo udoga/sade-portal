@@ -1,6 +1,5 @@
-<div x-data="new ExpenseListController(expenseApi)">
+<div x-data="new ExpenseListController(expenseApi, notifier)">
     <h2>Expenses</h2>
-    <div class="error-alert" @error-event.window="error = $event.detail" x-text="error.message"></div>
     <table>
         <tr>
             <th class="narrow">Id</th>

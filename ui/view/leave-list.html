@@ -1,6 +1,5 @@
-<div x-data="new LeaveListController(leaveApi)">
+<div x-data="new LeaveListController(leaveApi, notifier)">
     <h2>Leaves</h2>
-    <div class="error-alert" @error-event.window="error = $event.detail" x-text="error.message"></div>
     <table>
         <tr>
             <th class="narrow">ID</th>

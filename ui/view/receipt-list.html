@@ -1,6 +1,5 @@
-<div x-data="new ReceiptListController(receiptApi)">
+<div x-data="new ReceiptListController(receiptApi, notifier)">
     <h2>Receipts</h2>
-    <div class="error-alert" @error-event.window="error = $event.detail" x-text="error.message"></div>
     <table>
         <tr>
             <th class="narrow">Id</th>

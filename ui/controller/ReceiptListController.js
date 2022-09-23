@@ -1,7 +1,7 @@
 class ReceiptListController extends ListController {
   receipts = [];
 
-  constructor(api) {
-    super(api, "receipts");
+  constructor(api, notifier) {
+    super(api, "receipts", notifier);
   }
 }

@@ -1,0 +1,5 @@
+<div x-data="{ notifications: [] }">
+  <template x-for="n in notifications" @notifications-event.window="notifications = $event.detail;">
+    <div class="error-alert" x-text="n.message"></div>
+  </template>
+</div>

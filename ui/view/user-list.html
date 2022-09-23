@@ -1,6 +1,5 @@
-<div x-data="new UserListController(userApi)">
+<div x-data="new UserListController(userApi, notifier)">
     <h2>Users</h2>
-    <div class="error-alert" @error-event.window="error = $event.detail" x-text="error.message"></div>
     <table>
         <tr>
             <th class="narrow">Id</th>

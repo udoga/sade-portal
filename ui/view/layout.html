@@ -13,7 +13,9 @@
         <a href="#/leave-list"><i class="fa-solid fa-umbrella-beach"></i>Leaves</a>
         <a href="#/expense-list"><i class="fa-solid fa-comment-dollar"></i>Expenses</a>
     </nav>
-    <main :class="{ shifted: isShifted }" @route-event.window="loadView($el, $event.detail)">
+    <main :class="{ shifted: isShifted }">
+        <div x-html="(await httpApi.get('view/notifications.html')).text()"></div>
+        <div @route-event.window="loadView($el, $event.detail)"></div>
     </main>
     <div class="overlay" x-show="hasOverlay" @click="setNavigation(false)">
     </div>

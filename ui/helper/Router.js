@@ -1,6 +1,9 @@
 class Router {
-  constructor() {
-    setTimeout(() => this.notify(), 100);
+  notifier = null;
+
+  constructor(notifier) {
+    this.notifier = notifier;
+    setTimeout(() => this.notify(), 500);
   }
 
   route = function(hashUrl) {
@@ -9,23 +12,8 @@ class Router {
 
   notify = function() {
     if (!location.hash) this.route("#/home");
-    else if (location.hash === "#/home") this.emit("home");
-    else if (location.hash === "#/user-list") this.emit("user-list");
-    else if (location.hash.startsWith("#/user-form")) this.emit("user-form");
-    else if (location.hash.startsWith("#/user-page")) this.emit("user-page");
-    else if (location.hash === "#/receipt-list") this.emit("receipt-list");
-    else if (location.hash.startsWith("#/receipt-form")) this.emit("receipt-form");
-    else if (location.hash.startsWith("#/receipt-page")) this.emit("receipt-page");
-    else if (location.hash === "#/person-list") this.emit("person-list");
-    else if (location.hash.startsWith("#/person-form")) this.emit("person-form");
-    else if (location.hash.startsWith("#/person-page")) this.emit("person-page");
-    else if (location.hash === "#/leave-list") this.emit("leave-list");
-    else if (location.hash.startsWith("#/leave-form")) this.emit("leave-form");
-    else if (location.hash.startsWith("#/leave-page")) this.emit("leave-page");
-    else if (location.hash === "#/expense-list") this.emit("expense-list");
-    else if (location.hash.startsWith("#/expense-form")) this.emit("expense-form");
-    else if (location.hash.startsWith("#/expense-page")) this.emit("expense-page");
-    else this.emit("not-found");
+    this.emit(this.findView())
+    this.notifier.clear();
   }
 
   emit = function(viewName) {
@@ -36,5 +24,25 @@ class Router {
     var parts = location.hash.split("/");
     var id = parts[parts.length - 1];
     return isNaN(id)? null : id;
+  }
+
+  findView = function() {
+    if (location.hash === "#/home") return "home";
+    if (location.hash === "#/user-list") return "user-list";
+    if (location.hash.startsWith("#/user-form")) return "user-form";
+    if (location.hash.startsWith("#/user-page")) return "user-page";
+    if (location.hash === "#/receipt-list") return "receipt-list";
+    if (location.hash.startsWith("#/receipt-form")) return "receipt-form";
+    if (location.hash.startsWith("#/receipt-page")) return "receipt-page";
+    if (location.hash === "#/person-list") return "person-list";
+    if (location.hash.startsWith("#/person-form")) return "person-form";
+    if (location.hash.startsWith("#/person-page")) return "person-page";
+    if (location.hash === "#/leave-list") return "leave-list";
+    if (location.hash.startsWith("#/leave-form")) return "leave-form";
+    if (location.hash.startsWith("#/leave-page")) return "leave-page";
+    if (location.hash === "#/expense-list") return "expense-list";
+    if (location.hash.startsWith("#/expense-form")) return "expense-form";
+    if (location.hash.startsWith("#/expense-page")) return "expense-page";
+    return "not-found";
   }
 }

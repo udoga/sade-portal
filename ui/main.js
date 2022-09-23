@@ -4,4 +4,5 @@ var receiptApi = new ReceiptApi(httpApi);
 var personApi = new PersonApi(httpApi);
 var leaveApi = new LeaveApi(httpApi);
 var expenseApi = new ExpenseApi(httpApi);
-var router = new Router();
+var notifier = new Notifier();
+var router = new Router(notifier);

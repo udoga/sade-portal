@@ -1,7 +1,7 @@
 class LeaveListController extends ListController {
   leaves = [];
 
-  constructor(api) {
-    super(api, "leaves");
+  constructor(api, notifier) {
+    super(api, "leaves", notifier);
   }
 }
