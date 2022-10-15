@@ -1,4 +1,4 @@
-<div x-data="new ExpenseFormController(router, expenseApi)">
+<div x-data="new ExpenseFormController(router, expenseApi, notifier)">
     <h2>Expense Form</h2>
     <form @expense-event.window="expense = $event.detail">
         <div class="field">
