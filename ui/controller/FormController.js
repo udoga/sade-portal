@@ -12,7 +12,7 @@ class FormController {
   }
 
   load = function(id) {
-    this.api.read(id).then((json) => { this.handle(json);});
+    this.api.read(id).then((json) => { this.handleLoadResponse(json);});
   }
 
   save = function() {
@@ -20,16 +20,20 @@ class FormController {
     else this.create();
   }
 
-  handle = function(json) {
+  handleLoadResponse = function(json) {
     json.data? this.emit(json.data) : this.notifier.notify(json.error);
   }
 
+  handleSaveResponse = function(json) {
+    json.data? this.quit() : this.notifier.notify(json.error);
+  }
+
   create = function() {
-    this.api.create(this.getRecord()).then((json) => this.quit());
+    this.api.create(this.getRecord()).then((json) => this.handleSaveResponse(json));
   }
 
   update = function() {
-    this.api.update(this.router.getId(), this.getRecord()).then((json) => this.quit());
+    this.api.update(this.router.getId(), this.getRecord()).then((json) => this.handleSaveResponse(json));
   }
 
   quit = function() {
