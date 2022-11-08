@@ -21,11 +21,11 @@ class FormController {
   }
 
   handleLoadResponse = function(json) {
-    json.data? this.emit(json.data) : this.notifier.notify(json.error);
+    json.data? this.emit(json.data) : this.notifier.notify(new Notification("error", json.error.message));
   }
 
   handleSaveResponse = function(json) {
-    json.data? this.quit() : this.notifier.notify(json.error);
+    json.data? this.quit() : this.notifier.notify(new Notification("error", json.error.message));
   }
 
   create = function() {
