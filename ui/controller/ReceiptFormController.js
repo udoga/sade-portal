@@ -1,8 +1,8 @@
 class ReceiptFormController extends FormController {
   receipt = {};
 
-  constructor(router, api) {
-    super(router, api, "receipt");
+  constructor(router, api, notifier) {
+    super(router, api, "receipt", notifier);
   }
 
   getRecord = function() {

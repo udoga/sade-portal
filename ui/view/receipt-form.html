@@ -1,4 +1,4 @@
-<div x-data="new ReceiptFormController(router, receiptApi)">
+<div x-data="new ReceiptFormController(router, receiptApi, notifier)">
     <h2>Receipt Form</h2>
     <form @receipt-event.window="receipt = $event.detail">
         <div class="field">

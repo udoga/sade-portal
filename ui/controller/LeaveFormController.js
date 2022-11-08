@@ -1,8 +1,8 @@
 class LeaveFormController extends FormController {
   leave = {};
 
-  constructor(router, api) {
-    super(router, api, "leave");
+  constructor(router, api, notifier) {
+    super(router, api, "leave", notifier);
   }
 
   getRecord = function() {

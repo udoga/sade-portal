@@ -1,4 +1,4 @@
-<div x-data="new LeaveFormController(router, leaveApi)">
+<div x-data="new LeaveFormController(router, leaveApi, notifier)">
     <h2>Leave Form</h2>
     <form @leave-event.window="leave = $event.detail">
         <div class="field">
