@@ -6,6 +6,10 @@ class Notifier {
     this.emit();
   }
 
+  notifyLater = function(notification) {
+    setTimeout(() => this.notify(notification), 100);
+  }
+
   clear = function() {
     this.notifications = [];
     this.emit();

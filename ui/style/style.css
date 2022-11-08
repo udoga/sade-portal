@@ -320,3 +320,9 @@ a.button.light-blue:active {
   color: red;
   padding-bottom: 10px;
 }
+
+.success-alert {
+  color: green;
+  padding-bottom: 10px;
+}
+
