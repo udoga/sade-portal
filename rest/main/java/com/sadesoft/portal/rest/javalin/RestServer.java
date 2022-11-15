@@ -10,8 +10,9 @@ import com.sadesoft.portal.base.error.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
-import io.javalin.plugin.json.JavalinJackson;
+import io.javalin.json.JavalinJackson;
 import com.sadesoft.portal.base.config.ServerConfig;
+import io.javalin.plugin.bundled.CorsPluginConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,16 +44,16 @@ public class RestServer {
     }
 
     private void configureServer() {
-        server._conf.enableCorsForAllOrigins();
+        server.cfg.plugins.enableCors(corsContainer -> corsContainer.add(CorsPluginConfig::anyHost));
         if (!config.uiFolder.isEmpty())
-            server._conf.addStaticFiles(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
+            server.cfg.staticFiles.add(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
     }
 
     private void configureMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        server._conf.jsonMapper(new JavalinJackson(mapper));
+        server.cfg.jsonMapper(new JavalinJackson(mapper));
     }
 
     private void configureErrors() {

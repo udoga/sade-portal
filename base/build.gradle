@@ -18,8 +18,8 @@ sourceSets {
 
 dependencies {
     implementation 'com.h2database:h2:2.1.214'
-    implementation 'org.postgresql:postgresql:42.4.0'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
-    implementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    implementation 'org.postgresql:postgresql:42.5.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
