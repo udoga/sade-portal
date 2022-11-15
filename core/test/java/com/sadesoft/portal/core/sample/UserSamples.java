@@ -7,4 +7,14 @@ public class UserSamples {
             null,
             "sample-username",
             "sample-password");
+
+    public static User firstUser = new User(
+            null,
+            "first-username",
+            "first-password");
+
+    public static User secondUser = new User(
+            null,
+            "second-username",
+            "second-password");
 }

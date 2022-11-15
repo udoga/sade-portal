@@ -32,7 +32,7 @@ public class Main {
         PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
-        SessionService sessionService = new SessionService(sessionRepo);
+        SessionService sessionService = new SessionService(sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(serverConfig);
