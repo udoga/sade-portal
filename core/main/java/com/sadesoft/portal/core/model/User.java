@@ -6,15 +6,15 @@ import com.sadesoft.portal.base.repo.Record;
 public class User implements Record, Cloneable {
     public String id = null;
     public String username = null;
-    public String fullName = null;
+    public String password = null;
 
     public User() {
     }
 
-    public User(String id, String username, String fullName) {
+    public User(String id, String username, String password) {
         this.id = id;
         this.username = username;
-        this.fullName = fullName;
+        this.password = password;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class User implements Record, Cloneable {
         User u = (User) o;
         return Objects.equals(id, u.id) &&
                 Objects.equals(username, u.username) &&
-                Objects.equals(fullName, u.fullName);
+                Objects.equals(password, u.password);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class User implements Record, Cloneable {
         return "User[" +
                 "id=" + id +
                 " username=" + username +
-                " fullName=" + fullName +
+                " password=" + password +
                 "]";
     }
 
@@ -65,9 +65,9 @@ public class User implements Record, Cloneable {
         return user;
     }
 
-    public User withFullName(String fullName) {
+    public User withPassword(String password) {
         User user = copy();
-        user.fullName = fullName;
+        user.password = password;
         return user;
     }
 }

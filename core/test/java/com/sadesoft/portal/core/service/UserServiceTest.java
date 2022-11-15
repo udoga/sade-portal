@@ -32,7 +32,7 @@ public class UserServiceTest {
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
         assertMissingFieldOnCreate(validUser.withUsername(null));
-        assertMissingFieldOnCreate(validUser.withFullName(null));
+        assertMissingFieldOnCreate(validUser.withPassword(null));
     }
 
     private void assertMissingFieldOnCreate(User user) {
@@ -70,7 +70,7 @@ public class UserServiceTest {
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
             assertMissingFieldOnUpdate(validUser.withUsername(null));
-            assertMissingFieldOnUpdate(validUser.withFullName(null));
+            assertMissingFieldOnUpdate(validUser.withPassword(null));
         }
 
         private void assertMissingFieldOnUpdate(User user) {

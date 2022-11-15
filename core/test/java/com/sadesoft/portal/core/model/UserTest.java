@@ -18,14 +18,14 @@ public class UserTest {
         User user = new User();
         assertNull(user.id);
         assertNull(user.username);
-        assertNull(user.fullName);
+        assertNull(user.password);
     }
 
     @Test
     public void printsFields() {
         assertEquals("User[id=null" +
-                " username=username" +
-                " fullName=Full Name" +
+                " username=sample-username" +
+                " password=sample-password" +
                 "]", validUser.toString());
     }
 
@@ -33,7 +33,7 @@ public class UserTest {
     public void clonesWithFields() {
         assertNull(validUser.withId(null).id);
         assertNull(validUser.withUsername(null).username);
-        assertNull(validUser.withFullName(null).fullName);
+        assertNull(validUser.withPassword(null).password);
     }
 
     @Test
@@ -41,6 +41,6 @@ public class UserTest {
         assertEquals(UserSamples.validUser, validUser.copy());
         assertNotEquals(UserSamples.validUser, validUser.withId("0"));
         assertNotEquals(UserSamples.validUser, validUser.withUsername(null));
-        assertNotEquals(UserSamples.validUser, validUser.withFullName(null));
+        assertNotEquals(UserSamples.validUser, validUser.withPassword(null));
     }
 }

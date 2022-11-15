@@ -4,7 +4,7 @@
         <tr>
             <th class="narrow">Id</th>
             <th>Username</th>
-            <th>Full Name</th>
+            <th>Password</th>
             <th class="narrow last">
                 <a class="green header icon button" href="#/user-form"><i class="fas fa-plus"></i> New</a>
             </th>
@@ -13,7 +13,7 @@
             <tr>
                 <td x-text="user.id" class="narrow"></td>
                 <td x-text="user.username"></td>
-                <td x-text="user.fullName"></td>
+                <td x-text="user.password"></td>
                 <td class="narrow last">
                     <a title="Show" class="light-blue row button" :href="'#/user-page/' + user.id">
                         <i class="fas fa-eye"></i>

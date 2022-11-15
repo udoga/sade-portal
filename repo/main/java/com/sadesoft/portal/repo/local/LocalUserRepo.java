@@ -16,7 +16,7 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
         super(connection, "users", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("username"),
-                new JdbcColumn("full_name")));
+                new JdbcColumn("password")));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
     protected void fillStatement(PreparedStatement s, User u) throws SQLException {
         int i = 1;
         s.setString(i++, u.username);
-        s.setString(i++, u.fullName);
+        s.setString(i++, u.password);
         if (u.id != null) setId(s, i, u.id);
     }
 }

@@ -35,7 +35,7 @@ CREATE TABLE projects(
 CREATE TABLE users(
     id IDENTITY PRIMARY KEY NOT NULL,
     username VARCHAR(255) NOT NULL,
-    full_name VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE expenses(
@@ -98,9 +98,9 @@ INSERT INTO projects VALUES
     (default, 'Second Project');
 
 INSERT INTO users VALUES
---        id,      username,     full_name
-    (default,  'first.user',  'First User'),
-    (default, 'second.user', 'Second User');
+--        id,      username,          password
+    (default,  'first.user',  'first-password'),
+    (default, 'second.user', 'second-password');
 
 INSERT INTO expenses VALUES
 --        id, person_id,    form_date,      amount, currency,  paid,   description,     status

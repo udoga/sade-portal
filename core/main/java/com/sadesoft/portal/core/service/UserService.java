@@ -41,7 +41,7 @@ public class UserService {
 
     private void check(User user) {
         checkMissingField(user.username, "username");
-        checkMissingField(user.fullName, "fullName");
+        checkMissingField(user.password, "password");
     }
 
     private void checkMissingField(String value, String field) {
