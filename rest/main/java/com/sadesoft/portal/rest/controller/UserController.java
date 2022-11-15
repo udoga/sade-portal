@@ -8,8 +8,8 @@ import io.javalin.http.HandlerType;
 
 public class UserController extends RestController {
     public UserController(UserService service) {
-        super("/api/users");
-        add(HandlerType.GET, "", c -> send(c, service.listPage(getPageNo(c), getPageSize(c))));
+        super("/users");
+        add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.POST, "", c -> send(c, service.create(getUser(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getUser(c))));

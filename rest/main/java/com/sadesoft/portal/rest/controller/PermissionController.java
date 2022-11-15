@@ -6,7 +6,7 @@ import io.javalin.http.HandlerType;
 
 public class PermissionController extends RestController {
     public PermissionController(PermissionService service) {
-        super("/api/permissions");
+        super("/permissions");
         add(HandlerType.GET, "/", c -> send(c, service.list()));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
     }

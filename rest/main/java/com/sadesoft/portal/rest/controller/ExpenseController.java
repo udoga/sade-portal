@@ -8,7 +8,7 @@ import io.javalin.http.HandlerType;
 
 public class ExpenseController extends RestController {
     public ExpenseController(ExpenseService service) {
-        super("/api/expenses");
+        super("/expenses");
         add(HandlerType.GET, "", c -> send(c, service.listPage(getPageNo(c), getPageSize(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getExpense(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));

@@ -30,7 +30,7 @@ public class RestServer {
 
     public void enrol(RestController controller){
         for (RestMethod method: controller.methods)
-            server.addHandler(method.type, controller.path + method.path, method.handler);
+            server.addHandler(method.type, config.path + controller.path + method.path, method.handler);
     }
 
     public void run() {
