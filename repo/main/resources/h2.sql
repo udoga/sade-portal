@@ -38,6 +38,15 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE sessions(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    begin_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE expenses(
     id IDENTITY PRIMARY KEY NOT NULL,
     person_id INT NOT NULL,
