@@ -1,8 +1,8 @@
 package com.sadesoft.portal.rest;
 
-import java.sql.Connection;
-
-import com.sadesoft.portal.base.config.*;
+import com.sadesoft.portal.base.config.DatabaseConfig;
+import com.sadesoft.portal.base.config.Props;
+import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.repo.*;
 import com.sadesoft.portal.core.service.*;
@@ -11,6 +11,8 @@ import com.sadesoft.portal.repo.kolay.KolayPersonRepo;
 import com.sadesoft.portal.repo.local.*;
 import com.sadesoft.portal.rest.controller.*;
 import com.sadesoft.portal.rest.javalin.RestServer;
+
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) throws Exception {

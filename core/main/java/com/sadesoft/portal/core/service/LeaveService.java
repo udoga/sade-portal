@@ -24,6 +24,10 @@ public class LeaveService {
         return repo.listPage(pageNo, pageSize);
     }
 
+    public List<Leave> listFiltered(ApprovalStatus status, int pageNo, int pageSize) {
+        return repo.listFiltered(status ,pageNo, pageSize);
+    }
+
     public Leave read(String id) {
         return repo.read(id);
     }

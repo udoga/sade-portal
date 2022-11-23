@@ -1,13 +1,13 @@
 package com.sadesoft.portal.rest.javalin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.sadesoft.portal.base.util.StringUtil;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HandlerType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RestController {
     protected String path;
@@ -38,7 +38,7 @@ public class RestController {
         return StringUtil.getInteger(getQueryParameter(c, "pageSize", "10"));
     }
 
-    private String getQueryParameter(Context c, String key, String defaultValue) {
+    protected String getQueryParameter(Context c, String key, String defaultValue) {
         String param = c.queryParam(key);
         return (param == null)? defaultValue : param;
     }

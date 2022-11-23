@@ -3,14 +3,14 @@ class Router {
 
   constructor(notifier) {
     this.notifier = notifier;
-    setTimeout(() => this.notify(), 500);
+    setTimeout(() => this.startRouting(), 500);
   }
 
   route = function(hashUrl) {
     location.hash = hashUrl;
   }
 
-  notify = function() {
+  startRouting = function() {
     if (!location.hash) this.route("#/home");
     this.emit(this.findView())
     this.notifier.clear();

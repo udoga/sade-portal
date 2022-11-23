@@ -1,14 +1,14 @@
 package com.sadesoft.portal.base.repo;
 
+import com.sadesoft.portal.base.error.RecordNotFoundError;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sadesoft.portal.base.error.RecordNotFoundError;
-
 public class MockRepo<T extends Record> implements Repo<T> {
     public final String tableName;
-    private final ArrayList<T> records;
-    private int nextId;
+    protected final ArrayList<T> records;
+    protected int nextId;
 
     public MockRepo(String tableName) {
         this.tableName = tableName;

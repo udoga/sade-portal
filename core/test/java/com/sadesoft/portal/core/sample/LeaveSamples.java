@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.sample;
 
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Leave;
 import com.sadesoft.portal.core.model.LeaveType;
 

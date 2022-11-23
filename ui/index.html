@@ -43,6 +43,6 @@
     <script src="controller/LayoutController.js"></script>
     <script src="main.js"></script>
 </head>
-<body x-data="{}" x-html="(await httpApi.get('/view/layout.html')).text()" @hashchange.window="router.notify()">
+<body x-data="{}" x-html="(await httpApi.get('/view/layout.html')).text()" @hashchange.window="router.startRouting()">
 </body>
 </html>

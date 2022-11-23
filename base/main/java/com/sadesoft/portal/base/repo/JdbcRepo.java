@@ -1,12 +1,13 @@
 package com.sadesoft.portal.base.repo;
 
+import com.sadesoft.portal.base.error.RecordNotFoundError;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import com.sadesoft.portal.base.error.RecordNotFoundError;
 
 public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
@@ -80,18 +81,26 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         s.setTimestamp(index, (time == null)? null : java.sql.Timestamp.valueOf(time));
     }
 
-    private <V> V call(Callable<V> callable) {
+    protected <V> V call(Callable<V> callable) {
         try { return callable.call(); }
         catch (RuntimeException e) { throw e; }
         catch (Exception e) { throw new RuntimeException(e); }
     }
 
-    private List<T> query(String sql) throws SQLException {
+    protected List<T> query(String sql) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet set = statement.executeQuery();
         List<T> objects = getObjects(set);
         statement.close();
         return objects;
+    }
+
+    protected String getColumnName(int index) {
+        return columns.get(index).name;
+    }
+
+    protected String createSelectSql(String appendedSQL) {
+        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
     }
 
     private T command(String sql, T record, boolean fill) throws SQLException {
@@ -118,16 +127,8 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return result;
     }
 
-    protected String getColumnName(int index) {
-        return columns.get(index).name;
-    }
-
     private String getIdName() {
         return getColumnName(0);
-    }
-
-    private String createSelectSql(String appendedSQL) {
-        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
     }
 
     private String createInsertSql() {
