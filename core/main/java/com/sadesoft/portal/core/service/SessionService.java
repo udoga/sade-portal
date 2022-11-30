@@ -1,14 +1,15 @@
 package com.sadesoft.portal.core.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-
 import com.sadesoft.portal.base.error.InvalidCredentialsError;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.SessionRepo;
 import com.sadesoft.portal.core.repo.UserRepo;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class SessionService {
     private final SessionRepo sessionRepo;
@@ -20,11 +21,11 @@ public class SessionService {
     }
 
     public List<Session> list() {
-        return sessionRepo.list();
+        return sessionRepo.list().stream().map(s -> s.withToken(null)).collect(Collectors.toList());
     }
 
     public Session read(String id) {
-        return sessionRepo.read(id);
+        return sessionRepo.read(id).withToken(null);
     }
 
     public Session login(User user) {

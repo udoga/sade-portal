@@ -5,6 +5,7 @@ import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.sample.SessionSamples;
 import com.sadesoft.portal.core.sample.UserSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -40,8 +41,34 @@ public class SessionServiceTest {
     }
 
     @Test
+    void whenThereAreNoSessions_listedSessionsAreEmpty() {
+        assertEquals(0, service.list().size());
+    }
+
+    @Test
     public void whenUserIsNotSavedOnRepo_doesNotCreateSession() {
         assertThrows(InvalidCredentialsError.class, () -> service.login(firstUser));
+    }
+
+    @Nested
+    public class GivenSessionServiceWithOneSession {
+        private Session session;
+
+        @BeforeEach
+        public void setup() {
+            session = sessionRepo.create(SessionSamples.validSession.copy());
+        }
+
+        @Test
+        public void readsSessionWithoutToken() {
+            assertEquals(session.withToken(null), service.read("0"));
+        }
+
+        @Test
+        public void listsSessionsWithoutTokens() {
+            assertEquals(1, service.list().size());
+            assertNull(service.list().get(0).token);
+        }
     }
 
     @Nested
