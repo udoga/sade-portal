@@ -6,6 +6,6 @@ class LeaveFormController extends FormController {
   }
 
   getRecord = function() {
-    return this.leave;
+    return Object.assign({}, this.leave, {"status": null});
   }
 }
