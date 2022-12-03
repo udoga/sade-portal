@@ -19,6 +19,10 @@ public class RestController {
     }
 
     protected void add(HandlerType type, String path, Handler handler) {
+        addSeparate(type, this.path + path, handler);
+    }
+
+    protected void addSeparate(HandlerType type, String path, Handler handler) {
         this.methods.add(new RestMethod(type, path, handler));
     }
 

@@ -28,13 +28,17 @@ public class RestServer {
         configure();
     }
 
-    public void enrol(RestController controller){
-        for (RestMethod method: controller.methods)
-            server.addHandler(method.type, config.path + controller.path + method.path, method.handler);
+    public void enrol(RestController controller) {
+        for (RestMethod method: controller.methods) enrol(method);
     }
 
     public void run() {
         server.start(config.port);
+    }
+
+    private void enrol(RestMethod method) {
+        method.path = config.path + method.path;
+        server.addHandler(method.type, method.path, method.handler);
     }
 
     private void configure() {

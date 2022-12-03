@@ -29,13 +29,15 @@ public class SessionService {
     }
 
     public Session login(User user) {
-        for (User u: userRepo.list())
-            if (user.username.equals(u.username) && user.password.equals(u.password))
-                return createSession(u.id);
+        for (User u: userRepo.list()) if (u.equals(user.withId(u.id))) return create(u.id);
         throw new InvalidCredentialsError();
     }
 
-    private Session createSession(String userId) {
+    public void authenticate(String token) {
+        System.out.println("Authenticating: " + token);
+    }
+
+    private Session create(String userId) {
         LocalDateTime now = LocalDateTime.now();
         String token = UUID.randomUUID().toString();
         return sessionRepo.create(new Session(null, userId, now, now.plusHours(1), token));
