@@ -1,4 +1,4 @@
-<div x-data="new PersonPageController(router, personApi)">
+<div x-data="new PersonPageController(router, personClient)">
     <h2>Person</h2>
     <div @person-event.window="person = $event.detail">
         <div class="field">

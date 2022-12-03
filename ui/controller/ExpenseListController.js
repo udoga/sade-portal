@@ -1,7 +1,7 @@
 class ExpenseListController extends ListController {
   expenses = [];
 
-  constructor(api, notifier) {
-    super(api, "expenses", notifier);
+  constructor(client, notifier) {
+    super(client, "expenses", notifier);
   }
 }

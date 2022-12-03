@@ -10,16 +10,16 @@
     <script src="https://kit.fontawesome.com/0af4976317.js"></script>
     <script src="https://unpkg.com/alpinejs" defer></script>
 
-    <script src="helper/HttpApi.js"></script>
+    <script src="helper/HttpClient.js"></script>
     <script src="helper/Notification.js"></script>
     <script src="helper/Notifier.js"></script>
-    <script src="helper/RestApi.js"></script>
+    <script src="helper/RestClient.js"></script>
     <script src="helper/Router.js"></script>
-    <script src="api/UserApi.js"></script>
-    <script src="api/ReceiptApi.js"></script>
-    <script src="api/PersonApi.js"></script>
-    <script src="api/LeaveApi.js"></script>
-    <script src="api/ExpenseApi.js"></script>
+    <script src="client/UserClient.js"></script>
+    <script src="client/ReceiptClient.js"></script>
+    <script src="client/PersonClient.js"></script>
+    <script src="client/LeaveClient.js"></script>
+    <script src="client/ExpenseClient.js"></script>
 
     <script src="controller/PageController.js"></script>
     <script src="controller/FormController.js"></script>
@@ -43,6 +43,8 @@
     <script src="controller/LayoutController.js"></script>
     <script src="main.js"></script>
 </head>
-<body x-data="{}" x-html="(await httpApi.get('/view/layout.html')).text()" @hashchange.window="router.startRouting()">
+<body x-data="{}"
+      x-html="(await httpClient.get('/view/layout.html')).text()"
+      @hashchange.window="router.startRouting()">
 </body>
 </html>

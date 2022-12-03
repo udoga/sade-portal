@@ -1,8 +1,8 @@
 class LeavePageController extends PageController {
   leave = {};
 
-  constructor(router, api) {
-    super(router, api, "leave");
+  constructor(router, client) {
+    super(router, client, "leave");
   }
 
   getRecord = function() {

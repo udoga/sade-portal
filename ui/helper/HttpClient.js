@@ -1,4 +1,4 @@
-class HttpApi {
+class HttpClient {
   get = function(url, options) {
      return fetch(url, options);
   }

@@ -1,8 +1,8 @@
 class ReceiptPageController extends PageController {
   receipt = {};
 
-  constructor(router, api) {
-    super(router, api, "receipt");
+  constructor(router, client) {
+    super(router, client, "receipt");
   }
 
   getRecord = function() {

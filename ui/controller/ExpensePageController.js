@@ -1,8 +1,8 @@
 class ExpensePageController extends PageController {
   expense = {};
 
-  constructor(router, api) {
-    super(router, api, "expense");
+  constructor(router, client) {
+    super(router, client, "expense");
   }
 
   getRecord = function() {

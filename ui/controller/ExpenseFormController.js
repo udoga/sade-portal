@@ -1,8 +1,8 @@
 class ExpenseFormController extends FormController {
   expense = {};
 
-  constructor(router, api, notifier) {
-    super(router, api, "expense", notifier);
+  constructor(router, client, notifier) {
+    super(router, client, "expense", notifier);
   }
 
   getRecord = function() {

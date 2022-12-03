@@ -1,7 +1,7 @@
 class UserListController extends ListController {
   users = [];
 
-  constructor(api, notifier) {
-    super(api, "users", notifier);
+  constructor(client, notifier) {
+    super(client, "users", notifier);
   }
 }

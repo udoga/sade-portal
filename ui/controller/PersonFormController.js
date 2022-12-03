@@ -1,8 +1,8 @@
 class PersonFormController extends FormController {
   person = {};
 
-  constructor(router, api, notifier) {
-    super(router, api, "person", notifier);
+  constructor(router, client, notifier) {
+    super(router, client, "person", notifier);
   }
 
   getRecord = function() {

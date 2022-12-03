@@ -1,12 +1,12 @@
 class LayoutController {
-  httpApi = null;
+  httpClient = null;
   isWide = true;
   hasNavigation = true;
   isShifted = true;
   hasOverlay = false;
 
-  constructor(httpApi) {
-    this.httpApi = httpApi;
+  constructor(httpClient) {
+    this.httpClient = httpClient;
     this.onResize();
   }
 
@@ -30,7 +30,7 @@ class LayoutController {
   }
 
   loadView = function(element, viewPath) {
-    this.httpApi.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
+    this.httpClient.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
     if (!this.isWide) this.setNavigation(false);
   }
 }

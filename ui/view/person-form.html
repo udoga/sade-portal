@@ -1,4 +1,4 @@
-<div x-data="new PersonFormController(router, personApi, notifier)">
+<div x-data="new PersonFormController(router, personClient, notifier)">
     <h2>Person Form</h2>
     <form @person-event.window="person = $event.detail">
         <div class="field">

@@ -1,7 +1,7 @@
 class PersonListController extends ListController {
   people = [];
 
-  constructor(api, notifier) {
-    super(api, "people", notifier);
+  constructor(client, notifier) {
+    super(client, "people", notifier);
   }
 }

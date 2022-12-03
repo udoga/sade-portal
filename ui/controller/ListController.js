@@ -1,18 +1,18 @@
 class ListController {
-  api = null;
+  client = null;
   name = null;
   notifier = null;
   error = {};
 
-  constructor(api, name, notifier) {
-    this.api = api;
+  constructor(client, name, notifier) {
+    this.client = client;
     this.name = name;
     this.notifier = notifier;
     this.load();
   }
 
   load = function() {
-    this.api.list().then((json) => this.handle(json));
+    this.client.list().then((json) => this.handle(json));
   }
 
   handle = function(json) {
@@ -20,7 +20,7 @@ class ListController {
   }
 
   remove = function(id) {
-    this.api.delete(id).then((response) =>  this.load() );
+    this.client.delete(id).then((response) =>  this.load() );
   }
 
   emit = function(data) {

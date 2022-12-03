@@ -1,8 +1,8 @@
 class PersonPageController extends PageController {
   person = {};
 
-  constructor(router, api) {
-    super(router, api, "person");
+  constructor(router, client) {
+    super(router, client, "person");
   }
 
   getRecord = function() {
