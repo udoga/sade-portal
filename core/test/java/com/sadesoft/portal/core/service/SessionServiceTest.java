@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidCredentialsError;
+import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Session;
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -28,14 +29,18 @@ public class SessionServiceTest {
     }
 
     private void assertInvalidCredentials(User user) {
-        assertThrows(InvalidCredentialsError.class, () -> service.login(user));
+        assertThrows(SessionError.class, () -> service.login(user));
+    }
+
+    private LocalDateTime minutesLater(int minutes) {
+        return LocalDateTime.now().plusMinutes(minutes);
     }
 
     @BeforeEach
     public void setup() {
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
-        service = new SessionService(sessionRepo, userRepo);
+        service = new SessionService(Duration.ofHours(1), sessionRepo, userRepo);
         firstUser = UserSamples.firstUser.copy();
         secondUser = UserSamples.secondUser.copy();
     }
@@ -46,8 +51,15 @@ public class SessionServiceTest {
     }
 
     @Test
-    public void whenUserIsNotSavedOnRepo_doesNotCreateSession() {
-        assertThrows(InvalidCredentialsError.class, () -> service.login(firstUser));
+    void whenThereAreNoSessions_doesNotAuthenticateToken() {
+        SessionError e = assertThrows(SessionError.class, () -> service.authenticate("sample-token"));
+        assertEquals("Session not found.", e.getMessage());
+    }
+
+    @Test
+    public void whenThereAreNoUsers_doesNotCreateSession() {
+        SessionError e = assertThrows(SessionError.class, () -> service.login(firstUser));
+        assertEquals("Invalid username or password.", e.getMessage());
     }
 
     @Nested
@@ -109,6 +121,58 @@ public class SessionServiceTest {
             Session session = service.login(secondUser);
             assertEquals(1, sessionRepo.list().size());
             assertEquals(secondUser.id, session.userId);
+        }
+
+        @Test
+        public void whenSessionTimeoutIsSetDifferent_savesDifferentEndTime() {
+            SessionService newService = new SessionService(Duration.ofSeconds(30), sessionRepo, userRepo);
+            Session session = newService.login(firstUser);
+            assertEquals(1, sessionRepo.list().size());
+            assertTimeEquals(LocalDateTime.now().plusSeconds(30), session.endTime);
+        }
+
+        @Nested
+        public class GivenSessionServiceWithOneLoggedInUser {
+            private Session session;
+
+            @BeforeEach
+            public void setup() {
+                session = service.login(firstUser);
+            }
+
+            @Test
+            public void whenTokenIsNull_requestsLogin() {
+                var e = assertThrows(SessionError.class, () -> service.authenticate(null));
+                assertEquals("Please login to continue.", e.getMessage());
+            }
+
+            @Test
+            public void checksEqualityWhileAuthentication() {
+                assertDoesNotThrow(() -> service.authenticate(session.token));
+                var e = assertThrows(SessionError.class, () -> service.authenticate("another-token"));
+                assertEquals("Session not found.", e.getMessage());
+            }
+
+            @Test
+            public void whenThereAreTwoSessions_authenticatesIfTokenExists() {
+                Session secondSession = service.login(secondUser);
+                assertDoesNotThrow(() -> service.authenticate(session.token));
+                assertDoesNotThrow(() -> service.authenticate(secondSession.token));
+                assertThrows(SessionError.class, () -> service.authenticate("missing-token"));
+            }
+
+            @Test
+            public void whenSessionIsExpired_doesNotAuthenticateToken() {
+                assertDoesNotThrow(() -> service.authenticate(session.token, minutesLater(59)));
+                var e = assertThrows(SessionError.class, () -> service.authenticate(session.token, minutesLater(61)));
+                assertEquals("Session is expired.", e.getMessage());
+            }
+
+            @Test
+            public void whenSessionIsNotStarted_doesNotAuthenticateToken() {
+                var e = assertThrows(SessionError.class, () -> service.authenticate(session.token, minutesLater(-1)));
+                assertEquals("Session is not started.", e.getMessage());
+            }
         }
     }
 }

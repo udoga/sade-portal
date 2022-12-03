@@ -16,7 +16,11 @@ class ListController {
   }
 
   handle = function(json) {
-    json.data? this.emit(json.data) : this.notifier.notify(json.error);
+    json.data? this.emit(json.data) : this.notifyError(json);
+  }
+
+  notifyError = function(json) {
+    this.notifier.notify(new Notification("error", json.error.message));
   }
 
   remove = function(id) {

@@ -13,6 +13,7 @@ import com.sadesoft.portal.rest.controller.*;
 import com.sadesoft.portal.rest.javalin.RestServer;
 
 import java.sql.Connection;
+import java.time.Duration;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -34,7 +35,7 @@ public class Main {
         PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
-        SessionService sessionService = new SessionService(sessionRepo, userRepo);
+        SessionService sessionService = new SessionService(Duration.ofHours(1), sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(serverConfig);
