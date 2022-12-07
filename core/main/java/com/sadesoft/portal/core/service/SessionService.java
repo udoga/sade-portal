@@ -1,24 +1,24 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.SessionRepo;
 import com.sadesoft.portal.core.repo.UserRepo;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SessionService {
-    public final Duration sessionTimeout;
+    public final ServerConfig serverConfig;
     private final SessionRepo sessionRepo;
     private final UserRepo userRepo;
 
-    public SessionService(Duration sessionTimeout, SessionRepo repo, UserRepo userRepo) {
-        this.sessionTimeout = sessionTimeout;
+    public SessionService(ServerConfig serverConfig, SessionRepo repo, UserRepo userRepo) {
+        this.serverConfig = serverConfig;
         this.sessionRepo = repo;
         this.userRepo = userRepo;
     }
@@ -41,6 +41,7 @@ public class SessionService {
     }
 
     public void authenticate(String token, LocalDateTime time) {
+        if (!serverConfig.authenticationEnabled) return;
         Session session = find(token);
         if (time.isAfter(session.endTime)) throw new SessionError("Session is expired.");
         if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started.");
@@ -48,7 +49,8 @@ public class SessionService {
 
     private Session create(String userId, LocalDateTime beginTime) {
         String token = UUID.randomUUID().toString();
-        return sessionRepo.create(new Session(null, userId, beginTime, beginTime.plus(sessionTimeout), token));
+        LocalDateTime endTime = beginTime.plusSeconds(serverConfig.sessionTimeout);
+        return sessionRepo.create(new Session(null, userId, beginTime, endTime, token));
     }
 
     private Session find(String token) {

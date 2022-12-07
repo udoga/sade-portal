@@ -1,5 +1,7 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.config.Props;
+import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -11,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +25,7 @@ public class SessionServiceTest {
     private SessionService service;
     private User firstUser;
     private User secondUser;
+    private ServerConfig serverConfig;
 
     private void assertTimeEquals(LocalDateTime expected, LocalDateTime actual) {
         assertTrue(ChronoUnit.SECONDS.between(expected, actual) <= 1);
@@ -38,9 +41,11 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void setup() {
+        Props props = new Props(Map.of("session_timeout", "3600", "authentication_enabled", "true"));
+        serverConfig = new ServerConfig(props);
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
-        service = new SessionService(Duration.ofHours(1), sessionRepo, userRepo);
+        service = new SessionService(serverConfig, sessionRepo, userRepo);
         firstUser = UserSamples.firstUser.copy();
         secondUser = UserSamples.secondUser.copy();
     }
@@ -60,6 +65,12 @@ public class SessionServiceTest {
     public void whenThereAreNoUsers_doesNotCreateSession() {
         SessionError e = assertThrows(SessionError.class, () -> service.login(firstUser));
         assertEquals("Invalid username or password.", e.getMessage());
+    }
+
+    @Test
+    public void whenAuthenticationIsDisabled_doesNotAuthenticate() {
+        serverConfig.authenticationEnabled = false;
+        assertDoesNotThrow(() -> service.authenticate("sample-token"));
     }
 
     @Nested
@@ -125,8 +136,8 @@ public class SessionServiceTest {
 
         @Test
         public void whenSessionTimeoutIsSetDifferent_savesDifferentEndTime() {
-            SessionService newService = new SessionService(Duration.ofSeconds(30), sessionRepo, userRepo);
-            Session session = newService.login(firstUser);
+            serverConfig.sessionTimeout = 30;
+            Session session = service.login(firstUser);
             assertEquals(1, sessionRepo.list().size());
             assertTimeEquals(LocalDateTime.now().plusSeconds(30), session.endTime);
         }
