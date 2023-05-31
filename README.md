@@ -32,3 +32,14 @@
 - Change "kolay.enabled" to true in [default.properties](rest/main/resources/default.properties) to use it.
 - Current "kolay.url" points to the mock Kolay IK API.
 - To make changes in mock API, contact developers and get access.
+
+## Todos
+
+* Encrypted passwords in database.
+* Related Person and User.
+* Authorization service.
+* Login page.
+* KolayIk integration.
+* Language selection.
+* Message Box style.
+* Pagination buttons.
