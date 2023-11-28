@@ -21,17 +21,9 @@
 
 - base: Classes that can be reusable for unrelated projects.
 - core: Classes and business rules specific to this application.
-- repo: Repository implementations for local databases and Kolay IK.
+- repo: Repository implementations for data sources.
 - rest: REST API plugin by using Javalin.
 - ui: Web user interface by using AlpineJS.
-
-## Kolay IK Integration
-
-- The application can use Kolay IK API instead of local database.
-- There is a mock Kolay IK API we created in Postman cloud.
-- Change "kolay.enabled" to true in [default.properties](rest/main/resources/default.properties) to use it.
-- Current "kolay.url" points to the mock Kolay IK API.
-- To make changes in mock API, contact developers and get access.
 
 ## Todos
 

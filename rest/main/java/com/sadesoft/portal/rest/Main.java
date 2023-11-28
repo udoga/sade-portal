@@ -6,8 +6,6 @@ import com.sadesoft.portal.base.config.ServerConfig;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.core.repo.*;
 import com.sadesoft.portal.core.service.*;
-import com.sadesoft.portal.repo.kolay.KolayConfig;
-import com.sadesoft.portal.repo.kolay.KolayPersonRepo;
 import com.sadesoft.portal.repo.local.*;
 import com.sadesoft.portal.rest.controller.*;
 import com.sadesoft.portal.rest.javalin.RestServer;
@@ -18,12 +16,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
         Connection connection = new DatabaseConfig(props.getSection("database")).connect();
-        KolayConfig kolayConfig = new KolayConfig(props.getSection("kolay"));
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
 
         ExpenseRepo expenseRepo = new LocalExpenseRepo(connection);
         LeaveRepo leaveRepo = new LocalLeaveRepo(connection);
-        PersonRepo personRepo = kolayConfig.enabled? new KolayPersonRepo(kolayConfig) : new LocalPersonRepo(connection);
+        PersonRepo personRepo = new LocalPersonRepo(connection);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(connection);
         UserRepo userRepo = new LocalUserRepo(connection);
         SessionRepo sessionRepo = new LocalSessionRepo(connection);
