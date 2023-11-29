@@ -19,7 +19,7 @@ public class ExpenseTest {
     public void initializesWithoutFields() {
         Expense expense = new Expense();
         assertNull(expense.id);
-        assertNull(expense.personId);
+        assertNull(expense.userId);
         assertNull(expense.formDate);
         assertNull(expense.amount);
         assertNull(expense.currency);
@@ -31,7 +31,7 @@ public class ExpenseTest {
     @Test
     public void printsFields() {
         assertEquals("Expense[id=null" +
-                " personId=1" +
+                " userId=1" +
                 " formDate=2022-01-01" +
                 " amount=1000.10" +
                 " currency=EUR" +
@@ -44,7 +44,7 @@ public class ExpenseTest {
     @Test
     public void clonesWithFields() {
         assertNull(validExpense.withId(null).id);
-        assertNull(validExpense.withPersonId(null).personId);
+        assertNull(validExpense.withUserId(null).userId);
         assertNull(validExpense.withFormDate(null).formDate);
         assertNull(validExpense.withAmount(null).amount);
         assertNull(validExpense.withCurrency(null).currency);
@@ -57,7 +57,7 @@ public class ExpenseTest {
     public void checksEquality() {
         assertEquals(validExpense, validExpense.copy());
         assertNotEquals(validExpense, validExpense.withId("0"));
-        assertNotEquals(validExpense, validExpense.withPersonId(null));
+        assertNotEquals(validExpense, validExpense.withUserId(null));
         assertNotEquals(validExpense, validExpense.withFormDate(null));
         assertNotEquals(validExpense, validExpense.withAmount(null));
         assertNotEquals(validExpense, validExpense.withCurrency(null));

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Expense implements Record, Cloneable {
     public String id = null;
-    public String personId = null;
+    public String userId = null;
     public LocalDate formDate = null;
     public BigDecimal amount = null;
     public Currency currency = null;
@@ -17,7 +17,7 @@ public class Expense implements Record, Cloneable {
     public ApprovalStatus status = null;
 
     public Expense(String id,
-                   String personId,
+                   String userId,
                    LocalDate formDate,
                    BigDecimal amount,
                    Currency currency,
@@ -25,7 +25,7 @@ public class Expense implements Record, Cloneable {
                    String description,
                    ApprovalStatus status) {
         this.id = id;
-        this.personId = personId;
+        this.userId = userId;
         this.formDate = formDate;
         this.amount = amount;
         this.currency = currency;
@@ -42,7 +42,7 @@ public class Expense implements Record, Cloneable {
         if (!(o instanceof Expense)) return false;
         Expense e = (Expense) o;
         return Objects.equals(id, e.id) &&
-                Objects.equals(personId, e.personId) &&
+                Objects.equals(userId, e.userId) &&
                 Objects.equals(formDate, e.formDate) &&
                 Objects.equals(amount, e.amount) &&
                 Objects.equals(currency, e.currency) &&
@@ -55,7 +55,7 @@ public class Expense implements Record, Cloneable {
     public String toString() {
         return "Expense[" +
                 "id=" + id +
-                " personId=" + personId +
+                " userId=" + userId +
                 " formDate=" + formDate +
                 " amount=" + amount +
                 " currency=" + currency +
@@ -89,9 +89,9 @@ public class Expense implements Record, Cloneable {
         return expense;
     }
 
-    public Expense withPersonId(String personId) {
+    public Expense withUserId(String userId) {
         Expense expense = copy();
-        expense.personId = personId;
+        expense.userId = userId;
         return expense;
     }
 

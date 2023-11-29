@@ -28,7 +28,6 @@
 ## Todos
 
 * Encrypted passwords in database.
-* Related Person and User.
 * Authorization service.
 * Login page.
 * KolayIk integration.

@@ -19,7 +19,6 @@ public class Main {
 
         ExpenseRepo expenseRepo = new LocalExpenseRepo(connection);
         LeaveRepo leaveRepo = new LocalLeaveRepo(connection);
-        PersonRepo personRepo = new LocalPersonRepo(connection);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(connection);
         UserRepo userRepo = new LocalUserRepo(connection);
         SessionRepo sessionRepo = new LocalSessionRepo(connection);
@@ -27,14 +26,12 @@ public class Main {
 
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         LeaveService leaveService = new LeaveService(leaveRepo);
-        PersonService personService = new PersonService(personRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
         SessionService sessionService = new SessionService(serverConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(serverConfig);
-        server.enrol(new PersonController(personService));
         server.enrol(new ReceiptController(receiptService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new LeaveController(leaveService));

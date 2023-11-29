@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class Leave implements Record, Cloneable {
     public String id = null;
-    public String personId = null;
+    public String userId = null;
     public LeaveType leaveType = null;
-    public String replacementPersonId = null;
+    public String replacementUserId = null;
     public LocalDateTime startTime = null;
     public LocalDateTime endTime = null;
     public Integer dayCount = null;
@@ -19,7 +19,7 @@ public class Leave implements Record, Cloneable {
     public Leave() {
     }
 
-    public Leave copy(){
+    public Leave copy() {
         try {
             return (Leave) clone();
         } catch (CloneNotSupportedException e) {
@@ -28,18 +28,18 @@ public class Leave implements Record, Cloneable {
     }
 
     public Leave(String id,
-                 String personId,
+                 String userId,
                  LeaveType leaveType,
-                 String replacementPersonId,
+                 String replacementUserId,
                  LocalDateTime startTime,
                  LocalDateTime endTime,
                  Integer dayCount,
                  String description,
                  ApprovalStatus status) {
         this.id = id;
-        this.personId = personId;
+        this.userId = userId;
         this.leaveType = leaveType;
-        this.replacementPersonId = replacementPersonId;
+        this.replacementUserId = replacementUserId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayCount = dayCount;
@@ -52,9 +52,9 @@ public class Leave implements Record, Cloneable {
         if (!(o instanceof Leave)) return false;
         Leave l = (Leave) o;
         return Objects.equals(id, l.id) &&
-                Objects.equals(personId, l.personId) &&
+                Objects.equals(userId, l.userId) &&
                 Objects.equals(leaveType, l.leaveType) &&
-                Objects.equals(replacementPersonId, l.replacementPersonId) &&
+                Objects.equals(replacementUserId, l.replacementUserId) &&
                 Objects.equals(startTime,l.startTime) &&
                 Objects.equals(endTime, l.endTime) &&
                 Objects.equals(dayCount, l.dayCount) &&
@@ -66,9 +66,9 @@ public class Leave implements Record, Cloneable {
     public String toString() {
         return "Leave[" +
                 "id=" + id +
-                " personId=" + personId +
+                " userId=" + userId +
                 " leaveType=" + leaveType +
-                " replacementPersonId=" + replacementPersonId +
+                " replacementUserId=" + replacementUserId +
                 " startTime=" + startTime +
                 " endTime=" + endTime +
                 " dayCount=" + description +
@@ -93,9 +93,9 @@ public class Leave implements Record, Cloneable {
         return leave;
     }
 
-    public Leave withPersonId(String personId) {
+    public Leave withUserId(String userId) {
         Leave leave = copy();
-        leave.personId = personId;
+        leave.userId = userId;
         return leave;
     }
 
@@ -105,9 +105,9 @@ public class Leave implements Record, Cloneable {
         return leave;
     }
 
-    public Leave withReplacementPersonId(String replacementPersonId) {
+    public Leave withReplacementUserId(String replacementUserId) {
         Leave leave = copy();
-        leave.replacementPersonId = replacementPersonId;
+        leave.replacementUserId = replacementUserId;
         return leave;
     }
 

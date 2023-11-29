@@ -7,11 +7,10 @@
     </header>
     <nav :class="{ opened: hasNavigation }">
         <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
-        <a href="#/person-list"><i class="fa-solid fa-person"></i>People</a>
+        <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
         <a href="#/leave-list"><i class="fa-solid fa-umbrella-beach"></i>Leaves</a>
         <a href="#/expense-list"><i class="fa-solid fa-comment-dollar"></i>Expenses</a>
         <a href="#/receipt-list"><i class="fa-solid fa-receipt"></i>Receipts</a>
-        <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
     </nav>
     <main :class="{ shifted: isShifted }">
         <div x-html="(await httpClient.get('view/notifications.html')).text()"></div>

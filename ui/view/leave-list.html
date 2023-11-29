@@ -3,22 +3,22 @@
     <table>
         <tr>
             <th class="narrow">ID</th>
-            <th>Person ID</th>
+            <th>User ID</th>
             <th>Leave Type</th>
-            <th>Replacement Person ID</th>
+            <th>Replacement User ID</th>
             <th>Start Time</th>
             <th>End Time</th>
             <th>Status</th>
             <th class="narrow last">
-                <a class="green header icon button" href="#/leave-form"><i class="fas fa-plus"></i>New</a>
+                <a class="green header icon button" href="#/leave-form"><i class="fas fa-plus"></i> New</a>
             </th>
         </tr>
         <template x-for="leave in leaves" @leaves-event.window="leaves = $event.detail">
             <tr>
                 <td x-text="leave.id" class="narrow"></td>
-                <td x-text="leave.personId"></td>
+                <td x-text="leave.userId"></td>
                 <td x-text="leave.leaveType"></td>
-                <td x-text="leave.replacementPersonId"></td>
+                <td x-text="leave.replacementUserId"></td>
                 <td x-text="leave.startTime"></td>
                 <td x-text="leave.endTime"></td>
                 <td x-text="leave.status"></td>

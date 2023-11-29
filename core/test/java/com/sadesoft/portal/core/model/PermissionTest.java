@@ -25,7 +25,7 @@ public class PermissionTest {
     @Test
     public void printsFields() {
         assertEquals("Permission[id=null" +
-                " name=person_create" +
+                " name=user_create" +
                 "]", validPermission.toString());
     }
 
