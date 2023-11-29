@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.javalin;
+package com.sadesoft.portal.base.rest;
 
 import com.sadesoft.portal.base.util.StringUtil;
 import io.javalin.http.Context;

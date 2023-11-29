@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.javalin;
+package com.sadesoft.portal.base.rest;
 
 import io.javalin.http.Handler;
 import io.javalin.http.HandlerType;

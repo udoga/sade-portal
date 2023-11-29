@@ -1,9 +1,9 @@
 package com.sadesoft.portal.rest.controller;
 
+import com.sadesoft.portal.base.rest.RestController;
 import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Leave;
 import com.sadesoft.portal.core.service.LeaveService;
-import com.sadesoft.portal.rest.javalin.RestController;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 

@@ -1,4 +1,4 @@
-package com.sadesoft.portal.rest.javalin;
+package com.sadesoft.portal.base.rest;
 
 public class RestError {
     public int status;

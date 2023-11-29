@@ -1,8 +1,8 @@
 package com.sadesoft.portal.rest.controller;
 
+import com.sadesoft.portal.base.rest.RestController;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.service.ExpenseService;
-import com.sadesoft.portal.rest.javalin.RestController;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
