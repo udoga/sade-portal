@@ -1,4 +1,4 @@
-<div x-data="new LayoutController(httpClient)" @resize.window="onResize()">
+<div x-data="new LayoutController(router)" @resize.window="handleResize()">
     <header>
         <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
         <h1>Sade Portal</h1>
@@ -14,7 +14,7 @@
     </nav>
     <main :class="{ shifted: isShifted }">
         <div x-html="(await httpClient.get('view/notifications.html')).text()"></div>
-        <div @route-event.window="loadView($el, $event.detail)"></div>
+        <div @route-event.window="handleRouteChange($el)"></div>
     </main>
     <div class="overlay" x-show="hasOverlay" @click="setNavigation(false)">
     </div>

@@ -1,17 +1,22 @@
 class LayoutController {
-  httpClient = null;
+  router = null;
   isWide = true;
   hasNavigation = true;
   isShifted = true;
   hasOverlay = false;
 
-  constructor(httpClient) {
-    this.httpClient = httpClient;
-    this.onResize();
+  constructor(router) {
+    this.router = router;
+    this.handleResize();
   }
 
-  onResize = function() {
+  handleResize = function() {
     if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
+  }
+
+  handleRouteChange = function(element) {
+    this.router.loadView(element);
+    if (!this.isWide) this.setNavigation(false);
   }
 
   toggleWide = function() {
@@ -27,10 +32,5 @@ class LayoutController {
     this.hasNavigation = hasNavigation;
     this.isShifted = this.isWide && this.hasNavigation;
     this.hasOverlay = !this.isWide && this.hasNavigation;
-  }
-
-  loadView = function(element, viewPath) {
-    this.httpClient.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
-    if (!this.isWide) this.setNavigation(false);
   }
 }

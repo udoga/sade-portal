@@ -1,23 +1,30 @@
 class Router {
   notifier = null;
+  httpClient = null;
 
-  constructor(notifier) {
+  constructor(notifier, httpClient) {
     this.notifier = notifier;
-    setTimeout(() => this.startRouting(), 500);
+    this.httpClient = httpClient;
+    setTimeout(() => this.handleChange(), 500);
   }
 
   route = function(hashUrl) {
     location.hash = hashUrl;
   }
 
-  startRouting = function() {
+  handleChange = function() {
     if (!location.hash) this.route("#/home");
-    this.emit(this.findView())
-    this.notifier.clear();
+    else this.emitEvent()
   }
 
-  emit = function(viewName) {
-    window.dispatchEvent(new CustomEvent("route-event", { detail: '/view/' + viewName + '.html' }));
+  loadView = function(element) {
+    var viewPath = "/view/" + this.findView() + ".html";
+    this.httpClient.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
+  }
+
+  emitEvent = function() {
+    window.dispatchEvent(new CustomEvent("route-event"));
+    this.notifier.clear();
   }
 
   getId = function() {
