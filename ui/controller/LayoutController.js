@@ -14,8 +14,7 @@ class LayoutController {
     if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
   }
 
-  handleRouteChange = function(element) {
-    this.router.loadView(element);
+  handleHashChange = function() {
     if (!this.isWide) this.setNavigation(false);
   }
 

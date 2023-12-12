@@ -37,8 +37,6 @@
     <script src="controller/LayoutController.js"></script>
     <script src="main.js"></script>
 </head>
-<body x-data="{}"
-      x-html="(await httpClient.get('/view/layout.html')).text()"
-      @hashchange.window="router.handleChange()">
+<body x-data="{}" x-init="router.loadNode($el)" @hashchange.window="router.reloadNodes()">
 </body>
 </html>

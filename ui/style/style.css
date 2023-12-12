@@ -37,6 +37,14 @@ body {
   background: white;
 }
 
+.login {
+  width: 400px;
+  margin: 400px auto;
+  background: var(--navigation-background-color);
+  border: 1px solid var(--navigation-border-color);
+  padding: 30px 40px;
+}
+
 header {
   height: var(--header-height);
   background: var(--header-background-color);

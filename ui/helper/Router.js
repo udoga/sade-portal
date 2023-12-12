@@ -1,29 +1,30 @@
 class Router {
   notifier = null;
   httpClient = null;
+  nestedNodes = null;
 
   constructor(notifier, httpClient) {
     this.notifier = notifier;
     this.httpClient = httpClient;
-    setTimeout(() => this.handleChange(), 500);
+    this.nestedNodes = [];
   }
 
   route = function(hashUrl) {
     location.hash = hashUrl;
   }
 
-  handleChange = function() {
-    if (!location.hash) this.route("#/home");
-    else this.emitEvent()
+  loadNode = function(element) {
+    var view = this.findViews()[this.nestedNodes.length];
+    this.nestedNodes.push({"element": element, "view": view});
+    this.httpClient.get("/view/" + view + ".html").then(r => r.text()).then(html => { element.innerHTML = html; });
   }
 
-  loadView = function(element) {
-    var viewPath = "/view/" + this.findView() + ".html";
-    this.httpClient.get(viewPath).then(response => response.text()).then(html => { element.innerHTML = html; });
-  }
-
-  emitEvent = function() {
-    window.dispatchEvent(new CustomEvent("route-event"));
+  reloadNodes = function() {
+    var i = 0;
+    var views = this.findViews();
+    while (this.nestedNodes[i].view == views[i]) i++;
+    this.nestedNodes = this.nestedNodes.slice(0, i+1);
+    this.loadNode(this.nestedNodes.pop().element);
     this.notifier.clear();
   }
 
@@ -33,20 +34,21 @@ class Router {
     return isNaN(id)? null : id;
   }
 
-  findView = function() {
-    if (location.hash === "#/home") return "home";
-    if (location.hash === "#/user-list") return "user-list";
-    if (location.hash.startsWith("#/user-form")) return "user-form";
-    if (location.hash.startsWith("#/user-page")) return "user-page";
-    if (location.hash === "#/leave-list") return "leave-list";
-    if (location.hash.startsWith("#/leave-form")) return "leave-form";
-    if (location.hash.startsWith("#/leave-page")) return "leave-page";
-    if (location.hash === "#/expense-list") return "expense-list";
-    if (location.hash.startsWith("#/expense-form")) return "expense-form";
-    if (location.hash.startsWith("#/expense-page")) return "expense-page";
-    if (location.hash === "#/receipt-list") return "receipt-list";
-    if (location.hash.startsWith("#/receipt-form")) return "receipt-form";
-    if (location.hash.startsWith("#/receipt-page")) return "receipt-page";
-    return "not-found";
+  findViews = function() {
+    if (location.hash === "#/login") return ["login"];
+    if (!location.hash || location.hash === "#/home") return ["layout", "home"];
+    if (location.hash === "#/user-list") return ["layout", "user-list"];
+    if (location.hash.startsWith("#/user-form")) return ["layout", "user-form"];
+    if (location.hash.startsWith("#/user-page")) return ["layout", "user-page"];
+    if (location.hash === "#/leave-list") return ["layout", "leave-list"];
+    if (location.hash.startsWith("#/leave-form")) return ["layout", "leave-form"];
+    if (location.hash.startsWith("#/leave-page")) return ["layout", "leave-page"];
+    if (location.hash === "#/expense-list") return ["layout", "expense-list"];
+    if (location.hash.startsWith("#/expense-form")) return ["layout", "expense-form"];
+    if (location.hash.startsWith("#/expense-page")) return ["layout", "expense-page"];
+    if (location.hash === "#/receipt-list") return ["layout", "receipt-list"];
+    if (location.hash.startsWith("#/receipt-form")) return ["layout", "receipt-form"];
+    if (location.hash.startsWith("#/receipt-page")) return ["layout", "receipt-page"];
+    return ["layout", "not-found"];
   }
 }
