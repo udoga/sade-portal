@@ -45,6 +45,12 @@ body {
   padding: 30px 40px;
 }
 
+.login .error {
+  color: darkred;
+  text-align: center;
+  margin-top: 20px;
+}
+
 header {
   height: var(--header-height);
   background: var(--header-background-color);

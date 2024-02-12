@@ -1,14 +1,16 @@
-<div x-data="{}" class="login">
+<div class="login" x-data="new LoginController(router, sessionClient)">
   <h2>Login</h2>
   <form>
     <div class="field">
-      <input type="text" placeholder="Username"/>
+      <input type="text" placeholder="Username" x-model="user.username"/>
     </div>
     <div class="field">
-      <input type="password" placeholder="Password"/>
+      <input type="password" placeholder="Password" x-model="user.password"/>
     </div>
   </form>
   <div class="options">
-    <a href="#/home" class="green form button">Login</a>
+    <a class="green form button" @click="login()">Login</a>
+  </div>
+  <div class="error" x-show="errorMessage" x-text="errorMessage">
   </div>
 </div>

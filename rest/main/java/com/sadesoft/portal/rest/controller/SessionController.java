@@ -31,10 +31,14 @@ public class SessionController extends RestController {
     }
 
     private boolean isLoginRequest(Context c) {
-        return c.path().equals(methods.get(1).path) && c.method().equals(methods.get(1).type);
+        return normalize(c.path()).equals(methods.get(1).path) && c.method().equals(methods.get(1).type);
     }
 
     private String removePrefix(String s, String prefix) {
         return (s != null && s.startsWith(prefix))? s.replaceFirst(prefix, "") : s;
+    }
+
+    private String normalize(String path) {
+        return path.endsWith("/")? path.substring(0, path.length()-1) : path;
     }
 }

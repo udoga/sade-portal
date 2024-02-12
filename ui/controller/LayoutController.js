@@ -10,6 +10,11 @@ class LayoutController {
     this.handleResize();
   }
 
+  logout = function() {
+    localStorage.removeItem("token");
+    this.router.route("#/login");
+  }
+
   handleResize = function() {
     if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
   }

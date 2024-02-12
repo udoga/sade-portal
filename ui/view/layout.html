@@ -2,7 +2,7 @@
     <header>
         <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
         <h1>Sade Portal</h1>
-        <a href="#/login" class="right"><i class="fas fa-power-off"></i></a>
+        <a class="right" @click="logout()"><i class="fas fa-power-off"></i></a>
         <a class="right"><i class="fas fa-cog"></i></a>
     </header>
     <nav :class="{ opened: hasNavigation }">
