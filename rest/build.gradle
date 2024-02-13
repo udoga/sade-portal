@@ -21,9 +21,9 @@ dependencies {
     implementation project(":base")
     implementation project(":core")
     implementation project(":repo")
-    implementation 'io.javalin:javalin:5.1.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation 'io.javalin:javalin:5.4.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 }
 
 application {
