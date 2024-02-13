@@ -7,11 +7,15 @@
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="text" placeholder="Password" x-model="user.password"/>
+            <input type="password" placeholder="Password" x-model="user.password"/>
+        </div>
+        <div class="field">
+            <label>Retype Password</label>
+            <input type="password" placeholder="Password" x-model="retypedPassword"/>
         </div>
     </form>
     <div class="options">
         <a class="white form button" @click="quit()">Back</a>
-        <a class="green form button" @click="save()">Save</a>
+        <a class="green form button" @click="check()">Save</a>
     </div>
 </div>
