@@ -1,4 +1,4 @@
-class PageController {
+class PageComponent {
   router = null;
   client = null;
   name = null;

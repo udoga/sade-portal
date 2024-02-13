@@ -1,4 +1,4 @@
-class LeaveListController extends ListController {
+class LeaveListComponent extends ListComponent {
   leaves = [];
 
   constructor(client, notifier) {

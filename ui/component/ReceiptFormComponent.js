@@ -1,4 +1,4 @@
-class ReceiptFormController extends FormController {
+class ReceiptFormComponent extends FormComponent {
   receipt = {};
 
   constructor(router, client, notifier) {

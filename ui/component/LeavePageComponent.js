@@ -1,4 +1,4 @@
-class LeavePageController extends PageController {
+class LeavePageComponent extends PageComponent {
   leave = {};
 
   constructor(router, client) {

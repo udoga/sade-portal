@@ -1,4 +1,4 @@
-class ReceiptPageController extends PageController {
+class ReceiptPageComponent extends PageComponent {
   receipt = {};
 
   constructor(router, client) {

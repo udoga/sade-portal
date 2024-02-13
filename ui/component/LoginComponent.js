@@ -1,4 +1,4 @@
-class LoginController {
+class LoginComponent {
   router = null;
   sessionClient = null;
   user = {};

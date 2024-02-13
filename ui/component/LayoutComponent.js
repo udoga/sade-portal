@@ -1,4 +1,4 @@
-class LayoutController {
+class LayoutComponent {
   router = null;
   isWide = true;
   hasNavigation = true;

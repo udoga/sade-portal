@@ -1,4 +1,4 @@
-class FormController {
+class FormComponent {
   router = null;
   client = null;
   name = null;

@@ -1,4 +1,4 @@
-class UserPageController extends PageController {
+class UserPageComponent extends PageComponent {
   user = {};
 
   constructor(router, client) {

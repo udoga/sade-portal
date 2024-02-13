@@ -1,4 +1,4 @@
-class ReceiptListController extends ListController {
+class ReceiptListComponent extends ListComponent {
   receipts = [];
 
   constructor(client, notifier) {

@@ -1,4 +1,4 @@
-class ExpenseFormController extends FormController {
+class ExpenseFormComponent extends FormComponent {
   expense = {};
 
   constructor(router, client, notifier) {

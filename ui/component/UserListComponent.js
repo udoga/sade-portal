@@ -1,4 +1,4 @@
-class UserListController extends ListController {
+class UserListComponent extends ListComponent {
   users = [];
 
   constructor(client, notifier) {

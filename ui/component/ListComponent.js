@@ -1,4 +1,4 @@
-class ListController {
+class ListComponent {
   client = null;
   name = null;
   notifier = null;

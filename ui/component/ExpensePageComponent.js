@@ -1,4 +1,4 @@
-class ExpensePageController extends PageController {
+class ExpensePageComponent extends PageComponent {
   expense = {};
 
   constructor(router, client) {

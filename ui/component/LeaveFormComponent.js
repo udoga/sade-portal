@@ -1,4 +1,4 @@
-class LeaveFormController extends FormController {
+class LeaveFormComponent extends FormComponent {
   leave = {};
 
   constructor(router, client, notifier) {

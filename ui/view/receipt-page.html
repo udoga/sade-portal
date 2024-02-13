@@ -1,4 +1,4 @@
-<div x-data="new ReceiptPageController(router, receiptClient)">
+<div x-data="new ReceiptPageComponent(router, receiptClient)">
     <h2>Receipt</h2>
     <div @receipt-event.window="receipt = $event.detail">
         <div class="field">

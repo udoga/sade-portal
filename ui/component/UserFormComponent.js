@@ -1,4 +1,4 @@
-class UserFormController extends FormController {
+class UserFormComponent extends FormComponent {
   user = {};
 
   constructor(router, client, notifier) {

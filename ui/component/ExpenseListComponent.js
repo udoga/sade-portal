@@ -1,4 +1,4 @@
-class ExpenseListController extends ListController {
+class ExpenseListComponent extends ListComponent {
   expenses = [];
 
   constructor(client, notifier) {

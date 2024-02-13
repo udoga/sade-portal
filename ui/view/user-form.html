@@ -1,4 +1,4 @@
-<div x-data="new UserFormController(router, userClient, notifier)">
+<div x-data="new UserFormComponent(router, userClient, notifier)">
     <h2>User Form</h2>
     <form @user-event.window="user = $event.detail">
         <div class="field">
