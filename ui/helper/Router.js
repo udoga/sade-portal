@@ -7,10 +7,18 @@ class Router {
     this.notifier = notifier;
     this.httpClient = httpClient;
     this.nestedNodes = [];
+    this.refresh();
   }
 
   route = function(hashUrl) {
     location.hash = hashUrl;
+  }
+
+  refresh = function() {
+    var h = location.hash;
+    if (h != "#/login" && !localStorage.getItem("token")) location.hash = "#/login";
+    else if (h == "" || h == "#" || h == "#/") location.hash = "#/home";
+    else this.reloadNodes();
   }
 
   loadNode = function(element) {
@@ -22,9 +30,9 @@ class Router {
   reloadNodes = function() {
     var i = 0;
     var views = this.findViews();
-    while (this.nestedNodes[i].view == views[i]) i++;
+    while (i < this.nestedNodes.length && this.nestedNodes[i].view == views[i]) i++;
     this.nestedNodes = this.nestedNodes.slice(0, i+1);
-    this.loadNode(this.nestedNodes.pop().element);
+    if (this.nestedNodes.length) this.loadNode(this.nestedNodes.pop().element);
     this.notifier.clear();
   }
 
@@ -36,7 +44,7 @@ class Router {
 
   findViews = function() {
     if (location.hash === "#/login") return ["login"];
-    if (!location.hash || location.hash === "#/home") return ["layout", "home"];
+    if (location.hash === "#/home") return ["layout", "home"];
     if (location.hash === "#/user-list") return ["layout", "user-list"];
     if (location.hash.startsWith("#/user-form")) return ["layout", "user-form"];
     if (location.hash.startsWith("#/user-page")) return ["layout", "user-page"];

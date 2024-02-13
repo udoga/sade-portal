@@ -29,8 +29,6 @@
 
 * Encrypted passwords in database.
 * Authorization service.
-* Login page.
-* KolayIk integration.
 * Language selection.
 * Message Box style.
 * Pagination buttons.

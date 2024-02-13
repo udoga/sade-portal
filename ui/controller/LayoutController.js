@@ -12,7 +12,7 @@ class LayoutController {
 
   logout = function() {
     localStorage.removeItem("token");
-    this.router.route("#/login");
+    this.router.refresh();
   }
 
   handleResize = function() {
