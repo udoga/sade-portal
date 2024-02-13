@@ -1,0 +1,24 @@
+<div x-data="new SessionPageComponent(router, sessionClient)">
+  <h2>Session</h2>
+  <div @session-event.window="session = $event.detail">
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="session.id"></span>
+    </div>
+    <div class="field">
+      <label>User Id:</label>
+      <span x-text="session.userId"></span>
+    </div>
+    <div class="field">
+      <label>Begin Time:</label>
+      <span x-text="session.beginTime"></span>
+    </div>
+    <div class="field">
+      <label>End Time:</label>
+      <span x-text="session.endTime"></span>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#/session-list">Back</a>
+    </div>
+  </div>
+</div>

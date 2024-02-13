@@ -58,7 +58,7 @@ public class SessionServiceTest {
     @Test
     void whenThereAreNoSessions_doesNotAuthenticateToken() {
         SessionError e = assertThrows(SessionError.class, () -> service.authenticate("sample-token"));
-        assertEquals("Session not found.", e.getMessage());
+        assertEquals("Session not found, invalid token.", e.getMessage());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class SessionServiceTest {
     @Test
     public void whenReceivesLogoutRequest_throwsError() {
         var e =  assertThrows(SessionError.class, () -> service.logout(""));
-        assertEquals("Session not found.", e.getMessage());
+        assertEquals("Session not found, invalid token.", e.getMessage());
     }
 
     @Nested
@@ -173,7 +173,7 @@ public class SessionServiceTest {
             public void checksEqualityWhileAuthentication() {
                 assertDoesNotThrow(() -> service.authenticate(session.token));
                 var e = assertThrows(SessionError.class, () -> service.authenticate("another-token"));
-                assertEquals("Session not found.", e.getMessage());
+                assertEquals("Session not found, invalid token.", e.getMessage());
             }
 
             @Test
@@ -188,13 +188,13 @@ public class SessionServiceTest {
             public void whenSessionIsExpired_doesNotAuthenticateToken() {
                 assertDoesNotThrow(() -> service.authenticate(session.token, minutesLater(59)));
                 var e = assertThrows(SessionError.class, () -> service.authenticate(session.token, minutesLater(61)));
-                assertEquals("Session is ended.", e.getMessage());
+                assertEquals("Session expired, please login.", e.getMessage());
             }
 
             @Test
             public void whenSessionIsNotStarted_doesNotAuthenticateToken() {
                 var e = assertThrows(SessionError.class, () -> service.authenticate(session.token, minutesLater(-1)));
-                assertEquals("Session is not started.", e.getMessage());
+                assertEquals("Session is not started yet.", e.getMessage());
             }
         }
     }

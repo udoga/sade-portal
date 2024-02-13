@@ -1,0 +1,26 @@
+<div x-data="new SessionListComponent(sessionClient, notifier)">
+  <h2>Sessions</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>User Id</th>
+      <th>Begin Time</th>
+      <th>End Time</th>
+      <th class="narrow last">
+      </th>
+    </tr>
+    <template x-for="session in sessions" @sessions-event.window="sessions = $event.detail">
+      <tr>
+        <td x-text="session.id" class="narrow"></td>
+        <td x-text="session.userId"></td>
+        <td x-text="session.beginTime"></td>
+        <td x-text="session.endTime"></td>
+        <td class="narrow last">
+          <a title="Show" class="light-blue row button" :href="'#/session-page/' + session.id">
+            <i class="fas fa-eye"></i>
+          </a>
+        </td>
+      </tr>
+    </template>
+  </table>
+</div>

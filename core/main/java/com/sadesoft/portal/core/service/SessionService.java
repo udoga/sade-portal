@@ -48,8 +48,8 @@ public class SessionService {
     public void authenticate(String token, LocalDateTime time) {
         if (!serverConfig.authenticationEnabled) return;
         Session session = find(token);
-        if (time.isAfter(session.endTime)) throw new SessionError("Session is ended.");
-        if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started.");
+        if (time.isAfter(session.endTime)) throw new SessionError("Session expired, please login.");
+        if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started yet.");
     }
 
     private Session create(String userId, LocalDateTime beginTime) {
@@ -60,6 +60,6 @@ public class SessionService {
 
     private Session find(String token) {
         for (Session s: sessionRepo.list()) if (s.token.equals(token)) return s;
-        throw new SessionError((token == null)? "Please login to continue." : "Session not found.");
+        throw new SessionError((token == null)? "Please login to continue." : "Session not found, invalid token.");
     }
 }
