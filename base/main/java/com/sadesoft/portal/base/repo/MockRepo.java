@@ -18,7 +18,9 @@ public class MockRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        return records;
+        ArrayList<T> list = new ArrayList<T>();
+        for (T t: records) list.add((T) t.copy());
+        return list;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class MockRepo<T extends Record> implements Repo<T> {
         if (pageNo <= 0) throw new RuntimeException("Page number should be greater than zero");
         int fromIndex = Math.min((pageNo - 1) * pageSize, records.size());
         int toIndex = Math.min(pageNo * pageSize, records.size());
-        return records.subList(fromIndex, toIndex);
+        return list().subList(fromIndex, toIndex);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MockRepo<T extends Record> implements Repo<T> {
     @Override
     public T read(String id) {
         int index = findIndex(id);
-        return records.get(index);
+        return list().get(index);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MockRepo<T extends Record> implements Repo<T> {
         int index = findIndex(id);
         record.setId(id);
         records.set(index, record);
-        return records.get(index);
+        return list().get(index);
     }
 
     @Override

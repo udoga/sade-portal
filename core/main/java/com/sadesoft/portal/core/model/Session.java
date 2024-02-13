@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
-public class Session implements Record, Cloneable {
+public class Session implements Record {
     public String id = null;
     public String userId = null;
     public LocalDateTime beginTime = null;

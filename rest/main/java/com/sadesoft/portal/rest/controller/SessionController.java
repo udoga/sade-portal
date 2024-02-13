@@ -14,6 +14,7 @@ public class SessionController extends RestController {
         this.service = service;
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.POST, "", c -> send(c, service.login(getUser(c))));
+        add(HandlerType.POST, "/logout", c -> send(c, service.logout(getToken(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         addSeparate(HandlerType.BEFORE, "/*", c -> authenticate(c, getToken(c)));
     }

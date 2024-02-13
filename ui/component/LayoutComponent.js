@@ -1,16 +1,19 @@
 class LayoutComponent {
   router = null;
+  sessionClient = null;
   isWide = true;
   hasNavigation = true;
   isShifted = true;
   hasOverlay = false;
 
-  constructor(router) {
+  constructor(router, sessionClient) {
     this.router = router;
+    this.sessionClient = sessionClient;
     this.handleResize();
   }
 
   logout = function() {
+    this.sessionClient.logout();
     localStorage.removeItem("token");
     this.router.refresh();
   }

@@ -5,7 +5,7 @@ import com.sadesoft.portal.base.repo.Record;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Receipt implements Record, Cloneable {
+public class Receipt implements Record {
     public String id = null;
     public String expenseId = null;
     public LocalDate receiptDate = null;

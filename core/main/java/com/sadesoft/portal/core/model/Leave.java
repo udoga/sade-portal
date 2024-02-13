@@ -5,7 +5,7 @@ import com.sadesoft.portal.base.repo.Record;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Leave implements Record, Cloneable {
+public class Leave implements Record {
     public String id = null;
     public String userId = null;
     public LeaveType leaveType = null;

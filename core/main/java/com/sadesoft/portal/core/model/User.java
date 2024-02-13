@@ -3,7 +3,7 @@ package com.sadesoft.portal.core.model;
 import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
-public class User implements Record, Cloneable {
+public class User implements Record {
     public String id = null;
     public String username = null;
     public String password = null;
@@ -45,6 +45,7 @@ public class User implements Record, Cloneable {
         this.id = id;
     }
 
+    @Override
     public User copy() {
         try {
             return (User) clone();

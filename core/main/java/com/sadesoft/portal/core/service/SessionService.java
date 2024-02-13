@@ -36,6 +36,11 @@ public class SessionService {
         throw new SessionError("Invalid username or password.");
     }
 
+    public Session logout(String token) {
+        Session session = find(token);
+        return sessionRepo.update(session.id, session.withEndTime(LocalDateTime.now()));
+    }
+
     public void authenticate(String token) {
         authenticate(token, LocalDateTime.now());
     }
@@ -43,7 +48,7 @@ public class SessionService {
     public void authenticate(String token, LocalDateTime time) {
         if (!serverConfig.authenticationEnabled) return;
         Session session = find(token);
-        if (time.isAfter(session.endTime)) throw new SessionError("Session is expired.");
+        if (time.isAfter(session.endTime)) throw new SessionError("Session is ended.");
         if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started.");
     }
 

@@ -4,7 +4,7 @@ import com.sadesoft.portal.base.repo.Record;
 
 import java.util.Objects;
 
-public class Permission implements Record, Cloneable {
+public class Permission implements Record {
     public String id;
     public String name;
 

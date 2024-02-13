@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Expense implements Record, Cloneable {
+public class Expense implements Record {
     public String id = null;
     public String userId = null;
     public LocalDate formDate = null;

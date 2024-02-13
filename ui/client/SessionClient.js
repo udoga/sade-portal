@@ -6,4 +6,10 @@ class SessionClient extends RestClient {
   login = function(user) {
     return this.create(user);
   }
+
+  logout = function() {
+    return this.httpClient.post(this.url + "logout", {
+      headers: this.getHeaders()
+    }).then(response => response.json());
+  }
 }

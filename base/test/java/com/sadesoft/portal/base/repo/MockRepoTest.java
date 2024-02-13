@@ -220,5 +220,14 @@ public class MockRepoTest {
         public void setId(String id) {
             this.id = id;
         }
+
+        @Override
+        public MockRecord copy() {
+            try {
+                return (MockRecord) clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

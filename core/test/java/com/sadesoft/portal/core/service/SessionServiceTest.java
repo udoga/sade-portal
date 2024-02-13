@@ -28,7 +28,7 @@ public class SessionServiceTest {
     private ServerConfig serverConfig;
 
     private void assertTimeEquals(LocalDateTime expected, LocalDateTime actual) {
-        assertTrue(ChronoUnit.SECONDS.between(expected, actual) <= 1);
+        assertTrue(Math.abs(ChronoUnit.SECONDS.between(expected, actual)) <= 1);
     }
 
     private void assertInvalidCredentials(User user) {
@@ -73,6 +73,12 @@ public class SessionServiceTest {
         assertDoesNotThrow(() -> service.authenticate("sample-token"));
     }
 
+    @Test
+    public void whenReceivesLogoutRequest_throwsError() {
+        var e =  assertThrows(SessionError.class, () -> service.logout(""));
+        assertEquals("Session not found.", e.getMessage());
+    }
+
     @Nested
     public class GivenSessionServiceWithOneSession {
         private Session session;
@@ -91,6 +97,12 @@ public class SessionServiceTest {
         public void listsSessionsWithoutTokens() {
             assertEquals(1, service.list().size());
             assertNull(service.list().get(0).token);
+        }
+
+        @Test
+        public void whenReceivesLogoutRequest_updatesEndTime() {
+            service.logout(session.token);
+            assertTimeEquals(LocalDateTime.now(), sessionRepo.read("0").endTime);
         }
     }
 
@@ -176,7 +188,7 @@ public class SessionServiceTest {
             public void whenSessionIsExpired_doesNotAuthenticateToken() {
                 assertDoesNotThrow(() -> service.authenticate(session.token, minutesLater(59)));
                 var e = assertThrows(SessionError.class, () -> service.authenticate(session.token, minutesLater(61)));
-                assertEquals("Session is expired.", e.getMessage());
+                assertEquals("Session is ended.", e.getMessage());
             }
 
             @Test
