@@ -14,8 +14,6 @@ public class ServerConfigTest {
         assertEquals(7000, config.port);
         assertFalse(config.uiExternal);
         assertEquals("", config.uiFolder);
-        assertEquals(0, config.sessionTimeout);
-        assertFalse(config.authenticationEnabled);
     }
 
     @Test
@@ -32,7 +30,5 @@ public class ServerConfigTest {
         assertEquals(1234, config.port);
         assertTrue(config.uiExternal);
         assertEquals("ui", config.uiFolder);
-        assertEquals(1000, config.sessionTimeout);
-        assertTrue(config.authenticationEnabled);
     }
 }

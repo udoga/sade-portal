@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.config.Props;
-import com.sadesoft.portal.base.config.ServerConfig;
+import com.sadesoft.portal.base.config.SessionConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -15,17 +14,16 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SessionServiceTest {
+    private SessionConfig config;
     private MockUserRepo userRepo;
     private MockSessionRepo sessionRepo;
     private SessionService service;
     private User firstUser;
     private User secondUser;
-    private ServerConfig serverConfig;
 
     private void assertTimeEquals(LocalDateTime expected, LocalDateTime actual) {
         assertTrue(Math.abs(ChronoUnit.SECONDS.between(expected, actual)) <= 1);
@@ -41,11 +39,10 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void setup() {
-        Props props = new Props(Map.of("session_timeout", "3600", "authentication_enabled", "true"));
-        serverConfig = new ServerConfig(props);
+        config = new SessionConfig(3600, true);
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
-        service = new SessionService(serverConfig, sessionRepo, userRepo);
+        service = new SessionService(config, sessionRepo, userRepo);
         firstUser = UserSamples.firstUser.copy();
         secondUser = UserSamples.secondUser.copy();
     }
@@ -69,7 +66,7 @@ public class SessionServiceTest {
 
     @Test
     public void whenAuthenticationIsDisabled_doesNotAuthenticate() {
-        serverConfig.authenticationEnabled = false;
+        config.authenticationEnabled = false;
         assertDoesNotThrow(() -> service.authenticate("sample-token"));
     }
 
@@ -148,7 +145,7 @@ public class SessionServiceTest {
 
         @Test
         public void whenSessionTimeoutIsSetDifferent_savesDifferentEndTime() {
-            serverConfig.sessionTimeout = 30;
+            config.sessionTimeout = 30;
             Session session = service.login(firstUser);
             assertEquals(1, sessionRepo.list().size());
             assertTimeEquals(LocalDateTime.now().plusSeconds(30), session.endTime);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import com.sadesoft.portal.base.config.DatabaseConfig;
 import com.sadesoft.portal.base.config.Props;
 import com.sadesoft.portal.base.config.ServerConfig;
+import com.sadesoft.portal.base.config.SessionConfig;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.base.rest.RestServer;
 import com.sadesoft.portal.core.repo.*;
@@ -15,6 +16,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
         Connection connection = new DatabaseConfig(props.getSection("database")).connect();
+        SessionConfig sessionConfig = new SessionConfig(props.getSection("session"));
         ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
 
         ExpenseRepo expenseRepo = new LocalExpenseRepo(connection);
@@ -28,7 +30,7 @@ public class Main {
         LeaveService leaveService = new LeaveService(leaveRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
         UserService userService = new UserService(userRepo);
-        SessionService sessionService = new SessionService(serverConfig, sessionRepo, userRepo);
+        SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(serverConfig);
@@ -38,7 +40,6 @@ public class Main {
         server.enrol(new UserController(userService));
         server.enrol(new SessionController(sessionService));
         server.enrol(new PermissionController(permissionService));
-
         server.run();
     }
 }

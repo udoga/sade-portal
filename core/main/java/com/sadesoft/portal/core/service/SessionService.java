@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.config.ServerConfig;
+import com.sadesoft.portal.base.config.SessionConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
@@ -13,12 +13,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class SessionService {
-    public final ServerConfig serverConfig;
+    public final SessionConfig config;
     private final SessionRepo sessionRepo;
     private final UserRepo userRepo;
 
-    public SessionService(ServerConfig serverConfig, SessionRepo repo, UserRepo userRepo) {
-        this.serverConfig = serverConfig;
+    public SessionService(SessionConfig config, SessionRepo repo, UserRepo userRepo) {
+        this.config = config;
         this.sessionRepo = repo;
         this.userRepo = userRepo;
     }
@@ -46,7 +46,7 @@ public class SessionService {
     }
 
     public void authenticate(String token, LocalDateTime time) {
-        if (!serverConfig.authenticationEnabled) return;
+        if (!config.authenticationEnabled) return;
         Session session = find(token);
         if (time.isAfter(session.endTime)) throw new SessionError("Session expired, please login.");
         if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started yet.");
@@ -54,7 +54,7 @@ public class SessionService {
 
     private Session create(String userId, LocalDateTime beginTime) {
         String token = UUID.randomUUID().toString();
-        LocalDateTime endTime = beginTime.plusSeconds(serverConfig.sessionTimeout);
+        LocalDateTime endTime = beginTime.plusSeconds(config.sessionTimeout);
         return sessionRepo.create(new Session(null, userId, beginTime, endTime, token));
     }
 
