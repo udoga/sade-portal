@@ -1,4 +1,6 @@
-package com.sadesoft.portal.base.config;
+package com.sadesoft.portal.core.model;
+
+import com.sadesoft.portal.base.model.Props;
 
 public class SessionConfig {
     public int sessionTimeout;

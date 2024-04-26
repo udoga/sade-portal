@@ -1,10 +1,10 @@
 package com.sadesoft.portal.rest;
 
 import java.sql.Connection;
-import com.sadesoft.portal.base.config.DatabaseConfig;
-import com.sadesoft.portal.base.config.Props;
-import com.sadesoft.portal.base.config.ServerConfig;
-import com.sadesoft.portal.base.config.SessionConfig;
+import com.sadesoft.portal.base.repo.JdbcConfig;
+import com.sadesoft.portal.base.model.Props;
+import com.sadesoft.portal.base.rest.RestConfig;
+import com.sadesoft.portal.core.model.SessionConfig;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.base.rest.RestServer;
 import com.sadesoft.portal.core.repo.*;
@@ -15,9 +15,9 @@ import com.sadesoft.portal.rest.controller.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
-        Connection connection = new DatabaseConfig(props.getSection("database")).connect();
+        Connection connection = new JdbcConfig(props.getSection("jdbc")).connect();
+        RestConfig restConfig = new RestConfig(props.getSection("rest"));
         SessionConfig sessionConfig = new SessionConfig(props.getSection("session"));
-        ServerConfig serverConfig = new ServerConfig(props.getSection("server"));
 
         ExpenseRepo expenseRepo = new LocalExpenseRepo(connection);
         LeaveRepo leaveRepo = new LocalLeaveRepo(connection);
@@ -33,7 +33,7 @@ public class Main {
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
-        RestServer server = new RestServer(serverConfig);
+        RestServer server = new RestServer(restConfig);
         server.enrol(new ReceiptController(receiptService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new LeaveController(leaveService));

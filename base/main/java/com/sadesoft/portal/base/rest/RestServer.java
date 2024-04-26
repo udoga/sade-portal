@@ -11,17 +11,16 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
-import com.sadesoft.portal.base.config.ServerConfig;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RestServer {
-    private final ServerConfig config;
+    private final RestConfig config;
     private final Javalin server;
     private final Logger logger;
 
-    public RestServer(ServerConfig config) {
+    public RestServer(RestConfig config) {
         this.config = config;
         this.server = Javalin.create();
         this.logger = LoggerFactory.getLogger(RestServer.class);
@@ -69,7 +68,7 @@ public class RestServer {
 
     private void handle(Context c, Exception e, int status) {
         if (status >= 500) e.printStackTrace();
-        else logger.info(e.getClass().getSimpleName() + ": " + e.getMessage());
+        else logger.info("{}: {}", e.getClass().getSimpleName(), e.getMessage());
         c.status(status);
         c.json(Map.of("error", new RestError(status, e.getClass().getSimpleName(), e.getMessage())));
     }

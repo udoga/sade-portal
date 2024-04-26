@@ -147,11 +147,11 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         String delimiter = ", ";
         StringBuilder result = new StringBuilder();
         for (JdbcColumn column: columns.subList(includeId? 0 : 1, columns.size()))
-            result.append(String.format(template, column.name, getQuestionMark(column))).append(delimiter);
+            result.append(String.format(template, column.name, getPlaceholder(column))).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
     }
 
-    private String getQuestionMark(JdbcColumn column) {
+    private String getPlaceholder(JdbcColumn column) {
         if (isPostgresql() && !column.type.isEmpty()) return "?::" + column.type;
         return "?";
     }

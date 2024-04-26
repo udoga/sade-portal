@@ -1,15 +1,16 @@
-package com.sadesoft.portal.base.config;
+package com.sadesoft.portal.base.rest;
 
+import com.sadesoft.portal.base.model.Props;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ServerConfigTest {
+public class RestConfigTest {
     @Test
     public void initializesWithDefaults() {
-        ServerConfig config = new ServerConfig(new Props(Map.of()));
+        RestConfig config = new RestConfig(new Props(Map.of()));
         assertEquals("", config.path);
         assertEquals(7000, config.port);
         assertFalse(config.uiExternal);
@@ -25,7 +26,7 @@ public class ServerConfigTest {
                 "ui_folder", "ui",
                 "session_timeout", "1000",
                 "authentication_enabled","true"));
-        ServerConfig config = new ServerConfig(props);
+        RestConfig config = new RestConfig(props);
         assertEquals("/api", config.path);
         assertEquals(1234, config.port);
         assertTrue(config.uiExternal);

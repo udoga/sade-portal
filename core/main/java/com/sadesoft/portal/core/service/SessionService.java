@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.config.SessionConfig;
+import com.sadesoft.portal.core.model.SessionConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;

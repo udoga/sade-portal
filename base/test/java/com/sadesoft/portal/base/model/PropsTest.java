@@ -1,4 +1,4 @@
-package com.sadesoft.portal.base.config;
+package com.sadesoft.portal.base.model;
 
 import java.util.Map;
 import com.sadesoft.portal.base.util.PathUtil;
