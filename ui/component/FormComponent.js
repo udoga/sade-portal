@@ -12,7 +12,7 @@ class FormComponent {
   }
 
   load = function(id) {
-    this.client.read(id).then((json) => { this.handleLoadResponse(json);});
+    this.client.read(id).then(json => this.handleLoadResponse(json));
   }
 
   save = function() {

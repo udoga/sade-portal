@@ -15,10 +15,26 @@ class Router {
   }
 
   refresh = function() {
-    var h = location.hash;
-    if (h != "#/login" && !localStorage.getItem("token")) location.hash = "#/login";
-    else if (h == "" || h == "#" || h == "#/") location.hash = "#/home";
+    var url = location.hash;
+    var token = localStorage.getItem("token");
+    if (!token && url != "#/login") location.hash = "#/login";
+    else if (token && ["", "#", "#/", "#/login"].includes(url)) location.hash = "#/home";
     else this.reloadNodes();
+  }
+
+  login = function(token) {
+    localStorage.setItem("token", token);
+    this.refresh();
+  }
+
+  logout = function() {
+    localStorage.removeItem("token");
+    this.refresh();
+  }
+
+  getToken = function(prefix) {
+    var token = localStorage.getItem("token");
+    return token? (prefix + token) : "";
   }
 
   loadNode = function(element) {

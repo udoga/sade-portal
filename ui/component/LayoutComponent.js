@@ -14,8 +14,7 @@ class LayoutComponent {
 
   logout = function() {
     this.sessionClient.logout();
-    localStorage.removeItem("token");
-    this.router.refresh();
+    this.router.logout();
   }
 
   handleResize = function() {

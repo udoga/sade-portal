@@ -1,6 +1,6 @@
 class SessionClient extends RestClient {
-  constructor(httpClient) {
-    super(httpClient, "/sessions/");
+  constructor(router) {
+    super(router, "/sessions/");
   }
 
   login = function(user) {
@@ -8,8 +8,6 @@ class SessionClient extends RestClient {
   }
 
   logout = function() {
-    return this.httpClient.post(this.url + "logout", {
-      headers: this.getHeaders()
-    }).then(response => response.json());
+    return this.post(this.url + "logout", { headers: this.getHeaders() }).then(response => response.json());
   }
 }

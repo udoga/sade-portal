@@ -12,7 +12,7 @@ class ListComponent {
   }
 
   load = function() {
-    this.client.list().then((json) => this.handle(json));
+    this.client.list().then(json => this.handle(json));
   }
 
   handle = function(json) {

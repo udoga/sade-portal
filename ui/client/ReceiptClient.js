@@ -1,5 +1,5 @@
 class ReceiptClient extends RestClient {
-  constructor(httpClient) {
-    super(httpClient, "/receipts/");
+  constructor(router) {
+    super(router, "/receipts/");
   }
 }

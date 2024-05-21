@@ -14,8 +14,7 @@ class LoginComponent {
   }
 
   accept = function(session) {
-    localStorage.setItem("token", session.token);
-    this.router.route("#/home");
+    this.router.login(session.token);
   }
 
   reject = function(error) {
