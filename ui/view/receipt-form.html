@@ -1,47 +1,47 @@
 <div x-data="new ReceiptFormComponent(router, receiptClient, notifier)">
-    <h2>Receipt Form</h2>
-    <form @receipt-event.window="receipt = $event.detail">
-        <div class="field">
-            <label>Expense Id</label>
-            <input type="text" placeholder="Expense Id" x-model="receipt.expenseId"/>
-        </div>
-        <div class="field">
-            <label>Receipt Date</label>
-            <input type="date" placeholder="Date" x-model="receipt.receiptDate"/>
-        </div>
-        <div class="field">
-            <label>Category</label>
-            <input list="category" placeholder="Category" x-model="receipt.category"/>
-            <datalist id="category">
-                <option value="Food">
-                <option value="Communication">
-                <option value="Transportation">
-                <option value="Stationary">
-                <option value="Technology">
-                <option value="Vehicle">
-                <option value="Office">
-                <option value="Accommodation">
-                <option value="Notary">
-                <option value="Cargo">
-                <option value="Balancing">
-                <option value="Other">
-            </datalist>
-        </div>
-        <div class="field">
-            <label>Amount</label>
-            <input type="number" min="0" value="0" step="0.01" placeholder="Amount" x-model="receipt.amount"/>
-        </div>
-        <div class="field">
-            <label>Vat Rate</label>
-            <input type="number" min="0" value="0" step="0.01" placeholder="Vat Rate" x-model="receipt.vatRate"/>
-        </div>
-        <div class="field">
-            <label>Description</label>
-            <textarea placeholder="Description" x-model="receipt.description"></textarea>
-        </div>
-        <div class="options">
-            <a class="white form button" @click="quit()">Back</a>
-            <a class="green form button" @click="save()">Save</a>
-        </div>
-    </form>
+  <h2>Receipt Form</h2>
+  <form @receipt-event.window="receipt = $event.detail">
+    <div class="field">
+      <label>Expense Id</label>
+      <input type="text" placeholder="Expense Id" x-model="receipt.expenseId"/>
+    </div>
+    <div class="field">
+      <label>Receipt Date</label>
+      <input type="date" placeholder="Date" x-model="receipt.receiptDate"/>
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <input list="category" placeholder="Category" x-model="receipt.category"/>
+      <datalist id="category">
+        <option value="Food">
+        <option value="Communication">
+        <option value="Transportation">
+        <option value="Stationary">
+        <option value="Technology">
+        <option value="Vehicle">
+        <option value="Office">
+        <option value="Accommodation">
+        <option value="Notary">
+        <option value="Cargo">
+        <option value="Balancing">
+        <option value="Other">
+      </datalist>
+    </div>
+    <div class="field">
+      <label>Amount</label>
+      <input type="number" min="0" value="0" step="0.01" placeholder="Amount" x-model="receipt.amount"/>
+    </div>
+    <div class="field">
+      <label>Vat Rate</label>
+      <input type="number" min="0" value="0" step="0.01" placeholder="Vat Rate" x-model="receipt.vatRate"/>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea placeholder="Description" x-model="receipt.description"></textarea>
+    </div>
+    <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="save()">Save</a>
+    </div>
+  </form>
 </div>

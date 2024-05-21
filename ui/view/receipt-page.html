@@ -1,38 +1,38 @@
 <div x-data="new ReceiptPageComponent(router, receiptClient)">
-    <h2>Receipt</h2>
-    <div @receipt-event.window="receipt = $event.detail">
-        <div class="field">
-            <label>Id:</label>
-            <span x-text="receipt.id"></span>
-        </div>
-        <div class="field">
-            <label>Expense Id:</label>
-            <span x-text="receipt.expenseId"></span>
-        </div>
-        <div class="field">
-            <label>Receipt Date:</label>
-            <span x-text="receipt.receiptDate"></span>
-        </div>
-        <div class="field">
-            <label>Category:</label>
-            <span x-text="receipt.category"></span>
-        </div>
-        <div class="field">
-            <label>Amount:</label>
-            <span x-text="receipt.amount"></span>
-        </div>
-        <div class="field">
-            <label>Vat Rate:</label>
-            <span x-text="receipt.vatRate"></span>
-        </div>
-        <div class="field">
-            <label>Description:</label>
-            <span x-text="receipt.description"></span>
-        </div>
-        <div class="options">
-            <a class="white form button" href="#/receipt-list">Back</a>
-            <a class="yellow form button" :href="'#/receipt-form/' + receipt.id">Edit</a>
-            <a class="red form button" @click="remove()">Delete</a>
-        </div>
+  <h2>Receipt</h2>
+  <div @receipt-event.window="receipt = $event.detail">
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="receipt.id"></span>
     </div>
+    <div class="field">
+      <label>Expense Id:</label>
+      <span x-text="receipt.expenseId"></span>
+    </div>
+    <div class="field">
+      <label>Receipt Date:</label>
+      <span x-text="receipt.receiptDate"></span>
+    </div>
+    <div class="field">
+      <label>Category:</label>
+      <span x-text="receipt.category"></span>
+    </div>
+    <div class="field">
+      <label>Amount:</label>
+      <span x-text="receipt.amount"></span>
+    </div>
+    <div class="field">
+      <label>Vat Rate:</label>
+      <span x-text="receipt.vatRate"></span>
+    </div>
+    <div class="field">
+      <label>Description:</label>
+      <span x-text="receipt.description"></span>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#/receipt-list">Back</a>
+      <a class="yellow form button" :href="'#/receipt-form/' + receipt.id">Edit</a>
+      <a class="red form button" @click="remove()">Delete</a>
+    </div>
+  </div>
 </div>

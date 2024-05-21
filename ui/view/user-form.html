@@ -1,21 +1,21 @@
 <div x-data="new UserFormComponent(router, userClient, notifier)">
-    <h2>User Form</h2>
-    <form @user-event.window="user = $event.detail">
-        <div class="field">
-            <label>Username</label>
-            <input type="text" placeholder="Username" x-model="user.username"/>
-        </div>
-        <div class="field">
-            <label>Password</label>
-            <input type="password" placeholder="Password" x-model="user.password"/>
-        </div>
-        <div class="field">
-            <label>Retype Password</label>
-            <input type="password" placeholder="Password" x-model="retypedPassword"/>
-        </div>
-    </form>
-    <div class="options">
-        <a class="white form button" @click="quit()">Back</a>
-        <a class="green form button" @click="check()">Save</a>
+  <h2>User Form</h2>
+  <form @user-event.window="user = $event.detail">
+    <div class="field">
+      <label>Username</label>
+      <input type="text" placeholder="Username" x-model="user.username"/>
     </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" placeholder="Password" x-model="user.password"/>
+    </div>
+    <div class="field">
+      <label>Retype Password</label>
+      <input type="password" placeholder="Password" x-model="retypedPassword"/>
+    </div>
+  </form>
+  <div class="options">
+    <a class="white form button" @click="quit()">Back</a>
+    <a class="green form button" @click="check()">Save</a>
+  </div>
 </div>

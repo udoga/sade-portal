@@ -1,52 +1,52 @@
 <div x-data="new LeaveFormComponent(router, leaveClient, notifier)">
-    <h2>Leave Form</h2>
-    <form @leave-event.window="leave = $event.detail">
-        <div class="field">
-            <label>User ID</label>
-            <input type="text" placeholder="User ID" x-model="leave.userId"/>
-        </div>
-        <div class="field">
-            <label>Leave Type</label>
-            <input list="leaves" placeholder="Leave Type" x-model="leave.leaveType"/>
-            <datalist id="leaves">
-                <option value="ParentalLeave">
-                <option value="BereavementLeave">
-                <option value="BreastFeedingLeave">
-                <option value="PersonalLeave">
-                <option value="MarriageLeave">
-                <option value="MilitaryLeave">
-                <option value="MaternityLeave">
-                <option value="PaternityLeave">
-                <option value="UnpaidLeave">
-                <option value="MedicalLeave">
-                <option value="AnnualLeave">
-                <option value="BirthdayLeave">
-                <option value="RemoteWorking">
-            </datalist>
-        </div>
-        <div class="field">
-            <label>Replacement User ID</label>
-            <input type="text" placeholder="Replacement User ID" x-model="leave.replacementUserId"/>
-        </div>
-        <div class="field">
-            <label>Start Time</label>
-            <input type="text" placeholder="Start Time" x-model="leave.startTime"/>
-        </div>
-        <div class="field">
-            <label>End Time</label>
-            <input type="text" placeholder="End Time" x-model="leave.endTime"/>
-        </div>
-        <div class="field">
-            <label>Day Count</label>
-            <input type="number" placeholder="Day Count" x-model="leave.dayCount"/>
-        </div>
-        <div class="field">
-            <label>Description</label>
-            <textarea placeholder="Description" x-model="leave.description"></textarea>
-        </div>
-        <div class="options">
-            <a class="white form button" @click="quit()">Back</a>
-            <a class="green form button" @click="save()">Save</a>
-        </div>
-    </form>
+  <h2>Leave Form</h2>
+  <form @leave-event.window="leave = $event.detail">
+    <div class="field">
+      <label>User ID</label>
+      <input type="text" placeholder="User ID" x-model="leave.userId"/>
+    </div>
+    <div class="field">
+      <label>Leave Type</label>
+      <input list="leaves" placeholder="Leave Type" x-model="leave.leaveType"/>
+      <datalist id="leaves">
+        <option value="ParentalLeave">
+        <option value="BereavementLeave">
+        <option value="BreastFeedingLeave">
+        <option value="PersonalLeave">
+        <option value="MarriageLeave">
+        <option value="MilitaryLeave">
+        <option value="MaternityLeave">
+        <option value="PaternityLeave">
+        <option value="UnpaidLeave">
+        <option value="MedicalLeave">
+        <option value="AnnualLeave">
+        <option value="BirthdayLeave">
+        <option value="RemoteWorking">
+      </datalist>
+    </div>
+    <div class="field">
+      <label>Replacement User ID</label>
+      <input type="text" placeholder="Replacement User ID" x-model="leave.replacementUserId"/>
+    </div>
+    <div class="field">
+      <label>Start Time</label>
+      <input type="text" placeholder="Start Time" x-model="leave.startTime"/>
+    </div>
+    <div class="field">
+      <label>End Time</label>
+      <input type="text" placeholder="End Time" x-model="leave.endTime"/>
+    </div>
+    <div class="field">
+      <label>Day Count</label>
+      <input type="number" placeholder="Day Count" x-model="leave.dayCount"/>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea placeholder="Description" x-model="leave.description"></textarea>
+    </div>
+    <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="save()">Save</a>
+    </div>
+  </form>
 </div>

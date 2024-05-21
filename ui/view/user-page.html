@@ -1,14 +1,14 @@
 <div x-data="new UserPageComponent(router, userClient)">
   <h2>User</h2>
   <div @user-event.window="user = $event.detail">
-      <div class="field">
-        <label>Id:</label>
-        <span x-text="user.id"></span>
-      </div>
-      <div class="field">
-        <label>Username:</label>
-        <span x-text="user.username"></span>
-      </div>
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="user.id"></span>
+    </div>
+    <div class="field">
+      <label>Username:</label>
+      <span x-text="user.username"></span>
+    </div>
     <div class="options">
       <a class="white form button" href="#/user-list">Back</a>
       <a class="yellow form button" :href="'#/user-form/' + user.id">Edit</a>
