@@ -32,11 +32,6 @@ class Router {
     this.refresh();
   }
 
-  getToken = function(prefix) {
-    var token = localStorage.getItem("token");
-    return token? (prefix + token) : "";
-  }
-
   loadNode = function(element) {
     var view = this.findViews()[this.nestedNodes.length];
     this.nestedNodes.push({"element": element, "view": view});

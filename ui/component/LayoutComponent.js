@@ -1,20 +1,18 @@
 class LayoutComponent {
-  router = null;
   sessionClient = null;
   isWide = true;
   hasNavigation = true;
   isShifted = true;
   hasOverlay = false;
 
-  constructor(router, sessionClient) {
-    this.router = router;
+  constructor(sessionClient) {
     this.sessionClient = sessionClient;
     this.handleResize();
   }
 
   logout = function() {
     this.sessionClient.logout();
-    this.router.logout();
+    window.dispatchEvent(new CustomEvent("logout-event"));
   }
 
   handleResize = function() {

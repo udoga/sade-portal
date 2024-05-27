@@ -14,7 +14,7 @@ class LoginComponent {
   }
 
   accept = function(session) {
-    this.router.login(session.token);
+    window.dispatchEvent(new CustomEvent("login-event", { detail: session.token }));
   }
 
   reject = function(error) {

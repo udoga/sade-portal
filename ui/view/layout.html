@@ -1,4 +1,4 @@
-<div x-data="new LayoutComponent(router, sessionClient)" @resize.window="handleResize()"
+<div x-data="new LayoutComponent(sessionClient)" @resize.window="handleResize()"
      @hashchange.window="handleHashChange()">
   <header>
     <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>

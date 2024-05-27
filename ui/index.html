@@ -41,6 +41,9 @@
   <script src="component/LoginComponent.js"></script>
   <script src="main.js"></script>
 </head>
-<body x-data="{}" x-init="router.loadNode($el)" @hashchange.window="router.refresh()">
+<body x-data="{}" x-init="router.loadNode($el)"
+      @hashchange.window="router.refresh()"
+      @login-event.window="router.login($event.detail)"
+      @logout-event.window="router.logout()">
 </body>
 </html>

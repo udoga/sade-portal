@@ -1,6 +1,6 @@
 class SessionClient extends RestClient {
-  constructor(router) {
-    super(router, "/sessions/");
+  constructor() {
+    super("/sessions/");
   }
 
   login = function(user) {

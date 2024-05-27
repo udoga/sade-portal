@@ -1,5 +1,5 @@
 class UserClient extends RestClient {
-  constructor(router) {
-    super(router, "/users/");
+  constructor() {
+    super("/users/");
   }
 }

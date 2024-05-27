@@ -1,10 +1,8 @@
 class RestClient extends HttpClient {
-  router = null;
   url = null;
 
-  constructor(router, url) {
+  constructor(url) {
     super();
-    this.router = router;
     this.url = "/api" + url;
   }
 
@@ -33,11 +31,16 @@ class RestClient extends HttpClient {
   }
 
   getHeaders = function() {
-    return {"Content-Type": "application/json", "Authorization": this.router.getToken("Bearer ")};
+    return {"Content-Type": "application/json", "Authorization": this.getToken("Bearer ")};
+  }
+
+  getToken = function(prefix) {
+    var token = localStorage.getItem("token");
+    return token? (prefix + token) : "";
   }
 
   checkSession = function(json) {
-    if (json.error && json.error.type == "SessionError") this.router.logout();
+    if (json.error && json.error.type == "SessionError") window.dispatchEvent(new CustomEvent("logout-event"));
     return json;
   }
 }
