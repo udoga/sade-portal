@@ -1,11 +1,7 @@
 class UserPageComponent extends PageComponent {
-  user = {};
+  user = this.record;
 
   constructor(router, client) {
     super(router, client, "user");
-  }
-
-  getRecord = function() {
-    return this.user;
   }
 }

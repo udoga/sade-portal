@@ -1,5 +1,5 @@
 class UserFormComponent extends FormComponent {
-  user = {};
+  user = this.record;
   retypedPassword = "";
 
   constructor(router, client, notifier) {
@@ -9,9 +9,5 @@ class UserFormComponent extends FormComponent {
   check = function() {
     if (this.user.password === this.retypedPassword) this.save();
     else notifier.notify(new Notification("error", "Passwords don't match, please try again."));
-  }
-
-  getRecord = function() {
-    return this.user;
   }
 }

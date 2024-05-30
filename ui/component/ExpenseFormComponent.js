@@ -1,11 +1,7 @@
 class ExpenseFormComponent extends FormComponent {
-  expense = {};
+  expense = this.record;
 
   constructor(router, client, notifier) {
     super(router, client, "expense", notifier);
-  }
-
-  getRecord = function() {
-    return this.expense;
   }
 }

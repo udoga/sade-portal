@@ -2,17 +2,18 @@ class FormComponent {
   router = null;
   client = null;
   name = null;
+  record = {};
 
   constructor(router, client, name, notifier) {
     this.router = router;
     this.client = client;
     this.name = name;
     this.notifier = notifier;
-    if (this.router.getId()) this.load(this.router.getId());
   }
 
-  load = function(id) {
-    this.client.read(id).then(json => this.handleLoadResponse(json));
+  load = function() {
+    var id = this.router.getId();
+    if (id) this.client.read(id).then(json => this.handleLoadResponse(json));
   }
 
   save = function() {
@@ -21,7 +22,7 @@ class FormComponent {
   }
 
   handleLoadResponse = function(json) {
-    json.data? this.emit(json.data) : this.notifyError(json);
+    json.data? Object.assign(this.record, json.data) : this.notifyError(json);
   }
 
   handleSaveResponse = function(json) {
@@ -38,18 +39,14 @@ class FormComponent {
   }
 
   create = function() {
-    this.client.create(this.getRecord()).then((json) => this.handleSaveResponse(json));
+    this.client.create(this.record).then((json) => this.handleSaveResponse(json));
   }
 
   update = function() {
-    this.client.update(this.router.getId(), this.getRecord()).then((json) => this.handleSaveResponse(json));
+    this.client.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
   }
 
   quit = function() {
     this.router.route("#/" + this.name + "-list");
-  }
-
-  emit = function(data) {
-    window.dispatchEvent(new CustomEvent(this.name + "-event", { detail: data }));
   }
 }

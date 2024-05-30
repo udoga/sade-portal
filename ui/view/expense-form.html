@@ -1,6 +1,6 @@
-<div x-data="new ExpenseFormComponent(router, expenseClient, notifier)">
+<div x-data="new ExpenseFormComponent(router, expenseClient, notifier)" x-init="load()">
   <h2>Expense Form</h2>
-  <form @expense-event.window="expense = $event.detail">
+  <form>
     <div class="field">
       <label>User Id</label>
       <input type="text" placeholder="User Id" x-model="expense.userId"/>

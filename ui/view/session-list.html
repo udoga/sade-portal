@@ -1,4 +1,4 @@
-<div x-data="new SessionListComponent(sessionClient, notifier)">
+<div x-data="new SessionListComponent(sessionClient, notifier)" x-init="load()">
   <h2>Sessions</h2>
   <table>
     <tr>
@@ -9,7 +9,7 @@
       <th class="narrow last">
       </th>
     </tr>
-    <template x-for="session in sessions" @sessions-event.window="sessions = $event.detail">
+    <template x-for="session in sessions">
       <tr>
         <td x-text="session.id" class="narrow"></td>
         <td x-text="session.userId"></td>

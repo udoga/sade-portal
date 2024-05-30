@@ -1,11 +1,7 @@
 class ReceiptFormComponent extends FormComponent {
-  receipt = {};
+  receipt = this.record;
 
   constructor(router, client, notifier) {
     super(router, client, "receipt", notifier);
-  }
-
-  getRecord = function() {
-    return this.receipt;
   }
 }

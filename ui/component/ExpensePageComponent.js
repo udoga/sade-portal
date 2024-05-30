@@ -1,11 +1,7 @@
 class ExpensePageComponent extends PageComponent {
-  expense = {};
+  expense = this.record;
 
   constructor(router, client) {
     super(router, client, "expense");
-  }
-
-  getRecord = function() {
-    return this.expense;
   }
 }

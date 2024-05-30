@@ -1,6 +1,6 @@
-<div x-data="new UserPageComponent(router, userClient)">
+<div x-data="new UserPageComponent(router, userClient)" x-init="load()">
   <h2>User</h2>
-  <div @user-event.window="user = $event.detail">
+  <div>
     <div class="field">
       <label>Id:</label>
       <span x-text="user.id"></span>

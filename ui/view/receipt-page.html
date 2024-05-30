@@ -1,6 +1,6 @@
-<div x-data="new ReceiptPageComponent(router, receiptClient)">
+<div x-data="new ReceiptPageComponent(router, receiptClient)" x-init="load()">
   <h2>Receipt</h2>
-  <div @receipt-event.window="receipt = $event.detail">
+  <div>
     <div class="field">
       <label>Id:</label>
       <span x-text="receipt.id"></span>

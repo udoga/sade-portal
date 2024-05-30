@@ -1,11 +1,12 @@
 class LeaveFormComponent extends FormComponent {
-  leave = {};
+  leave = this.record;
 
   constructor(router, client, notifier) {
     super(router, client, "leave", notifier);
   }
 
-  getRecord = function() {
-    return Object.assign({}, this.leave, {"status": null});
+  saveLeave = function() {
+    this.leave.status = null;
+    this.save();
   }
 }

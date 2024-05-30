@@ -1,5 +1,5 @@
 class LeaveListComponent extends ListComponent {
-  leaves = [];
+  leaves = this.records;
 
   constructor(client, notifier) {
     super(client, "leaves", notifier);

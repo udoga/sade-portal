@@ -2,13 +2,13 @@ class ListComponent {
   client = null;
   name = null;
   notifier = null;
+  records = [];
   error = {};
 
   constructor(client, name, notifier) {
     this.client = client;
     this.name = name;
     this.notifier = notifier;
-    this.load();
   }
 
   load = function() {
@@ -16,7 +16,7 @@ class ListComponent {
   }
 
   handle = function(json) {
-    json.data? this.emit(json.data) : this.notifyError(json);
+    json.data? Object.assign(this.records, json.data) : this.notifyError(json);
   }
 
   notifyError = function(json) {
@@ -25,9 +25,5 @@ class ListComponent {
 
   remove = function(id) {
     this.client.delete(id).then((response) =>  this.load() );
-  }
-
-  emit = function(data) {
-    window.dispatchEvent(new CustomEvent( this.name + "-event", { detail: data }));
   }
 }

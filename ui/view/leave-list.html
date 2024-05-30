@@ -1,4 +1,4 @@
-<div x-data="new LeaveListComponent(leaveClient, notifier)">
+<div x-data="new LeaveListComponent(leaveClient, notifier)" x-init="load()">
   <h2>Leaves</h2>
   <table>
     <tr>
@@ -13,7 +13,7 @@
         <a class="green header icon button" href="#/leave-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="leave in leaves" @leaves-event.window="leaves = $event.detail">
+    <template x-for="leave in leaves">
       <tr>
         <td x-text="leave.id" class="narrow"></td>
         <td x-text="leave.userId"></td>

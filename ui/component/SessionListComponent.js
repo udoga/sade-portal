@@ -1,5 +1,5 @@
 class SessionListComponent extends ListComponent {
-  sessions = [];
+  sessions = this.records;
 
   constructor(client, notifier) {
     super(client, "sessions", notifier);

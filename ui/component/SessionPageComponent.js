@@ -1,11 +1,7 @@
 class SessionPageComponent extends PageComponent {
-  session = {};
+  session = this.record;
 
   constructor(router, client) {
     super(router, client, "session");
-  }
-
-  getRecord = function() {
-    return this.session;
   }
 }

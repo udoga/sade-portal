@@ -1,6 +1,6 @@
-<div x-data="new ExpensePageComponent(router, expenseClient)">
+<div x-data="new ExpensePageComponent(router, expenseClient)" x-init="load()">
   <h2>Expense</h2>
-  <div @expense-event.window="expense = $event.detail">
+  <div>
     <div class="field">
       <label>Id:</label>
       <span x-text="expense.id"></span>

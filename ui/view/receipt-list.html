@@ -1,4 +1,4 @@
-<div x-data="new ReceiptListComponent(receiptClient, notifier)">
+<div x-data="new ReceiptListComponent(receiptClient, notifier)" x-init="load()">
   <h2>Receipts</h2>
   <table>
     <tr>
@@ -13,7 +13,7 @@
         <a class="green header icon button" href="#/receipt-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="receipt in receipts" @receipts-event.window="receipts = $event.detail">
+    <template x-for="receipt in receipts">
       <tr>
         <td x-text="receipt.id" class="narrow"></td>
         <td x-text="receipt.expenseId"></td>

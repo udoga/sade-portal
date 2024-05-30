@@ -1,11 +1,7 @@
 class LeavePageComponent extends PageComponent {
-  leave = {};
+  leave = this.record;
 
   constructor(router, client) {
     super(router, client, "leave");
-  }
-
-  getRecord = function() {
-    return this.leave;
   }
 }

@@ -1,4 +1,4 @@
-<div x-data="new ExpenseListComponent(expenseClient, notifier)">
+<div x-data="new ExpenseListComponent(expenseClient, notifier)" x-init="load()">
   <h2>Expenses</h2>
   <table>
     <tr>
@@ -12,7 +12,7 @@
         <a class="green header icon button" href="#/expense-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="expense in expenses" @expenses-event.window="expenses = $event.detail">
+    <template x-for="expense in expenses">
       <tr>
         <td x-text="expense.id" class="narrow"></td>
         <td x-text="expense.userId"></td>

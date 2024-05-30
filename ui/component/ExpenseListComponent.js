@@ -1,5 +1,5 @@
 class ExpenseListComponent extends ListComponent {
-  expenses = [];
+  expenses = this.records;
 
   constructor(client, notifier) {
     super(client, "expenses", notifier);

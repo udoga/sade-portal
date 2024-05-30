@@ -1,6 +1,6 @@
-<div x-data="new SessionPageComponent(router, sessionClient)">
+<div x-data="new SessionPageComponent(router, sessionClient)" x-init="load()">
   <h2>Session</h2>
-  <div @session-event.window="session = $event.detail">
+  <div>
     <div class="field">
       <label>Id:</label>
       <span x-text="session.id"></span>

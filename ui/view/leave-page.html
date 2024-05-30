@@ -1,6 +1,6 @@
-<div x-data="new LeavePageComponent(router, leaveClient)">
+<div x-data="new LeavePageComponent(router, leaveClient)" x-init="load()">
   <h2>Leave</h2>
-  <div @leave-event.window="leave = $event.detail">
+  <div>
     <div class="field">
       <label>Id:</label>
       <span x-text="leave.id"></span>

@@ -1,11 +1,7 @@
 class ReceiptPageComponent extends PageComponent {
-  receipt = {};
+  receipt = this.record;
 
   constructor(router, client) {
     super(router, client, "receipt");
-  }
-
-  getRecord = function() {
-    return this.receipt;
   }
 }

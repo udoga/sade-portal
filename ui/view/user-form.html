@@ -1,6 +1,6 @@
-<div x-data="new UserFormComponent(router, userClient, notifier)">
+<div x-data="new UserFormComponent(router, userClient, notifier)" x-init="load()">
   <h2>User Form</h2>
-  <form @user-event.window="user = $event.detail">
+  <form>
     <div class="field">
       <label>Username</label>
       <input type="text" placeholder="Username" x-model="user.username"/>

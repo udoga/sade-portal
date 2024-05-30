@@ -2,23 +2,19 @@ class PageComponent {
   router = null;
   client = null;
   name = null;
+  record = {};
 
   constructor(router, client, name) {
     this.router = router;
     this.client = client;
     this.name = name;
-    this.load(router.getId());
   }
 
-  load = function(id) {
-    this.client.read(id).then((json) => { this.emit(json.data); });
+  load = function() {
+    this.client.read(this.router.getId()).then(json => Object.assign(this.record, json.data));
   }
 
   remove = function() {
-    this.client.delete(this.getRecord().id).then((json) => this.router.route("#/" + this.name + "-list"));
-  }
-
-  emit = function(data) {
-    window.dispatchEvent(new CustomEvent(this.name + "-event", { detail: data }));
+    this.client.delete(this.record.id).then((json) => this.router.route("#/" + this.name + "-list"));
   }
 }
