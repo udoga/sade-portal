@@ -27,7 +27,6 @@
 
 ## Todos
 
-* Notification on all errors.
 * Leave table should show usernames.
 * Encrypted passwords in database.
 * Authorization service.
