@@ -18,6 +18,14 @@ CREATE TABLE sessions(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE employees(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE leaves(
     id IDENTITY PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
@@ -56,13 +64,18 @@ CREATE TABLE receipts(
 
 INSERT INTO users VALUES
 --        id,      username,          password
-    (default,  'first.user',  'first-password'),
-    (default, 'second.user', 'second-password');
+    (default,  'doga.sezgin',       'doga-pwd'),
+    (default, 'eylul.erdinc',      'eylul-pwd');
 
 INSERT INTO permissions  VALUES
 --        id,          name
     (default,   'user_read'),
     (default, 'user_update');
+
+INSERT INTO employees VALUES
+--        id,  user_id,  First Name, Last Name
+    (default,        1, 'Uğur Doğa',  'Sezgin'),
+    (default,        2, 'Eylül',      'Erdinç');
 
 INSERT INTO leaves VALUES
 --        id,   user_id,          leave_type,    replacement_user_id,            start_time,                end_time,     day_count,   description,    status

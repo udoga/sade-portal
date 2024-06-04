@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS receipts CASCADE;
 DROP TABLE IF EXISTS expenses CASCADE;
 DROP TABLE IF EXISTS leaves CASCADE;
+DROP TABLE IF EXISTS employees CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS permissions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -48,6 +49,14 @@ CREATE TABLE sessions(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE employees(
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE leaves(
     id SERIAL PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
@@ -91,6 +100,11 @@ INSERT INTO permissions  VALUES
 --        id,          name
     (default,   'user_read'),
     (default, 'user_update');
+
+INSERT INTO employees VALUES
+--        id,  user_id,  First Name, Last Name
+    (default,        1, 'Uğur Doğa',  'Sezgin'),
+    (default,        2, 'Eylül',      'Erdinç');
 
 INSERT INTO leaves VALUES
 --        id,   user_id,          leave_type,    replacement_user_id,            start_time,                end_time,     day_count,   description,    status

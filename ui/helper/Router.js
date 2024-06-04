@@ -61,6 +61,9 @@ class Router {
     if (location.hash.startsWith("#/user-page")) return ["layout", "user-page"];
     if (location.hash === "#/session-list") return ["layout", "session-list"];
     if (location.hash.startsWith("#/session-page")) return ["layout", "session-page"];
+    if (location.hash === "#/employee-list") return ["layout", "employee-list"];
+    if (location.hash.startsWith("#/employee-form")) return ["layout", "employee-form"];
+    if (location.hash.startsWith("#/employee-page")) return ["layout", "employee-page"];
     if (location.hash === "#/leave-list") return ["layout", "leave-list"];
     if (location.hash.startsWith("#/leave-form")) return ["layout", "leave-form"];
     if (location.hash.startsWith("#/leave-page")) return ["layout", "leave-page"];
