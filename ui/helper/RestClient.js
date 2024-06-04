@@ -40,7 +40,9 @@ class RestClient extends HttpClient {
   }
 
   checkSession = function(json) {
-    if (json.error && json.error.type == "SessionError") window.dispatchEvent(new CustomEvent("logout-event"));
+    var e = json.error;
+    if (e && e.type === "SessionError" && e.message !== "Invalid username or password.")
+      window.dispatchEvent(new CustomEvent("logout-event"));
     return json;
   }
 }

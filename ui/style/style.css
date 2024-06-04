@@ -38,10 +38,11 @@ body {
 }
 
 .login {
-  width: 400px;
+  width: 300px;
   margin: 400px auto;
   background: var(--navigation-background-color);
   border: 1px solid var(--navigation-border-color);
+  border-radius: 5px;
   padding: 30px 40px;
 }
 

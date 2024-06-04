@@ -1,4 +1,4 @@
-<div class="login" x-data="new LoginComponent(router, sessionClient)">
+<div class="login" x-data="new LoginComponent(router, sessionClient)" @keyup.enter="login()">
   <h2>Login</h2>
   <form>
     <div class="field">
