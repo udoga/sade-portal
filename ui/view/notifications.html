@@ -1,5 +1,5 @@
 <div x-data="{ notifications: [] }">
   <template x-for="n in notifications" @notifications-event.window="notifications = $event.detail;">
-    <div :class="n.type + '-alert'" x-text="n.message"></div>
+    <div :class="n.type + ' alert'" x-text="n.message"></div>
   </template>
 </div>

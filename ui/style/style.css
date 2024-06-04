@@ -331,13 +331,16 @@ a.button.light-blue:active {
   border-color: #006684;
 }
 
-.error-alert {
-  color: red;
-  padding-bottom: 10px;
+.alert {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
 }
 
-.success-alert {
-  color: green;
-  padding-bottom: 10px;
+.alert.error {
+  background: #ffdddd;
 }
 
+.alert.success {
+  background: #ddffdd;
+}
