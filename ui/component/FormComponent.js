@@ -1,14 +1,15 @@
 class FormComponent {
   router = null;
   client = null;
+  notifier = null;
   name = null;
   record = {};
 
-  constructor(router, client, name, notifier) {
+  constructor(router, client, notifier, name) {
     this.router = router;
     this.client = client;
-    this.name = name;
     this.notifier = notifier;
+    this.name = name;
   }
 
   load = function() {

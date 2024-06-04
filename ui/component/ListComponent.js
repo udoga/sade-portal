@@ -1,14 +1,14 @@
 class ListComponent {
   client = null;
-  name = null;
   notifier = null;
+  name = null;
   records = [];
   error = {};
 
-  constructor(client, name, notifier) {
+  constructor(client, notifier, name) {
     this.client = client;
-    this.name = name;
     this.notifier = notifier;
+    this.name = name;
   }
 
   load = function() {

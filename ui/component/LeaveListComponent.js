@@ -2,6 +2,6 @@ class LeaveListComponent extends ListComponent {
   leaves = this.records;
 
   constructor(client, notifier) {
-    super(client, "leaves", notifier);
+    super(client, notifier, "leaves");
   }
 }

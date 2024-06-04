@@ -3,7 +3,7 @@ class UserFormComponent extends FormComponent {
   retypedPassword = "";
 
   constructor(router, client, notifier) {
-    super(router, client, "user", notifier);
+    super(router, client, notifier, "user");
   }
 
   check = function() {
