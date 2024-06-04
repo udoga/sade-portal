@@ -49,7 +49,7 @@ public class LeaveServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingField(validLeave.withUserId(null));
+        assertMissingField(validLeave.withEmployeeId(null));
         assertMissingField(validLeave.withLeaveType(null));
         assertMissingField(validLeave.withStartTime(null));
         assertMissingField(validLeave.withEndTime(null));
@@ -106,7 +106,7 @@ public class LeaveServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update("0", validLeave.withUserId(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validLeave.withEmployeeId(null)));
             assertThrows(MissingFieldError.class, () -> service.update("0", validLeave.withStartTime(null)));
         }
     }

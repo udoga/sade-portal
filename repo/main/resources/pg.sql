@@ -59,20 +59,20 @@ CREATE TABLE employees(
 
 CREATE TABLE leaves(
     id SERIAL PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL,
+    employee_id INT NOT NULL,
     leave_type leave_type NOT NULL,
-    replacement_user_id INT NOT NULL,
+    replacement_employee_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     day_count INT NOT NULL,
     description VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE expenses(
     id SERIAL PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+    employee_id INT NOT NULL REFERENCES employees(id) ON DELETE RESTRICT,
     form_date DATE NOT NULL,
     amount DECIMAL NOT NULL,
     currency currency NOT NULL,
@@ -92,9 +92,9 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,      username,          password
-    (default,  'first.user',  'first-password'),
-    (default, 'second.user', 'second-password');
+--        id,      username,     password
+    (default,  'doga.sezgin',  'doga-pwd'),
+    (default, 'eylul.erdinc', 'eylul-pwd');
 
 INSERT INTO permissions  VALUES
 --        id,          name
@@ -102,19 +102,19 @@ INSERT INTO permissions  VALUES
     (default, 'user_update');
 
 INSERT INTO employees VALUES
---        id,  user_id,  First Name, Last Name
-    (default,        1, 'Uğur Doğa',  'Sezgin'),
-    (default,        2, 'Eylül',      'Erdinç');
+--        id, user_id,  First Name, Last Name
+    (default,       1, 'Uğur Doğa',  'Sezgin'),
+    (default,       2, 'Eylül',      'Erdinç');
 
 INSERT INTO leaves VALUES
---        id,   user_id,          leave_type,    replacement_user_id,            start_time,                end_time,     day_count,   description,    status
-    (default,         1,    'MaternityLeave',                      1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
-    (default,         2,    'PaternityLeave',                      2,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
+--        id, employee_id,          leave_type,    replacement_employee_id,            start_time,                end_time,     day_count,   description,    status
+    (default,           1,    'MaternityLeave',                          1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
+    (default,           2,    'PaternityLeave',                          2,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
 
 INSERT INTO expenses VALUES
---        id,   user_id,    form_date,      amount, currency,  paid,   description,     status
-    (default,         1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
-    (default,         2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
+--        id, employee_id,    form_date,      amount, currency,  paid,   description,     status
+    (default,           1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
+    (default,           2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
 
 INSERT INTO receipts VALUES
 --        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description

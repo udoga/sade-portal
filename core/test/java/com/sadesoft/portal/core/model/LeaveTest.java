@@ -18,9 +18,9 @@ public class LeaveTest {
     public void initializesWithoutFields() {
         Leave l = new Leave();
         assertNull(l.id);
-        assertNull(l.userId);
+        assertNull(l.employeeId);
         assertNull(l.leaveType);
-        assertNull(l.replacementUserId);
+        assertNull(l.replacementEmployeeId);
         assertNull(l.startTime);
         assertNull(l.endTime);
         assertNull(l.dayCount);
@@ -31,9 +31,9 @@ public class LeaveTest {
     @Test
     public void printsFields() {
         assertEquals("Leave[id=null" +
-                " userId=4" +
+                " employeeId=4" +
                 " leaveType=AnnualLeave" +
-                " replacementUserId=6" +
+                " replacementEmployeeId=6" +
                 " startTime=2022-05-04T09:18" +
                 " endTime=2022-05-04T09:19" +
                 " dayCount=descriptionExample" +
@@ -44,9 +44,9 @@ public class LeaveTest {
     @Test
     public void clonesWithFields() {
         assertNull(validLeave.withId(null).id);
-        assertNull(validLeave.withUserId(null).userId);
+        assertNull(validLeave.withEmployeeId(null).employeeId);
         assertNull(validLeave.withLeaveType(null).leaveType);
-        assertNull(validLeave.withReplacementUserId(null).replacementUserId);
+        assertNull(validLeave.withReplacementEmployeeId(null).replacementEmployeeId);
         assertNull(validLeave.withStartTime(null).startTime);
         assertNull(validLeave.withEndTime(null).endTime);
         assertNull(validLeave.withDayCount(null).dayCount);
@@ -58,9 +58,9 @@ public class LeaveTest {
     public void checksEquality() {
         assertEquals(validLeave, validLeave.copy());
         assertNotEquals(validLeave, validLeave.withId("0"));
-        assertNotEquals(validLeave, validLeave.withUserId(null));
+        assertNotEquals(validLeave, validLeave.withEmployeeId(null));
         assertNotEquals(validLeave, validLeave.withLeaveType(null));
-        assertNotEquals(validLeave, validLeave.withReplacementUserId(null));
+        assertNotEquals(validLeave, validLeave.withReplacementEmployeeId(null));
         assertNotEquals(validLeave, validLeave.withStartTime(null));
         assertNotEquals(validLeave, validLeave.withEndTime(null));
         assertNotEquals(validLeave, validLeave.withDayCount(null));

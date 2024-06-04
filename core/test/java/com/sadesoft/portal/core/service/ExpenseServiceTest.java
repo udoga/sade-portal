@@ -42,7 +42,7 @@ public class ExpenseServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingField(validExpense.withUserId(null));
+        assertMissingField(validExpense.withEmployeeId(null));
         assertMissingField(validExpense.withFormDate(null));
         assertMissingField(validExpense.withAmount(null));
         assertMissingField(validExpense.withCurrency(null));
@@ -86,7 +86,7 @@ public class ExpenseServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withUserId(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withEmployeeId(null)));
             assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withFormDate(null)));
         }
     }

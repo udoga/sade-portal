@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Expense implements Record {
     public String id = null;
-    public String userId = null;
+    public String employeeId = null;
     public LocalDate formDate = null;
     public BigDecimal amount = null;
     public Currency currency = null;
@@ -17,7 +17,7 @@ public class Expense implements Record {
     public ApprovalStatus status = null;
 
     public Expense(String id,
-                   String userId,
+                   String employeeId,
                    LocalDate formDate,
                    BigDecimal amount,
                    Currency currency,
@@ -25,7 +25,7 @@ public class Expense implements Record {
                    String description,
                    ApprovalStatus status) {
         this.id = id;
-        this.userId = userId;
+        this.employeeId = employeeId;
         this.formDate = formDate;
         this.amount = amount;
         this.currency = currency;
@@ -42,7 +42,7 @@ public class Expense implements Record {
         if (!(o instanceof Expense)) return false;
         Expense e = (Expense) o;
         return Objects.equals(id, e.id) &&
-                Objects.equals(userId, e.userId) &&
+                Objects.equals(employeeId, e.employeeId) &&
                 Objects.equals(formDate, e.formDate) &&
                 Objects.equals(amount, e.amount) &&
                 Objects.equals(currency, e.currency) &&
@@ -55,7 +55,7 @@ public class Expense implements Record {
     public String toString() {
         return "Expense[" +
                 "id=" + id +
-                " userId=" + userId +
+                " employeeId=" + employeeId +
                 " formDate=" + formDate +
                 " amount=" + amount +
                 " currency=" + currency +
@@ -89,9 +89,9 @@ public class Expense implements Record {
         return expense;
     }
 
-    public Expense withUserId(String userId) {
+    public Expense withEmployeeId(String employeeId) {
         Expense expense = copy();
-        expense.userId = userId;
+        expense.employeeId = employeeId;
         return expense;
     }
 

@@ -15,7 +15,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     public LocalExpenseRepo(Connection connection) {
         super(connection, "expenses", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("user_id"),
+                new JdbcColumn("employee_id"),
                 new JdbcColumn("form_date"),
                 new JdbcColumn("amount"),
                 new JdbcColumn("currency", "currency"),
@@ -42,7 +42,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.userId);
+        setId(s, i++, o.employeeId);
         setLocalDate(s, i++, o.formDate);
         s.setBigDecimal(i++, o.amount);
         s.setString(i++, o.currency.name());

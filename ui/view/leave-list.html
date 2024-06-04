@@ -3,9 +3,9 @@
   <table>
     <tr>
       <th class="narrow">Id</th>
-      <th>User Id</th>
+      <th>Employee Id</th>
       <th>Leave Type</th>
-      <th>Replacement User Id</th>
+      <th>Replacement Employee Id</th>
       <th>Start Time</th>
       <th>End Time</th>
       <th>Status</th>
@@ -16,9 +16,9 @@
     <template x-for="leave in leaves">
       <tr>
         <td x-text="leave.id" class="narrow"></td>
-        <td x-text="leave.userId"></td>
+        <td x-text="leave.employeeId"></td>
         <td x-text="leave.leaveType"></td>
-        <td x-text="leave.replacementUserId"></td>
+        <td x-text="leave.replacementEmployeeId"></td>
         <td x-text="leave.startTime"></td>
         <td x-text="leave.endTime"></td>
         <td x-text="leave.status"></td>

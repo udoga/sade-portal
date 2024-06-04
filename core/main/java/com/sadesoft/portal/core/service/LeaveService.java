@@ -53,7 +53,7 @@ public class LeaveService {
     }
 
     private void checkMissingFields(Leave leave) {
-        checkMissingField(leave.userId, "userId");
+        checkMissingField(leave.employeeId, "employeeId");
         checkMissingField(leave.leaveType, "leaveType");
         checkMissingField(leave.startTime, "startTime");
         checkMissingField(leave.endTime, "endTime");

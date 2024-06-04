@@ -15,9 +15,9 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     public LocalLeaveRepo(Connection connection) {
         super(connection, "leaves", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("user_id"),
+                new JdbcColumn("employee_id"),
                 new JdbcColumn("leave_type", "leave_type"),
-                new JdbcColumn("replacement_user_id"),
+                new JdbcColumn("replacement_employee_id"),
                 new JdbcColumn("start_time"),
                 new JdbcColumn("end_time"),
                 new JdbcColumn("day_count"),
@@ -43,9 +43,9 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Leave l) throws SQLException {
         int i = 1;
-        setId(s, i++, l.userId);
+        setId(s, i++, l.employeeId);
         s.setString(i++, l.leaveType.name());
-        setId(s, i++, l.replacementUserId);
+        setId(s, i++, l.replacementEmployeeId);
         setLocalDateTime(s, i++, l.startTime);
         setLocalDateTime(s, i++, l.endTime);
         s.setInt(i++, l.dayCount);

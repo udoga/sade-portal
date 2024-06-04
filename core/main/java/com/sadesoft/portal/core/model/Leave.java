@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class Leave implements Record {
     public String id = null;
-    public String userId = null;
+    public String employeeId = null;
     public LeaveType leaveType = null;
-    public String replacementUserId = null;
+    public String replacementEmployeeId = null;
     public LocalDateTime startTime = null;
     public LocalDateTime endTime = null;
     public Integer dayCount = null;
@@ -28,18 +28,18 @@ public class Leave implements Record {
     }
 
     public Leave(String id,
-                 String userId,
+                 String employeeId,
                  LeaveType leaveType,
-                 String replacementUserId,
+                 String replacementEmployeeId,
                  LocalDateTime startTime,
                  LocalDateTime endTime,
                  Integer dayCount,
                  String description,
                  ApprovalStatus status) {
         this.id = id;
-        this.userId = userId;
+        this.employeeId = employeeId;
         this.leaveType = leaveType;
-        this.replacementUserId = replacementUserId;
+        this.replacementEmployeeId = replacementEmployeeId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayCount = dayCount;
@@ -52,9 +52,9 @@ public class Leave implements Record {
         if (!(o instanceof Leave)) return false;
         Leave l = (Leave) o;
         return Objects.equals(id, l.id) &&
-                Objects.equals(userId, l.userId) &&
+                Objects.equals(employeeId, l.employeeId) &&
                 Objects.equals(leaveType, l.leaveType) &&
-                Objects.equals(replacementUserId, l.replacementUserId) &&
+                Objects.equals(replacementEmployeeId, l.replacementEmployeeId) &&
                 Objects.equals(startTime,l.startTime) &&
                 Objects.equals(endTime, l.endTime) &&
                 Objects.equals(dayCount, l.dayCount) &&
@@ -66,9 +66,9 @@ public class Leave implements Record {
     public String toString() {
         return "Leave[" +
                 "id=" + id +
-                " userId=" + userId +
+                " employeeId=" + employeeId +
                 " leaveType=" + leaveType +
-                " replacementUserId=" + replacementUserId +
+                " replacementEmployeeId=" + replacementEmployeeId +
                 " startTime=" + startTime +
                 " endTime=" + endTime +
                 " dayCount=" + description +
@@ -93,9 +93,9 @@ public class Leave implements Record {
         return leave;
     }
 
-    public Leave withUserId(String userId) {
+    public Leave withEmployeeId(String employeeId) {
         Leave leave = copy();
-        leave.userId = userId;
+        leave.employeeId = employeeId;
         return leave;
     }
 
@@ -105,9 +105,9 @@ public class Leave implements Record {
         return leave;
     }
 
-    public Leave withReplacementUserId(String replacementUserId) {
+    public Leave withReplacementEmployeeId(String replacementEmployeeId) {
         Leave leave = copy();
-        leave.replacementUserId = replacementUserId;
+        leave.replacementEmployeeId = replacementEmployeeId;
         return leave;
     }
 
