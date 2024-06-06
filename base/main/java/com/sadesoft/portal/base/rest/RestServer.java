@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sadesoft.portal.base.error.*;
 import io.javalin.Javalin;
+import io.javalin.config.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
@@ -37,7 +38,7 @@ public class RestServer {
 
     private void enrol(RestMethod method) {
         method.path = config.path + method.path;
-        server.addHandler(method.type, method.path, method.handler);
+        server.addHttpHandler(method.type, method.path, method.handler);
     }
 
     private void configure() {
@@ -47,16 +48,17 @@ public class RestServer {
     }
 
     private void configureServer() {
-        server.cfg.plugins.enableCors(corsContainer -> corsContainer.add(CorsPluginConfig::anyHost));
+        JavalinConfig c = server.unsafeConfig();
+        c.bundledPlugins.enableCors(cors -> cors.addRule(CorsPluginConfig.CorsRule::anyHost));
         if (!config.uiFolder.isEmpty())
-            server.cfg.staticFiles.add(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
+            c.staticFiles.add(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
     }
 
     private void configureMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        server.cfg.jsonMapper(new JavalinJackson(mapper));
+        server.unsafeConfig().jsonMapper(new JavalinJackson(mapper, false));
     }
 
     private void configureErrors() {
