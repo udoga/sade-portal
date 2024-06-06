@@ -55,9 +55,10 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     }
 
     @Override
-    public List<Leave> listFiltered(ApprovalStatus status, int pageNo, int pageSize) {
-        if(status == null) return listPage(pageNo, pageSize);
-        return call(() -> query(createSelectSql(" WHERE " + " status = " + "'"+ status.toString()+ "'"
-                + " LIMIT " + (pageSize)
-                + " OFFSET " + ((pageNo-1) * pageSize))));}
+    public List<Leave> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+        if (status == null) return paginate(pageNo, pageSize);
+        return call(() -> query(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
+                + " LIMIT " + pageSize
+                + " OFFSET " + ((pageNo-1) * pageSize))));
+    }
 }

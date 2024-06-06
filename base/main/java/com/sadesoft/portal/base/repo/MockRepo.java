@@ -24,7 +24,7 @@ public class MockRepo<T extends Record> implements Repo<T> {
     }
 
     @Override
-    public List<T> listPage(int pageNo, int pageSize) {
+    public List<T> paginate(int pageNo, int pageSize) {
         if (pageNo <= 0) throw new RuntimeException("Page number should be greater than zero");
         int fromIndex = Math.min((pageNo - 1) * pageSize, records.size());
         int toIndex = Math.min(pageNo * pageSize, records.size());

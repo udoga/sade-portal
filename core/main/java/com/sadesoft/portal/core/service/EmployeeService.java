@@ -17,10 +17,6 @@ public class EmployeeService {
         return repo.list();
     }
 
-    public List<Employee> listPage(int pageNo, int pageSize) {
-        return repo.listPage(pageNo, pageSize);
-    }
-
     public Employee read(String id) {
         return repo.read(id);
     }

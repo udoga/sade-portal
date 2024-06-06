@@ -25,21 +25,21 @@ public class MockLeaveRepoTest {
     @Test
     public void whenLeaveStatusIsNull_doesNotFilter() {
         leaveRepo.create(validLeave.withStatus(ApprovalStatus.Waiting));
-        assertEquals(leaveRepo.list(), leaveRepo.listFiltered(null, 1, 5));
+        assertEquals(leaveRepo.list(), leaveRepo.paginateByStatus(1, 5, null));
     }
 
     @Test
     public void whenThereIsOneLeave_filtersByStatus() {
         leaveRepo.create(validLeave.withStatus(ApprovalStatus.Approved));
-        assertEquals(leaveRepo.list(), leaveRepo.listFiltered(ApprovalStatus.Approved,1,5));
-        assertEquals(new ArrayList<Leave>(), leaveRepo.listFiltered(ApprovalStatus.Rejected,1,5));
+        assertEquals(leaveRepo.list(), leaveRepo.paginateByStatus(1, 5, ApprovalStatus.Approved));
+        assertEquals(new ArrayList<Leave>(), leaveRepo.paginateByStatus(1, 5, ApprovalStatus.Rejected));
     }
 
     @Test
     public void whenTwoLeavesHaveDifferentStatus_filtersByStatus() {
         leaveRepo.create(validLeave.withStatus(ApprovalStatus.Rejected));
         leaveRepo.create(validLeave.withStatus(ApprovalStatus.Approved));
-        List<Leave> filteredLeaves = leaveRepo.listFiltered(ApprovalStatus.Rejected, 1, 5);
+        List<Leave> filteredLeaves = leaveRepo.paginateByStatus(1, 5, ApprovalStatus.Rejected);
         assertEquals(1, filteredLeaves.size());
         assertEquals(ApprovalStatus.Rejected, filteredLeaves.get(0).status);
     }

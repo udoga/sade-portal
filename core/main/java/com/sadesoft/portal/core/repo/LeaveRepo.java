@@ -7,5 +7,5 @@ import com.sadesoft.portal.core.model.Leave;
 import java.util.List;
 
 public interface LeaveRepo extends Repo<Leave> {
-    List<Leave> listFiltered(ApprovalStatus status, int pageNo, int pageSize);
+    List<Leave> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status);
 }

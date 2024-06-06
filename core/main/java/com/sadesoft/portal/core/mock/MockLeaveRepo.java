@@ -14,8 +14,8 @@ public class MockLeaveRepo extends MockRepo<Leave> implements LeaveRepo {
     }
 
     @Override
-    public List<Leave> listFiltered(ApprovalStatus status, int pageNo, int pageSize) {
+    public List<Leave> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
         if (status != null) records.removeIf(r -> !Objects.equals(r.status.toString(), status.toString()));
-        return listPage(pageNo, pageSize);
+        return paginate(pageNo, pageSize);
     }
 }

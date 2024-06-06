@@ -20,12 +20,8 @@ public class LeaveService {
         return repo.list();
     }
 
-    public List<Leave> listPage(int pageNo, int pageSize) {
-        return repo.listPage(pageNo, pageSize);
-    }
-
-    public List<Leave> listFiltered(ApprovalStatus status, int pageNo, int pageSize) {
-        return repo.listFiltered(status ,pageNo, pageSize);
+    public List<Leave> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+        return repo.paginateByStatus(pageNo, pageSize, status);
     }
 
     public Leave read(String id) {

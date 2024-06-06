@@ -19,8 +19,8 @@ public class ReceiptService {
         return repo.list();
     }
 
-    public List<Receipt> listPage(int pageNo, int pageSize) {
-        return repo.listPage(pageNo, pageSize);
+    public List<Receipt> paginate(int pageNo, int pageSize) {
+        return repo.paginate(pageNo, pageSize);
     }
 
     public Receipt read(String id) {

@@ -137,12 +137,12 @@ public class MockRepoTest {
     @Nested
     public class GivenMockRepoWithTenRecords {
         private void assertInvalidPageNo(int pageNo) {
-            RuntimeException e = assertThrows(RuntimeException.class, () -> repo.listPage(pageNo, 1));
+            RuntimeException e = assertThrows(RuntimeException.class, () -> repo.paginate(pageNo, 1));
             assertEquals("Page number should be greater than zero", e.getMessage());
         }
 
         private void assertPage(List<String> expectedIds, int pageNo, int pageSize) {
-            List<MockRecord> records = repo.listPage(pageNo, pageSize);
+            List<MockRecord> records = repo.paginate(pageNo, pageSize);
             List<String> actualIds = records.stream().map(MockRecord::getId).collect(Collectors.toList());
             assertEquals(expectedIds, actualIds);
         }
