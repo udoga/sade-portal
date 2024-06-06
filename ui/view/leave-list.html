@@ -1,11 +1,11 @@
-<div x-data="new LeaveListComponent(leaveClient, notifier)" x-init="load()">
+<div x-data="new LeaveListComponent(leaveClient, notifier)" x-init="loadAll(employeeClient)">
   <h2>Leaves</h2>
   <table>
     <tr>
       <th class="narrow">Id</th>
-      <th>Employee Id</th>
+      <th>Employee</th>
       <th>Leave Type</th>
-      <th>Replacement Employee Id</th>
+      <th>Replacement Employee</th>
       <th>Start Time</th>
       <th>End Time</th>
       <th>Status</th>
@@ -16,9 +16,9 @@
     <template x-for="leave in leaves">
       <tr>
         <td x-text="leave.id" class="narrow"></td>
-        <td x-text="leave.employeeId"></td>
+        <td x-text="getEmployeeName(leave.employeeId)"></td>
         <td x-text="leave.leaveType"></td>
-        <td x-text="leave.replacementEmployeeId"></td>
+        <td x-text="getEmployeeName(leave.replacementEmployeeId)"></td>
         <td x-text="leave.startTime"></td>
         <td x-text="leave.endTime"></td>
         <td x-text="leave.status"></td>

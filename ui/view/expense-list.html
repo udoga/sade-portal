@@ -1,9 +1,9 @@
-<div x-data="new ExpenseListComponent(expenseClient, notifier)" x-init="load()">
+<div x-data="new ExpenseListComponent(expenseClient, notifier)" x-init="loadAll(employeeClient)">
   <h2>Expenses</h2>
   <table>
     <tr>
       <th class="narrow">Id</th>
-      <th>Employee Id</th>
+      <th>Employee</th>
       <th>Form Date</th>
       <th>Amount</th>
       <th>Paid</th>
@@ -15,7 +15,7 @@
     <template x-for="expense in expenses">
       <tr>
         <td x-text="expense.id" class="narrow"></td>
-        <td x-text="expense.employeeId"></td>
+        <td x-text="getEmployeeName(expense.employeeId)"></td>
         <td x-text="expense.formDate"></td>
         <td x-text="expense.amount + ' ' + expense.currency"></td>
         <td x-text="expense.paid"></td>

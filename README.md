@@ -27,7 +27,6 @@
 
 ## Todos
 
-* Leave table should show usernames.
 * Encrypted passwords in database.
 * Authorization service.
 * Language selection.
