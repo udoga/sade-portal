@@ -46,8 +46,9 @@ public class UserTest {
     }
 
     @Test
-    public void encryptsPasswordWithSha256() {
-        assertEquals(StringUtil.hashSha256(validUser.password), validUser.findEncryptedPassword());
-        assertEquals(validUser.withPassword(validUser.findEncryptedPassword()), validUser.withEncryptedPassword());
+    public void findsEncryptedPassword() {
+        assertEquals(StringUtil.hashSha256(validUser.password), validUser.findEncryptedPassword(""));
+        assertEquals(StringUtil.hashSha256("salt" + validUser.password), validUser.findEncryptedPassword("salt"));
+        assertEquals(validUser.withPassword(validUser.findEncryptedPassword("")), validUser.withEncryptedPassword(""));
     }
 }

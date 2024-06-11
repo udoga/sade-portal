@@ -73,11 +73,11 @@ public class User implements Record {
         return user;
     }
 
-    public User withEncryptedPassword() {
-        return withPassword(findEncryptedPassword());
+    public User withEncryptedPassword(String salt) {
+        return withPassword(findEncryptedPassword(salt));
     }
 
-    public String findEncryptedPassword() {
-        return StringUtil.hashSha256(password);
+    public String findEncryptedPassword(String salt) {
+        return StringUtil.hashSha256(salt + password);
     }
 }

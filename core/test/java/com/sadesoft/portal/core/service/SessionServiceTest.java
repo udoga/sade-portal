@@ -39,7 +39,7 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void setup() {
-        config = new SessionConfig(3600, true);
+        config = new SessionConfig(3600, true, "salt");
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
         service = new SessionService(config, sessionRepo, userRepo);
@@ -107,8 +107,8 @@ public class SessionServiceTest {
     public class GivenSessionServiceWithTwoUsers {
         @BeforeEach
         public void setup() {
-            userRepo.create(firstUser.withEncryptedPassword());
-            userRepo.create(secondUser.withEncryptedPassword());
+            userRepo.create(firstUser.withEncryptedPassword(config.salt));
+            userRepo.create(secondUser.withEncryptedPassword(config.salt));
         }
 
         @Test

@@ -31,7 +31,7 @@ public class Main {
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         LeaveService leaveService = new LeaveService(leaveRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        UserService userService = new UserService(userRepo);
+        UserService userService = new UserService(userRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 

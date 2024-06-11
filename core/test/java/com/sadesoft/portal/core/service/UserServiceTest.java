@@ -17,7 +17,7 @@ public class UserServiceTest {
     @BeforeEach
     public void setup() {
         repo = new MockUserRepo();
-        service = new UserService(repo);
+        service = new UserService(repo, "");
         validUser = UserSamples.validUser.copy();
     }
 
@@ -32,7 +32,13 @@ public class UserServiceTest {
     @Test
     public void whenCreatesUser_encryptsPassword() {
         service.create(validUser);
-        assertEquals(validUser.findEncryptedPassword(), repo.read("0").password);
+        assertEquals(validUser.findEncryptedPassword(""), repo.read("0").password);
+    }
+
+    @Test
+    public void whenCreatesUser_encryptsPasswordWithSalt() {
+        new UserService(repo, "salt").create(validUser);
+        assertEquals(validUser.findEncryptedPassword("salt"), repo.read("0").password);
     }
 
     @Test
@@ -68,10 +74,17 @@ public class UserServiceTest {
         }
 
         @Test
-        public void whenUpdatesPassword_encryptsPassword() {
+        public void whenUpdatesUser_encryptsPassword() {
             User updatedUser = validUser.withPassword("updated");
             service.update("0", updatedUser);
-            assertEquals(updatedUser.findEncryptedPassword(), repo.read("0").password);
+            assertEquals(updatedUser.findEncryptedPassword(""), repo.read("0").password);
+        }
+
+        @Test
+        public void whenUpdatesUser_encryptsPasswordWithSalt() {
+            User updatedUser = validUser.withPassword("updated");
+            new UserService(repo, "salt").update("0", updatedUser);
+            assertEquals(updatedUser.findEncryptedPassword("salt"), repo.read("0").password);
         }
 
         @Test

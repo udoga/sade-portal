@@ -9,9 +9,11 @@ import com.sadesoft.portal.core.repo.UserRepo;
 
 public class UserService {
     private final UserRepo repo;
+    private final String salt;
 
-    public UserService(UserRepo repo) {
+    public UserService(UserRepo repo, String salt) {
         this.repo = repo;
+        this.salt = salt;
     }
 
     public List<User> list() {
@@ -24,12 +26,12 @@ public class UserService {
 
     public User create(User user) {
         check(user);
-        return repo.create(user.withEncryptedPassword()).withPassword(null);
+        return repo.create(user.withEncryptedPassword(salt)).withPassword(null);
     }
 
     public User update(String id, User user) {
         check(user);
-        return repo.update(id, user.withEncryptedPassword()).withPassword(null);
+        return repo.update(id, user.withEncryptedPassword(salt)).withPassword(null);
     }
 
     public User delete(String id) {

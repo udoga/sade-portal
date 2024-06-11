@@ -33,7 +33,7 @@ public class SessionService {
 
     public Session login(User user) {
         for (User u: userRepo.list())
-            if (u.equals(user.withId(u.id).withEncryptedPassword()))
+            if (u.equals(user.withId(u.id).withEncryptedPassword(config.salt)))
                 return create(u.id, LocalDateTime.now());
         throw new SessionError("Invalid username or password.");
     }
