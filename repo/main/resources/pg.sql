@@ -92,7 +92,8 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,      username,                                                            password
+--        id,       username,                                                           password
+    (default,        'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'),
     (default,  'doga.sezgin', '6181e874f2fcb2ef71aa4598fd8fbc2dd0e2483eac363b664c51dd0476815840'),
     (default, 'eylul.erdinc', '65e527189be2f94987de4e2c623297a1337d1752fde15aa12e6546dd19a1de18');
 
@@ -102,14 +103,14 @@ INSERT INTO permissions  VALUES
     (default, 'user_update');
 
 INSERT INTO employees VALUES
---        id, user_id,  First Name, Last Name
-    (default,       1, 'Uğur Doğa',  'Sezgin'),
-    (default,       2, 'Eylül',      'Erdinç');
+--        id, user_id,  first_name, last_name
+    (default,       2, 'Uğur Doğa',  'Sezgin'),
+    (default,       3, 'Eylül',      'Erdinç');
 
 INSERT INTO leaves VALUES
 --        id, employee_id,          leave_type,    replacement_employee_id,            start_time,                end_time,     day_count,   description,    status
-    (default,           1,    'MaternityLeave',                          1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
-    (default,           2,    'PaternityLeave',                          2,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
+    (default,           1,    'MaternityLeave',                          2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
+    (default,           2,    'PaternityLeave',                          1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
 
 INSERT INTO expenses VALUES
 --        id, employee_id,    form_date,      amount, currency,  paid,   description,     status
