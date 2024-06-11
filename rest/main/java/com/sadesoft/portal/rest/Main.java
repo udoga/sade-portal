@@ -10,12 +10,14 @@ import com.sadesoft.portal.base.rest.RestServer;
 import com.sadesoft.portal.core.repo.*;
 import com.sadesoft.portal.core.service.*;
 import com.sadesoft.portal.repo.local.*;
+import com.sadesoft.portal.repo.opm.OpmUserRepo;
 import com.sadesoft.portal.rest.controller.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
         Connection connection = new JdbcConfig(props.getSection("jdbc")).connect();
+        Connection opmConnection = new JdbcConfig(props.getSection("opm")).connect();
         RestConfig restConfig = new RestConfig(props.getSection("rest"));
         SessionConfig sessionConfig = new SessionConfig(props.getSection("session"));
 
@@ -23,7 +25,8 @@ public class Main {
         ExpenseRepo expenseRepo = new LocalExpenseRepo(connection);
         LeaveRepo leaveRepo = new LocalLeaveRepo(connection);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(connection);
-        UserRepo userRepo = new LocalUserRepo(connection);
+        //UserRepo userRepo = new LocalUserRepo(connection);
+        UserRepo opmUserRepo = new OpmUserRepo(opmConnection);
         SessionRepo sessionRepo = new LocalSessionRepo(connection);
         PermissionRepo permissionRepo = new LocalPermissionRepo(connection);
 
@@ -31,8 +34,8 @@ public class Main {
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         LeaveService leaveService = new LeaveService(leaveRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        UserService userService = new UserService(userRepo, sessionConfig.salt);
-        SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
+        UserService userService = new UserService(opmUserRepo, sessionConfig.salt);
+        SessionService sessionService = new SessionService(sessionConfig, sessionRepo, opmUserRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
 
         RestServer server = new RestServer(restConfig);
