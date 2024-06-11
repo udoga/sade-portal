@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.model;
 
+import com.sadesoft.portal.base.util.StringUtil;
 import com.sadesoft.portal.core.sample.UserSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,5 +43,11 @@ public class UserTest {
         assertNotEquals(UserSamples.validUser, validUser.withId("0"));
         assertNotEquals(UserSamples.validUser, validUser.withUsername(null));
         assertNotEquals(UserSamples.validUser, validUser.withPassword(null));
+    }
+
+    @Test
+    public void encryptsPasswordWithSha256() {
+        assertEquals(StringUtil.hashSha256(validUser.password), validUser.findEncryptedPassword());
+        assertEquals(validUser.withPassword(validUser.findEncryptedPassword()), validUser.withEncryptedPassword());
     }
 }

@@ -92,9 +92,9 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,      username,     password
-    (default,  'doga.sezgin',  'doga-pwd'),
-    (default, 'eylul.erdinc', 'eylul-pwd');
+--        id,      username,                                                            password
+    (default,  'doga.sezgin', '6181e874f2fcb2ef71aa4598fd8fbc2dd0e2483eac363b664c51dd0476815840'),
+    (default, 'eylul.erdinc', '65e527189be2f94987de4e2c623297a1337d1752fde15aa12e6546dd19a1de18');
 
 INSERT INTO permissions  VALUES
 --        id,          name

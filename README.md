@@ -27,7 +27,7 @@
 
 ## Todos
 
-* Encrypted passwords in database.
+* Password encryption should use salt.
 * Authorization service.
 * Language selection.
 * Message Box style.

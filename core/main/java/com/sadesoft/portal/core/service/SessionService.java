@@ -32,7 +32,9 @@ public class SessionService {
     }
 
     public Session login(User user) {
-        for (User u: userRepo.list()) if (u.equals(user.withId(u.id))) return create(u.id, LocalDateTime.now());
+        for (User u: userRepo.list())
+            if (u.equals(user.withId(u.id).withEncryptedPassword()))
+                return create(u.id, LocalDateTime.now());
         throw new SessionError("Invalid username or password.");
     }
 

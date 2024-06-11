@@ -30,6 +30,12 @@ public class UserServiceTest {
     }
 
     @Test
+    public void whenCreatesUser_encryptsPassword() {
+        service.create(validUser);
+        assertEquals(validUser.findEncryptedPassword(), repo.read("0").password);
+    }
+
+    @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
         assertMissingFieldOnCreate(validUser.withUsername(null));
         assertMissingFieldOnCreate(validUser.withPassword(null));
@@ -48,9 +54,10 @@ public class UserServiceTest {
 
         @Test
         public void listsUsers() {
+            User expectedUser = validUser.withId("0").withPassword(null);
             assertEquals(1, service.list().size());
-            assertEquals(validUser.withPassword(null), service.list().get(0));
-            assertEquals(validUser.withPassword(null), service.read("0"));
+            assertEquals(expectedUser, service.list().get(0));
+            assertEquals(expectedUser, service.read("0"));
         }
 
         @Test
@@ -58,6 +65,13 @@ public class UserServiceTest {
             User user = service.update("0", validUser.withUsername("updated"));
             assertEquals(validUser.withId("0").withUsername("updated").withPassword(null), user);
             assertEquals(user, service.read("0"));
+        }
+
+        @Test
+        public void whenUpdatesPassword_encryptsPassword() {
+            User updatedUser = validUser.withPassword("updated");
+            service.update("0", updatedUser);
+            assertEquals(updatedUser.findEncryptedPassword(), repo.read("0").password);
         }
 
         @Test

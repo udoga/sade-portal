@@ -107,8 +107,8 @@ public class SessionServiceTest {
     public class GivenSessionServiceWithTwoUsers {
         @BeforeEach
         public void setup() {
-            userRepo.create(firstUser);
-            userRepo.create(secondUser);
+            userRepo.create(firstUser.withEncryptedPassword());
+            userRepo.create(secondUser.withEncryptedPassword());
         }
 
         @Test
@@ -130,7 +130,7 @@ public class SessionServiceTest {
             Session session = service.login(firstUser);
             assertEquals(1, sessionRepo.list().size());
             assertEquals(session, sessionRepo.read("0"));
-            assertEquals(firstUser.id, session.userId);
+            assertEquals("0", session.userId);
             assertTimeEquals(LocalDateTime.now(), session.beginTime);
             assertTimeEquals(LocalDateTime.now().plusHours(1), session.endTime);
             assertEquals(36, session.token.length());
@@ -140,7 +140,7 @@ public class SessionServiceTest {
         public void whenSecondUserTriesToLoginWithCorrectCredentials_createsSession() {
             Session session = service.login(secondUser);
             assertEquals(1, sessionRepo.list().size());
-            assertEquals(secondUser.id, session.userId);
+            assertEquals("1", session.userId);
         }
 
         @Test

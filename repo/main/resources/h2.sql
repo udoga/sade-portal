@@ -64,9 +64,9 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,      username,          password
-    (default,  'doga.sezgin',       'doga-pwd'),
-    (default, 'eylul.erdinc',      'eylul-pwd');
+--        id,      username,                                                            password
+    (default,  'doga.sezgin', '6181e874f2fcb2ef71aa4598fd8fbc2dd0e2483eac363b664c51dd0476815840'),
+    (default, 'eylul.erdinc', '65e527189be2f94987de4e2c623297a1337d1752fde15aa12e6546dd19a1de18');
 
 INSERT INTO permissions  VALUES
 --        id,          name
@@ -79,7 +79,7 @@ INSERT INTO employees VALUES
     (default,        2, 'Eylül',      'Erdinç');
 
 INSERT INTO leaves VALUES
---        id, employee_id,          leave_type, replacement_employee_id,            start_time,                end_time,     day_count,   description,    status
+--        id, employee_id,          leave_type, replacement_employee_id,              start_time,                end_time,  day_count,   description,     status
     (default,           1,    'MaternityLeave',                       1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
     (default,           2,    'PaternityLeave',                       2,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
 

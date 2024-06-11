@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.model;
 
 import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.base.util.StringUtil;
 
 public class User implements Record {
     public String id = null;
@@ -70,5 +71,13 @@ public class User implements Record {
         User user = copy();
         user.password = password;
         return user;
+    }
+
+    public User withEncryptedPassword() {
+        return withPassword(findEncryptedPassword());
+    }
+
+    public String findEncryptedPassword() {
+        return StringUtil.hashSha256(password);
     }
 }

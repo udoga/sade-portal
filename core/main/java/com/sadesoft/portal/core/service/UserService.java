@@ -24,12 +24,12 @@ public class UserService {
 
     public User create(User user) {
         check(user);
-        return repo.create(user).withPassword(null);
+        return repo.create(user.withEncryptedPassword()).withPassword(null);
     }
 
     public User update(String id, User user) {
         check(user);
-        return repo.update(id, user).withPassword(null);
+        return repo.update(id, user.withEncryptedPassword()).withPassword(null);
     }
 
     public User delete(String id) {
