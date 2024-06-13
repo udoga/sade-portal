@@ -88,7 +88,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected List<T> query(String sql) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = createStatement(sql);
         ResultSet set = statement.executeQuery();
         List<T> objects = getObjects(set);
         statement.close();
@@ -104,24 +104,32 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     private T command(String sql, T record, boolean fill) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(sql, getColumnNames().toArray(new String[0]));
+        PreparedStatement statement = createStatementWithColumns(sql);
         if (fill) fillStatement(statement, record);
         statement.executeUpdate();
         return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
     }
 
-    private T getFirst(List<T> objects, String id) {
+    protected PreparedStatement createStatement(String sql) {
+        return call(() -> connection.prepareStatement(sql));
+    }
+
+    protected PreparedStatement createStatementWithColumns(String sql) {
+        return call(() -> connection.prepareStatement(sql, getColumnNames().toArray(new String[0])));
+    }
+
+    protected T getFirst(List<T> objects, String id) {
         if (objects.isEmpty()) throw new RecordNotFoundError(tableName, id);
         return objects.get(0);
     }
 
-    private List<T> getObjects(ResultSet s) throws SQLException {
+    protected List<T> getObjects(ResultSet s) throws SQLException {
         ArrayList<T> users = new ArrayList<>();
         while (s.next()) users.add(toObject(s));
         return users;
     }
 
-    private List<String> getColumnNames() {
+    protected List<String> getColumnNames() {
         List<String> result = new ArrayList<>();
         for (JdbcColumn column: columns) result.add(column.name);
         return result;
