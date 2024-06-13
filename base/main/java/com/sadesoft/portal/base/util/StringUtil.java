@@ -12,8 +12,8 @@ public class StringUtil {
         catch (NumberFormatException e) { throw new InvalidNumberError(value); }
     }
 
-    public static String hashSha256(String s) {
-        MessageDigest digest = call(() -> MessageDigest.getInstance("SHA-256"));
+    public static String hashSha512(String s) {
+        MessageDigest digest = call(() -> MessageDigest.getInstance("SHA-512"));
         byte[] encodedHash = digest.digest(s.getBytes(StandardCharsets.UTF_8));
         return bytesToHex(encodedHash);
     }

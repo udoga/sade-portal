@@ -22,8 +22,10 @@ public class StringUtilTest {
     }
 
     @Test
-    public void hashesSha256() {
-        assertEquals("6eac1114aa783f6549327e7d01f63752995da7b31f1f37092b7dcb9f49cf5651", StringUtil.hashSha256("pwd1"));
-        assertEquals("149d2937d1bce53fa683ae652291bd54cc8754444216a9e278b45776b76375af", StringUtil.hashSha256("pwd2"));
+    public void hashesSha512() {
+        assertEquals("94af3fa5261b347f098bd9cf0fc1c145a20e1f662cb21b0d4a763398ac886f19017cb7d8bfd71" +
+            "df689108511f6f8d0c1ab464a80620d4332379d544ba67131a0", StringUtil.hashSha512("pwd1"));
+        assertEquals("3ebd594bccb9f9e076cd90eea1f6c46efef9a78a7b58f13fe89d2184160027a3fb6ca1d81073b" +
+            "b64923f3a4fd6b456f04c70a0881827ce43bcfd2642ed93b3d8", StringUtil.hashSha512("pwd2"));
     }
 }

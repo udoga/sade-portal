@@ -78,6 +78,6 @@ public class User implements Record {
     }
 
     public String findEncryptedPassword(String salt) {
-        return StringUtil.hashSha256(salt + password);
+        return StringUtil.hashSha512(salt + password);
     }
 }

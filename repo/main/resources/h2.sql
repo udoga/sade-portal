@@ -65,9 +65,9 @@ CREATE TABLE receipts(
 
 INSERT INTO users VALUES
 --        id,      username,                                                            password
-    (default,        'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'),
-    (default,  'doga.sezgin', '6181e874f2fcb2ef71aa4598fd8fbc2dd0e2483eac363b664c51dd0476815840'),
-    (default, 'eylul.erdinc', '65e527189be2f94987de4e2c623297a1337d1752fde15aa12e6546dd19a1de18');
+    (default,        'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),
+    (default,  'doga.sezgin', 'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
+    (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26');
 
 INSERT INTO permissions  VALUES
 --        id,          name
