@@ -26,10 +26,10 @@ CREATE TABLE employees(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
-CREATE TABLE leaves(
+CREATE TABLE vacations(
     id IDENTITY PRIMARY KEY NOT NULL,
     employee_id INT NOT NULL,
-    leave_type VARCHAR(255) NOT NULL,
+    vacation_type VARCHAR(255) NOT NULL,
     replacement_employee_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
@@ -79,10 +79,10 @@ INSERT INTO employees VALUES
     (default,        2, 'Uğur Doğa',  'Sezgin'),
     (default,        3, 'Eylül',      'Erdinç');
 
-INSERT INTO leaves VALUES
---        id, employee_id,          leave_type, replacement_employee_id,              start_time,                end_time,  day_count,   description,     status
-    (default,           1,    'MaternityLeave',                       2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
-    (default,           2,    'PaternityLeave',                       1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
+INSERT INTO vacations VALUES
+--        id, employee_id,       vacation_type, replacement_employee_id,              start_time,                end_time,  day_count,   description,     status
+    (default,           1, 'MaternityVacation',                       2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
+    (default,           2, 'PaternityVacation',                       1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
 
 INSERT INTO expenses VALUES
 --        id, employee_id,    form_date,      amount, currency,  paid,   description,     status

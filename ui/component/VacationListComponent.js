@@ -1,9 +1,9 @@
-class LeaveListComponent extends ListComponent {
-  leaves = this.records;
+class VacationListComponent extends ListComponent {
+  vacations = this.records;
   employees = [];
 
   constructor(client, notifier) {
-    super(client, notifier, "leaves");
+    super(client, notifier, "vacations");
   }
 
   loadAll = function(employeeClient) {

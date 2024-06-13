@@ -4,6 +4,6 @@ var router = new Router(notifier, httpClient);
 var userClient = new UserClient();
 var sessionClient = new SessionClient();
 var employeeClient = new EmployeeClient();
-var leaveClient = new LeaveClient();
+var vacationClient = new VacationClient();
 var expenseClient = new ExpenseClient();
 var receiptClient = new ReceiptClient();

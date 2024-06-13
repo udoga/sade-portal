@@ -26,7 +26,7 @@ public class Main {
         SessionRepo sessionRepo = new LocalSessionRepo(local);
         PermissionRepo permissionRepo = new LocalPermissionRepo(local);
         EmployeeRepo employeeRepo = (opm == null)? new LocalEmployeeRepo(local) : new OpmEmployeeRepo(opm);
-        LeaveRepo leaveRepo = new LocalLeaveRepo(local);
+        VacationRepo vacationRepo = new LocalVacationRepo(local);
         ExpenseRepo expenseRepo = new LocalExpenseRepo(local);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(local);
 
@@ -34,7 +34,7 @@ public class Main {
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);
-        LeaveService leaveService = new LeaveService(leaveRepo);
+        VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
 
@@ -43,7 +43,7 @@ public class Main {
         server.enrol(new SessionController(sessionService));
         server.enrol(new PermissionController(permissionService));
         server.enrol(new EmployeeController(employeeService));
-        server.enrol(new LeaveController(leaveService));
+        server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new ReceiptController(receiptService));
         server.run();

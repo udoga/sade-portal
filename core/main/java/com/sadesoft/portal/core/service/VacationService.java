@@ -1,0 +1,76 @@
+package com.sadesoft.portal.core.service;
+
+import com.sadesoft.portal.base.error.ClientError;
+import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.model.ApprovalStatus;
+import com.sadesoft.portal.core.model.Vacation;
+import com.sadesoft.portal.core.repo.VacationRepo;
+
+import java.util.List;
+
+public class VacationService {
+    private final VacationRepo repo;
+
+    public VacationService(VacationRepo repo) {
+        this.repo = repo;
+    }
+
+    public List<Vacation> list() {
+        return repo.list();
+    }
+
+    public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+        return repo.paginateByStatus(pageNo, pageSize, status);
+    }
+
+    public Vacation read(String id) {
+        return repo.read(id);
+    }
+
+    public Vacation create(Vacation vacation) {
+        check(vacation);
+        return repo.create(vacation.withStatus(ApprovalStatus.Waiting));
+    }
+
+    public Vacation update(String id, Vacation vacation) {
+        check(vacation);
+        return repo.update(id, vacation.withStatus(ApprovalStatus.Waiting));
+    }
+
+    public Vacation delete(String id) {
+        return repo.delete(id);
+    }
+
+    private void check(Vacation vacation) {
+        checkMissingFields(vacation);
+        checkEmptyFields(vacation);
+        checkForbiddenField(vacation.status, "status");
+    }
+
+    private void checkMissingFields(Vacation vacation) {
+        checkMissingField(vacation.employeeId, "employeeId");
+        checkMissingField(vacation.vacationType, "vacationType");
+        checkMissingField(vacation.startTime, "startTime");
+        checkMissingField(vacation.endTime, "endTime");
+        checkMissingField(vacation.dayCount, "dayCount");
+        checkMissingField(vacation.description, "description");
+    }
+
+    private void checkEmptyFields(Vacation vacation) {
+        checkEmptyField(vacation.description, "description");
+    }
+
+    private void checkMissingField(Object value, String field) {
+        if (value == null) throw new MissingFieldError(field);
+    }
+
+    private void checkForbiddenField(Object value, String field) {
+        if (value != null) throw new ClientError("Field '" + field + "' should not exist.");
+    }
+
+    private void checkEmptyField(String value, String field) {
+        if (value.isEmpty()) throw new EmptyFieldError(field);
+    }
+
+}

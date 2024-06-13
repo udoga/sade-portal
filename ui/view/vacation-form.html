@@ -1,0 +1,52 @@
+<div x-data="new VacationFormComponent(router, vacationClient, notifier)" x-init="load()">
+  <h2>Vacation Form</h2>
+  <form>
+    <div class="field">
+      <label>Employee Id</label>
+      <input type="text" placeholder="Employee Id" x-model="vacation.employeeId"/>
+    </div>
+    <div class="field">
+      <label>Vacation Type</label>
+      <input list="vacations" placeholder="Vacation Type" x-model="vacation.vacationType"/>
+      <datalist id="vacations">
+        <option value="ParentalVacation">
+        <option value="BereavementVacation">
+        <option value="BreastFeedingVacation">
+        <option value="PersonalVacation">
+        <option value="MarriageVacation">
+        <option value="MilitaryVacation">
+        <option value="MaternityVacation">
+        <option value="PaternityVacation">
+        <option value="UnpaidVacation">
+        <option value="MedicalVacation">
+        <option value="AnnualVacation">
+        <option value="BirthdayVacation">
+        <option value="RemoteWorking">
+      </datalist>
+    </div>
+    <div class="field">
+      <label>Replacement Employee Id</label>
+      <input type="text" placeholder="Replacement Employee Id" x-model="vacation.replacementEmployeeId"/>
+    </div>
+    <div class="field">
+      <label>Start Time</label>
+      <input type="text" placeholder="Start Time" x-model="vacation.startTime"/>
+    </div>
+    <div class="field">
+      <label>End Time</label>
+      <input type="text" placeholder="End Time" x-model="vacation.endTime"/>
+    </div>
+    <div class="field">
+      <label>Day Count</label>
+      <input type="number" placeholder="Day Count" x-model="vacation.dayCount"/>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea placeholder="Description" x-model="vacation.description"></textarea>
+    </div>
+    <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="saveVacation()">Save</a>
+    </div>
+  </form>
+</div>

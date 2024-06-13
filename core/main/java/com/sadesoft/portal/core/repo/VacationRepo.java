@@ -1,0 +1,11 @@
+package com.sadesoft.portal.core.repo;
+
+import com.sadesoft.portal.base.repo.Repo;
+import com.sadesoft.portal.core.model.ApprovalStatus;
+import com.sadesoft.portal.core.model.Vacation;
+
+import java.util.List;
+
+public interface VacationRepo extends Repo<Vacation> {
+    List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status);
+}

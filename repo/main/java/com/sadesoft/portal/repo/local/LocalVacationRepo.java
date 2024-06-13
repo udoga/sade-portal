@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.*;
-import com.sadesoft.portal.core.repo.LeaveRepo;
+import com.sadesoft.portal.core.repo.VacationRepo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
-    public LocalLeaveRepo(Connection connection) {
-        super(connection, "leaves", List.of(
+public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
+    public LocalVacationRepo(Connection connection) {
+        super(connection, "vacations", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
-                new JdbcColumn("leave_type", "leave_type"),
+                new JdbcColumn("vacation_type", "vacation_type"),
                 new JdbcColumn("replacement_employee_id"),
                 new JdbcColumn("start_time"),
                 new JdbcColumn("end_time"),
@@ -26,12 +26,12 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     }
 
     @Override
-    protected Leave toObject(ResultSet s) throws SQLException {
+    protected Vacation toObject(ResultSet s) throws SQLException {
         int i = 0;
-        return new Leave(
+        return new Vacation(
                 getId(s, getColumnName(i++)),
                 getId(s, getColumnName(i++)),
-                LeaveType.valueOf(s.getString(getColumnName(i++))),
+                VacationType.valueOf(s.getString(getColumnName(i++))),
                 getId(s, getColumnName(i++)),
                 getLocalDateTime(s, getColumnName(i++)),
                 getLocalDateTime(s, getColumnName(i++)),
@@ -41,10 +41,10 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Leave l) throws SQLException {
+    protected void fillStatement(PreparedStatement s, Vacation l) throws SQLException {
         int i = 1;
         setId(s, i++, l.employeeId);
-        s.setString(i++, l.leaveType.name());
+        s.setString(i++, l.vacationType.name());
         setId(s, i++, l.replacementEmployeeId);
         setLocalDateTime(s, i++, l.startTime);
         setLocalDateTime(s, i++, l.endTime);
@@ -55,7 +55,7 @@ public class LocalLeaveRepo extends JdbcRepo<Leave> implements LeaveRepo {
     }
 
     @Override
-    public List<Leave> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+    public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
         if (status == null) return paginate(pageNo, pageSize);
         return call(() -> query(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
                 + " LIMIT " + pageSize

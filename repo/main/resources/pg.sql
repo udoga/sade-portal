@@ -1,13 +1,13 @@
 DROP TABLE IF EXISTS receipts CASCADE;
 DROP TABLE IF EXISTS expenses CASCADE;
-DROP TABLE IF EXISTS leaves CASCADE;
+DROP TABLE IF EXISTS vacations CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS permissions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 DROP TYPE IF EXISTS receipt_category CASCADE;
-DROP TYPE IF EXISTS leave_type CASCADE;
+DROP TYPE IF EXISTS vacation_type CASCADE;
 DROP TYPE IF EXISTS currency CASCADE;
 DROP TYPE IF EXISTS approval_status CASCADE;
 
@@ -19,9 +19,10 @@ CREATE TYPE currency AS ENUM (
     'TRY', 'EUR', 'USD'
 );
 
-CREATE TYPE leave_type AS ENUM (
-    'ParentalLeave', 'BereavementLeave', 'BreastFeedingLeave', 'PersonalLeave', 'MarriageLeave', 'MilitaryLeave',
-    'MaternityLeave', 'PaternityLeave', 'UnpaidLeave', 'MedicalLeave', 'AnnualLeave', 'BirthdayLeave', 'RemoteWorking'
+CREATE TYPE vacation_type AS ENUM (
+    'ParentalVacation', 'BereavementVacation', 'BreastFeedingVacation', 'PersonalVacation', 'MarriageVacation',
+    'MilitaryVacation', 'MaternityVacation', 'PaternityVacation', 'UnpaidVacation', 'MedicalVacation', 'AnnualVacation',
+    'BirthdayVacation', 'RemoteWorking'
 );
 
 CREATE TYPE receipt_category AS ENUM (
@@ -57,10 +58,10 @@ CREATE TABLE employees(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
-CREATE TABLE leaves(
+CREATE TABLE vacations(
     id SERIAL PRIMARY KEY NOT NULL,
     employee_id INT NOT NULL,
-    leave_type leave_type NOT NULL,
+    vacation_type vacation_type NOT NULL,
     replacement_employee_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
@@ -107,10 +108,10 @@ INSERT INTO employees VALUES
     (default,       2, 'Uğur Doğa',  'Sezgin'),
     (default,       3, 'Eylül',      'Erdinç');
 
-INSERT INTO leaves VALUES
---        id, employee_id,          leave_type,    replacement_employee_id,            start_time,                end_time,     day_count,   description,    status
-    (default,           1,    'MaternityLeave',                          2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
-    (default,           2,    'PaternityLeave',                          1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
+INSERT INTO vacations VALUES
+--        id, employee_id,       vacation_type,    replacement_employee_id,            start_time,                end_time,     day_count,   description,    status
+    (default,           1, 'MaternityVacation',                          2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',             5,    'Example1', 'Approved'),
+    (default,           2, 'PaternityVacation',                          1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',             6,    'Example2', 'Rejected');
 
 INSERT INTO expenses VALUES
 --        id, employee_id,    form_date,      amount, currency,  paid,   description,     status
