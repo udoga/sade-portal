@@ -12,22 +12,20 @@ import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.UserRepo;
 
 public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
-    private final PreparedStatement updateStatement;
-
     public OpmUserRepo(Connection connection) {
         super(connection, "opm_sys_user", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("user_name"),
                 new JdbcColumn("password_hash_sha512")));
-        updateStatement = createStatementWithColumns("update " + tableName + " set user_name = ?, password_hash_sha512 = ? where id = ?");
     }
 
     @Override
     public User toObject(ResultSet s) throws SQLException {
+        int i = 0;
         return new User(
-                getId(s, "id"),
-                s.getString("user_name"),
-                s.getString("password_hash_sha512"));
+                getId(s, getColumnName(i++)),
+                s.getString(getColumnName(i++)),
+                s.getString(getColumnName(i)));
     }
 
     @Override
@@ -36,19 +34,5 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
         s.setString(i++, u.username);
         s.setString(i++, u.password);
         if (u.id != null) setId(s, i, u.id);
-    }
-
-    @Override
-    public User update(String id, User user) {
-        user.setId(id);
-        return call(() -> updateCredentials(user));
-    }
-
-    private User updateCredentials(User user) throws SQLException {
-        updateStatement.setString(1, user.username);
-        updateStatement.setString(2, user.password);
-        setId(updateStatement, 3, user.id);
-        updateStatement.executeUpdate();
-        return getFirst(getObjects(updateStatement.getGeneratedKeys()), user.id);
     }
 }

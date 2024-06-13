@@ -19,9 +19,9 @@ public class JdbcConfigTest {
 
     @Test
     public void initializesWithDefaults() {
-        Props props = new Props(Map.of("url", "url"));
+        Props props = new Props(Map.of());
         JdbcConfig c = new JdbcConfig(props);
-        assertEquals("url", c.url);
+        assertEquals("", c.url);
         assertEquals("", c.username);
         assertEquals("", c.password);
         assertEquals("", c.driver);

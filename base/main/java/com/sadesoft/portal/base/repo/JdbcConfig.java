@@ -13,7 +13,7 @@ public class JdbcConfig {
     public String driver;
 
     public JdbcConfig(Props props) {
-        this.url = props.getString("url");
+        this.url = props.getString("url", "");
         this.username = props.getString("username", "");
         this.password = props.getString("password", "");
         this.driver = props.getString("driver", "");
@@ -21,6 +21,6 @@ public class JdbcConfig {
 
     public Connection connect() throws SQLException, ClassNotFoundException {
         if (!driver.isEmpty()) Class.forName(driver);
-        return DriverManager.getConnection(url, username, password);
+        return url.isEmpty()? null : DriverManager.getConnection(url, username, password);
     }
 }
