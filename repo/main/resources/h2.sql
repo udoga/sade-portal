@@ -9,6 +9,11 @@ CREATE TABLE permissions(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE roles(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE sessions(
     id IDENTITY PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
@@ -73,6 +78,11 @@ INSERT INTO permissions  VALUES
 --        id,          name
     (default,   'user_read'),
     (default, 'user_update');
+
+INSERT INTO roles VALUES
+--        id,      name
+    (default, 'ROLE_ADMIN'),
+    (default, 'ROLE_USER');
 
 INSERT INTO employees VALUES
 --        id,  user_id,  first_name, last_name
