@@ -34,6 +34,7 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
 
     @Override
     public List<Role> listByUserId(String userId) {
-        return call(() -> query("SELECT r.* FROM roles r JOIN opm_sys_user_role ur ON r.id = ur.role_id WHERE ur.user_id = " + userId));
+        return call(() -> query("SELECT r.* FROM " + tableName +
+                " r JOIN opm_sys_user_role ur ON r.id = ur.role_id WHERE ur.user_id = " + userId));
     }
 }

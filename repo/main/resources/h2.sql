@@ -93,6 +93,7 @@ INSERT INTO roles VALUES
 INSERT INTO user_roles VALUES
 --    user_id,    role_id
     (       1,          1),
+    (       1,          2),
     (       2,          2),
     (       3,          2);
 

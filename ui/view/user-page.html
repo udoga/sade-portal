@@ -1,4 +1,4 @@
-<div x-data="new UserPageComponent(router, userClient, notifier)" x-init="load()">
+<div x-data="new UserPageComponent(router, userClient, notifier)" x-init="loadAll(roleClient)">
   <h2>User</h2>
   <div>
     <div class="field">
@@ -8,6 +8,10 @@
     <div class="field">
       <label>Username:</label>
       <span x-text="user.username"></span>
+    </div>
+    <div class="field">
+      <label>Role Names:</label>
+      <span x-text="getRoleNames()"></span>
     </div>
     <div class="options">
       <a class="white form button" href="#/user-list">Back</a>

@@ -2,6 +2,7 @@ var notifier = new Notifier();
 var httpClient = new HttpClient();
 var router = new Router(notifier, httpClient);
 var userClient = new UserClient();
+var roleClient = new RoleClient();
 var sessionClient = new SessionClient();
 var employeeClient = new EmployeeClient();
 var vacationClient = new VacationClient();
