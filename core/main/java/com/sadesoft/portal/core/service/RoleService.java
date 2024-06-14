@@ -6,7 +6,7 @@ import com.sadesoft.portal.core.repo.RoleRepo;
 import java.util.List;
 
 public class RoleService {
-    private RoleRepo repo;
+    private final RoleRepo repo;
 
     public RoleService(RoleRepo repo) {
         this.repo = repo;
@@ -18,5 +18,9 @@ public class RoleService {
 
     public List<Role> list() {
         return repo.list();
+    }
+
+    public List<Role> listByUserId(String userId) {
+        return (userId == null)? repo.list() : repo.listByUserId(userId);
     }
 }

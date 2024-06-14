@@ -24,15 +24,16 @@ public class Main {
         UserRepo userRepo = (opm == null)? new LocalUserRepo(local) : new OpmUserRepo(opm);
         SessionRepo sessionRepo = new LocalSessionRepo(local);
         PermissionRepo permissionRepo = (opm == null)? new LocalPermissionRepo(local) : new OpmPermissionRepo(opm);
+        RoleRepo roleRepo = (opm == null)? new LocalRoleRepo(local) : new OpmRoleRepo(opm);
         EmployeeRepo employeeRepo = (opm == null)? new LocalEmployeeRepo(local) : new OpmEmployeeRepo(opm);
         VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
         ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
         ReceiptRepo receiptRepo = (opm == null)? new LocalReceiptRepo(local) : new OpmReceiptRepo(opm);
-        RoleRepo roleRepo = (opm == null)? new LocalRoleRepo(local) : new OpmRoleRepo(opm);
 
-        UserService userService = new UserService(userRepo, roleRepo, sessionConfig.salt);
+        UserService userService = new UserService(userRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
+        RoleService roleService = new RoleService(roleRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
@@ -42,6 +43,7 @@ public class Main {
         server.enrol(new UserController(userService));
         server.enrol(new SessionController(sessionService));
         server.enrol(new PermissionController(permissionService));
+        server.enrol(new RoleController(roleService));
         server.enrol(new EmployeeController(employeeService));
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));

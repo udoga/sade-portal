@@ -4,6 +4,14 @@ CREATE TABLE users(
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE sessions(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    begin_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    token VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE permissions(
     id IDENTITY PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
@@ -19,14 +27,6 @@ CREATE TABLE user_roles(
     role_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
-);
-
-CREATE TABLE sessions(
-    id IDENTITY PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL,
-    begin_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL,
-    token VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE employees(

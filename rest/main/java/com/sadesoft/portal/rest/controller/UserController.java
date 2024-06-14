@@ -14,7 +14,6 @@ public class UserController extends RestController {
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getUser(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
-        add(HandlerType.GET, "/{id}/roles", c -> send(c, service.listRolesByUserId(getId(c))));
     }
 
     private User getUser(Context c) {
