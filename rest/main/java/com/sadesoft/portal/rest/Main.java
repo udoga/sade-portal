@@ -10,8 +10,7 @@ import com.sadesoft.portal.base.rest.RestServer;
 import com.sadesoft.portal.core.repo.*;
 import com.sadesoft.portal.core.service.*;
 import com.sadesoft.portal.repo.local.*;
-import com.sadesoft.portal.repo.opm.OpmEmployeeRepo;
-import com.sadesoft.portal.repo.opm.OpmUserRepo;
+import com.sadesoft.portal.repo.opm.*;
 import com.sadesoft.portal.rest.controller.*;
 
 public class Main {
@@ -24,12 +23,12 @@ public class Main {
 
         UserRepo userRepo = (opm == null)? new LocalUserRepo(local) : new OpmUserRepo(opm);
         SessionRepo sessionRepo = new LocalSessionRepo(local);
-        PermissionRepo permissionRepo = new LocalPermissionRepo(local);
+        PermissionRepo permissionRepo = (opm == null)? new LocalPermissionRepo(local) : new OpmPermissionRepo(opm);
         EmployeeRepo employeeRepo = (opm == null)? new LocalEmployeeRepo(local) : new OpmEmployeeRepo(opm);
-        VacationRepo vacationRepo = new LocalVacationRepo(local);
-        ExpenseRepo expenseRepo = new LocalExpenseRepo(local);
-        ReceiptRepo receiptRepo = new LocalReceiptRepo(local);
-        RoleRepo roleRepo = new LocalRoleRepo(local);
+        VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
+        ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
+        ReceiptRepo receiptRepo = (opm == null)? new LocalReceiptRepo(local) : new OpmReceiptRepo(opm);
+        RoleRepo roleRepo = (opm == null)? new LocalRoleRepo(local) : new OpmRoleRepo(opm);
 
         UserService userService = new UserService(userRepo, roleRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);

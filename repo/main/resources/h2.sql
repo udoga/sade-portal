@@ -26,8 +26,7 @@ CREATE TABLE sessions(
     user_id INT NOT NULL,
     begin_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
-    token VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+    token VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE employees(
@@ -76,7 +75,7 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,      username,                                                            password
+--        id,      username,                                                                                                                            password
     (default,        'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),
     (default,  'doga.sezgin', 'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
     (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26');
@@ -87,14 +86,15 @@ INSERT INTO permissions  VALUES
     (default, 'user_update');
 
 INSERT INTO roles VALUES
---        id,      name
+--        id,         name
     (default, 'ROLE_ADMIN'),
     (default, 'ROLE_USER');
 
-INSERT INTO user_roles (user_id, role_id) VALUES
+INSERT INTO user_roles VALUES
 --    user_id,    role_id
-        (1,         1),
-        (2,         2);
+    (       1,          1),
+    (       2,          2),
+    (       3,          2);
 
 INSERT INTO employees VALUES
 --        id,  user_id,  first_name, last_name

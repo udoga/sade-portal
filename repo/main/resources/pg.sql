@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS expenses CASCADE;
 DROP TABLE IF EXISTS vacations CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
+DROP TABLE IF EXISTS user_roles CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS permissions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
@@ -41,13 +43,24 @@ CREATE TABLE permissions(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE roles(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_roles(
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE sessions(
     id SERIAL PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
     begin_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
-    token VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+    token VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE employees(
@@ -102,6 +115,17 @@ INSERT INTO permissions  VALUES
 --        id,          name
     (default,   'user_read'),
     (default, 'user_update');
+
+INSERT INTO roles VALUES
+--        id,         name
+    (default, 'ROLE_ADMIN'),
+    (default, 'ROLE_USER');
+
+INSERT INTO user_roles VALUES
+--    user_id,    role_id
+    (       1,          1),
+    (       2,          2),
+    (       3,          2);
 
 INSERT INTO employees VALUES
 --        id, user_id,  first_name, last_name
