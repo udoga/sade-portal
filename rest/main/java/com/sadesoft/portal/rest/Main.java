@@ -29,8 +29,9 @@ public class Main {
         VacationRepo vacationRepo = new LocalVacationRepo(local);
         ExpenseRepo expenseRepo = new LocalExpenseRepo(local);
         ReceiptRepo receiptRepo = new LocalReceiptRepo(local);
+        RoleRepo roleRepo = new LocalRoleRepo(local);
 
-        UserService userService = new UserService(userRepo, sessionConfig.salt);
+        UserService userService = new UserService(userRepo, roleRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);

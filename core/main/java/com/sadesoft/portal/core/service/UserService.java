@@ -1,18 +1,23 @@
 package com.sadesoft.portal.core.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.repo.RoleRepo;
 import com.sadesoft.portal.core.repo.UserRepo;
 
 public class UserService {
     private final UserRepo repo;
+    private final RoleRepo roleRepo;
     private final String salt;
 
-    public UserService(UserRepo repo, String salt) {
+    public UserService(UserRepo repo, RoleRepo roleRepo, String salt) {
         this.repo = repo;
+        this.roleRepo = roleRepo;
         this.salt = salt;
     }
 
@@ -45,5 +50,9 @@ public class UserService {
 
     private void checkMissingField(String value, String field) {
         if (value == null) throw new MissingFieldError(field);
+    }
+
+    public List<Role> listRolesByUserId(String userId) {
+        return roleRepo.listByUserId(userId);
     }
 }

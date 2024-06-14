@@ -14,6 +14,13 @@ CREATE TABLE roles(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE user_roles(
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
 CREATE TABLE sessions(
     id IDENTITY PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
@@ -83,6 +90,11 @@ INSERT INTO roles VALUES
 --        id,      name
     (default, 'ROLE_ADMIN'),
     (default, 'ROLE_USER');
+
+INSERT INTO user_roles (user_id, role_id) VALUES
+--    user_id,    role_id
+        (1,         1),
+        (2,         2);
 
 INSERT INTO employees VALUES
 --        id,  user_id,  first_name, last_name
