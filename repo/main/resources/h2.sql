@@ -55,6 +55,20 @@ CREATE TABLE employees(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE worklogs(
+    id SERIAL PRIMARY KEY NOT NULL,
+    type_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    project_id INT NOT NULL,
+    work_date DATE NOT NULL,
+    duration INT NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (type_id) REFERENCES worklog_types(id) ON DELETE RESTRICT,
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE vacations(
     id IDENTITY PRIMARY KEY NOT NULL,
     employee_id INT NOT NULL,
@@ -134,6 +148,11 @@ INSERT INTO employees VALUES
 --        id,  user_id,  first_name, last_name
     (default,        2, 'Uğur Doğa',  'Sezgin'),
     (default,        3, 'Eylül',      'Erdinç');
+
+INSERT INTO worklogs VALUES
+--        id, type_id, employee_id, project_id,     work_date, duration, status, description
+    (default,       1,           1,          1,  '2022-01-01',        5, 'Done',  'Example1'),
+    (default,       2,           2,          2,  '2022-02-02',        6, 'Done',  'Example2');
 
 INSERT INTO vacations VALUES
 --        id, employee_id,       vacation_type, replacement_employee_id,              start_time,                end_time,  day_count,   description,     status

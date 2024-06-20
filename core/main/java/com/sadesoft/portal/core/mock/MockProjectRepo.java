@@ -6,6 +6,6 @@ import com.sadesoft.portal.core.repo.ProjectRepo;
 
 public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
     public MockProjectRepo() {
-        super("Client");
+        super("Project");
     }
 }
