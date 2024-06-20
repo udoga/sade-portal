@@ -1,0 +1,54 @@
+package com.sadesoft.portal.core.model;
+
+import com.sadesoft.portal.base.repo.Record;
+
+import java.util.Objects;
+
+public class Assignment implements Record {
+    public String id = null;
+    public String userId = null;
+    public String roleId = null;
+
+    public Assignment() {
+    }
+
+    public Assignment(String id, String userId, String roleId) {
+        this.id = id;
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Assignment)) return false;
+        Assignment r = (Assignment) o;
+        return Objects.equals(id, r.id) &&
+                Objects.equals(userId, r.userId) &&
+                Objects.equals(roleId, r.roleId);
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public Assignment copy() {
+        try {
+            return (Assignment) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Assignment withId(String id) {
+        Assignment copy = copy();
+        copy.id = id;
+        return copy;
+    }
+}

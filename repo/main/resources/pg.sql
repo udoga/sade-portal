@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS receipts CASCADE;
 DROP TABLE IF EXISTS expenses CASCADE;
 DROP TABLE IF EXISTS vacations CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
-DROP TABLE IF EXISTS user_roles CASCADE;
+DROP TABLE IF EXISTS assignments CASCADE;
 DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS permissions CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
@@ -74,7 +74,8 @@ CREATE TABLE worklog_types(
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE user_roles(
+CREATE TABLE assignments(
+    id SERIAL PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
     role_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
@@ -168,12 +169,12 @@ INSERT INTO worklog_types VALUES
     (default, 'Meeting'),
     (default, 'Data Analysis');
 
-INSERT INTO user_roles VALUES
---    user_id,    role_id
-    (       1,          1),
-    (       1,          2),
-    (       2,          2),
-    (       3,          2);
+INSERT INTO assignments VALUES
+--        id, user_id,    role_id
+    (default,       1,          1),
+    (default,       1,          2),
+    (default,       2,          2),
+    (default,       3,          2);
 
 INSERT INTO employees VALUES
 --        id, user_id,  first_name, last_name

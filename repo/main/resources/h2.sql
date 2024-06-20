@@ -22,6 +22,14 @@ CREATE TABLE roles(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE assignments(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
 CREATE TABLE clients(
     id IDENTITY PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
@@ -38,13 +46,6 @@ CREATE TABLE projects(
 CREATE TABLE worklog_types(
     id IDENTITY PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE user_roles(
-    user_id INT NOT NULL,
-    role_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
 CREATE TABLE employees(
@@ -137,12 +138,12 @@ INSERT INTO worklog_types VALUES
     (default, 'Meeting'),
     (default, 'Data Analysis');
 
-INSERT INTO user_roles VALUES
---    user_id,    role_id
-    (       1,          1),
-    (       1,          2),
-    (       2,          2),
-    (       3,          2);
+INSERT INTO assignments VALUES
+--        id, user_id,    role_id
+    (default,       1,          1),
+    (default,       1,          2),
+    (default,       2,          2),
+    (default,       3,          2);
 
 INSERT INTO employees VALUES
 --        id,  user_id,  first_name, last_name

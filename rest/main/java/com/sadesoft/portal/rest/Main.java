@@ -25,6 +25,7 @@ public class Main {
         SessionRepo sessionRepo = new LocalSessionRepo(local);
         PermissionRepo permissionRepo = (opm == null)? new LocalPermissionRepo(local) : new OpmPermissionRepo(opm);
         RoleRepo roleRepo = (opm == null)? new LocalRoleRepo(local) : new OpmRoleRepo(opm);
+        AssignmentRepo assignmentRepo = (opm == null)? new LocalAssignmentRepo(local) : new OpmAssignmentRepo(opm);
         EmployeeRepo employeeRepo = (opm == null)? new LocalEmployeeRepo(local) : new OpmEmployeeRepo(opm);
         VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
         ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
@@ -37,6 +38,7 @@ public class Main {
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
         RoleService roleService = new RoleService(roleRepo);
+        AssignmentService assignmentService = new AssignmentService(assignmentRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
@@ -50,6 +52,7 @@ public class Main {
         server.enrol(new SessionController(sessionService));
         server.enrol(new PermissionController(permissionService));
         server.enrol(new RoleController(roleService));
+        server.enrol(new AssignmentController(assignmentService));
         server.enrol(new EmployeeController(employeeService));
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));

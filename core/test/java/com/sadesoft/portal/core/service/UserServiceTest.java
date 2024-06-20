@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.mock.MockRoleRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

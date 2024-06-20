@@ -51,6 +51,16 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return call(() -> command(createDeleteSql(id), read(id), false));
     }
 
+    protected T readByValues(T record) {
+        String sql = createSelectSql(" where " + repeat("%1s = %2$s", false, " and "));
+        return call(() -> getFirst(query(createFilledStatement(sql, record)), ""));
+    }
+
+    protected T deleteByValues(T record) {
+        T row = readByValues(record);
+        return call(() -> command(createDeleteSql(row.getId()), row, false));
+    }
+
     protected abstract T toObject(ResultSet s) throws SQLException;
 
     protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;
@@ -88,7 +98,10 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected List<T> query(String sql) throws SQLException {
-        PreparedStatement statement = createStatement(sql);
+        return query(createStatement(sql));
+    }
+
+    protected List<T> query(PreparedStatement statement) throws SQLException {
         ResultSet set = statement.executeQuery();
         List<T> objects = getObjects(set);
         statement.close();
@@ -99,23 +112,25 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return columns.get(index).name;
     }
 
-    protected String createSelectSql(String appendedSQL) {
-        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
-    }
-
-    private T command(String sql, T record, boolean fill) throws SQLException {
+    protected T command(String sql, T record, boolean fill) throws SQLException {
         PreparedStatement statement = createStatementWithColumns(sql);
         if (fill) fillStatement(statement, record);
         statement.executeUpdate();
         return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
     }
 
-    protected PreparedStatement createStatement(String sql) {
-        return call(() -> connection.prepareStatement(sql));
+    protected PreparedStatement createStatement(String sql) throws SQLException {
+        return connection.prepareStatement(sql);
     }
 
-    protected PreparedStatement createStatementWithColumns(String sql) {
-        return call(() -> connection.prepareStatement(sql, getColumnNames().toArray(new String[0])));
+    protected PreparedStatement createFilledStatement(String sql, T record) throws SQLException {
+        PreparedStatement statement = createStatement(sql);
+        fillStatement(statement, record);
+        return statement;
+    }
+
+    protected PreparedStatement createStatementWithColumns(String sql) throws SQLException {
+        return connection.prepareStatement(sql, getColumnNames().toArray(new String[0]));
     }
 
     protected T getFirst(List<T> objects, String id) {
@@ -135,36 +150,43 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return result;
     }
 
-    private String getIdName() {
+    protected String getIdName() {
         return getColumnName(0);
     }
 
-    private String createInsertSql() {
+    protected String createSelectSql(String appendedSQL) {
+        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
+    }
+
+    protected String createInsertSql() {
         return "insert into " + tableName + " (" + repeat("%1$s", false) + ") values (" + repeat("%2$s", false) + ")";
     }
 
-    private String createUpdateSql() {
+    protected String createUpdateSql() {
         return "update " + tableName + " set " + repeat("%1$s = %2$s", false) + " where " + getIdName() + " = ?";
     }
 
-    private String createDeleteSql(String id) {
+    protected String createDeleteSql(String id) {
         return "delete from " + tableName + " where " + getIdName() + " = " + id;
     }
 
-    private String repeat(String template, boolean includeId) {
-        String delimiter = ", ";
+    protected String repeat(String template, boolean includeId) {
+        return repeat(template, includeId, ", ");
+    }
+
+    protected String repeat(String template, boolean includeId, String delimiter) {
         StringBuilder result = new StringBuilder();
         for (JdbcColumn column: columns.subList(includeId? 0 : 1, columns.size()))
             result.append(String.format(template, column.name, getPlaceholder(column))).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
     }
 
-    private String getPlaceholder(JdbcColumn column) {
+    protected String getPlaceholder(JdbcColumn column) {
         if (isPostgresql() && !column.type.isEmpty()) return "?::" + column.type;
         return "?";
     }
 
-    private boolean isPostgresql() {
+    protected boolean isPostgresql() {
         try {
             return connection.getMetaData().getDriverName().toLowerCase().contains("postgresql");
         } catch (SQLException e) {

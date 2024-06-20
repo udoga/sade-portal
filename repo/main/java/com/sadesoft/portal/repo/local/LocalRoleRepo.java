@@ -36,6 +36,6 @@ public class LocalRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     @Override
     public List<Role> listByUserId(String userId) {
         return call(() -> query("SELECT r.* FROM " + tableName +
-                " r JOIN user_roles ur ON r.id = ur.role_id WHERE ur.user_id = " + userId));
+                " r JOIN assignments ur ON r.id = ur.role_id WHERE ur.user_id = " + userId));
     }
 }
