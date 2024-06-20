@@ -22,6 +22,11 @@ CREATE TABLE roles(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE clients(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE user_roles(
     user_id INT NOT NULL,
     role_id INT NOT NULL,
@@ -89,6 +94,11 @@ INSERT INTO roles VALUES
 --        id,         name
     (default, 'ROLE_ADMIN'),
     (default, 'ROLE_USER');
+
+INSERT INTO clients VALUES
+--        id,      name
+    (default, 'Client1'),
+    (default, 'Client2');
 
 INSERT INTO user_roles VALUES
 --    user_id,    role_id
