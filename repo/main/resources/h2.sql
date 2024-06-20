@@ -35,6 +35,11 @@ CREATE TABLE projects(
     FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE worklog_types(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE user_roles(
     user_id INT NOT NULL,
     role_id INT NOT NULL,
@@ -112,6 +117,11 @@ INSERT INTO projects VALUES
 --        id, client_id,      name, description
     (default,         1, 'Project1', 'Example1'),
     (default,         2, 'Project2', 'Example2');
+
+INSERT INTO worklog_types VALUES
+--        id,      name
+    (default, 'Meeting'),
+    (default, 'Data Analysis');
 
 INSERT INTO user_roles VALUES
 --    user_id,    role_id
