@@ -61,6 +61,14 @@ CREATE TABLE clients(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE projects(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    client_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE RESTRICT
+);
+
 CREATE TABLE user_roles(
     user_id INT NOT NULL,
     role_id INT NOT NULL,
@@ -130,6 +138,11 @@ INSERT INTO clients VALUES
 --        id,      name
     (default, 'Client1'),
     (default, 'Client2');
+
+INSERT INTO projects VALUES
+--        id, client_id,      name, description
+    (default,         1, 'Project1', 'Example1'),
+    (default,         2, 'Project2', 'Example2');
 
 INSERT INTO user_roles VALUES
 --    user_id,    role_id
