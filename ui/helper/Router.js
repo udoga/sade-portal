@@ -73,6 +73,9 @@ class Router {
     if (location.hash === "#/receipt-list") return ["layout", "receipt-list"];
     if (location.hash.startsWith("#/receipt-form")) return ["layout", "receipt-form"];
     if (location.hash.startsWith("#/receipt-page")) return ["layout", "receipt-page"];
+    if (location.hash === "#/worklog-list") return ["layout", "worklog-list"];
+    if (location.hash.startsWith("#/worklog-form")) return ["layout", "worklog-form"];
+    if (location.hash.startsWith("#/worklog-page")) return ["layout", "worklog-page"];
     return ["layout", "not-found"];
   }
 }

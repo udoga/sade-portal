@@ -1,0 +1,41 @@
+<div x-data="new WorklogListComponent(worklogClient, notifier)" x-init="loadAll(employeeClient, worklogTypeClient, projectClient)">
+    <h2>Worklogs</h2>
+    <table>
+      <tr>
+        <th class="narrow">Id</th>
+        <th>Type</th>
+        <th>Employee</th>
+        <th>Project</th>
+        <th>Work Date</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th class="narrow last">
+          <a class="green header icon button" href="#/worklog-form"><i class="fas fa-plus"></i> New</a>
+        </th>
+      </tr>
+      <template x-for="worklog in worklogs">
+        <tr>
+          <td x-text="worklog.id" class="narrow"></td>
+          <td x-text="getTypeName(worklog.typeId)"></td>
+          <td x-text="getEmployeeName(worklog.employeeId)"></td>
+          <td x-text="getProjectName(worklog.projectId)"></td>
+          <td x-text="worklog.workDate"></td>
+          <td x-text="worklog.duration"></td>
+          <td x-text="worklog.status"></td>
+          <td x-text="worklog.description"></td>
+          <td class="narrow last">
+            <a title="Show" class="light-blue row button" :href="'#/worklog-page/' + worklog.id">
+              <i class="far fa-eye"></i>
+            </a>
+            <a title="Edit" class="yellow row button" :href="'#/worklog-form/' + worklog.id">
+              <i class="fas fa-pencil-alt"></i>
+            </a>
+            <a title="Delete" class="red row button" @click="remove(worklog.id)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </template>
+    </table>
+  </div>

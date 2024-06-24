@@ -20,12 +20,12 @@ public class WorklogTypeService {
         return repo.read(id);
     }
 
-    public WorklogType create(WorklogType WorklogType) {
-        return repo.create(WorklogType);
+    public WorklogType create(WorklogType worklogType) {
+        return repo.create(worklogType);
     }
 
-    public WorklogType update(String id, WorklogType WorklogType) {
-        return repo.update(id, WorklogType);
+    public WorklogType update(String id, WorklogType worklogType) {
+        return repo.update(id, worklogType);
     }
 
     public WorklogType delete(String id) {
