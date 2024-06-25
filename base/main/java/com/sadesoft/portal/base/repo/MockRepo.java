@@ -60,6 +60,6 @@ public class MockRepo<T extends Record> implements Repo<T> {
 
     private int findIndex(String id) {
         for (int i = 0; i < records.size(); i++) if (id.equals(records.get(i).getId())) return i;
-        throw new RecordNotFoundError(tableName, id);
+        throw new RecordNotFoundError(tableName, "id=" + id);
     }
 }

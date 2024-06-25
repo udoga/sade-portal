@@ -28,6 +28,15 @@ public class Assignment implements Record {
     }
 
     @Override
+    public String toString() {
+        return "Assignment[" +
+                "id=" + id +
+                " userId=" + userId +
+                " roleId=" + roleId +
+                "]";
+    }
+
+    @Override
     public String getId() {
         return id;
     }

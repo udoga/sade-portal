@@ -17,6 +17,6 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
 
     private Assignment readByValues(Assignment a) {
         for (Assignment r: records) if (r.withId(null).equals(a.withId(null))) return r;
-        throw new RecordNotFoundError(tableName, "");
+        throw new RecordNotFoundError(tableName, "record=" + a);
     }
 }

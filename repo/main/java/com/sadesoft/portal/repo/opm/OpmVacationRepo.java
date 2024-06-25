@@ -52,8 +52,8 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     @Override
     public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
         if (status == null) return paginate(pageNo, pageSize);
-        return call(() -> query(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
+        return call(() -> query(createStatement(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
                 + " LIMIT " + pageSize
-                + " OFFSET " + ((pageNo-1) * pageSize))));
+                + " OFFSET " + ((pageNo-1) * pageSize)))));
     }
 }

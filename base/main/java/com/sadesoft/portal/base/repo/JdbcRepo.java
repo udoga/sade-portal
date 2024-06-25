@@ -22,43 +22,50 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        return call(() -> query(createSelectSql("")));
+        String sql = createSelectSql("");
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<T> paginate(int pageNo, int pageSize) {
-        return call(() -> query(createSelectSql(" LIMIT " + (pageSize) + " OFFSET " + ((pageNo-1) * pageSize))));
+        String sql = createSelectSql(" LIMIT " + pageSize + " OFFSET " + (pageNo-1) * pageSize);
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public T create(T record) {
-        return call(() -> command(createInsertSql(), record, true));
+        String sql = createInsertSql();
+        return call(() -> command(fill(createCommandStatement(sql), record)));
     }
 
     @Override
     public T read(String id) {
-        return call(() -> getFirst(query(createSelectSql(" where " + getIdName() + " = " + id)), id));
+        String sql = createSelectSql(" where " + getIdName() + " = " + id);
+        return call(() -> getOrThrow(query(createStatement(sql)), getIdName() + "=" + id));
     }
 
     @Override
     public T update(String id, T record) {
         record.setId(id);
-        return call(() -> command(createUpdateSql(), record, true));
+        return call(() -> command(fill(createCommandStatement(createUpdateSql()), record)));
     }
 
     @Override
     public T delete(String id) {
-        return call(() -> command(createDeleteSql(id), read(id), false));
+        T result = read(id);
+        call(() -> command(createStatement(createDeleteSql(id))));
+        return result;
     }
 
     protected T readByValues(T record) {
         String sql = createSelectSql(" where " + repeat("%1s = %2$s", false, " and "));
-        return call(() -> getFirst(query(createFilledStatement(sql, record)), ""));
+        return call(() -> getOrThrow(query(fill(createStatement(sql), record)), "record=" + record));
     }
 
     protected T deleteByValues(T record) {
-        T row = readByValues(record);
-        return call(() -> command(createDeleteSql(row.getId()), row, false));
+        T result = readByValues(record);
+        call(() -> command(createStatement(createDeleteSql(result.getId()))));
+        return result;
     }
 
     protected abstract T toObject(ResultSet s) throws SQLException;
@@ -97,10 +104,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         catch (Exception e) { throw new RuntimeException(e); }
     }
 
-    protected List<T> query(String sql) throws SQLException {
-        return query(createStatement(sql));
-    }
-
     protected List<T> query(PreparedStatement statement) throws SQLException {
         ResultSet set = statement.executeQuery();
         List<T> objects = getObjects(set);
@@ -108,33 +111,27 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return objects;
     }
 
-    protected String getColumnName(int index) {
-        return columns.get(index).name;
-    }
-
-    protected T command(String sql, T record, boolean fill) throws SQLException {
-        PreparedStatement statement = createStatementWithColumns(sql);
-        if (fill) fillStatement(statement, record);
+    protected T command(PreparedStatement statement) throws SQLException {
         statement.executeUpdate();
-        return fill? getFirst(getObjects(statement.getGeneratedKeys()), record.getId()) : record;
+        ResultSet set = statement.getGeneratedKeys();
+        return set.isBeforeFirst()? getOrThrow(getObjects(set), "") : null;
     }
 
     protected PreparedStatement createStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql);
     }
 
-    protected PreparedStatement createFilledStatement(String sql, T record) throws SQLException {
-        PreparedStatement statement = createStatement(sql);
-        fillStatement(statement, record);
-        return statement;
-    }
-
-    protected PreparedStatement createStatementWithColumns(String sql) throws SQLException {
+    protected PreparedStatement createCommandStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql, getColumnNames().toArray(new String[0]));
     }
 
-    protected T getFirst(List<T> objects, String id) {
-        if (objects.isEmpty()) throw new RecordNotFoundError(tableName, id);
+    protected PreparedStatement fill(PreparedStatement s, T t) throws SQLException {
+        fillStatement(s, t);
+        return s;
+    }
+
+    protected T getOrThrow(List<T> objects, String message) {
+        if (objects.isEmpty()) throw new RecordNotFoundError(tableName, message);
         return objects.get(0);
     }
 
@@ -150,6 +147,10 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return result;
     }
 
+    protected String getColumnName(int index) {
+        return columns.get(index).name;
+    }
+
     protected String getIdName() {
         return getColumnName(0);
     }
@@ -159,15 +160,19 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected String createInsertSql() {
-        return "insert into " + tableName + " (" + repeat("%1$s", false) + ") values (" + repeat("%2$s", false) + ")";
+        return "insert into " + tableName + " (" + repeat("%1$s") + ") values (" + repeat("%2$s") + ")";
     }
 
     protected String createUpdateSql() {
-        return "update " + tableName + " set " + repeat("%1$s = %2$s", false) + " where " + getIdName() + " = ?";
+        return "update " + tableName + " set " + repeat("%1$s = %2$s") + " where " + getIdName() + " = ?";
     }
 
     protected String createDeleteSql(String id) {
         return "delete from " + tableName + " where " + getIdName() + " = " + id;
+    }
+
+    protected String repeat(String template) {
+        return repeat(template, false);
     }
 
     protected String repeat(String template, boolean includeId) {
