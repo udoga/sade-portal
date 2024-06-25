@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockWorklogTypeRepo;
 import com.sadesoft.portal.core.model.WorklogType;
-import com.sadesoft.portal.core.sample.WorklogTypeSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class WorklogTypeServiceTest {
     public void setup() {
         repo = new MockWorklogTypeRepo();
         service = new WorklogTypeService(repo);
-        validWorklogType = WorklogTypeSamples.validWorklogType.copy();
+        validWorklogType = new WorklogType(null, "Meeting");
     }
 
     @Nested

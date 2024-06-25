@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.*;
-import com.sadesoft.portal.core.sample.ReceiptSamples;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ReceiptServiceTest {
     private MockReceiptRepo repo;
@@ -39,7 +39,14 @@ public class ReceiptServiceTest {
     public void setup() {
         repo = new MockReceiptRepo();
         service = new ReceiptService(repo);
-        validReceipt = ReceiptSamples.validReceipt.copy();
+        validReceipt = new Receipt(
+                null,
+                "1",
+                LocalDate.of(2022, 1, 1),
+                ReceiptCategory.Other,
+                new BigDecimal("10.20"),
+                (short) 18,
+                "TaxiCoast");
     }
 
     @Test

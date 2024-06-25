@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
-import com.sadesoft.portal.core.sample.UserSamples;
 
 public class UserServiceTest {
     private MockUserRepo repo;
@@ -19,7 +18,7 @@ public class UserServiceTest {
     public void setup() {
         repo = new MockUserRepo();
         service = new UserService(repo, "");
-        validUser = UserSamples.validUser.copy();
+        validUser = new User(null, "sample-username", "sample-password");
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockClientRepo;
 import com.sadesoft.portal.core.model.Client;
-import com.sadesoft.portal.core.sample.ClientSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class ClientServiceTest {
     public void setup() {
         repo = new MockClientRepo();
         service = new ClientService(repo);
-        validClient = ClientSamples.validClient.copy();
+        validClient = new Client(null, "Sample Firm");
     }
 
     @Nested

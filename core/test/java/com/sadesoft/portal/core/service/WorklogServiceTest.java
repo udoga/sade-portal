@@ -2,11 +2,12 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockWorklogRepo;
 import com.sadesoft.portal.core.model.Worklog;
-import com.sadesoft.portal.core.sample.WorklogSamples;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +20,15 @@ public class WorklogServiceTest {
     public void setup() {
         repo = new MockWorklogRepo();
         service = new WorklogService(repo);
-        validWorklog = WorklogSamples.validWorklog.copy();
+        validWorklog = new Worklog(
+                null,
+                "1",
+                "1",
+                "1",
+                LocalDate.of(2024, 1, 1),
+                2,
+                "Approved",
+                "Sample Worklog");
     }
 
     @Nested

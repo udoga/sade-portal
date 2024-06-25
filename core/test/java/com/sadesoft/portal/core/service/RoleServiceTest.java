@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockRoleRepo;
 import com.sadesoft.portal.core.model.Role;
-import com.sadesoft.portal.core.sample.RoleSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class RoleServiceTest {
     public void setup() {
         repo = new MockRoleRepo();
         service = new RoleService(repo);
-        validRole = RoleSamples.validRole.copy();
+        validRole = new Role(null, "admin");
     }
 
     @Nested

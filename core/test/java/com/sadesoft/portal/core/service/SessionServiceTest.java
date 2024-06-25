@@ -6,8 +6,6 @@ import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
-import com.sadesoft.portal.core.sample.SessionSamples;
-import com.sadesoft.portal.core.sample.UserSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -43,8 +41,8 @@ public class SessionServiceTest {
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
         service = new SessionService(config, sessionRepo, userRepo);
-        firstUser = UserSamples.firstUser.copy();
-        secondUser = UserSamples.secondUser.copy();
+        firstUser = new User(null, "first-username", "first-password");
+        secondUser = new User(null, "second-username", "second-password");
     }
 
     @Test
@@ -82,7 +80,12 @@ public class SessionServiceTest {
 
         @BeforeEach
         public void setup() {
-            session = sessionRepo.create(SessionSamples.validSession.copy());
+            session = sessionRepo.create(new Session(
+                    null,
+                    "1",
+                    LocalDateTime.of(2022, 1, 1, 10, 0),
+                    LocalDateTime.of(2022, 1, 1, 12, 0),
+                    "sample-token"));
         }
 
         @Test

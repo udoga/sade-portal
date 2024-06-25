@@ -3,7 +3,6 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.model.Employee;
-import com.sadesoft.portal.core.sample.EmployeeSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ public class EmployeeServiceTest {
     public void setup() {
         repo = new MockEmployeeRepo();
         service = new EmployeeService(repo);
-        validEmployee = EmployeeSamples.validEmployee.copy();
+        validEmployee = new Employee(null, "1", "John", "Green");
     }
 
     @Test

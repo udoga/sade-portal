@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.model.Permission;
-import com.sadesoft.portal.core.sample.PermissionSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ public class PermissionServiceTest {
     public void setup() {
         repo = new MockPermissionRepo();
         service = new PermissionService(repo);
-        validPermission = PermissionSamples.validPermission.copy();
+        validPermission = new Permission(null, "user_create");
     }
 
     @Nested

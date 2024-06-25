@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockProjectRepo;
 import com.sadesoft.portal.core.model.Project;
-import com.sadesoft.portal.core.sample.ProjectSamples;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +18,11 @@ public class ProjectServiceTest {
     public void setup() {
         repo = new MockProjectRepo();
         service = new ProjectService(repo);
-        validProject = ProjectSamples.validProject.copy();
+        validProject = new Project(
+                null,
+                "1",
+                "Sample Project",
+                "Sample Description");
     }
 
     @Nested

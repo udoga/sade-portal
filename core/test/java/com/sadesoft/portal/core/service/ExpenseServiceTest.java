@@ -3,11 +3,15 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
+import com.sadesoft.portal.core.model.ApprovalStatus;
+import com.sadesoft.portal.core.model.Currency;
 import com.sadesoft.portal.core.model.Expense;
-import com.sadesoft.portal.core.sample.ExpenseSamples;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +33,15 @@ public class ExpenseServiceTest {
     public void setup() {
         repo = new MockExpenseRepo();
         service = new ExpenseService(repo);
-        validExpense = ExpenseSamples.validExpense.copy();
+        validExpense = new Expense(
+                null,
+                "1",
+                LocalDate.of(2022, 1, 1),
+                new BigDecimal("1000.10"),
+                Currency.EUR,
+                true,
+                "Example expense",
+                ApprovalStatus.Approved);
     }
 
     @Test
