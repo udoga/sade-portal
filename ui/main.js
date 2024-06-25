@@ -9,5 +9,6 @@ var vacationClient = new VacationClient();
 var expenseClient = new ExpenseClient();
 var receiptClient = new ReceiptClient();
 var worklogTypeClient = new WorklogTypeClient();
+var clientClient = new ClientClient();
 var projectClient = new ProjectClient();
 var worklogClient = new WorklogClient();

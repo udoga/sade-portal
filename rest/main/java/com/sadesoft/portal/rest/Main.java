@@ -30,9 +30,10 @@ public class Main {
         VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
         ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
         ReceiptRepo receiptRepo = (opm == null)? new LocalReceiptRepo(local) : new OpmReceiptRepo(opm);
-        WorklogRepo worklogRepo = (opm == null)? new LocalWorklogRepo(local) : new OpmWorklogRepo(opm);
         WorklogTypeRepo worklogTypeRepo = (opm == null)? new LocalWorklogTypeRepo(local) : new OpmWorklogTypeRepo(opm);
+        ClientRepo clientRepo = (opm == null)? new LocalClientRepo(local) : new OpmClientRepo(opm);
         ProjectRepo projectRepo = (opm == null)? new LocalProjectRepo(local) : new OpmProjectRepo(opm);
+        WorklogRepo worklogRepo = (opm == null)? new LocalWorklogRepo(local) : new OpmWorklogRepo(opm);
 
         UserService userService = new UserService(userRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
@@ -43,9 +44,10 @@ public class Main {
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        WorklogService worklogService = new WorklogService(worklogRepo);
         WorklogTypeService worklogTypeService = new WorklogTypeService(worklogTypeRepo);
+        ClientService clientService = new ClientService(clientRepo);
         ProjectService projectService = new ProjectService(projectRepo);
+        WorklogService worklogService = new WorklogService(worklogRepo);
 
         RestServer server = new RestServer(restConfig);
         server.enrol(new UserController(userService));
@@ -57,8 +59,9 @@ public class Main {
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new ReceiptController(receiptService));
-        server.enrol(new WorklogController(worklogService));
         server.enrol(new WorklogTypeController(worklogTypeService));
+        server.enrol(new ClientController(clientService));
+        server.enrol(new WorklogController(worklogService));
         server.enrol(new ProjectController(projectService));
         server.run();
     }

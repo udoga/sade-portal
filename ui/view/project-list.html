@@ -1,0 +1,33 @@
+<div x-data="new ProjectListComponent(projectClient, notifier)" x-init="loadAll(clientClient)">
+  <h2>Projects</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>Client</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th class="narrow last">
+        <a class="green header icon button" href="#/project-form"><i class="fas fa-plus"></i> New</a>
+      </th>
+    </tr>
+    <template x-for="project in projects">
+      <tr>
+        <td x-text="project.id" class="narrow"></td>
+        <td x-text="getClientName(project.clientId)"></td>
+        <td x-text="project.name"></td>
+        <td x-text="project.description"></td>
+        <td class="narrow last">
+          <a title="Show" class="light-blue row button" :href="'#/project-page/' + project.id">
+            <i class="far fa-eye"></i>
+          </a>
+          <a title="Edit" class="yellow row button" :href="'#/project-form/' + project.id">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <a title="Delete" class="red row button" @click="remove(project.id)">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+    </template>
+  </table>
+</div>

@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.model.Receipt;
 import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 

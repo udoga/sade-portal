@@ -1,42 +1,42 @@
 <div x-data="new WorklogPageComponent(router, worklogClient, notifier)" x-init="load()">
-    <h2>Worklog</h2>
-    <div>
-      <div class="field">
-        <label>Id:</label>
-        <span x-text="worklog.id"></span>
-      </div>
-      <div class="field">
-          <label>Type Id:</label>
-          <span x-text="worklog.typeId"></span>
-      </div>
-      <div class="field">
-        <label>Employee Id:</label>
-        <span x-text="worklog.employeeId"></span>
-      </div>
-      <div class="field">
-        <label>Project Id:</label>
-        <span x-text="worklog.projectId"></span>
-      </div>
-      <div class="field">
-        <label>Work Date</label>
-        <span x-text="worklog.workDate"></span>
-      </div>
-      <div class="field">
-        <label>Duration</label>
-        <span x-text="worklog.duration"></span>
-      </div>
-      <div class="field">
-        <label>Status</label>
-        <span x-text="worklog.status"></span>
-      </div>
-      <div class="field">
-        <label>Description</label>
-        <span x-text="worklog.description"></span>
-      </div>
-      <div class="options">
-        <a class="white form button" href="#/worklog-list">Back</a>
-        <a class="yellow form button" :href="'#/worklog-form/' + worklog.id">Edit</a>
-        <a class="red form button" @click="remove()">Delete</a>
-      </div>
+  <h2>Worklog</h2>
+  <div>
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="worklog.id"></span>
+    </div>
+    <div class="field">
+        <label>Type Id:</label>
+        <span x-text="worklog.typeId"></span>
+    </div>
+    <div class="field">
+      <label>Employee Id:</label>
+      <span x-text="worklog.employeeId"></span>
+    </div>
+    <div class="field">
+      <label>Project Id:</label>
+      <span x-text="worklog.projectId"></span>
+    </div>
+    <div class="field">
+      <label>Work Date</label>
+      <span x-text="worklog.workDate"></span>
+    </div>
+    <div class="field">
+      <label>Duration</label>
+      <span x-text="worklog.duration"></span>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <span x-text="worklog.status"></span>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <span x-text="worklog.description"></span>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#/worklog-list">Back</a>
+      <a class="yellow form button" :href="'#/worklog-form/' + worklog.id">Edit</a>
+      <a class="red form button" @click="remove()">Delete</a>
     </div>
   </div>
+</div>

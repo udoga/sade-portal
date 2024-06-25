@@ -1,0 +1,21 @@
+<div x-data="new ProjectFormComponent(router, projectClient, notifier)" x-init="load()">
+  <h2>Project Form</h2>
+  <form>
+    <div class="field">
+      <label>Client Id</label>
+      <input type="text" placeholder="Client Id" x-model="project.clientId"/>
+      </div>
+      <div class="field">
+          <label>Name</label>
+          <input type="text" placeholder="Name" x-model="project.name"/>
+      </div>
+      <div class="field">
+          <label>Description</label>
+          <input type="text" placeholder="Description" x-model="project.description"/>
+      </div>
+      <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="save()">Save</a>
+    </div>
+  </form>
+</div>

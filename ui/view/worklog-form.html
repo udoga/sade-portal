@@ -1,37 +1,37 @@
 <div x-data="new WorklogFormComponent(router, worklogClient, notifier)" x-init="load()">
-    <h2>Worklog Form</h2>
-    <form>
-      <div class="field">
-        <label>Type Id</label>
-        <input type="text" placeholder="Type Id" x-model="worklog.typeId"/>
-      </div>
-        <div class="field">
-            <label>Employee Id</label>
-            <input type="text" placeholder="Employee Id" x-model="worklog.employeeId"/>
-        </div>
-        <div class="field">
-            <label>Project Id</label>
-            <input type="text" placeholder="Project Id" x-model="worklog.projectId"/>
-        </div>
-        <div class="field">
-            <label>Work Date</label>
-            <input type="date" placeholder="Work Date" x-model="worklog.workDate"/>
-        </div>
-        <div class="field">
-            <label>Duration</label>
-            <input type="text" placeholder="Duration" x-model="worklog.duration"/>
-        </div>
-        <div class="field">
-            <label>Status</label>
-            <input type="text" placeholder="Status" x-model="worklog.status"/>
-        </div>
-        <div class="field">
-            <label>Description</label>
-            <textarea placeholder="Description" x-model="worklog.description"></textarea>
-        </div>
-      <div class="options">
-        <a class="white form button" @click="quit()">Back</a>
-        <a class="green form button" @click="save()">Save</a>
-      </div>
-    </form>
-  </div>
+  <h2>Worklog Form</h2>
+  <form>
+    <div class="field">
+      <label>Type Id</label>
+      <input type="text" placeholder="Type Id" x-model="worklog.typeId"/>
+    </div>
+    <div class="field">
+        <label>Employee Id</label>
+        <input type="text" placeholder="Employee Id" x-model="worklog.employeeId"/>
+    </div>
+    <div class="field">
+        <label>Project Id</label>
+        <input type="text" placeholder="Project Id" x-model="worklog.projectId"/>
+    </div>
+    <div class="field">
+        <label>Work Date</label>
+        <input type="date" placeholder="Work Date" x-model="worklog.workDate"/>
+    </div>
+    <div class="field">
+        <label>Duration</label>
+        <input type="text" placeholder="Duration" x-model="worklog.duration"/>
+    </div>
+    <div class="field">
+        <label>Status</label>
+        <input type="text" placeholder="Status" x-model="worklog.status"/>
+    </div>
+    <div class="field">
+        <label>Description</label>
+        <textarea placeholder="Description" x-model="worklog.description"></textarea>
+    </div>
+    <div class="options">
+      <a class="white form button" @click="quit()">Back</a>
+      <a class="green form button" @click="save()">Save</a>
+    </div>
+  </form>
+</div>
