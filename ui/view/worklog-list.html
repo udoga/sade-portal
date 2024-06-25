@@ -1,9 +1,9 @@
-<div x-data="new WorklogListComponent(worklogClient, notifier)" x-init="loadAll(employeeClient, worklogTypeClient, projectClient)">
+<div x-data="new WorklogListComponent(worklogClient, notifier)" x-init="loadAll(employeeClient, activityClient, projectClient)">
   <h2>Worklogs</h2>
   <table>
     <tr>
       <th class="narrow">Id</th>
-      <th>Type</th>
+      <th>Activity</th>
       <th>Employee</th>
       <th>Project</th>
       <th>Work Date</th>
@@ -17,7 +17,7 @@
     <template x-for="worklog in worklogs">
       <tr>
         <td x-text="worklog.id" class="narrow"></td>
-        <td x-text="getTypeName(worklog.typeId)"></td>
+        <td x-text="getActivityName(worklog.activityId)"></td>
         <td x-text="getEmployeeName(worklog.employeeId)"></td>
         <td x-text="getProjectName(worklog.projectId)"></td>
         <td x-text="worklog.workDate"></td>

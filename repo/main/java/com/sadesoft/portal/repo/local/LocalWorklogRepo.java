@@ -15,7 +15,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public LocalWorklogRepo(Connection connection) {
         super(connection, "worklogs", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("type_id"),
+                new JdbcColumn("activity_id"),
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("project_id"),
                 new JdbcColumn("work_date"),
@@ -29,7 +29,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public Worklog toObject(ResultSet s) throws SQLException {
         return new Worklog(
                 getId(s, "id"),
-                getId(s, "type_id"),
+                getId(s, "activity_id"),
                 getId(s, "employee_id"),
                 getId(s, "project_id"),
                 getLocalDate(s, "work_date"),
@@ -42,7 +42,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.typeId);
+        setId(s, i++, o.activityId);
         setId(s, i++, o.employeeId);
         setId(s, i++, o.projectId);
         setLocalDate(s, i++, o.workDate);

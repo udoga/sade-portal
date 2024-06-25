@@ -4,27 +4,27 @@ import com.sadesoft.portal.base.repo.Record;
 
 import java.util.Objects;
 
-public class WorklogType implements Record {
+public class Activity implements Record {
     public String id;
     public String name;
 
-    public WorklogType(String id, String name) {
+    public Activity(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public WorklogType(){}
+    public Activity(){}
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof WorklogType)) return false;
-        WorklogType w = (WorklogType) o;
+        if (!(o instanceof Activity)) return false;
+        Activity w = (Activity) o;
         return Objects.equals(id, w.id) && Objects.equals(name, w.name);
     }
 
     @Override
     public String toString() {
-        return "WorklogType[" +
+        return "Activity[" +
                 "id=" + id +
                 " name=" + name +
                 ']';
@@ -40,23 +40,23 @@ public class WorklogType implements Record {
         this.id = id;
     }
 
-    public WorklogType copy() {
+    public Activity copy() {
         try {
-            return (WorklogType) clone();
+            return (Activity) clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public WorklogType withId(String id) {
-        WorklogType worklogType = copy();
-        worklogType.id = id;
-        return worklogType;
+    public Activity withId(String id) {
+        Activity activity = copy();
+        activity.id = id;
+        return activity;
     }
 
-    public WorklogType withName(String name) {
-        WorklogType worklogType = copy();
-        worklogType.name = name;
-        return worklogType;
+    public Activity withName(String name) {
+        Activity activity = copy();
+        activity.name = name;
+        return activity;
     }
 }

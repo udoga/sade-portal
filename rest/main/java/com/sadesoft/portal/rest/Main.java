@@ -30,7 +30,7 @@ public class Main {
         VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
         ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
         ReceiptRepo receiptRepo = (opm == null)? new LocalReceiptRepo(local) : new OpmReceiptRepo(opm);
-        WorklogTypeRepo worklogTypeRepo = (opm == null)? new LocalWorklogTypeRepo(local) : new OpmWorklogTypeRepo(opm);
+        ActivityRepo activityRepo = (opm == null)? new LocalActivityRepo(local) : new OpmActivityRepo(opm);
         ClientRepo clientRepo = (opm == null)? new LocalClientRepo(local) : new OpmClientRepo(opm);
         ProjectRepo projectRepo = (opm == null)? new LocalProjectRepo(local) : new OpmProjectRepo(opm);
         WorklogRepo worklogRepo = (opm == null)? new LocalWorklogRepo(local) : new OpmWorklogRepo(opm);
@@ -44,7 +44,7 @@ public class Main {
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        WorklogTypeService worklogTypeService = new WorklogTypeService(worklogTypeRepo);
+        ActivityService activityService = new ActivityService(activityRepo);
         ClientService clientService = new ClientService(clientRepo);
         ProjectService projectService = new ProjectService(projectRepo);
         WorklogService worklogService = new WorklogService(worklogRepo);
@@ -59,7 +59,7 @@ public class Main {
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new ReceiptController(receiptService));
-        server.enrol(new WorklogTypeController(worklogTypeService));
+        server.enrol(new ActivityController(activityService));
         server.enrol(new ClientController(clientService));
         server.enrol(new WorklogController(worklogService));
         server.enrol(new ProjectController(projectService));

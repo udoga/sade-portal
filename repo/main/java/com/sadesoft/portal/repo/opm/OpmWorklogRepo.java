@@ -42,7 +42,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.typeId);
+        setId(s, i++, o.activityId);
         setId(s, i++, o.employeeId);
         setId(s, i++, o.projectId);
         setLocalDate(s, i++, o.workDate);

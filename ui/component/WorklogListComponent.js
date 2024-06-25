@@ -1,17 +1,17 @@
 class WorklogListComponent extends ListComponent {
     worklogs = this.records;
     employees = [];
-    types = [];
+    activities = [];
     projects = [];
 
     constructor(client, notifier) {
         super(client, notifier, "worklogs");
     }
 
-    loadAll = function (employeeClient, typeClient, projectClient) {
+    loadAll = function (employeeClient, activityClient, projectClient) {
         this.load();
         this.fillArray(employeeClient, this.employees);
-        this.fillArray(typeClient, this.types);
+        this.fillArray(activityClient, this.activities);
         this.fillArray(projectClient, this.projects);
     }
 
@@ -20,8 +20,8 @@ class WorklogListComponent extends ListComponent {
         return "-";
     }
 
-    getTypeName = function (typeId) {
-        for (let t of this.types) if (t.id === typeId) return (t.name);
+    getActivityName = function (activityId) {
+        for (let a of this.activities) if (a.id === activityId) return (a.name);
         return "-";
     }
 

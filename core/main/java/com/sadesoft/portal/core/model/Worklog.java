@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Worklog implements Record {
     public String id;
-    public String typeId;
+    public String activityId;
     public String employeeId;
     public String projectId;
     public LocalDate workDate;
@@ -15,10 +15,10 @@ public class Worklog implements Record {
     public String status;
     public String description;
 
-    public Worklog(String id, String typeId, String employeeId, String projectId, LocalDate workDate, int duration,
+    public Worklog(String id, String activityId, String employeeId, String projectId, LocalDate workDate, int duration,
             String status, String description) {
         this.id = id;
-        this.typeId = typeId;
+        this.activityId = activityId;
         this.employeeId = employeeId;
         this.projectId = projectId;
         this.workDate = workDate;
@@ -34,7 +34,7 @@ public class Worklog implements Record {
         if (!(o instanceof Worklog)) return false;
         Worklog w = (Worklog) o;
         return Objects.equals(id, w.id) &&
-                Objects.equals(typeId, w.typeId) &&
+                Objects.equals(activityId, w.activityId) &&
                 Objects.equals(employeeId, w.employeeId) &&
                 Objects.equals(projectId, w.projectId) &&
                 Objects.equals(workDate, w.workDate) &&
@@ -47,7 +47,7 @@ public class Worklog implements Record {
     public String toString() {
         return "Worklog[" +
                 "id=" + id +
-                " typeId=" + typeId +
+                " activityId=" + activityId +
                 " employeeId=" + employeeId +
                 " projectId=" + projectId +
                 " workDate=" + workDate +
@@ -81,9 +81,9 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withTypeId(String typeId) {
+    public Worklog withactivityId(String activityId) {
         Worklog worklog = copy();
-        worklog.typeId = typeId;
+        worklog.activityId = activityId;
         return worklog;
     }
 
