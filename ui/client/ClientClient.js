@@ -1,5 +1,5 @@
 class ClientClient extends RestClient {
     constructor() {
-      super("/clients/");
+        super("/clients/");
     }
-  }
+}

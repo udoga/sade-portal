@@ -1,21 +1,21 @@
 class Notifier {
-  notifications = [];
+    notifications = [];
 
-  notify = function(notification) {
-    this.notifications.push(notification);
-    this.emit();
-  }
+    notify = function (notification) {
+        this.notifications.push(notification);
+        this.emit();
+    }
 
-  notifyLater = function(notification) {
-    setTimeout(() => this.notify(notification), 100);
-  }
+    notifyLater = function (notification) {
+        setTimeout(() => this.notify(notification), 100);
+    }
 
-  clear = function() {
-    this.notifications = [];
-    this.emit();
-  }
+    clear = function () {
+        this.notifications = [];
+        this.emit();
+    }
 
-  emit = function() {
-    window.dispatchEvent(new CustomEvent("notifications-event", { detail: this.notifications.slice() }));
-  }
+    emit = function () {
+        window.dispatchEvent(new CustomEvent("notifications-event", { detail: this.notifications.slice() }));
+    }
 }

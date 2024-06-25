@@ -1,40 +1,40 @@
 class LayoutComponent {
-  sessionClient = null;
-  isWide = true;
-  hasNavigation = true;
-  isShifted = true;
-  hasOverlay = false;
+    sessionClient = null;
+    isWide = true;
+    hasNavigation = true;
+    isShifted = true;
+    hasOverlay = false;
 
-  constructor(sessionClient) {
-    this.sessionClient = sessionClient;
-    this.handleResize();
-  }
+    constructor(sessionClient) {
+        this.sessionClient = sessionClient;
+        this.handleResize();
+    }
 
-  logout = function() {
-    this.sessionClient.logout();
-    window.dispatchEvent(new CustomEvent("logout-event"));
-  }
+    logout = function () {
+        this.sessionClient.logout();
+        window.dispatchEvent(new CustomEvent("logout-event"));
+    }
 
-  handleResize = function() {
-    if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
-  }
+    handleResize = function () {
+        if (this.isWide !== (window.innerWidth > 768)) this.toggleWide();
+    }
 
-  handleHashChange = function() {
-    if (!this.isWide) this.setNavigation(false);
-  }
+    handleHashChange = function () {
+        if (!this.isWide) this.setNavigation(false);
+    }
 
-  toggleWide = function() {
-    this.isWide = !this.isWide;
-    this.setNavigation(this.isWide);
-  }
+    toggleWide = function () {
+        this.isWide = !this.isWide;
+        this.setNavigation(this.isWide);
+    }
 
-  toggleNavigation = function() {
-    this.setNavigation(!this.hasNavigation);
-  }
+    toggleNavigation = function () {
+        this.setNavigation(!this.hasNavigation);
+    }
 
-  setNavigation = function(hasNavigation) {
-    this.hasNavigation = hasNavigation;
-    this.isShifted = this.isWide && this.hasNavigation;
-    this.hasOverlay = !this.isWide && this.hasNavigation;
-  }
+    setNavigation = function (hasNavigation) {
+        this.hasNavigation = hasNavigation;
+        this.isShifted = this.isWide && this.hasNavigation;
+        this.hasOverlay = !this.isWide && this.hasNavigation;
+    }
 }

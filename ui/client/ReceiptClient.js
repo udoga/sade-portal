@@ -1,5 +1,5 @@
 class ReceiptClient extends RestClient {
-  constructor() {
-    super("/receipts/");
-  }
+    constructor() {
+        super("/receipts/");
+    }
 }

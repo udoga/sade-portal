@@ -1,7 +1,7 @@
 class ReceiptListComponent extends ListComponent {
-  receipts = this.records;
+    receipts = this.records;
 
-  constructor(client, notifier) {
-    super(client, notifier, "receipts");
-  }
+    constructor(client, notifier) {
+        super(client, notifier, "receipts");
+    }
 }

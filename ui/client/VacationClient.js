@@ -1,5 +1,5 @@
 class VacationClient extends RestClient {
-  constructor() {
-    super("/vacations/");
-  }
+    constructor() {
+        super("/vacations/");
+    }
 }

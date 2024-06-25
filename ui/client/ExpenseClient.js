@@ -1,5 +1,5 @@
 class ExpenseClient extends RestClient {
-  constructor() {
-    super("/expenses/");
-  }
+    constructor() {
+        super("/expenses/");
+    }
 }

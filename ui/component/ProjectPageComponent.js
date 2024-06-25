@@ -4,4 +4,4 @@ class ProjectPageComponent extends PageComponent {
     constructor(router, client, notifier) {
         super(router, client, notifier, "project");
     }
-  }
+}
