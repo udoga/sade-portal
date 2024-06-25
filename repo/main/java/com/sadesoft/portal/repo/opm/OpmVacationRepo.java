@@ -4,7 +4,6 @@ import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
-import com.sadesoft.portal.core.model.VacationType;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
 import java.sql.Connection;

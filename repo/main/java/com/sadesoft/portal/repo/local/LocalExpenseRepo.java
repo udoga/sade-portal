@@ -26,16 +26,15 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
 
     @Override
     public Expense toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Expense(
-                getId(s, getColumnName(i++)),
-                getId(s, getColumnName(i++)),
-                getLocalDate(s, getColumnName(i++)),
-                s.getBigDecimal(getColumnName(i++)),
-                Currency.valueOf(s.getString(getColumnName(i++))),
-                s.getBoolean(getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                ApprovalStatus.valueOf(s.getString(getColumnName(i)))
+                getId(s, "id"),
+                getId(s, "employee_id"),
+                getLocalDate(s, "form_date"),
+                s.getBigDecimal("amount"),
+                Currency.valueOf(s.getString("currency")),
+                s.getBoolean("paid"),
+                s.getString("description"),
+                ApprovalStatus.valueOf(s.getString("approval_status"))
         );
     }
 

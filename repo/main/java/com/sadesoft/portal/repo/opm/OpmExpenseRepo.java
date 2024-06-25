@@ -2,12 +2,9 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.model.ApprovalStatus;
-import com.sadesoft.portal.core.model.Currency;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

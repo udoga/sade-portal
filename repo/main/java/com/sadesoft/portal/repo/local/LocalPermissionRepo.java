@@ -21,10 +21,9 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
 
     @Override
     protected Permission toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Permission(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++))
+                getId(s, "id"),
+                s.getString("name")
         );
     }
 

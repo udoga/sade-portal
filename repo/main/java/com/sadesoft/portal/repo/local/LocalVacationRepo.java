@@ -27,17 +27,16 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
 
     @Override
     protected Vacation toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Vacation(
-                getId(s, getColumnName(i++)),
-                getId(s, getColumnName(i++)),
-                VacationType.valueOf(s.getString(getColumnName(i++))),
-                getId(s, getColumnName(i++)),
-                getLocalDateTime(s, getColumnName(i++)),
-                getLocalDateTime(s, getColumnName(i++)),
-                s.getInt(getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                ApprovalStatus.valueOf(s.getString(getColumnName(i))));
+                getId(s, "id"),
+                getId(s, "employee_id"),
+                VacationType.valueOf(s.getString("vacation_type")),
+                getId(s, "replacement_employee_id"),
+                getLocalDateTime(s, "start_time"),
+                getLocalDateTime(s, "end_time"),
+                s.getInt("day_count"),
+                s.getString("description"),
+                ApprovalStatus.valueOf(s.getString("status")));
     }
 
     @Override

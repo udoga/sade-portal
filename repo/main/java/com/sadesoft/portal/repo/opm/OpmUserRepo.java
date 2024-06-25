@@ -21,11 +21,10 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
 
     @Override
     public User toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new User(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                s.getString(getColumnName(i)));
+                getId(s, "id"),
+                s.getString("user_name"),
+                s.getString("password_hash_sha512"));
     }
 
     @Override

@@ -20,10 +20,9 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     @Override
     protected Client toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Client(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)));
+                getId(s, "id"),
+                s.getString("name"));
     }
 
     @Override

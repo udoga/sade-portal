@@ -21,11 +21,10 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
 
     @Override
     public User toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new User(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                s.getString(getColumnName(i)));
+                getId(s, "id"),
+                s.getString("username"),
+                s.getString("password"));
     }
 
     @Override

@@ -20,10 +20,9 @@ public class LocalRoleRepo extends JdbcRepo<Role> implements RoleRepo {
 
     @Override
     protected Role toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Role(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)));
+                getId(s, "id"),
+                s.getString("name"));
     }
 
     @Override

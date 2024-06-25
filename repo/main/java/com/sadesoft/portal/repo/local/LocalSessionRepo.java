@@ -23,13 +23,12 @@ public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
 
     @Override
     public Session toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Session(
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                getLocalDateTime(s, getColumnName(i++)),
-                getLocalDateTime(s, getColumnName(i++)),
-                s.getString(getColumnName(i)));
+                getId(s, "id"),
+                s.getString("user_id"),
+                getLocalDateTime(s, "begin_time"),
+                getLocalDateTime(s, "end_time"),
+                s.getString("token"));
     }
 
     @Override

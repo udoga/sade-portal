@@ -26,15 +26,14 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
 
     @Override
     public Receipt toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Receipt(
-                getId(s, getColumnName(i++)),
-                getId(s, getColumnName(i++)),
-                getLocalDate(s, getColumnName(i++)),
-                ReceiptCategory.valueOf(s.getString(getColumnName(i++))),
-                s.getBigDecimal(getColumnName(i++)),
-                s.getShort(getColumnName(i++)),
-                s.getString(getColumnName(i))
+                getId(s, "id"),
+                getId(s, "expense_id"),
+                getLocalDate(s, "receipt_date"),
+                ReceiptCategory.valueOf(s.getString("category")),
+                s.getBigDecimal("amount"),
+                s.getShort("vat_rate"),
+                s.getString("description")
         );
     }
 

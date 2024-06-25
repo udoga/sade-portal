@@ -22,12 +22,11 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
 
     @Override
     protected Employee toObject(ResultSet s) throws SQLException {
-        int i = 0;
         return new Employee(
-                getId(s, getColumnName(i++)),
-                getId(s, getColumnName(i++)),
-                s.getString(getColumnName(i++)),
-                s.getString(getColumnName(i++)));
+                getId(s, "id"),
+                getId(s, "user_id"),
+                s.getString("first_name"),
+                s.getString("last_name"));
     }
 
     @Override
