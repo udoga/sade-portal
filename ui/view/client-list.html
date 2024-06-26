@@ -1,0 +1,29 @@
+<div x-data="new ClientListComponent(clientClient, notifier)" x-init="load()">
+  <h2>Clients</h2>
+  <table>
+    <tr>
+      <th class="narrow">Id</th>
+      <th>Name</th>
+      <th class="narrow last">
+        <a class="green header icon button" href="#/client-form"><i class="fas fa-plus"></i> New</a>
+      </th>
+    </tr>
+    <template x-for="client in clients">
+      <tr>
+        <td x-text="client.id" class="narrow"></td>
+        <td x-text="client.name"></td>
+        <td class="narrow last">
+          <a title="Show" class="light-blue row button" :href="'#/client-page/' + client.id">
+            <i class="far fa-eye"></i>
+          </a>
+          <a title="Edit" class="yellow row button" :href="'#/client-form/' + client.id">
+            <i class="fas fa-pencil-alt"></i>
+          </a>
+          <a title="Delete" class="red row button" @click="remove(client.id)">
+            <i class="fas fa-trash"></i>
+          </a>
+        </td>
+      </tr>
+    </template>
+  </table>
+</div>

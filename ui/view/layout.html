@@ -15,6 +15,7 @@
     <a href="#/session-list"><i class="fa-solid fa-laptop"></i>Sessions</a>
     <a href="#/worklog-list"><i class="fa-solid fa-calendar-days"></i>Worklogs</a>
     <a href="#/project-list"><i class="fa-solid fa-diagram-project"></i>Projects</a>
+    <a href="#/client-list"><i class="fa-solid fa-handshake"></i>Clients</a>
   </nav>
   <main :class="{ shifted: isShifted }">
     <div x-html="(await httpClient.get('view/notifications.html')).text()"></div>
