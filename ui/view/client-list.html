@@ -8,18 +8,18 @@
         <a class="green header icon button" href="#/client-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="client in clients">
+    <template x-for="clientRecord in clientRecords">
       <tr>
-        <td x-text="client.id" class="narrow"></td>
-        <td x-text="client.name"></td>
+        <td x-text="clientRecord.id" class="narrow"></td>
+        <td x-text="clientRecord.name"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/client-page/' + client.id">
+          <a title="Show" class="light-blue row button" :href="'#/client-page/' + clientRecord.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/client-form/' + client.id">
+          <a title="Edit" class="yellow row button" :href="'#/client-form/' + clientRecord.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(client.id)">
+          <a title="Delete" class="red row button" @click="remove(clientRecord.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>
