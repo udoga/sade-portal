@@ -11,12 +11,12 @@ public class Worklog implements Record {
     public String employeeId;
     public String projectId;
     public LocalDate workDate;
-    public int duration;
+    public Integer duration;
     public String status;
     public String description;
 
-    public Worklog(String id, String activityId, String employeeId, String projectId, LocalDate workDate, int duration,
-            String status, String description) {
+    public Worklog(String id, String activityId, String employeeId, String projectId, LocalDate workDate,
+            Integer duration, String status, String description) {
         this.id = id;
         this.activityId = activityId;
         this.employeeId = employeeId;
