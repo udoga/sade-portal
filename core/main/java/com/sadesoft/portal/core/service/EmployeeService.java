@@ -17,6 +17,10 @@ public class EmployeeService {
         return repo.list();
     }
 
+    public List<Employee> listByUserId(String userId) {
+        return (userId == null)? repo.list() : repo.listByUserId(userId);
+    }
+
     public Employee read(String id) {
         return repo.read(id);
     }

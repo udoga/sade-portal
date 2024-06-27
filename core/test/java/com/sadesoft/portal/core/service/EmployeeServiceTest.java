@@ -1,14 +1,14 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.base.error.RecordNotFoundError;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.model.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EmployeeServiceTest {
     private MockEmployeeRepo repo;
@@ -53,6 +53,13 @@ public class EmployeeServiceTest {
             assertEquals(1, service.list().size());
             assertEquals(validEmployee, service.list().get(0));
             assertEquals(validEmployee, service.read("0"));
+        }
+
+        @Test
+        public void listsByUserId() {
+            assertEquals(0, service.listByUserId("0").size());
+            assertEquals(1, service.listByUserId("1").size());
+            assertEquals(1, service.listByUserId(null).size());
         }
 
         @Test

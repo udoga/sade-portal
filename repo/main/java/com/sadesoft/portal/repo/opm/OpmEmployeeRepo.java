@@ -37,4 +37,9 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
         s.setString(i++, o.lastName);
         if (o.id != null) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Employee> listByUserId(String userId) {
+        return call(() -> query(createStatement(createSelectSql(" where user_id = " + userId))));
+    }
 }
