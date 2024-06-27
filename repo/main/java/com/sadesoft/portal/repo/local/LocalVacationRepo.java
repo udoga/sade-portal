@@ -16,7 +16,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         super(connection, "vacations", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
-                new JdbcColumn("vacation_type", "vacation_type"),
+                new JdbcColumn("category_id"),
                 new JdbcColumn("replacement_employee_id"),
                 new JdbcColumn("start_time"),
                 new JdbcColumn("end_time"),
@@ -30,7 +30,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         return new Vacation(
                 getId(s, "id"),
                 getId(s, "employee_id"),
-                VacationType.valueOf(s.getString("vacation_type")),
+                getId(s, "category_id"),
                 getId(s, "replacement_employee_id"),
                 getLocalDateTime(s, "start_time"),
                 getLocalDateTime(s, "end_time"),
@@ -43,7 +43,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     protected void fillStatement(PreparedStatement s, Vacation l) throws SQLException {
         int i = 1;
         setId(s, i++, l.employeeId);
-        s.setString(i++, l.vacationType.name());
+        setId(s, i++, l.categoryId);
         setId(s, i++, l.replacementEmployeeId);
         setLocalDateTime(s, i++, l.startTime);
         setLocalDateTime(s, i++, l.endTime);

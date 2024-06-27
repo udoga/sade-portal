@@ -50,7 +50,7 @@ public class VacationService {
 
     private void checkMissingFields(Vacation vacation) {
         checkMissingField(vacation.employeeId, "employeeId");
-        checkMissingField(vacation.vacationType, "vacationType");
+        checkMissingField(vacation.categoryId, "categoryId");
         checkMissingField(vacation.startTime, "startTime");
         checkMissingField(vacation.endTime, "endTime");
         checkMissingField(vacation.dayCount, "dayCount");

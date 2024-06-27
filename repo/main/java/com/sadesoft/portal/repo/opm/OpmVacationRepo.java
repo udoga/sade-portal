@@ -17,6 +17,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         super(connection, "opm_hrm_vacation", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
+                new JdbcColumn("vacation_type_id"),
                 new JdbcColumn("vacation_start_date"),
                 new JdbcColumn("vacation_end_date"),
                 new JdbcColumn("total_days"),
@@ -28,7 +29,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
             return new Vacation(
                 getId(s, "id"),
                 getId(s, "employee_id"),
-                null,
+                getId(s, "vacation_type_id"),
                 null,
                 getLocalDateTime(s, "vacation_start_date"),
                 getLocalDateTime(s, "vacation_end_date"),
@@ -41,6 +42,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     protected void fillStatement(PreparedStatement s, Vacation o) throws SQLException {
         int i = 1;
         setId(s, i++, o.employeeId);
+        setId(s, i++, o.categoryId);
         setLocalDateTime(s, i++, o.startTime);
         setLocalDateTime(s, i++, o.endTime);
         s.setInt(i++, o.dayCount);

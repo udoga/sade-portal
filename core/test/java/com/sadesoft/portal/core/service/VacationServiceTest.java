@@ -6,7 +6,6 @@ import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockVacationRepo;
 import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
-import com.sadesoft.portal.core.model.VacationType;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -42,7 +41,7 @@ public class VacationServiceTest {
         validVacation = new Vacation(
                 null,
                 "4",
-                VacationType.AnnualVacation,
+                "1",
                 "6",
                 LocalDateTime.of(2022,5,4,9,18),
                 LocalDateTime.of(2022,5,4,9,19),
@@ -62,7 +61,7 @@ public class VacationServiceTest {
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
         assertMissingField(validVacation.withEmployeeId(null));
-        assertMissingField(validVacation.withVacationType(null));
+        assertMissingField(validVacation.withVacationCategoryId(null));
         assertMissingField(validVacation.withStartTime(null));
         assertMissingField(validVacation.withEndTime(null));
         assertMissingField(validVacation.withDayCount(null));

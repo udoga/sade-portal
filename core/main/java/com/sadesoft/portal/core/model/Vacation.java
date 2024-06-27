@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Vacation implements Record {
     public String id = null;
     public String employeeId = null;
-    public VacationType vacationType = null;
+    public String categoryId = null;
     public String replacementEmployeeId = null;
     public LocalDateTime startTime = null;
     public LocalDateTime endTime = null;
@@ -29,7 +29,7 @@ public class Vacation implements Record {
 
     public Vacation(String id,
                     String employeeId,
-                    VacationType vacationType,
+                    String categoryId,
                     String replacementEmployeeId,
                     LocalDateTime startTime,
                     LocalDateTime endTime,
@@ -38,7 +38,7 @@ public class Vacation implements Record {
                     ApprovalStatus status) {
         this.id = id;
         this.employeeId = employeeId;
-        this.vacationType = vacationType;
+        this.categoryId = categoryId;
         this.replacementEmployeeId = replacementEmployeeId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -53,7 +53,7 @@ public class Vacation implements Record {
         Vacation l = (Vacation) o;
         return Objects.equals(id, l.id) &&
                 Objects.equals(employeeId, l.employeeId) &&
-                Objects.equals(vacationType, l.vacationType) &&
+                Objects.equals(categoryId, l.categoryId) &&
                 Objects.equals(replacementEmployeeId, l.replacementEmployeeId) &&
                 Objects.equals(startTime,l.startTime) &&
                 Objects.equals(endTime, l.endTime) &&
@@ -67,7 +67,7 @@ public class Vacation implements Record {
         return "Vacation[" +
                 "id=" + id +
                 " employeeId=" + employeeId +
-                " vacationType=" + vacationType +
+                " categoryId=" + categoryId +
                 " replacementEmployeeId=" + replacementEmployeeId +
                 " startTime=" + startTime +
                 " endTime=" + endTime +
@@ -99,9 +99,9 @@ public class Vacation implements Record {
         return vacation;
     }
 
-    public Vacation withVacationType(VacationType vacationType) {
+    public Vacation withVacationCategoryId(String categoryId) {
         Vacation vacation = copy();
-        vacation.vacationType = vacationType;
+        vacation.categoryId = categoryId;
         return vacation;
     }
 
