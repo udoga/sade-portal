@@ -1,23 +1,23 @@
 class PageComponent {
     router = null;
-    client = null;
+    api = null;
     name = null;
     notifier = null;
     record = {};
 
-    constructor(router, client, notifier, name) {
+    constructor(router, api, notifier, name) {
         this.router = router;
-        this.client = client;
+        this.api = api;
         this.notifier = notifier;
         this.name = name;
     }
 
     load = function () {
-        this.client.read(this.router.getId()).then(json => this.handleLoadResponse(json));
+        this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
     }
 
     remove = function () {
-        this.client.delete(this.record.id).then(json => this.handleRemoveResponse(json));
+        this.api.delete(this.record.id).then(json => this.handleRemoveResponse(json));
     }
 
     handleLoadResponse = function (json) {

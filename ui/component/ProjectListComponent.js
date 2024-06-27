@@ -2,13 +2,13 @@ class ProjectListComponent extends ListComponent {
     projects = this.records;
     clients = [];
 
-    constructor(client, notifier) {
-        super(client, notifier, "projects");
+    constructor(api, notifier) {
+        super(api, notifier, "projects");
     }
 
-    loadAll = function (clientClient) {
+    loadAll = function (clientApi) {
         this.load();
-        clientClient.list().then(json => json.data ? Object.assign(this.clients, json.data) : this.notifyError(json));
+        clientApi.list().then(json => json.data ? Object.assign(this.clients, json.data) : this.notifyError(json));
     }
 
     getClientName = function (clientId) {

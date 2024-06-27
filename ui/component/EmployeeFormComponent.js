@@ -1,7 +1,7 @@
 class EmployeeFormComponent extends FormComponent {
     employee = this.record;
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "employee");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "employee");
     }
 }

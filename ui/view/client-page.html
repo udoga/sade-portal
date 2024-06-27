@@ -3,15 +3,15 @@
   <div>
     <div class="field">
       <label>Id:</label>
-      <span x-text="clientRecord.id"></span>
+      <span x-text="client.id"></span>
     </div>
     <div class="field">
       <label>Name</label>
-      <span x-text="clientRecord.name"></span>
+      <span x-text="client.name"></span>
     </div>
     <div class="options">
       <a class="white form button" href="#/client-list">Back</a>
-      <a class="yellow form button" :href="'#/client-form/' + clientRecord.id">Edit</a>
+      <a class="yellow form button" :href="'#/client-form/' + client.id">Edit</a>
       <a class="red form button" @click="remove()">Delete</a>
     </div>
   </div>

@@ -3,13 +3,13 @@ class UserPageComponent extends PageComponent {
     employee = {};
     roles = [];
     selectedTitle = "";
-    employeeClient = null;
-    roleClient = null;
+    employeeApi = null;
+    roleApi = null;
 
-    constructor(router, client, notifier, employeeClient, roleClient) {
-        super(router, client, notifier, "user");
-        this.employeeClient = employeeClient;
-        this.roleClient = roleClient;
+    constructor(router, api, notifier, employeeApi, roleApi) {
+        super(router, api, notifier, "user");
+        this.employeeApi = employeeApi;
+        this.roleApi = roleApi;
     }
 
     select = function (title) {
@@ -27,12 +27,12 @@ class UserPageComponent extends PageComponent {
     }
 
     loadEmployee = function () {
-        this.employeeClient.listByUserId(this.router.getId())
+        this.employeeApi.listByUserId(this.router.getId())
             .then(json => json.data ? Object.assign(this.employee, json.data[0]) : this.notifyError(json));
     }
 
     loadRoles = function () {
-        this.roleClient.listByUserId(this.router.getId())
+        this.roleApi.listByUserId(this.router.getId())
             .then(json => json.data ? Object.assign(this.roles, json.data) : this.notifyError(json));
     }
 

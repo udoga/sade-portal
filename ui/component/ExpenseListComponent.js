@@ -2,13 +2,13 @@ class ExpenseListComponent extends ListComponent {
     expenses = this.records;
     employees = [];
 
-    constructor(client, notifier) {
-        super(client, notifier, "expenses");
+    constructor(api, notifier) {
+        super(api, notifier, "expenses");
     }
 
-    loadAll = function (employeeClient) {
+    loadAll = function (employeeApi) {
         this.load();
-        employeeClient.list()
+        employeeApi.list()
             .then(json => json.data ? Object.assign(this.employees, json.data) : this.notifyError(json));
     }
 

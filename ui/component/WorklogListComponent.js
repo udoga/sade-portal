@@ -4,15 +4,15 @@ class WorklogListComponent extends ListComponent {
     activities = [];
     projects = [];
 
-    constructor(client, notifier) {
-        super(client, notifier, "worklogs");
+    constructor(api, notifier) {
+        super(api, notifier, "worklogs");
     }
 
-    loadAll = function (employeeClient, activityClient, projectClient) {
+    loadAll = function (employeeApi, activityApi, projectApi) {
         this.load();
-        this.fillArray(employeeClient, this.employees);
-        this.fillArray(activityClient, this.activities);
-        this.fillArray(projectClient, this.projects);
+        this.fillArray(employeeApi, this.employees);
+        this.fillArray(activityApi, this.activities);
+        this.fillArray(projectApi, this.projects);
     }
 
     getEmployeeName = function (employeeId) {
@@ -30,7 +30,7 @@ class WorklogListComponent extends ListComponent {
         return "-";
     }
 
-    fillArray = function (client, array) {
-        client.list().then(json => json.data ? Object.assign(array, json.data) : this.notifyError(json));
+    fillArray = function (api, array) {
+        api.list().then(json => json.data ? Object.assign(array, json.data) : this.notifyError(json));
     }
 }

@@ -2,8 +2,8 @@ class UserFormComponent extends FormComponent {
     user = this.record;
     retypedPassword = "";
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "user");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "user");
     }
 
     check = function () {

@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.base.error.RecordNotFoundError;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.model.Employee;
 import org.junit.jupiter.api.BeforeEach;

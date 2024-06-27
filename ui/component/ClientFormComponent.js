@@ -1,7 +1,7 @@
 class ClientFormComponent extends FormComponent {
-    clientRecord = this.record;
+    client = this.record;
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "client");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "client");
     }
 }

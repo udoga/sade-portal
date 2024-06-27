@@ -1,20 +1,20 @@
 class FormComponent {
     router = null;
-    client = null;
+    api = null;
     notifier = null;
     name = null;
     record = {};
 
-    constructor(router, client, notifier, name) {
+    constructor(router, api, notifier, name) {
         this.router = router;
-        this.client = client;
+        this.api = api;
         this.notifier = notifier;
         this.name = name;
     }
 
     load = function () {
         var id = this.router.getId();
-        if (id) this.client.read(id).then(json => this.handleLoadResponse(json));
+        if (id) this.api.read(id).then(json => this.handleLoadResponse(json));
     }
 
     save = function () {
@@ -40,11 +40,11 @@ class FormComponent {
     }
 
     create = function () {
-        this.client.create(this.record).then((json) => this.handleSaveResponse(json));
+        this.api.create(this.record).then((json) => this.handleSaveResponse(json));
     }
 
     update = function () {
-        this.client.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
+        this.api.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
     }
 
     quit = function () {

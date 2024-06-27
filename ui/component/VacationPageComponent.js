@@ -1,7 +1,7 @@
 class VacationPageComponent extends PageComponent {
     vacation = this.record;
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "vacation");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "vacation");
     }
 }

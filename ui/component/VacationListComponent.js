@@ -2,13 +2,13 @@ class VacationListComponent extends ListComponent {
     vacations = this.records;
     employees = [];
 
-    constructor(client, notifier) {
-        super(client, notifier, "vacations");
+    constructor(api, notifier) {
+        super(api, notifier, "vacations");
     }
 
-    loadAll = function (employeeClient) {
+    loadAll = function (employeeApi) {
         this.load();
-        employeeClient.list()
+        employeeApi.list()
             .then(json => json.data ? Object.assign(this.employees, json.data) : this.notifyError(json));
     }
 

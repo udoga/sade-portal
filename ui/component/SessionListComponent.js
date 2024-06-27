@@ -2,13 +2,13 @@ class SessionListComponent extends ListComponent {
     sessions = this.records;
     users = [];
 
-    constructor(client, notifier) {
-        super(client, notifier, "sessions");
+    constructor(api, notifier) {
+        super(api, notifier, "sessions");
     }
 
-    loadAll = function (userClient) {
+    loadAll = function (userApi) {
         this.load();
-        userClient.list().then(json => json.data ? Object.assign(this.users, json.data) : this.notifyError(json));
+        userApi.list().then(json => json.data ? Object.assign(this.users, json.data) : this.notifyError(json));
     }
 
     getUsername = function (userId) {

@@ -1,22 +1,22 @@
 class ListComponent {
-    client = null;
+    api = null;
     notifier = null;
     name = null;
     records = [];
     error = {};
 
-    constructor(client, notifier, name) {
-        this.client = client;
+    constructor(api, notifier, name) {
+        this.api = api;
         this.notifier = notifier;
         this.name = name;
     }
 
     load = function () {
-        this.client.list().then(json => this.handleLoadResponse(json));
+        this.api.list().then(json => this.handleLoadResponse(json));
     }
 
     remove = function (id) {
-        this.client.delete(id).then(json => this.handleRemoveResponse(json));
+        this.api.delete(id).then(json => this.handleRemoveResponse(json));
     }
 
     handleLoadResponse = function (json) {

@@ -1,8 +1,8 @@
 class VacationFormComponent extends FormComponent {
     vacation = this.record;
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "vacation");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "vacation");
     }
 
     saveVacation = function () {

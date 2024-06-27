@@ -1,17 +1,17 @@
 class LayoutComponent {
-    sessionClient = null;
+    sessionApi = null;
     isWide = true;
     hasNavigation = true;
     isShifted = true;
     hasOverlay = false;
 
-    constructor(sessionClient) {
-        this.sessionClient = sessionClient;
+    constructor(sessionApi) {
+        this.sessionApi = sessionApi;
         this.handleResize();
     }
 
     logout = function () {
-        this.sessionClient.logout();
+        this.sessionApi.logout();
         window.dispatchEvent(new CustomEvent("logout-event"));
     }
 

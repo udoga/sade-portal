@@ -1,7 +1,7 @@
 class ClientListComponent extends ListComponent {
-    clientRecords = this.records;
+    clients = this.records;
 
-    constructor(client, notifier) {
-        super(client, notifier, "clients");
+    constructor(api, notifier) {
+        super(api, notifier, "clients");
     }
 }

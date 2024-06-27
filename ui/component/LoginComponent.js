@@ -1,16 +1,16 @@
 class LoginComponent {
     router = null;
-    sessionClient = null;
+    sessionApi = null;
     user = {};
     errorMessage = "";
 
-    constructor(router, sessionClient) {
+    constructor(router, sessionApi) {
         this.router = router;
-        this.sessionClient = sessionClient;
+        this.sessionApi = sessionApi;
     }
 
     login = function () {
-        this.sessionClient.login(this.user).then(json => json.data ? this.accept(json.data) : this.reject(json.error));
+        this.sessionApi.login(this.user).then(json => json.data ? this.accept(json.data) : this.reject(json.error));
     }
 
     accept = function (session) {

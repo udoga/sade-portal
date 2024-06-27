@@ -1,7 +1,7 @@
 class WorklogPageComponent extends PageComponent {
     worklog = this.record;
 
-    constructor(router, client, notifier) {
-        super(router, client, notifier, "worklog");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "worklog");
     }
 }
