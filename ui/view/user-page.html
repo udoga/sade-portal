@@ -38,10 +38,16 @@
           </div>
         </div>
         <div x-show="isSelected('roles')">
-          <table>
-            <tr><th>Role Name</th></tr>
+          <table class="relations">
+            <tr>
+              <th class="narrow">Id</th>
+              <th>Role Name</th>
+            </tr>
             <template x-for="role in roles">
-              <tr><td x-text="role.name"></td></tr>
+              <tr>
+                <td x-text="role.id" class="narrow"></td>
+                <td x-text="role.name"></td>
+              </tr>
             </template>
           </table>
         </div>

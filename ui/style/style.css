@@ -159,21 +159,19 @@ h2 {
   margin-bottom: 20px;
 }
 
-table, th, td {
-  border: 1px solid var(--main-border-color);
-}
-
 table {
   width: 100%;
+  border-style: hidden;
 }
 
 th {
+  border: 1px solid var(--main-border-color);
   padding: 12px 8px 12px 8px;
   text-align: left;
-  background: #f9fafb;
 }
 
 td {
+  border: 1px solid var(--main-border-color);
   padding: 8px;
 }
 
@@ -187,6 +185,19 @@ th.last, td.last {
   min-width: 120px;
   text-align: center;
   vertical-align: middle;
+}
+
+table.records {
+  border: 1px solid var(--main-border-color);
+  border-style: solid;
+}
+
+table.records th {
+  background: #f9fafb;
+}
+
+table.relations th {
+  font-weight: bold;
 }
 
 .field {
