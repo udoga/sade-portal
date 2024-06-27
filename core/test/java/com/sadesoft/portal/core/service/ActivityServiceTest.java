@@ -21,32 +21,32 @@ public class ActivityServiceTest {
     }
 
     @Nested
-    public class GivenServiceWithOneClient {
+    public class GivenServiceWithOneActivity {
         @BeforeEach
         public void setup() {
             repo.create(validActivity);
         }
 
         @Test
-        public void listsClients() {
+        public void listsActivities() {
             assertEquals(1, service.list().size());
             assertEquals(validActivity.withId("0"), service.list().get(0));
         }
 
         @Test
-        public void readsClients() {
+        public void readsActivity() {
             assertEquals(validActivity.withId("0"), service.read("0"));
         }
 
         @Test
-        public void updatesClientById() {
+        public void updatesActivityById() {
             Activity activity = service.update("0", validActivity.withName("updated"));
             assertEquals(validActivity.withId("0").withName("updated"), activity);
             assertEquals(activity, service.read("0"));
         }
 
         @Test
-        public void deletesClientById() {
+        public void deletesActivityById() {
             Activity activity = service.delete("0");
             assertEquals(validActivity.withId("0"), activity);
             assertEquals(0, service.list().size());

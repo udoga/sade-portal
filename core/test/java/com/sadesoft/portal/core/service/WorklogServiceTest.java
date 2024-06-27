@@ -32,32 +32,32 @@ public class WorklogServiceTest {
     }
 
     @Nested
-    public class GivenServiceWithOneClient {
+    public class GivenServiceWithOneWorklog {
         @BeforeEach
         public void setup() {
             repo.create(validWorklog);
         }
 
         @Test
-        public void listsClients() {
+        public void listsWorklogs() {
             assertEquals(1, service.list().size());
             assertEquals(validWorklog.withId("0"), service.list().get(0));
         }
 
         @Test
-        public void readsClients() {
+        public void readsWorklogs() {
             assertEquals(validWorklog.withId("0"), service.read("0"));
         }
 
         @Test
-        public void updatesClientById() {
+        public void updatesWorklogById() {
             Worklog client = service.update("0", validWorklog.withDescription("updated"));
             assertEquals(validWorklog.withId("0").withDescription("updated"), client);
             assertEquals(client, service.read("0"));
         }
 
         @Test
-        public void deletesClientById() {
+        public void deletesWorklogById() {
             Worklog client = service.delete("0");
             assertEquals(validWorklog.withId("0"), client);
             assertEquals(0, service.list().size());

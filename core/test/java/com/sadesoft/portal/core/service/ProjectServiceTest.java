@@ -26,32 +26,32 @@ public class ProjectServiceTest {
     }
 
     @Nested
-    public class GivenServiceWithOneClient {
+    public class GivenServiceWithOneProject {
         @BeforeEach
         public void setup() {
             repo.create(validProject);
         }
 
         @Test
-        public void listsClients() {
+        public void listsProjects() {
             assertEquals(1, service.list().size());
             assertEquals(validProject.withId("0"), service.list().get(0));
         }
 
         @Test
-        public void readsClients() {
+        public void readsProject() {
             assertEquals(validProject.withId("0"), service.read("0"));
         }
 
         @Test
-        public void updatesClientById() {
+        public void updatesProjectById() {
             Project client = service.update("0", validProject.withName("updated"));
             assertEquals(validProject.withId("0").withName("updated"), client);
             assertEquals(client, service.read("0"));
         }
 
         @Test
-        public void deletesClientById() {
+        public void deletesProjectById() {
             Project client = service.delete("0");
             assertEquals(validProject.withId("0"), client);
             assertEquals(0, service.list().size());
