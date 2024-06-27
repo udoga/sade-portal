@@ -126,6 +126,11 @@ nav i {
   text-align: center;
 }
 
+i.fa {
+    font-family: FontAwesome !important;
+    font-style: normal;
+}
+
 main {
   padding: 20px;
   margin-top: var(--header-height);
@@ -190,6 +195,10 @@ th.last, td.last {
 
 .field label {
   font-weight: bold;
+}
+
+.field.last {
+  margin-bottom: 0px;
 }
 
 form .field label {
@@ -343,4 +352,37 @@ a.button.light-blue:active {
 
 .alert.success {
   background: #ddffdd;
+}
+
+.panel {
+  border: 1px solid var(--navigation-border-color);
+}
+
+.panel-header {
+  display: flex;
+  border-bottom: 1px solid var(--navigation-border-color);
+  background-color: var(--navigation-background-color);
+}
+
+.panel-item {
+  padding: 10px;
+  border-right: 1px solid var(--navigation-border-color);
+  cursor: pointer;
+}
+
+.panel-item:hover {
+  background-color: var(--navigation-hover-color);
+}
+
+.panel-item.selected {
+  background-color: white;
+}
+
+.panel-content {
+  padding: 10px;
+}
+
+.panel-message {
+  text-align: center;
+  color: gray;
 }

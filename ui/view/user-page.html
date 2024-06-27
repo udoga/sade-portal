@@ -1,4 +1,4 @@
-<div x-data="new UserPageComponent(router, userApi, notifier)" x-init="loadAll(roleApi)">
+<div x-data="new UserPageComponent(router, userApi, notifier, employeeApi, roleApi)" x-init="load()">
   <h2>User</h2>
   <div>
     <div class="field">
@@ -9,9 +9,43 @@
       <label>Username:</label>
       <span x-text="user.username"></span>
     </div>
-    <div class="field">
-      <label>Role Names:</label>
-      <span x-text="getRoleNames()"></span>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="select('employee')" :class="getClass('employee')">Employee</span>
+        <span class="panel-item" @click="select('roles')" :class="getClass('roles')">Roles</span>
+      </div>
+      <div class="panel-content">
+        <div x-show="isSelected('')">
+          <div class="panel-message">Select tab to display details.</div>
+        </div>
+        <div x-show="isSelected('employee')">
+          <div x-show="isEmployee()">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="employee.id"></span>
+            </div>
+            <div class="field">
+              <label>First Name:</label>
+              <span x-text="employee.firstName"></span>
+            </div>
+            <div class="last field">
+              <label>Last Name:</label>
+              <span x-text="employee.lastName"></span>
+            </div>
+          </div>
+          <div x-show="!isEmployee()">
+            <div class="panel-message">This user is not an employee.</div>
+          </div>
+        </div>
+        <div x-show="isSelected('roles')">
+          <table>
+            <tr><th>Role Name</th></tr>
+            <template x-for="role in roles">
+              <tr><td x-text="role.name"></td></tr>
+            </template>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="options">
       <a class="white form button" href="#/user-list">Back</a>
