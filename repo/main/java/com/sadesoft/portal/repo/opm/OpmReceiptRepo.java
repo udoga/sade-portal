@@ -17,6 +17,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 new JdbcColumn("id"),
                 new JdbcColumn("expense_id"),
                 new JdbcColumn("expense_item_date"),
+                new JdbcColumn("expense_item_category_id"),
                 new JdbcColumn("amount"),
                 new JdbcColumn("vat"),
                 new JdbcColumn("description")));
@@ -28,7 +29,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 getId(s, "id"),
                 getId(s, "expense_id"),
                 getLocalDateTime(s, "expense_item_date").toLocalDate(),
-                null,
+                getId(s, "expense_item_category_id"),
                 s.getBigDecimal("amount"),
                 s.getShort("vat"),
                 s.getString("description")
@@ -40,6 +41,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         int i = 1;
         setId(s, i++, o.expenseId);
         setLocalDateTime(s, i++, o.receiptDate.atTime(0, 0, 0));
+        setId(s, i++, o.categoryId);
         s.setBigDecimal(i++, o.amount);
         s.setShort(i++, o.vatRate);
         s.setString(i++, o.description);

@@ -128,14 +128,21 @@ CREATE TABLE expenses(
     approval_status approval_status NOT NULL
 );
 
+CREATE TABLE receipt_categories(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE receipts(
-    id SERIAL PRIMARY KEY NOT NULL,
-    expense_id INT NOT NULL REFERENCES expenses(id) ON DELETE RESTRICT,
+    id IDENTITY PRIMARY KEY NOT NULL,
+    expense_id INT NOT NULL,
     receipt_date DATE NOT NULL,
-    category receipt_category NOT NULL,
+    category_id INT NOT NULL,
     amount DECIMAL NOT NULL,
     vat_rate SMALLINT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+    FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE RESTRICT,
+    FOREIGN KEY (category_id) REFERENCES receipt_categories(id) ON DELETE RESTRICT
 );
 
 INSERT INTO users VALUES
@@ -196,6 +203,11 @@ INSERT INTO expenses VALUES
     (default,           1, '2022-01-01',   '1000.10',    'EUR',  true,    'Example1', 'Approved'),
     (default,           2, '2022-02-02', '100000.10',    'TRY', false,    'Example2', 'Rejected');
 
+INSERT INTO receipt_categories VALUES
+--        id,      name
+    (default, 'Transport'),
+    (default,      'Food');
+
 INSERT INTO receipts VALUES
---        id, expense_id, receipt_date, receipt_category,    amount, vat_rate, description
-    (default,          1, '2022-01-01', 'Transportation',   '45.20',     '18', 'Bus Coast');
+--        id, expense_id, receipt_date, category_id,    amount, vat_rate, description
+    (default,          1, '2022-01-01',           1,   '45.20',     '18', 'Bus Coast');

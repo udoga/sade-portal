@@ -9,7 +9,6 @@ import java.util.List;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.model.Receipt;
-import com.sadesoft.portal.core.model.ReceiptCategory;
 import com.sadesoft.portal.core.repo.ReceiptRepo;
 
 public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
@@ -18,7 +17,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 new JdbcColumn("id"),
                 new JdbcColumn("expense_id"),
                 new JdbcColumn("receipt_date"),
-                new JdbcColumn("category", "receipt_category"),
+                new JdbcColumn("category_id"),
                 new JdbcColumn("amount"),
                 new JdbcColumn("vat_rate"),
                 new JdbcColumn("description")));
@@ -30,7 +29,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 getId(s, "id"),
                 getId(s, "expense_id"),
                 getLocalDate(s, "receipt_date"),
-                ReceiptCategory.valueOf(s.getString("category")),
+                getId(s, "category_id"),
                 s.getBigDecimal("amount"),
                 s.getShort("vat_rate"),
                 s.getString("description")
@@ -42,7 +41,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         int i = 1;
         setId(s, i++, o.expenseId);
         setLocalDate(s, i++, o.receiptDate);
-        s.setString(i++, o.category.name());
+        setId(s, i++, o.categoryId);
         s.setBigDecimal(i++, o.amount);
         s.setShort(i++, o.vatRate);
         s.setString(i++, o.description);

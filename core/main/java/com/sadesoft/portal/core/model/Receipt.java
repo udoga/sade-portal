@@ -9,7 +9,7 @@ public class Receipt implements Record {
     public String id = null;
     public String expenseId = null;
     public LocalDate receiptDate = null;
-    public ReceiptCategory category = null;
+    public String categoryId = null;
     public BigDecimal amount = null;
     public Short vatRate = null;
     public String description = null;
@@ -20,14 +20,14 @@ public class Receipt implements Record {
     public Receipt(String id,
                    String expenseId,
                    LocalDate receiptDate,
-                   ReceiptCategory category,
+                   String categoryId,
                    BigDecimal amount,
                    Short vatRate,
                    String description) {
         this.id = id;
         this.expenseId = expenseId;
         this.receiptDate = receiptDate;
-        this.category = category;
+        this.categoryId = categoryId;
         this.amount = amount;
         this.vatRate = vatRate;
         this.description = description;
@@ -40,7 +40,7 @@ public class Receipt implements Record {
         return Objects.equals(id, u.id) &&
                 Objects.equals(expenseId, u.expenseId) &&
                 Objects.equals(receiptDate, u.receiptDate) &&
-                Objects.equals(category, u.category) &&
+                Objects.equals(categoryId, u.categoryId) &&
                 Objects.equals(amount, u.amount) &&
                 Objects.equals(vatRate, u.vatRate) &&
                 Objects.equals(description, u.description);
@@ -52,7 +52,7 @@ public class Receipt implements Record {
                 "id=" + id +
                 " expenseId=" + expenseId +
                 " receiptDate=" + receiptDate +
-                " category=" + category +
+                " categoryId=" + categoryId +
                 " amount=" + amount +
                 " vatRate=" + vatRate +
                 " description=" + description +
@@ -95,9 +95,9 @@ public class Receipt implements Record {
         return receipt;
     }
 
-    public Receipt withReceiptCategory(ReceiptCategory receiptCategory) {
+    public Receipt withReceiptCategoryId(String categoryId) {
         Receipt receipt = copy();
-        receipt.category = receiptCategory;
+        receipt.categoryId = categoryId;
         return receipt;
     }
 

@@ -44,7 +44,7 @@ public class ReceiptService {
     private void check(Receipt receipt) {
         checkMissingField(receipt.expenseId, "expenseId");
         checkMissingField(receipt.receiptDate, "receiptDate");
-        checkMissingField(receipt.category, "receiptCategory");
+        checkMissingField(receipt.categoryId, "categoryId");
         checkMissingField(receipt.amount, "amount");
         checkMissingField(receipt.vatRate, "vatRate");
         checkMissingField(receipt.description, "description");

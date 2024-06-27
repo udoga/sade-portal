@@ -43,7 +43,7 @@ public class ReceiptServiceTest {
                 null,
                 "1",
                 LocalDate.of(2022, 1, 1),
-                ReceiptCategory.Other,
+                "1",
                 new BigDecimal("10.20"),
                 (short) 18,
                 "TaxiCoast");
@@ -61,7 +61,7 @@ public class ReceiptServiceTest {
     public void whenHasMissingField_throwsError() {
         assertMissingField(validReceipt.withExpenseId(null));
         assertMissingField(validReceipt.withReceiptDate(null));
-        assertMissingField(validReceipt.withReceiptCategory(null));
+        assertMissingField(validReceipt.withReceiptCategoryId(null));
         assertMissingField(validReceipt.withAmount(null));
         assertMissingField(validReceipt.withVatRate(null));
         assertMissingField(validReceipt.withDescription(null));
@@ -114,7 +114,7 @@ public class ReceiptServiceTest {
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
             assertThrows(MissingFieldError.class, () -> service.update("0", validReceipt.withReceiptDate(null)));
-            assertThrows(MissingFieldError.class, () -> service.update("0", validReceipt.withReceiptCategory(null)));
+            assertThrows(MissingFieldError.class, () -> service.update("0", validReceipt.withReceiptCategoryId(null)));
         }
     }
 }
