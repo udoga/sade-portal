@@ -1,4 +1,4 @@
-class ClientClient extends RestClient {
+class ClientApi extends RestApi {
     constructor() {
         super("/clients/");
     }

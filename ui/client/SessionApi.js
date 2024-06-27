@@ -1,4 +1,4 @@
-class SessionClient extends RestClient {
+class SessionApi extends RestApi {
     constructor() {
         super("/sessions/");
     }

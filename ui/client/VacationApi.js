@@ -1,4 +1,4 @@
-class VacationClient extends RestClient {
+class VacationApi extends RestApi {
     constructor() {
         super("/vacations/");
     }

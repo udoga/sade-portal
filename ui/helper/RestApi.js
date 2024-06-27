@@ -1,4 +1,4 @@
-class RestClient extends HttpClient {
+class RestApi extends HttpClient {
     url = null;
 
     constructor(url) {

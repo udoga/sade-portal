@@ -1,4 +1,4 @@
-class WorklogClient extends RestClient {
+class WorklogApi extends RestApi {
     constructor() {
         super("/worklogs/");
     }

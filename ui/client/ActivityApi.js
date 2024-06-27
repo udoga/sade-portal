@@ -1,4 +1,4 @@
-class ActivityClient extends RestClient {
+class ActivityApi extends RestApi {
     constructor() {
         super("/activities/");
     }

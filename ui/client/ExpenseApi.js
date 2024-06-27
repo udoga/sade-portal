@@ -1,4 +1,4 @@
-class ExpenseClient extends RestClient {
+class ExpenseApi extends RestApi {
     constructor() {
         super("/expenses/");
     }
