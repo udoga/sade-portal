@@ -17,7 +17,6 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("category_id"),
-                new JdbcColumn("replacement_employee_id"),
                 new JdbcColumn("start_time"),
                 new JdbcColumn("end_time"),
                 new JdbcColumn("day_count"),
@@ -31,7 +30,6 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 getId(s, "id"),
                 getId(s, "employee_id"),
                 getId(s, "category_id"),
-                getId(s, "replacement_employee_id"),
                 getLocalDateTime(s, "start_time"),
                 getLocalDateTime(s, "end_time"),
                 s.getInt("day_count"),
@@ -44,7 +42,6 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         int i = 1;
         setId(s, i++, l.employeeId);
         setId(s, i++, l.categoryId);
-        setId(s, i++, l.replacementEmployeeId);
         setLocalDateTime(s, i++, l.startTime);
         setLocalDateTime(s, i++, l.endTime);
         s.setInt(i++, l.dayCount);

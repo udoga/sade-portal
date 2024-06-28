@@ -9,7 +9,6 @@ public class Vacation implements Record {
     public String id = null;
     public String employeeId = null;
     public String categoryId = null;
-    public String replacementEmployeeId = null;
     public LocalDateTime startTime = null;
     public LocalDateTime endTime = null;
     public Integer dayCount = null;
@@ -30,7 +29,6 @@ public class Vacation implements Record {
     public Vacation(String id,
                     String employeeId,
                     String categoryId,
-                    String replacementEmployeeId,
                     LocalDateTime startTime,
                     LocalDateTime endTime,
                     Integer dayCount,
@@ -39,7 +37,6 @@ public class Vacation implements Record {
         this.id = id;
         this.employeeId = employeeId;
         this.categoryId = categoryId;
-        this.replacementEmployeeId = replacementEmployeeId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.dayCount = dayCount;
@@ -54,7 +51,6 @@ public class Vacation implements Record {
         return Objects.equals(id, l.id) &&
                 Objects.equals(employeeId, l.employeeId) &&
                 Objects.equals(categoryId, l.categoryId) &&
-                Objects.equals(replacementEmployeeId, l.replacementEmployeeId) &&
                 Objects.equals(startTime,l.startTime) &&
                 Objects.equals(endTime, l.endTime) &&
                 Objects.equals(dayCount, l.dayCount) &&
@@ -68,7 +64,6 @@ public class Vacation implements Record {
                 "id=" + id +
                 " employeeId=" + employeeId +
                 " categoryId=" + categoryId +
-                " replacementEmployeeId=" + replacementEmployeeId +
                 " startTime=" + startTime +
                 " endTime=" + endTime +
                 " dayCount=" + description +
@@ -102,12 +97,6 @@ public class Vacation implements Record {
     public Vacation withVacationCategoryId(String categoryId) {
         Vacation vacation = copy();
         vacation.categoryId = categoryId;
-        return vacation;
-    }
-
-    public Vacation withReplacementEmployeeId(String replacementEmployeeId) {
-        Vacation vacation = copy();
-        vacation.replacementEmployeeId = replacementEmployeeId;
         return vacation;
     }
 

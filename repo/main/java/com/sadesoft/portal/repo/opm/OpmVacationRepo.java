@@ -30,7 +30,6 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 getId(s, "id"),
                 getId(s, "employee_id"),
                 getId(s, "vacation_type_id"),
-                null,
                 getLocalDateTime(s, "vacation_start_date"),
                 getLocalDateTime(s, "vacation_end_date"),
                 s.getInt("total_days"),

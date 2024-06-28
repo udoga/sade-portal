@@ -113,7 +113,6 @@ CREATE TABLE vacations(
     id SERIAL PRIMARY KEY NOT NULL,
     employee_id INT NOT NULL,
     category_id INT NOT NULL,
-    replacement_employee_id INT NOT NULL,
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     day_count INT NOT NULL,
@@ -205,9 +204,9 @@ INSERT INTO vacation_categories VALUES
     (default, 'MarriageVacation');
 
 INSERT INTO vacations VALUES
---        id, employee_id,  category_id, replacement_employee_id,              start_time,                end_time,  day_count,   description,     status
-    (default,           1,            1,                       2,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
-    (default,           2,            1,                       1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
+--        id, employee_id,  category_id,              start_time,                end_time,  day_count,   description,     status
+    (default,           1,            1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
+    (default,           2,            1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
 
 INSERT INTO expenses VALUES
 --        id, employee_id,    form_date,      amount, currency,  paid,   description,     status
