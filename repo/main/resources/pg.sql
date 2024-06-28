@@ -1,30 +1,24 @@
 DROP TABLE IF EXISTS receipts CASCADE;
+DROP TABLE IF EXISTS receipt_categories CASCADE;
 DROP TABLE IF EXISTS expenses CASCADE;
 DROP TABLE IF EXISTS vacations CASCADE;
+DROP TABLE IF EXISTS vacation_categories CASCADE;
+DROP TABLE IF EXISTS worklogs CASCADE;
+DROP TABLE IF EXISTS activities CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+DROP TABLE IF EXISTS clients CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
+DROP TABLE IF EXISTS grants CASCADE;
 DROP TABLE IF EXISTS assignments CASCADE;
-DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS permissions CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
-DROP TYPE IF EXISTS receipt_category CASCADE;
-DROP TYPE IF EXISTS vacation_type CASCADE;
 DROP TYPE IF EXISTS approval_status CASCADE;
 
 CREATE TYPE approval_status AS ENUM (
     'Approved', 'Rejected', 'Waiting'
-);
-
-CREATE TYPE vacation_type AS ENUM (
-    'ParentalVacation', 'BereavementVacation', 'BreastFeedingVacation', 'PersonalVacation', 'MarriageVacation',
-    'MilitaryVacation', 'MaternityVacation', 'PaternityVacation', 'UnpaidVacation', 'MedicalVacation', 'AnnualVacation',
-    'BirthdayVacation', 'RemoteWorking'
-);
-
-CREATE TYPE receipt_category AS ENUM (
-    'Food', 'Communication', 'Transportation', 'Stationery', 'Technology', 'Vehicle', 'Office', 'Accommodation',
-    'Notary', 'Cargo', 'Balancing', 'Other'
 );
 
 CREATE TABLE users(
@@ -41,14 +35,38 @@ CREATE TABLE sessions(
     token VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE roles(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE permissions(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE roles(
+CREATE TABLE assignments(
     id SERIAL PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE grants(
+    id SERIAL PRIMARY KEY NOT NULL,
+    role_id INT NOT NULL,
+    permission_id INT NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT,
+    FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE employees(
+    id SERIAL PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE clients(
@@ -67,22 +85,6 @@ CREATE TABLE projects(
 CREATE TABLE activities(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE assignments(
-    id SERIAL PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL,
-    role_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
-    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
-);
-
-CREATE TABLE employees(
-    id SERIAL PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE worklogs(
@@ -113,7 +115,7 @@ CREATE TABLE vacations(
     day_count INT NOT NULL,
     description VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
-    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
     FOREIGN KEY (category_id) REFERENCES vacation_categories(id) ON DELETE RESTRICT
 );
 
@@ -144,73 +146,79 @@ CREATE TABLE receipts(
 );
 
 INSERT INTO users VALUES
---        id,       username,                                                           password
-    (default,        'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),
-    (default,  'doga.sezgin', 'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
+--   id,      username,       password
+    (default, 'admin',        'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),
+    (default, 'doga.sezgin',  'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
     (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26');
 
+INSERT INTO roles VALUES
+--   id,      name
+    (default, 'ROLE_ADMIN'),
+    (default, 'ROLE_USER' );
+
 INSERT INTO permissions  VALUES
---        id,          name
-    (default,   'user_read'),
+--   id,      name
+    (default, 'user_read'  ),
     (default, 'user_update');
 
-INSERT INTO roles VALUES
---        id,         name
-    (default, 'ROLE_ADMIN'),
-    (default, 'ROLE_USER');
+INSERT INTO assignments VALUES
+--   id,      user_id, role_id
+    (default,       1,       1),
+    (default,       1,       2),
+    (default,       2,       2),
+    (default,       3,       2);
+
+INSERT INTO grants VALUES
+--   id,      role_id, permission_id
+    (default,       1,             1),
+    (default,       1,             2),
+    (default,       2,             1);
 
 INSERT INTO clients VALUES
---        id,      name
-    (default, 'Client1'),
-    (default, 'Client2');
+--   id,      name
+    (default, 'Client One'),
+    (default, 'Client Two');
 
 INSERT INTO projects VALUES
---        id, client_id,      name, description
-    (default,         1, 'Project1', 'Example1'),
-    (default,         2, 'Project2', 'Example2');
+--   id,      client_id, name,          description
+    (default,         1, 'Project One', 'Description one.'),
+    (default,         2, 'Project Two', 'Description two.');
 
 INSERT INTO activities VALUES
---        id,      name
+--   id,      name
     (default, 'Meeting'),
     (default, 'Data Analysis');
 
-INSERT INTO assignments VALUES
---        id, user_id,    role_id
-    (default,       1,          1),
-    (default,       1,          2),
-    (default,       2,          2),
-    (default,       3,          2);
-
 INSERT INTO employees VALUES
---        id, user_id,  first_name, last_name
+--   id,      user_id,  first_name, last_name
     (default,       2, 'Uğur Doğa',  'Sezgin'),
     (default,       3, 'Eylül',      'Erdinç');
 
 INSERT INTO worklogs VALUES
---        id, activity_id, employee_id, project_id,     work_date, duration, status, description
-    (default,       1,           1,          1,  '2022-01-01',        5, 'Done',  'Example1'),
-    (default,       2,           2,          2,  '2022-02-02',        6, 'Done',  'Example2');
+--   id,      activity_id, employee_id, project_id, work_date,    duration, status, description
+    (default,           1,           1,          1, '2022-01-01',        5, 'Done',  'Description one.'),
+    (default,           2,           2,          2, '2022-02-02',        6, 'Done',  'Description two.');
 
 INSERT INTO vacation_categories VALUES
---        id,              name
+--   id,      name
     (default, 'ParentalVacation'),
     (default, 'MarriageVacation');
 
 INSERT INTO vacations VALUES
---        id, employee_id,  category_id,              start_time,                end_time,  day_count,   description,     status
-    (default,           1,            1,   '2022-01-01T09:00:00',   '2022-05-05T12:00:00',          5,    'Example1', 'Approved'),
-    (default,           2,            1,   '2022-01-01T08:00:00',   '2022-06-06T11:00:00',          6,    'Example2', 'Rejected');
+--   id,      employee_id, category_id, start_time,            end_time,              day_count, description,        status
+    (default,           1,           1, '2022-01-01T09:00:00', '2022-05-05T12:00:00',         5, 'Description one.', 'Approved'),
+    (default,           2,           1, '2022-01-01T08:00:00', '2022-06-06T11:00:00',         6, 'Description two.', 'Rejected');
 
 INSERT INTO expenses VALUES
---        id, employee_id,    form_date,   description,     status
-    (default,           1, '2022-01-01',    'Example1', 'Approved'),
-    (default,           2, '2022-02-02',    'Example2', 'Rejected');
+--   id,      employee_id, form_date,    description,        status
+    (default,           1, '2022-01-01', 'Description one.', 'Approved'),
+    (default,           2, '2022-02-02', 'Description two.', 'Rejected');
 
 INSERT INTO receipt_categories VALUES
---        id,      name
+--   id,      name
     (default, 'Transport'),
-    (default,      'Food');
+    (default, 'Food'     );
 
 INSERT INTO receipts VALUES
---        id, expense_id, receipt_date, category_id,    amount, currency, vat_rate, description
-    (default,          1, '2022-01-01',           1,   '45.20',    'TRY',     '18', 'Bus Coast');
+--   id,      expense_id, receipt_date, category_id, amount,  currency, vat_rate, description
+    (default,          1, '2022-01-01',           1, '45.20',    'TRY',     '18', 'Bus Coast');

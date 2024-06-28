@@ -23,46 +23,49 @@ public class Main {
 
         UserRepo userRepo = (opm == null)? new LocalUserRepo(local) : new OpmUserRepo(opm);
         SessionRepo sessionRepo = new LocalSessionRepo(local);
-        PermissionRepo permissionRepo = (opm == null)? new LocalPermissionRepo(local) : new OpmPermissionRepo(opm);
         RoleRepo roleRepo = (opm == null)? new LocalRoleRepo(local) : new OpmRoleRepo(opm);
+        PermissionRepo permissionRepo = (opm == null)? new LocalPermissionRepo(local) : new OpmPermissionRepo(opm);
         AssignmentRepo assignmentRepo = (opm == null)? new LocalAssignmentRepo(local) : new OpmAssignmentRepo(opm);
+        GrantRepo grantRepo = (opm == null)? new LocalGrantRepo(local) : new OpmGrantRepo(opm);
         EmployeeRepo employeeRepo = (opm == null)? new LocalEmployeeRepo(local) : new OpmEmployeeRepo(opm);
+        ClientRepo clientRepo = (opm == null)? new LocalClientRepo(local) : new OpmClientRepo(opm);
+        ProjectRepo projectRepo = (opm == null)? new LocalProjectRepo(local) : new OpmProjectRepo(opm);
+        ActivityRepo activityRepo = (opm == null)? new LocalActivityRepo(local) : new OpmActivityRepo(opm);
+        WorklogRepo worklogRepo = (opm == null)? new LocalWorklogRepo(local) : new OpmWorklogRepo(opm);
         VacationRepo vacationRepo = (opm == null)? new LocalVacationRepo(local) : new OpmVacationRepo(opm);
         ExpenseRepo expenseRepo = (opm == null)? new LocalExpenseRepo(local) : new OpmExpenseRepo(opm);
         ReceiptRepo receiptRepo = (opm == null)? new LocalReceiptRepo(local) : new OpmReceiptRepo(opm);
-        ActivityRepo activityRepo = (opm == null)? new LocalActivityRepo(local) : new OpmActivityRepo(opm);
-        ClientRepo clientRepo = (opm == null)? new LocalClientRepo(local) : new OpmClientRepo(opm);
-        ProjectRepo projectRepo = (opm == null)? new LocalProjectRepo(local) : new OpmProjectRepo(opm);
-        WorklogRepo worklogRepo = (opm == null)? new LocalWorklogRepo(local) : new OpmWorklogRepo(opm);
 
         UserService userService = new UserService(userRepo, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
-        PermissionService permissionService = new PermissionService(permissionRepo);
         RoleService roleService = new RoleService(roleRepo);
+        PermissionService permissionService = new PermissionService(permissionRepo);
         AssignmentService assignmentService = new AssignmentService(assignmentRepo);
+        GrantService grantService = new GrantService(grantRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);
+        ClientService clientService = new ClientService(clientRepo);
+        ProjectService projectService = new ProjectService(projectRepo);
+        ActivityService activityService = new ActivityService(activityRepo);
+        WorklogService worklogService = new WorklogService(worklogRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
-        ActivityService activityService = new ActivityService(activityRepo);
-        ClientService clientService = new ClientService(clientRepo);
-        ProjectService projectService = new ProjectService(projectRepo);
-        WorklogService worklogService = new WorklogService(worklogRepo);
 
         RestServer server = new RestServer(restConfig);
         server.enrol(new UserController(userService));
         server.enrol(new SessionController(sessionService));
-        server.enrol(new PermissionController(permissionService));
         server.enrol(new RoleController(roleService));
+        server.enrol(new PermissionController(permissionService));
         server.enrol(new AssignmentController(assignmentService));
+        server.enrol(new GrantController(grantService));
         server.enrol(new EmployeeController(employeeService));
+        server.enrol(new ClientController(clientService));
+        server.enrol(new ProjectController(projectService));
+        server.enrol(new ActivityController(activityService));
+        server.enrol(new WorklogController(worklogService));
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new ReceiptController(receiptService));
-        server.enrol(new ActivityController(activityService));
-        server.enrol(new ClientController(clientService));
-        server.enrol(new WorklogController(worklogService));
-        server.enrol(new ProjectController(projectService));
         server.run();
     }
 }

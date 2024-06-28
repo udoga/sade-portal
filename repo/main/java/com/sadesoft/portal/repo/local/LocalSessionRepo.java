@@ -25,7 +25,7 @@ public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
     public Session toObject(ResultSet s) throws SQLException {
         return new Session(
                 getId(s, "id"),
-                s.getString("user_id"),
+                getId(s, "user_id"),
                 getLocalDateTime(s, "begin_time"),
                 getLocalDateTime(s, "end_time"),
                 s.getString("token"));
@@ -34,7 +34,7 @@ public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Session o) throws SQLException {
         int i = 1;
-        s.setString(i++, o.userId);
+        setId(s, i++, o.userId);
         setLocalDateTime(s, i++, o.beginTime);
         setLocalDateTime(s, i++, o.endTime);
         s.setString(i++, o.token);

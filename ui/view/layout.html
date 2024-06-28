@@ -7,15 +7,15 @@
   </header>
   <nav :class="{ opened: hasNavigation }">
     <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
+    <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
+    <a href="#/session-list"><i class="fa-solid fa-laptop"></i>Sessions</a>
     <a href="#/employee-list"><i class="fa-solid fa-address-card"></i>Employees</a>
+    <a href="#/client-list"><i class="fa-solid fa-handshake"></i>Clients</a>
+    <a href="#/project-list"><i class="fa-solid fa-diagram-project"></i>Projects</a>
+    <a href="#/worklog-list"><i class="fa-solid fa-calendar-days"></i>Worklogs</a>
     <a href="#/vacation-list"><i class="fa-solid fa-umbrella-beach"></i>Vacations</a>
     <a href="#/expense-list"><i class="fa-solid fa-file-invoice-dollar"></i>Expenses</a>
     <a href="#/receipt-list"><i class="fa-solid fa-receipt"></i>Receipts</a>
-    <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
-    <a href="#/session-list"><i class="fa-solid fa-laptop"></i>Sessions</a>
-    <a href="#/worklog-list"><i class="fa-solid fa-calendar-days"></i>Worklogs</a>
-    <a href="#/project-list"><i class="fa-solid fa-diagram-project"></i>Projects</a>
-    <a href="#/client-list"><i class="fa-solid fa-handshake"></i>Clients</a>
   </nav>
   <main :class="{ shifted: isShifted }">
     <div x-html="(await httpClient.get('view/notifications.html')).text()"></div>

@@ -64,6 +64,15 @@ class Router {
         if (location.hash === "#/employee-list") return ["layout", "employee-list"];
         if (location.hash.startsWith("#/employee-form")) return ["layout", "employee-form"];
         if (location.hash.startsWith("#/employee-page")) return ["layout", "employee-page"];
+        if (location.hash === "#/client-list") return ["layout", "client-list"];
+        if (location.hash.startsWith("#/client-form")) return ["layout", "client-form"];
+        if (location.hash.startsWith("#/client-page")) return ["layout", "client-page"];
+        if (location.hash === "#/project-list") return ["layout", "project-list"];
+        if (location.hash.startsWith("#/project-form")) return ["layout", "project-form"];
+        if (location.hash.startsWith("#/project-page")) return ["layout", "project-page"];
+        if (location.hash === "#/worklog-list") return ["layout", "worklog-list"];
+        if (location.hash.startsWith("#/worklog-form")) return ["layout", "worklog-form"];
+        if (location.hash.startsWith("#/worklog-page")) return ["layout", "worklog-page"];
         if (location.hash === "#/vacation-list") return ["layout", "vacation-list"];
         if (location.hash.startsWith("#/vacation-form")) return ["layout", "vacation-form"];
         if (location.hash.startsWith("#/vacation-page")) return ["layout", "vacation-page"];
@@ -73,15 +82,6 @@ class Router {
         if (location.hash === "#/receipt-list") return ["layout", "receipt-list"];
         if (location.hash.startsWith("#/receipt-form")) return ["layout", "receipt-form"];
         if (location.hash.startsWith("#/receipt-page")) return ["layout", "receipt-page"];
-        if (location.hash === "#/worklog-list") return ["layout", "worklog-list"];
-        if (location.hash.startsWith("#/worklog-form")) return ["layout", "worklog-form"];
-        if (location.hash.startsWith("#/worklog-page")) return ["layout", "worklog-page"];
-        if (location.hash === "#/project-list") return ["layout", "project-list"];
-        if (location.hash.startsWith("#/project-form")) return ["layout", "project-form"];
-        if (location.hash.startsWith("#/project-page")) return ["layout", "project-page"];
-        if (location.hash === "#/client-list") return ["layout", "client-list"];
-        if (location.hash.startsWith("#/client-form")) return ["layout", "client-form"];
-        if (location.hash.startsWith("#/client-page")) return ["layout", "client-page"];
         return ["layout", "not-found"];
     }
 }
