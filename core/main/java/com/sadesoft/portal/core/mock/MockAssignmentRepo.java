@@ -9,7 +9,6 @@ import com.sadesoft.portal.core.repo.AssignmentRepo;
 import com.sadesoft.portal.core.repo.RoleRepo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MockAssignmentRepo extends MockRepo<Assignment> implements AssignmentRepo {
     private final RoleRepo roleRepo;
@@ -31,7 +30,12 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
 
     @Override
     public List<AssignmentWithRole> listWithRole() {
-        return records.stream().map(a -> new AssignmentWithRole(a, getRole(a.roleId))).collect(Collectors.toList());
+        return records.stream().map(a -> new AssignmentWithRole(a, getRole(a.roleId))).toList();
+    }
+
+    @Override
+    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+        return listWithRole().stream().filter(a -> a.userId.equals(userId)).toList();
     }
 
     private Role getRole(String roleId) {

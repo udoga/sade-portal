@@ -33,7 +33,7 @@ public class MockAssignmentRepoTest {
     }
 
     @Nested
-    public class GivenAssignmentRepoWithRoleRepo {
+    public class GivenTwoAssignmentsAndTwoRoles {
         private RoleRepo roleRepo;
 
         @BeforeEach
@@ -42,15 +42,22 @@ public class MockAssignmentRepoTest {
             assignmentRepo = new MockAssignmentRepo(roleRepo);
             roleRepo.create(new Role("0", "admin"));
             roleRepo.create(new Role("1", "user"));
+            assignmentRepo.create(assignment.withRoleId("1"));
+            assignmentRepo.create(assignment.withRoleId("0"));
         }
 
         @Test
-        void whenRoleIsFound_initializesWithRole() {
-            assignmentRepo.create(assignment.withRoleId("1"));
-            assignmentRepo.create(assignment.withUserId("0"));
+        void whenListsWithRoles_initializesAssignmentsWithRole() {
             List<AssignmentWithRole> assignments = assignmentRepo.listWithRole();
             assertEquals(roleRepo.read("1"), assignments.get(0).role);
             assertEquals(roleRepo.read("0"), assignments.get(1).role);
+        }
+
+        @Test
+        void whenListsWithRoles_filtersByUserId() {
+            assignmentRepo.create(assignment.withUserId("1"));
+            assertEquals(2, assignmentRepo.listWithRoleByUserId("0").size());
+            assertEquals(1, assignmentRepo.listWithRoleByUserId("1").size());
         }
     }
 }

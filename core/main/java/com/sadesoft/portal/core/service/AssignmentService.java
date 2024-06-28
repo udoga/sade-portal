@@ -25,7 +25,7 @@ public class AssignmentService {
         return repo.deleteByValues(a);
     }
 
-    public List<AssignmentWithRole> listWithRole() {
-        return repo.listWithRole();
+    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+        return (userId == null)? repo.listWithRole() : repo.listWithRoleByUserId(userId);
     }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface AssignmentRepo extends Repo<Assignment> {
     Assignment deleteByValues(Assignment a);
     List<AssignmentWithRole> listWithRole();
+    List<AssignmentWithRole> listWithRoleByUserId(String userId);
 }

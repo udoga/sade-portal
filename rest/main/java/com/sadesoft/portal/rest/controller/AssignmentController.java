@@ -10,9 +10,13 @@ public class AssignmentController extends RestController {
     public AssignmentController(AssignmentService service) {
         super("/assignments");
         add(HandlerType.GET, "", c -> send(c, service.list()));
-        add(HandlerType.GET, "/with-role", c -> send(c, service.listWithRole()));
+        add(HandlerType.GET, "/with-role", c -> send(c, service.listWithRoleByUserId(getUserId(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getAssignment(c))));
         add(HandlerType.DELETE, "", c -> send(c, service.deleteByValues(getQueriedAssignment(c))));
+    }
+
+    private String getUserId(Context c) {
+        return c.queryParam("userId");
     }
 
     private Assignment getAssignment(Context c) {

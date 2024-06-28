@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements AssignmentRepo {
+    private final String selectWithRoleSql =
+            "SELECT a.*, r.name role_name FROM assignments a JOIN roles r ON a.role_id = r.id";
+
     public LocalAssignmentRepo(Connection connection) {
         super(connection, "assignments", List.of(
                 new JdbcColumn("id"),
@@ -44,7 +47,12 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
 
     @Override
     public List<AssignmentWithRole> listWithRole() {
-        String sql = "SELECT a.*, r.name role_name FROM " + tableName + " a JOIN roles r ON a.role_id = r.id";
+        return call(() -> queryFor(createStatement(selectWithRoleSql), this::toAssignmentWithRole));
+    }
+
+    @Override
+    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+        String sql = selectWithRoleSql + " where user_id = " + userId;
         return call(() -> queryFor(createStatement(sql), this::toAssignmentWithRole));
     }
 
