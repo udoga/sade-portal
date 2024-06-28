@@ -3,6 +3,7 @@ var httpClient = new HttpClient();
 var router = new Router(notifier, httpClient);
 var userApi = new UserApi();
 var roleApi = new RoleApi();
+var assignmentApi = new AssignmentApi();
 var sessionApi = new SessionApi();
 var employeeApi = new EmployeeApi();
 var vacationApi = new VacationApi();
