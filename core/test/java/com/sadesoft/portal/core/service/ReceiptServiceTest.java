@@ -45,6 +45,7 @@ public class ReceiptServiceTest {
                 LocalDate.of(2022, 1, 1),
                 "1",
                 new BigDecimal("10.20"),
+                "TRY",
                 (short) 18,
                 "TaxiCoast");
     }

@@ -108,6 +108,7 @@ CREATE TABLE receipts(
     receipt_date DATE NOT NULL,
     category_id INT NOT NULL,
     amount DECIMAL NOT NULL,
+    currency VARCHAR(255) NOT NULL,
     vat_rate SMALLINT NOT NULL,
     description TEXT NOT NULL,
     FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE RESTRICT,
@@ -183,5 +184,5 @@ INSERT INTO receipt_categories VALUES
     (default,      'Food');
 
 INSERT INTO receipts VALUES
---        id, expense_id, receipt_date, category_id,    amount, vat_rate, description
-    (default,          1, '2022-01-01',           1,   '45.20',     '18', 'Bus Coast');
+--        id, expense_id, receipt_date, category_id,    amount, currency, vat_rate, description
+    (default,          1, '2022-01-01',           1,   '45.20',    'TRY',     '18', 'Bus Coast');

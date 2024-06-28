@@ -11,6 +11,7 @@ public class Receipt implements Record {
     public LocalDate receiptDate = null;
     public String categoryId = null;
     public BigDecimal amount = null;
+    public String currency = null;
     public Short vatRate = null;
     public String description = null;
 
@@ -22,6 +23,7 @@ public class Receipt implements Record {
                    LocalDate receiptDate,
                    String categoryId,
                    BigDecimal amount,
+                   String currency,
                    Short vatRate,
                    String description) {
         this.id = id;
@@ -29,6 +31,7 @@ public class Receipt implements Record {
         this.receiptDate = receiptDate;
         this.categoryId = categoryId;
         this.amount = amount;
+        this.currency = currency;
         this.vatRate = vatRate;
         this.description = description;
     }
@@ -42,6 +45,7 @@ public class Receipt implements Record {
                 Objects.equals(receiptDate, u.receiptDate) &&
                 Objects.equals(categoryId, u.categoryId) &&
                 Objects.equals(amount, u.amount) &&
+                Objects.equals(currency, u.currency) &&
                 Objects.equals(vatRate, u.vatRate) &&
                 Objects.equals(description, u.description);
     }
@@ -54,6 +58,7 @@ public class Receipt implements Record {
                 " receiptDate=" + receiptDate +
                 " categoryId=" + categoryId +
                 " amount=" + amount +
+                " currency=" + currency +
                 " vatRate=" + vatRate +
                 " description=" + description +
                 ']';
@@ -104,6 +109,12 @@ public class Receipt implements Record {
     public Receipt withAmount(BigDecimal amount) {
         Receipt receipt = copy();
         receipt.amount = amount;
+        return receipt;
+    }
+
+    public Receipt withCurrency(String currency) {
+        Receipt receipt = copy();
+        receipt.currency = currency;
         return receipt;
     }
 

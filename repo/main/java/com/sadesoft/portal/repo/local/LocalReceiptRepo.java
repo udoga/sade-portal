@@ -19,6 +19,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 new JdbcColumn("receipt_date"),
                 new JdbcColumn("category_id"),
                 new JdbcColumn("amount"),
+                new JdbcColumn("currency"),
                 new JdbcColumn("vat_rate"),
                 new JdbcColumn("description")));
     }
@@ -31,6 +32,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 getLocalDate(s, "receipt_date"),
                 getId(s, "category_id"),
                 s.getBigDecimal("amount"),
+                s.getString("currency"),
                 s.getShort("vat_rate"),
                 s.getString("description")
         );
@@ -43,6 +45,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         setLocalDate(s, i++, o.receiptDate);
         setId(s, i++, o.categoryId);
         s.setBigDecimal(i++, o.amount);
+        s.setString(i++, o.currency);
         s.setShort(i++, o.vatRate);
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
