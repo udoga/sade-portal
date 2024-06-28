@@ -5,10 +5,10 @@ import com.sadesoft.portal.base.repo.Record;
 import java.util.Objects;
 
 public class Employee implements Record {
-    public String id = null;
-    public String userId = null;
-    public String firstName = null;
-    public String lastName = null;
+    public String id;
+    public String userId;
+    public String firstName;
+    public String lastName;
 
     public Employee(String id, String userId, String firstName, String lastName) {
         this.id = id;

@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Expense implements Record {
-    public String id = null;
-    public String employeeId = null;
-    public LocalDate formDate = null;
-    public String description = null;
-    public ApprovalStatus status = null;
+    public String id;
+    public String employeeId;
+    public LocalDate formDate;
+    public String description;
+    public ApprovalStatus status;
 
     public Expense(String id,
                    String employeeId,

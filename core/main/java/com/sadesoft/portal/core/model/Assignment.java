@@ -5,9 +5,9 @@ import com.sadesoft.portal.base.repo.Record;
 import java.util.Objects;
 
 public class Assignment implements Record {
-    public String id = null;
-    public String userId = null;
-    public String roleId = null;
+    public String id;
+    public String userId;
+    public String roleId;
 
     public Assignment() {
     }

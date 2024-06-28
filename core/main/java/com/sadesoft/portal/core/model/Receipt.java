@@ -6,14 +6,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Receipt implements Record {
-    public String id = null;
-    public String expenseId = null;
-    public LocalDate receiptDate = null;
-    public String categoryId = null;
-    public BigDecimal amount = null;
-    public String currency = null;
-    public Short vatRate = null;
-    public String description = null;
+    public String id;
+    public String expenseId;
+    public LocalDate receiptDate;
+    public String categoryId;
+    public BigDecimal amount;
+    public String currency;
+    public Short vatRate;
+    public String description;
 
     public Receipt() {
     }

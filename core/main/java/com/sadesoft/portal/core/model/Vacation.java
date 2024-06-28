@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Vacation implements Record {
-    public String id = null;
-    public String employeeId = null;
-    public String categoryId = null;
-    public LocalDateTime startTime = null;
-    public LocalDateTime endTime = null;
-    public Integer dayCount = null;
-    public String description = null;
-    public ApprovalStatus status = null;
+    public String id;
+    public String employeeId;
+    public String categoryId;
+    public LocalDateTime startTime;
+    public LocalDateTime endTime;
+    public Integer dayCount;
+    public String description;
+    public ApprovalStatus status;
 
     public Vacation() {
     }

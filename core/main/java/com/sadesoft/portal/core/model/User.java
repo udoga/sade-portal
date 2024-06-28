@@ -5,9 +5,9 @@ import com.sadesoft.portal.base.repo.Record;
 import com.sadesoft.portal.base.util.StringUtil;
 
 public class User implements Record {
-    public String id = null;
-    public String username = null;
-    public String password = null;
+    public String id;
+    public String username;
+    public String password;
 
     public User() {
     }

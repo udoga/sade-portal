@@ -5,11 +5,11 @@ import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
 
 public class Session implements Record {
-    public String id = null;
-    public String userId = null;
-    public LocalDateTime beginTime = null;
-    public LocalDateTime endTime = null;
-    public String token = null;
+    public String id;
+    public String userId;
+    public LocalDateTime beginTime;
+    public LocalDateTime endTime;
+    public String token;
 
     public Session() {
     }
