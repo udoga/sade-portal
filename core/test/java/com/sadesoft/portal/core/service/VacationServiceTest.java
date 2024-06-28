@@ -41,7 +41,6 @@ public class VacationServiceTest {
         validVacation = new Vacation(
                 null,
                 "4",
-                "1",
                 "6",
                 LocalDateTime.of(2022,5,4,9,18),
                 LocalDateTime.of(2022,5,4,9,19),

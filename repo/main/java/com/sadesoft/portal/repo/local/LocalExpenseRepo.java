@@ -17,9 +17,6 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("form_date"),
-                new JdbcColumn("amount"),
-                new JdbcColumn("currency", "currency"),
-                new JdbcColumn("paid"),
                 new JdbcColumn("description"),
                 new JdbcColumn("approval_status", "approval_status")));
     }
@@ -30,9 +27,6 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 getId(s, "id"),
                 getId(s, "employee_id"),
                 getLocalDate(s, "form_date"),
-                s.getBigDecimal("amount"),
-                Currency.valueOf(s.getString("currency")),
-                s.getBoolean("paid"),
                 s.getString("description"),
                 ApprovalStatus.valueOf(s.getString("approval_status"))
         );
@@ -43,9 +37,6 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         int i = 1;
         setId(s, i++, o.employeeId);
         setLocalDate(s, i++, o.formDate);
-        s.setBigDecimal(i++, o.amount);
-        s.setString(i++, o.currency.name());
-        s.setBoolean(i++, o.paid);
         s.setString(i++, o.description);
         s.setString(i++, o.status.name());
         if (o.id != null) setId(s, i, o.id);

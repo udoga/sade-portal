@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,26 +9,17 @@ public class Expense implements Record {
     public String id = null;
     public String employeeId = null;
     public LocalDate formDate = null;
-    public BigDecimal amount = null;
-    public Currency currency = null;
-    public Boolean paid = null;
     public String description = null;
     public ApprovalStatus status = null;
 
     public Expense(String id,
                    String employeeId,
                    LocalDate formDate,
-                   BigDecimal amount,
-                   Currency currency,
-                   Boolean paid,
                    String description,
                    ApprovalStatus status) {
         this.id = id;
         this.employeeId = employeeId;
         this.formDate = formDate;
-        this.amount = amount;
-        this.currency = currency;
-        this.paid = paid;
         this.description = description;
         this.status = status;
     }
@@ -44,9 +34,6 @@ public class Expense implements Record {
         return Objects.equals(id, e.id) &&
                 Objects.equals(employeeId, e.employeeId) &&
                 Objects.equals(formDate, e.formDate) &&
-                Objects.equals(amount, e.amount) &&
-                Objects.equals(currency, e.currency) &&
-                Objects.equals(paid, e.paid) &&
                 Objects.equals(description, e.description) &&
                 Objects.equals(status, e.status);
     }
@@ -57,9 +44,6 @@ public class Expense implements Record {
                 "id=" + id +
                 " employeeId=" + employeeId +
                 " formDate=" + formDate +
-                " amount=" + amount +
-                " currency=" + currency +
-                " paid=" + paid +
                 " description=" + description +
                 " status=" + status +
                 "]";
@@ -98,24 +82,6 @@ public class Expense implements Record {
     public Expense withFormDate(LocalDate formDate) {
         Expense expense = copy();
         expense.formDate = formDate;
-        return expense;
-    }
-
-    public Expense withAmount(BigDecimal amount) {
-        Expense expense = copy();
-        expense.amount = amount;
-        return expense;
-    }
-
-    public Expense withCurrency(Currency currency) {
-        Expense expense = copy();
-        expense.currency = currency;
-        return expense;
-    }
-
-    public Expense withPaid(Boolean paid) {
-        Expense expense = copy();
-        expense.paid = paid;
         return expense;
     }
 

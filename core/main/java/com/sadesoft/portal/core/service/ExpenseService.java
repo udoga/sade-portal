@@ -48,9 +48,6 @@ public class ExpenseService {
     private void checkMissingFields(Expense expense) {
         checkMissingField(expense.employeeId, "userId");
         checkMissingField(expense.formDate, "formDate");
-        checkMissingField(expense.amount, "amount");
-        checkMissingField(expense.currency, "currency");
-        checkMissingField(expense.paid, "paid");
         checkMissingField(expense.description, "description");
         checkMissingField(expense.status, "status");
     }

@@ -26,9 +26,6 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 getId(s, "id"),
                 getId(s, "employee_id"),
                 getLocalDateTime(s, "expense_date").toLocalDate(),
-                null,
-                null,
-                null,
                 s.getString("description"),
                 null);
     }

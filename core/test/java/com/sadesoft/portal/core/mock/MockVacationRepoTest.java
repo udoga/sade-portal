@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
-import com.sadesoft.portal.core.model.VacationType;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,6 @@ public class MockVacationRepoTest {
         validVacation = new Vacation(
                 null,
                 "4",
-                VacationType.AnnualVacation,
                 "6",
                 LocalDateTime.of(2022,5,4,9,18),
                 LocalDateTime.of(2022,5,4,9,19),

@@ -4,13 +4,11 @@ import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
 import com.sadesoft.portal.core.model.ApprovalStatus;
-import com.sadesoft.portal.core.model.Currency;
 import com.sadesoft.portal.core.model.Expense;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,9 +35,6 @@ public class ExpenseServiceTest {
                 null,
                 "1",
                 LocalDate.of(2022, 1, 1),
-                new BigDecimal("1000.10"),
-                Currency.EUR,
-                true,
                 "Example expense",
                 ApprovalStatus.Approved);
     }
@@ -56,9 +51,6 @@ public class ExpenseServiceTest {
     public void whenHasMissingFieldOnCreate_throwsError() {
         assertMissingField(validExpense.withEmployeeId(null));
         assertMissingField(validExpense.withFormDate(null));
-        assertMissingField(validExpense.withAmount(null));
-        assertMissingField(validExpense.withCurrency(null));
-        assertMissingField(validExpense.withPaid(null));
         assertMissingField(validExpense.withDescription(null));
         assertMissingField(validExpense.withStatus(null));
     }

@@ -10,23 +10,6 @@
       <input type="date" placeholder="Form Date" x-model="expense.formDate"/>
     </div>
     <div class="field">
-      <label>Amount</label>
-      <input type="number" min="0" value="0" step="0.01" placeholder="Amount" x-model="expense.amount"/>
-    </div>
-    <div class="field">
-      <label>Currency</label>
-      <input list="currency" placeholder="Currency" x-model="expense.currency"/>
-      <datalist id="currency">
-        <option value="TRY">
-        <option value="EUR">
-        <option value="USD">
-      </datalist>
-    </div>
-    <div class="field">
-      <label>Paid</label>
-      <input type="checkbox" placeholder="Paid" x-model="expense.paid"/>
-    </div>
-    <div class="field">
       <label>Description</label>
       <textarea placeholder="Description" x-model="expense.description"></textarea>
     </div>
