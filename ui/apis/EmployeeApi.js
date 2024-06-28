@@ -4,6 +4,6 @@ class EmployeeApi extends RestApi {
     }
 
     listByUserId = function (userId) {
-        return this.getJson(this.get(this.url + "?userId=" + userId, { headers: this.getHeaders() }));
+        return this.list("?userId=" + userId);
     }
 }

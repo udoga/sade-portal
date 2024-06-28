@@ -6,8 +6,8 @@ class RestApi extends HttpClient {
         this.url = "/api" + url;
     }
 
-    list = function () {
-        return this.getJson(this.get(this.url, { headers: this.getHeaders() }));
+    list = function (appendedUrl = "") {
+        return this.getJson(this.get(this.url + appendedUrl, { headers: this.getHeaders() }));
     };
 
     create = function (data) {
