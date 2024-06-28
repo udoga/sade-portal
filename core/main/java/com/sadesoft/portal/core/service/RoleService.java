@@ -19,8 +19,4 @@ public class RoleService {
     public List<Role> list() {
         return repo.list();
     }
-
-    public List<Role> listByUserId(String userId) {
-        return (userId == null)? repo.list() : repo.listByUserId(userId);
-    }
 }

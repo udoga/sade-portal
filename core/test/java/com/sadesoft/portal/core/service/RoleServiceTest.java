@@ -37,14 +37,5 @@ public class RoleServiceTest {
         public void readsRoles() {
             assertEquals(validRole.withId("0"), service.read("0"));
         }
-
-        @Test
-        public void listsRolesByUserId() {
-            repo.addUserRole("1", repo.read("0"));
-            assertEquals(service.list(), service.listByUserId(null));
-            assertEquals(0, service.listByUserId("0").size());
-            assertEquals(1, service.listByUserId("1").size());
-            assertEquals(repo.read("0"), service.listByUserId("1").get(0));
-        }
     }
 }
