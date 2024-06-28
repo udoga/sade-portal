@@ -98,15 +98,13 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         s.setTimestamp(index, (time == null)? null : java.sql.Timestamp.valueOf(time));
     }
 
-    protected <V> V call(Callable<V> callable) {
-        try { return callable.call(); }
-        catch (RuntimeException e) { throw e; }
-        catch (Exception e) { throw new RuntimeException(e); }
+    protected List<T> query(PreparedStatement statement) throws SQLException {
+        return queryFor(statement, this::toObject);
     }
 
-    protected List<T> query(PreparedStatement statement) throws SQLException {
+    protected <R> List<R> queryFor(PreparedStatement statement, ResultSetReader<R> reader) throws SQLException {
         ResultSet set = statement.executeQuery();
-        List<T> objects = getObjects(set);
+        List<R> objects = getObjects(set, reader);
         statement.close();
         return objects;
     }
@@ -114,7 +112,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected T command(PreparedStatement statement) throws SQLException {
         statement.executeUpdate();
         ResultSet set = statement.getGeneratedKeys();
-        return set.isBeforeFirst()? getOrThrow(getObjects(set), "") : null;
+        return set.isBeforeFirst()? getOrThrow(getObjects(set, this::toObject), "") : null;
     }
 
     protected PreparedStatement createStatement(String sql) throws SQLException {
@@ -135,10 +133,10 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return objects.get(0);
     }
 
-    protected List<T> getObjects(ResultSet s) throws SQLException {
-        ArrayList<T> users = new ArrayList<>();
-        while (s.next()) users.add(toObject(s));
-        return users;
+    protected <R> List<R> getObjects(ResultSet s, ResultSetReader<R> reader) throws SQLException {
+        ArrayList<R> objects = new ArrayList<>();
+        while (s.next()) objects.add(reader.read(s));
+        return objects;
     }
 
     protected List<String> getColumnNames() {
@@ -192,10 +190,17 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected boolean isPostgresql() {
-        try {
-            return connection.getMetaData().getDriverName().toLowerCase().contains("postgresql");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return call(() -> connection.getMetaData().getDriverName().toLowerCase().contains("postgresql"));
+    }
+
+    protected <V> V call(Callable<V> callable) {
+        try { return callable.call(); }
+        catch (RuntimeException e) { throw e; }
+        catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    @FunctionalInterface
+    public interface ResultSetReader<T> {
+        T read(ResultSet s) throws SQLException;
     }
 }

@@ -18,6 +18,10 @@ public class Assignment implements Record {
         this.roleId = roleId;
     }
 
+    public Assignment(Assignment a) {
+        this(a.id, a.userId, a.roleId);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Assignment)) return false;
@@ -58,6 +62,18 @@ public class Assignment implements Record {
     public Assignment withId(String id) {
         Assignment copy = copy();
         copy.id = id;
+        return copy;
+    }
+
+    public Assignment withUserId(String userId) {
+        Assignment copy = copy();
+        copy.userId = userId;
+        return copy;
+    }
+
+    public Assignment withRoleId(String roleId) {
+        Assignment copy = copy();
+        copy.roleId = roleId;
         return copy;
     }
 }

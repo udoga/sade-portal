@@ -2,7 +2,9 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.compound.AssignmentWithRole;
 import com.sadesoft.portal.core.model.Assignment;
+import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
 
 import java.sql.Connection;
@@ -38,5 +40,17 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     @Override
     public Assignment deleteByValues(Assignment a) {
         return super.deleteByValues(a);
+    }
+
+    @Override
+    public List<AssignmentWithRole> listWithRole() {
+        String sql = "SELECT a.*, r.name role_name FROM " + tableName + " a JOIN roles r ON a.role_id = r.id";
+        return call(() -> queryFor(createStatement(sql), this::toAssignmentWithRole));
+    }
+
+    public AssignmentWithRole toAssignmentWithRole(ResultSet s) throws SQLException {
+        return new AssignmentWithRole(
+                toObject(s),
+                new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 }
