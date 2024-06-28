@@ -41,11 +41,6 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     }
 
     @Override
-    public Assignment deleteByValues(Assignment a) {
-        return super.deleteByValues(a);
-    }
-
-    @Override
     public List<AssignmentWithRole> listWithRole() {
         return call(() -> queryFor(createStatement(selectWithRoleSql), this::toAssignmentWithRole));
     }

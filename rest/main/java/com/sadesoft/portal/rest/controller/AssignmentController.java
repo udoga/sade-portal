@@ -12,7 +12,7 @@ public class AssignmentController extends RestController {
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.GET, "/with-role", c -> send(c, service.listWithRoleByUserId(getUserId(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getAssignment(c))));
-        add(HandlerType.DELETE, "", c -> send(c, service.deleteByValues(getQueriedAssignment(c))));
+        add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
     }
 
     private String getUserId(Context c) {
@@ -21,9 +21,5 @@ public class AssignmentController extends RestController {
 
     private Assignment getAssignment(Context c) {
         return c.bodyAsClass(Assignment.class);
-    }
-
-    private Assignment getQueriedAssignment(Context c) {
-        return new Assignment(null, c.queryParam("userId"), c.queryParam("roleId"));
     }
 }

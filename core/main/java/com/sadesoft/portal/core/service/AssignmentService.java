@@ -21,8 +21,8 @@ public class AssignmentService {
         return repo.create(assignment);
     }
 
-    public Assignment deleteByValues(Assignment a) {
-        return repo.deleteByValues(a);
+    public Assignment delete(String id) {
+        return repo.delete(id);
     }
 
     public List<AssignmentWithRole> listWithRoleByUserId(String userId) {

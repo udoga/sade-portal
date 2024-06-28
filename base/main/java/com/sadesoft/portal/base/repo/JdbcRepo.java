@@ -57,17 +57,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return result;
     }
 
-    protected T readByValues(T record) {
-        String sql = createSelectSql(" where " + repeat("%1s = %2$s", false, " and "));
-        return call(() -> getOrThrow(query(fill(createStatement(sql), record)), "record=" + record));
-    }
-
-    protected T deleteByValues(T record) {
-        T result = readByValues(record);
-        call(() -> command(createStatement(createDeleteSql(result.getId()))));
-        return result;
-    }
-
     protected abstract T toObject(ResultSet s) throws SQLException;
 
     protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;

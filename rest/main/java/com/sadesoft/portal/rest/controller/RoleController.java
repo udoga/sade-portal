@@ -11,5 +11,4 @@ public class RoleController extends RestController {
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
     }
 
-
 }
