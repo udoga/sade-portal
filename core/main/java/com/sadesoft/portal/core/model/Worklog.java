@@ -7,20 +7,20 @@ import java.util.Objects;
 
 public class Worklog implements Record {
     public String id;
-    public String activityId;
-    public String employeeId;
     public String projectId;
+    public String employeeId;
+    public String activityId;
     public LocalDate workDate;
     public Integer duration;
     public String status;
     public String description;
 
-    public Worklog(String id, String activityId, String employeeId, String projectId, LocalDate workDate,
+    public Worklog(String id, String projectId, String employeeId, String activityId, LocalDate workDate,
             Integer duration, String status, String description) {
         this.id = id;
-        this.activityId = activityId;
-        this.employeeId = employeeId;
         this.projectId = projectId;
+        this.employeeId = employeeId;
+        this.activityId = activityId;
         this.workDate = workDate;
         this.duration = duration;
         this.status = status;
@@ -34,9 +34,9 @@ public class Worklog implements Record {
         if (!(o instanceof Worklog)) return false;
         Worklog w = (Worklog) o;
         return Objects.equals(id, w.id) &&
-                Objects.equals(activityId, w.activityId) &&
-                Objects.equals(employeeId, w.employeeId) &&
-                Objects.equals(projectId, w.projectId) &&
+        Objects.equals(projectId, w.projectId) &&
+        Objects.equals(employeeId, w.employeeId) &&
+        Objects.equals(activityId, w.activityId) &&
                 Objects.equals(workDate, w.workDate) &&
                 Objects.equals(duration, w.duration) &&
                 Objects.equals(status, w.status) &&
@@ -47,9 +47,9 @@ public class Worklog implements Record {
     public String toString() {
         return "Worklog[" +
                 "id=" + id +
-                " activityId=" + activityId +
-                " employeeId=" + employeeId +
                 " projectId=" + projectId +
+                " employeeId=" + employeeId +
+                " activityId=" + activityId +
                 " workDate=" + workDate +
                 " duration=" + duration +
                 " status=" + status +
@@ -81,9 +81,9 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withactivityId(String activityId) {
+    public Worklog withProjectId(String projectId) {
         Worklog worklog = copy();
-        worklog.activityId = activityId;
+        worklog.projectId = projectId;
         return worklog;
     }
 
@@ -93,9 +93,9 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withProjectId(String projectId) {
+    public Worklog withActivityId(String activityId) {
         Worklog worklog = copy();
-        worklog.projectId = projectId;
+        worklog.activityId = activityId;
         return worklog;
     }
 

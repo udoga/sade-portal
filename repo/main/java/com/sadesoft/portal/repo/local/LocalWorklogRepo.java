@@ -15,9 +15,9 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public LocalWorklogRepo(Connection connection) {
         super(connection, "worklogs", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("activity_id"),
-                new JdbcColumn("employee_id"),
                 new JdbcColumn("project_id"),
+                new JdbcColumn("employee_id"),
+                new JdbcColumn("activity_id"),
                 new JdbcColumn("work_date"),
                 new JdbcColumn("duration"),
                 new JdbcColumn("status"),
@@ -29,9 +29,9 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public Worklog toObject(ResultSet s) throws SQLException {
         return new Worklog(
                 getId(s, "id"),
-                getId(s, "activity_id"),
-                getId(s, "employee_id"),
                 getId(s, "project_id"),
+                getId(s, "employee_id"),
+                getId(s, "activity_id"),
                 getLocalDate(s, "work_date"),
                 s.getInt("duration"),
                 s.getString("status"),
@@ -42,9 +42,9 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.activityId);
-        setId(s, i++, o.employeeId);
         setId(s, i++, o.projectId);
+        setId(s, i++, o.employeeId);
+        setId(s, i++, o.activityId);
         setLocalDate(s, i++, o.workDate);
         s.setInt(i++, o.duration);
         s.setString(i++, o.status);

@@ -3,9 +3,9 @@
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
-      <th>Activity</th>
-      <th>Employee</th>
       <th>Project</th>
+      <th>Employee</th>
+      <th>Activity</th>
       <th>Work Date</th>
       <th>Duration</th>
       <th>Status</th>
@@ -17,9 +17,9 @@
     <template x-for="worklog in worklogs">
       <tr>
         <td x-text="worklog.id" class="narrow"></td>
-        <td x-text="getActivityName(worklog.activityId)"></td>
-        <td x-text="getEmployeeName(worklog.employeeId)"></td>
         <td x-text="getProjectName(worklog.projectId)"></td>
+        <td x-text="getEmployeeName(worklog.employeeId)"></td>
+        <td x-text="getActivityName(worklog.activityId)"></td>
         <td x-text="worklog.workDate"></td>
         <td x-text="worklog.duration"></td>
         <td x-text="worklog.status"></td>
