@@ -15,4 +15,3 @@ var activityApi = new ActivityApi();
 var worklogApi = new WorklogApi();
 var vacationApi = new VacationApi();
 var expenseApi = new ExpenseApi();
-var receiptApi = new ReceiptApi();
