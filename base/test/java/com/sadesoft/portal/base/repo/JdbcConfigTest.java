@@ -9,12 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JdbcConfigTest {
     @Test
     public void initializes() {
-        Props props = new Props(Map.of("url", "url", "username", "u", "password", "p", "driver", "d"));
+        Props props = new Props(Map.of("url", "url", "username", "u", "password", "p", "driver", "d", "initPath", "/"));
         JdbcConfig c = new JdbcConfig(props);
         assertEquals("url", c.url);
         assertEquals("u", c.username);
         assertEquals("p", c.password);
         assertEquals("d", c.driver);
+        assertEquals("d", c.driver);
+        assertEquals("/", c.initPath);
     }
 
     @Test
@@ -25,5 +27,6 @@ public class JdbcConfigTest {
         assertEquals("", c.username);
         assertEquals("", c.password);
         assertEquals("", c.driver);
+        assertEquals("", c.initPath);
     }
 }

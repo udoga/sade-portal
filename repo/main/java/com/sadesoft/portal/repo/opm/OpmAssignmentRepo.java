@@ -35,8 +35,8 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     @Override
     protected void fillStatement(PreparedStatement s, Assignment o) throws SQLException {
         int i = 1;
-        s.setString(i++, o.userId);
-        s.setString(i++, o.roleId);
+        setId(s, i++, o.userId);
+        setId(s, i++, o.roleId);
         if (o.id != null) setId(s, i, o.id);
     }
 

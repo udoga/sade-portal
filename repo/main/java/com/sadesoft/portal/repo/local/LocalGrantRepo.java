@@ -30,8 +30,8 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Grant o) throws SQLException {
         int i = 1;
-        s.setString(i++, o.roleId);
-        s.setString(i++, o.permissionId);
+        setId(s, i++, o.roleId);
+        setId(s, i++, o.permissionId);
         if (o.id != null) setId(s, i, o.id);
     }
 }

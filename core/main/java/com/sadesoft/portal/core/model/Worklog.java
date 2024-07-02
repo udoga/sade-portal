@@ -34,9 +34,9 @@ public class Worklog implements Record {
         if (!(o instanceof Worklog)) return false;
         Worklog w = (Worklog) o;
         return Objects.equals(id, w.id) &&
-        Objects.equals(projectId, w.projectId) &&
-        Objects.equals(employeeId, w.employeeId) &&
-        Objects.equals(activityId, w.activityId) &&
+                Objects.equals(projectId, w.projectId) &&
+                Objects.equals(employeeId, w.employeeId) &&
+                Objects.equals(activityId, w.activityId) &&
                 Objects.equals(workDate, w.workDate) &&
                 Objects.equals(duration, w.duration) &&
                 Objects.equals(status, w.status) &&
