@@ -10,13 +10,13 @@ public class Expense implements Record {
     public String employeeId;
     public LocalDate formDate;
     public String description;
-    public ApprovalStatus status;
+    public String status;
 
     public Expense(String id,
                    String employeeId,
                    LocalDate formDate,
                    String description,
-                   ApprovalStatus status) {
+                   String status) {
         this.id = id;
         this.employeeId = employeeId;
         this.formDate = formDate;
@@ -91,7 +91,7 @@ public class Expense implements Record {
         return expense;
     }
 
-    public Expense withStatus(ApprovalStatus status) {
+    public Expense withStatus(String status) {
         Expense expense = copy();
         expense.status = status;
         return expense;

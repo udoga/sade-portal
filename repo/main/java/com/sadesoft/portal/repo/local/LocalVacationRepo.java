@@ -21,7 +21,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 new JdbcColumn("end_time"),
                 new JdbcColumn("day_count"),
                 new JdbcColumn("description"),
-                new JdbcColumn("status", "approval_status")));
+                new JdbcColumn("status")));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 getLocalDateTime(s, "end_time"),
                 s.getInt("day_count"),
                 s.getString("description"),
-                ApprovalStatus.valueOf(s.getString("status")));
+                s.getString("status"));
     }
 
     @Override
@@ -46,12 +46,12 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         setLocalDateTime(s, i++, l.endTime);
         s.setInt(i++, l.dayCount);
         s.setString(i++, l.description);
-        s.setString(i++, l.status.name());
+        s.setString(i++, l.status);
         if (l.id != null) setId(s, i, l.id);
     }
 
     @Override
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
         if (status == null) return paginate(pageNo, pageSize);
         return call(() -> query(createStatement(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
                 + " LIMIT " + pageSize

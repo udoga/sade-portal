@@ -18,7 +18,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("form_date"),
                 new JdbcColumn("description"),
-                new JdbcColumn("approval_status", "approval_status")));
+                new JdbcColumn("approval_status")));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 getId(s, "employee_id"),
                 getLocalDate(s, "form_date"),
                 s.getString("description"),
-                ApprovalStatus.valueOf(s.getString("approval_status"))
+                s.getString("approval_status")
         );
     }
 
@@ -38,7 +38,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         setId(s, i++, o.employeeId);
         setLocalDate(s, i++, o.formDate);
         s.setString(i++, o.description);
-        s.setString(i++, o.status.name());
+        s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
     }
 }

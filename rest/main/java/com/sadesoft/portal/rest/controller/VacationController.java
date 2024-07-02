@@ -1,7 +1,6 @@
 package com.sadesoft.portal.rest.controller;
 
 import com.sadesoft.portal.base.rest.RestController;
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.service.VacationService;
 import io.javalin.http.Context;
@@ -21,8 +20,8 @@ public class VacationController extends RestController {
         return c.bodyAsClass(Vacation.class);
     }
 
-    private ApprovalStatus getStatus(Context c) {
+    private String getStatus(Context c) {
         String queryParameter = getQueryParameter(c, "status", null);
-        return (queryParameter == null)? null : ApprovalStatus.valueOf(queryParameter);
+        return queryParameter;
     }
 }

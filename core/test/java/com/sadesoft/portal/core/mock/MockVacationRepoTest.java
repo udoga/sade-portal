@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.mock;
 
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -33,24 +32,24 @@ public class MockVacationRepoTest {
 
     @Test
     public void whenVacationStatusIsNull_doesNotFilter() {
-        vacationRepo.create(validVacation.withStatus(ApprovalStatus.Waiting));
+        vacationRepo.create(validVacation.withStatus("Waiting"));
         assertEquals(vacationRepo.list(), vacationRepo.paginateByStatus(1, 5, null));
     }
 
     @Test
     public void whenThereIsOneVacation_filtersByStatus() {
-        vacationRepo.create(validVacation.withStatus(ApprovalStatus.Approved));
-        assertEquals(vacationRepo.list(), vacationRepo.paginateByStatus(1, 5, ApprovalStatus.Approved));
-        assertEquals(new ArrayList<Vacation>(), vacationRepo.paginateByStatus(1, 5, ApprovalStatus.Rejected));
+        vacationRepo.create(validVacation.withStatus("Approved"));
+        assertEquals(vacationRepo.list(), vacationRepo.paginateByStatus(1, 5, "Approved"));
+        assertEquals(new ArrayList<Vacation>(), vacationRepo.paginateByStatus(1, 5, "Rejected"));
     }
 
     @Test
     public void whenTwoVacationsHaveDifferentStatus_filtersByStatus() {
-        vacationRepo.create(validVacation.withStatus(ApprovalStatus.Rejected));
-        vacationRepo.create(validVacation.withStatus(ApprovalStatus.Approved));
-        List<Vacation> filteredVacations = vacationRepo.paginateByStatus(1, 5, ApprovalStatus.Rejected);
+        vacationRepo.create(validVacation.withStatus("Rejected"));
+        vacationRepo.create(validVacation.withStatus("Approved"));
+        List<Vacation> filteredVacations = vacationRepo.paginateByStatus(1, 5, "Rejected");
         assertEquals(1, filteredVacations.size());
-        assertEquals(ApprovalStatus.Rejected, filteredVacations.get(0).status);
+        assertEquals("Rejected", filteredVacations.get(0).status);
     }
 }
 

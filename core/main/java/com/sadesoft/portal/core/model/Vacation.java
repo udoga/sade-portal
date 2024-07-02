@@ -13,7 +13,7 @@ public class Vacation implements Record {
     public LocalDateTime endTime;
     public Integer dayCount;
     public String description;
-    public ApprovalStatus status;
+    public String status;
 
     public Vacation() {
     }
@@ -33,7 +33,7 @@ public class Vacation implements Record {
                     LocalDateTime endTime,
                     Integer dayCount,
                     String description,
-                    ApprovalStatus status) {
+                    String status) {
         this.id = id;
         this.employeeId = employeeId;
         this.categoryId = categoryId;
@@ -124,7 +124,7 @@ public class Vacation implements Record {
         return vacation;
     }
 
-    public Vacation withStatus(ApprovalStatus status) {
+    public Vacation withStatus(String status) {
         Vacation vacation = copy();
         vacation.status = status;
         return vacation;

@@ -4,7 +4,6 @@ import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockVacationRepo;
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +51,7 @@ public class VacationServiceTest {
     @Test
     public void createsVacations() {
         Vacation vacation = service.create(validVacation);
-        assertEquals(validVacation.withId("0").withStatus(ApprovalStatus.Waiting), vacation);
+        assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
         assertEquals(1, repo.list().size());
         assertEquals(vacation, repo.read("0"));
     }
@@ -69,7 +68,7 @@ public class VacationServiceTest {
 
     @Test
     public void whenApprovalStatusIsFilled_throwsError() {
-        assertForbiddenField(validVacation.withStatus(ApprovalStatus.Approved));
+        assertForbiddenField(validVacation.withStatus("Approved"));
     }
 
     @Test
@@ -101,9 +100,9 @@ public class VacationServiceTest {
 
         @Test
         public void whenUpdatesVacation_makesStatusWaiting() {
-            repo.update("0", repo.read("0").withStatus(ApprovalStatus.Approved));
+            repo.update("0", repo.read("0").withStatus("Approved"));
             Vacation vacation = service.update("0", validVacation);
-            assertEquals(validVacation.withId("0").withStatus(ApprovalStatus.Waiting), vacation);
+            assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
         }
 
         @Test

@@ -2,7 +2,6 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -50,7 +49,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
         if (status == null) return paginate(pageNo, pageSize);
         return call(() -> query(createStatement(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
                 + " LIMIT " + pageSize

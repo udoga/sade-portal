@@ -3,7 +3,6 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -20,7 +19,7 @@ public class VacationService {
         return repo.list();
     }
 
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, ApprovalStatus status) {
+    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
         return repo.paginateByStatus(pageNo, pageSize, status);
     }
 
@@ -30,12 +29,12 @@ public class VacationService {
 
     public Vacation create(Vacation vacation) {
         check(vacation);
-        return repo.create(vacation.withStatus(ApprovalStatus.Waiting));
+        return repo.create(vacation.withStatus("Waiting"));
     }
 
     public Vacation update(String id, Vacation vacation) {
         check(vacation);
-        return repo.update(id, vacation.withStatus(ApprovalStatus.Waiting));
+        return repo.update(id, vacation.withStatus("Waiting"));
     }
 
     public Vacation delete(String id) {

@@ -15,11 +15,6 @@ DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
-DROP TYPE IF EXISTS approval_status CASCADE;
-
-CREATE TYPE approval_status AS ENUM (
-    'Approved', 'Rejected', 'Waiting'
-);
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY NOT NULL,
@@ -124,7 +119,7 @@ CREATE TABLE expenses(
     employee_id INT NOT NULL REFERENCES employees(id) ON DELETE RESTRICT,
     form_date DATE NOT NULL,
     description VARCHAR(255) NOT NULL,
-    approval_status approval_status NOT NULL
+    approval_status VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE receipt_categories(

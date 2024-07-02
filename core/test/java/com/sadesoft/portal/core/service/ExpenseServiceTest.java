@@ -3,7 +3,6 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
-import com.sadesoft.portal.core.model.ApprovalStatus;
 import com.sadesoft.portal.core.model.Expense;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -36,7 +35,7 @@ public class ExpenseServiceTest {
                 "1",
                 LocalDate.of(2022, 1, 1),
                 "Example expense",
-                ApprovalStatus.Approved);
+                "Approved");
     }
 
     @Test
