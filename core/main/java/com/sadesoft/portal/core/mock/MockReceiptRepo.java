@@ -1,5 +1,8 @@
 package com.sadesoft.portal.core.mock;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.model.Receipt;
 import com.sadesoft.portal.core.repo.ReceiptRepo;
@@ -7,5 +10,10 @@ import com.sadesoft.portal.core.repo.ReceiptRepo;
 public class MockReceiptRepo extends MockRepo<Receipt> implements ReceiptRepo {
     public MockReceiptRepo() {
         super("Receipt");
+    }
+
+    @Override
+    public List<Receipt> listByExpenseId(String expenseId) {
+        return records.stream().filter(e -> e.expenseId.equals(expenseId)).collect(Collectors.toList());
     }
 }

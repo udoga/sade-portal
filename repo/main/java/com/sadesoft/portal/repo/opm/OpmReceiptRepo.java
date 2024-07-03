@@ -50,4 +50,9 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Receipt> listByExpenseId(String expenseId) {
+        return call(() -> query(createStatement(createSelectSql(" where expense_id = " + expenseId))));
+    }
 }

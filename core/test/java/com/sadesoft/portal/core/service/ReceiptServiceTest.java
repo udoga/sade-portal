@@ -99,6 +99,13 @@ public class ReceiptServiceTest {
         }
 
         @Test
+        public void listsByExpenseId() {
+            assertEquals(0, service.listByExpenseId("0").size());
+            assertEquals(1, service.listByExpenseId("1").size());
+            assertEquals(1, service.listByExpenseId(null).size());
+        }
+
+        @Test
         public void updatesReceiptById() {
             Receipt receipt = service.update("0", validReceipt.withDescription("updated"));
             assertEquals(validReceipt.withId("0").withDescription("updated"), receipt);
