@@ -35,6 +35,7 @@
               <th>Amount</th>
               <th>Currency</th>
               <th>Vat Rate</th>
+              <th></th>
             </tr>
             <template x-for="r in receipts">
               <tr>
@@ -44,6 +45,11 @@
                 <td x-text="r.amount"></td>
                 <td x-text="r.currency"></td>
                 <td x-text="r.vatRate"></td>
+                <td class="narrow">
+                  <a title="Delete" class="red row button" @click="removeReceipt(r.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
               </tr>
             </template>
           </table>

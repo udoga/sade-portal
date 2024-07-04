@@ -215,5 +215,7 @@ INSERT INTO receipt_categories VALUES
     (default, 'Food'     );
 
 INSERT INTO receipts VALUES
---   id,      expense_id, receipt_date, category_id, amount,  currency, vat_rate, description
-    (default,          1, '2022-01-01',           1, '45.20',    'TRY',     '18', 'Bus Coast');
+--   id,      expense_id, receipt_date, category_id, amount,   currency, vat_rate, description
+    (default,          1, '2022-01-01',           1,  '45.20',    'TRY',       18, 'Bus Coast'),
+    (default,          1, '2022-01-02',           2, '200.50',    'TRY',       18, 'Office Breakfast'),
+    (default,          2, '2022-01-03',           1, '300.00',    'TRY',       18, 'Taxi');

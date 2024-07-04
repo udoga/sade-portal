@@ -30,4 +30,8 @@ class ExpensePageComponent extends PageComponent {
         this.receiptApi.listByExpenseId(this.router.getId())
             .then(json => json.data ? Object.assign(this.receipts, json.data) : this.notifyError(json));
     }
+
+    removeReceipt = function (id) {
+        this.receiptApi.delete(id).then(json => this.handleRemoveResponse(this.receipts, json));
+    }
 }
