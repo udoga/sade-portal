@@ -1,7 +1,6 @@
 class ExpensePageComponent extends PageComponent {
     expense = this.record;
     receipts = [];
-    selectedTitle = "";
     receiptApi = null;
 
     constructor(router, api, notifier, receiptApi) {
@@ -10,20 +9,11 @@ class ExpensePageComponent extends PageComponent {
     }
 
     loadRelations = function() {
-        this.select("receipts");
+        this.selectTab("receipts");
     }
 
-    select = function (title) {
-        this.selectedTitle = title;
-        if (title == "receipts") this.loadReceipts();
-    }
-
-    isSelected = function (title) {
-        return this.selectedTitle === title;
-    }
-
-    getClass = function (title) {
-        return (this.selectedTitle === title)? "selected" : "";
+    loadTab = function (tab) {
+        if (tab == "receipts") this.loadReceipts();
     }
 
     loadReceipts = function () {
@@ -32,6 +22,7 @@ class ExpensePageComponent extends PageComponent {
     }
 
     removeReceipt = function (id) {
-        this.receiptApi.delete(id).then(json => this.handleRemoveResponse(this.receipts, json));
+        this.receiptApi.delete(id)
+            .then(json => json.data ? this.removeFromTable(this.receipts, json) : this.notifyError(json));
     }
 }

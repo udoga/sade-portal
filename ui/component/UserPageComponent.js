@@ -2,7 +2,6 @@ class UserPageComponent extends PageComponent {
     user = this.record;
     assignments = [];
     employee = {};
-    selectedTitle = "";
     employeeApi = null;
     assignmentApi = null;
 
@@ -13,26 +12,12 @@ class UserPageComponent extends PageComponent {
     }
 
     loadRelations = function () {
-        this.select("assignments");
+        this.selectTab("assignments");
     }
 
-    select = function (title) {
-        this.selectedTitle = title;
-        if (title == "assignments") this.loadAssignments();
-        else if (title == "employee") this.loadEmployee();
-    }
-
-    isSelected = function (title) {
-        return this.selectedTitle === title;
-    }
-
-    getClass = function (title) {
-        return (this.selectedTitle === title)? "selected" : "";
-    }
-
-    loadEmployee = function () {
-        this.employeeApi.listByUserId(this.router.getId())
-            .then(json => json.data ? Object.assign(this.employee, json.data[0]) : this.notifyError(json));
+    loadTab = function (tab) {
+        if (tab == "assignments") this.loadAssignments();
+        else if (tab == "employee") this.loadEmployee();
     }
 
     loadAssignments = function () {
@@ -40,11 +25,13 @@ class UserPageComponent extends PageComponent {
             .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
     }
 
-    isEmployee = function () {
-        return Object.keys(this.employee).length !== 0;
+    loadEmployee = function () {
+        this.employeeApi.listByUserId(this.router.getId())
+            .then(json => json.data ? Object.assign(this.employee, json.data[0]) : this.notifyError(json));
     }
 
     removeAssignment = function (id) {
-        this.assignmentApi.delete(id).then(json => this.handleRemoveResponse(this.assignments, json));
+        this.assignmentApi.delete(id)
+            .then(json => json.data ? this.removeFromTable(this.assignments, json) : this.notifyError(json));
     }
 }

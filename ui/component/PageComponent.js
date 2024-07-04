@@ -4,6 +4,7 @@ class PageComponent {
     name = null;
     notifier = null;
     record = {};
+    selectedTab = "";
 
     constructor(router, api, notifier, name) {
         this.router = router;
@@ -38,8 +39,17 @@ class PageComponent {
         this.notifier.notify(new Notification("error", json.error.message));
     }
 
-    handleRemoveResponse = function (records, json) {
-        json.data ? this.removeFromTable(records, json.data.id) : this.notifyError(json);
+    selectTab = function (tab) {
+        this.selectedTab = tab;
+        this.loadTab(tab);
+    }
+
+    isSelectedTab = function (tab) {
+        return this.selectedTab === tab;
+    }
+
+    getTabClass = function (tab) {
+        return (this.selectedTab === tab)? "selected" : "";
     }
 
     removeFromTable = function (records, id) {
@@ -50,5 +60,9 @@ class PageComponent {
     getIndex = function (records, id) {
         for (let i = 0; i < records.length; i++) if (records[i].id === id) return i;
         return null;
+    }
+
+    hasData = function (record) {
+        return Object.keys(record).length !== 0;
     }
 }

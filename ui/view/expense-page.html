@@ -23,10 +23,10 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="select('receipts')" :class="getClass('receipts')">Receipts</span>
+        <span class="panel-item" @click="selectTab('receipts')" :class="getTabClass('receipts')">Receipts</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelected('receipts')">
+        <div x-show="isSelectedTab('receipts')">
           <table class="relations">
             <tr>
               <th class="narrow">Receipt Id</th>
