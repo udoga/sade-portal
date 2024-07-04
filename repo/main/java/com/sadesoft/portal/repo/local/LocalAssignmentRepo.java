@@ -5,7 +5,6 @@ import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedAssignment;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
-import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
 
 import java.sql.*;

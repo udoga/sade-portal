@@ -1,4 +1,4 @@
-<div x-data="new ExpensePageComponent(router, expenseApi, notifier)" x-init="load()">
+<div x-data="new ExpensePageComponent(router, expenseApi, notifier, receiptApi)" x-init="load()">
   <h2>Expense</h2>
   <div>
     <div class="field">
@@ -20,6 +20,38 @@
     <div class="field">
       <label>Status:</label>
       <span x-text="expense.status"></span>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="select('receipts')" :class="getClass('receipts')">Receipt</span>
+      </div>
+      <div class="panel-content">
+        <div x-show="isSelected('')">
+          <div class="panel-message">Select tab to display details.</div>
+        </div>
+        <div x-show="isSelected('receipts')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Receipt Id</th>
+              <th>Receipt Date</th>
+              <th>Category Id</th>
+              <th>Amount</th>
+              <th>Currency</th>
+              <th>Vat Rate</th>
+            </tr>
+            <template x-for="r in receipts">
+              <tr>
+                <td x-text="r.id" class="narrow"></td>
+                <td x-text="r.receiptDate"></td>
+                <td x-text="r.categoryId"></td>
+                <td x-text="r.amount"></td>
+                <td x-text="r.currency"></td>
+                <td x-text="r.vatRate"></td>
+              </tr>
+            </template>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="options">
       <a class="white form button" href="#/expense-list">Back</a>

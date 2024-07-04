@@ -59,6 +59,9 @@ class Router {
         if (location.hash === "#/user-list") return ["layout", "user-list"];
         if (location.hash.startsWith("#/user-form")) return ["layout", "user-form"];
         if (location.hash.startsWith("#/user-page")) return ["layout", "user-page"];
+        if (location.hash === "#/role-list") return ["layout", "role-list"];
+        if (location.hash.startsWith("#/role-form")) return ["layout", "role-form"];
+        if (location.hash.startsWith("#/role-page")) return ["layout", "role-page"];
         if (location.hash === "#/employee-list") return ["layout", "employee-list"];
         if (location.hash.startsWith("#/employee-form")) return ["layout", "employee-form"];
         if (location.hash.startsWith("#/employee-page")) return ["layout", "employee-page"];
@@ -77,9 +80,6 @@ class Router {
         if (location.hash === "#/expense-list") return ["layout", "expense-list"];
         if (location.hash.startsWith("#/expense-form")) return ["layout", "expense-form"];
         if (location.hash.startsWith("#/expense-page")) return ["layout", "expense-page"];
-        if (location.hash === "#/role-list") return ["layout", "role-list"];
-        if (location.hash.startsWith("#/role-form")) return ["layout", "role-form"];
-        if (location.hash.startsWith("#/role-page")) return ["layout", "role-page"];
         return ["layout", "not-found"];
     }
 }
