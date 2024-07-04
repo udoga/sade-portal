@@ -12,6 +12,10 @@ class UserPageComponent extends PageComponent {
         this.assignmentApi = assignmentApi;
     }
 
+    loadRelations = function () {
+        this.select("employee");
+    }
+
     select = function (title) {
         this.selectedTitle = title;
         if (title == "employee") this.loadEmployee();

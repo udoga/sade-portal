@@ -15,9 +15,6 @@
         <span class="panel-item" @click="select('assignments')" :class="getClass('assignments')">Roles</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelected('')">
-          <div class="panel-message">Select tab to display details.</div>
-        </div>
         <div x-show="isSelected('employee')">
           <div x-show="isEmployee()">
             <div class="field">

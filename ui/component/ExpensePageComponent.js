@@ -9,6 +9,10 @@ class ExpensePageComponent extends PageComponent {
         this.receiptApi = receiptApi;
     }
 
+    loadRelations = function() {
+        this.select("receipts");
+    }
+
     select = function (title) {
         this.selectedTitle = title;
         if (title == "receipts") this.loadReceipts();

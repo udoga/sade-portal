@@ -14,6 +14,7 @@ class PageComponent {
 
     load = function () {
         this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
+        if (this.loadRelations) this.loadRelations();
     }
 
     remove = function () {

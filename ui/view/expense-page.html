@@ -23,12 +23,9 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="select('receipts')" :class="getClass('receipts')">Receipt</span>
+        <span class="panel-item" @click="select('receipts')" :class="getClass('receipts')">Receipts</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelected('')">
-          <div class="panel-message">Select tab to display details.</div>
-        </div>
         <div x-show="isSelected('receipts')">
           <table class="relations">
             <tr>
