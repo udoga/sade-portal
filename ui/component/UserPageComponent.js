@@ -39,4 +39,8 @@ class UserPageComponent extends PageComponent {
     isEmployee = function () {
         return Object.keys(this.employee).length !== 0;
     }
+
+    removeAssignment = function (id) {
+        this.assignmentApi.delete(id).then(json => this.handleRemoveResponse(this.assignments, json));
+    }
 }

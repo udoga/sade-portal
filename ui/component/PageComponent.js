@@ -36,4 +36,18 @@ class PageComponent {
     notifyError = function (json) {
         this.notifier.notify(new Notification("error", json.error.message));
     }
+
+    handleRemoveResponse = function (records, json) {
+        json.data ? this.removeFromTable(records, json.data.id) : this.notifyError(json);
+    }
+
+    removeFromTable = function (records, id) {
+        records.splice(this.getIndex(records, id), 1);
+        this.notifier.notify(new Notification("success", "Deleted successfully."));
+    }
+
+    getIndex = function (records, id) {
+        for (let i = 0; i < records.length; i++) if (records[i].id === id) return i;
+        return null;
+    }
 }

@@ -42,11 +42,17 @@
             <tr>
               <th class="narrow">Role Id</th>
               <th>Role Name</th>
+              <th></th>
             </tr>
             <template x-for="a in assignments">
               <tr>
                 <td x-text="a.role.id" class="narrow"></td>
                 <td x-text="a.role.name"></td>
+                <td class="narrow">
+                  <a title="Delete" class="red row button" @click="removeAssignment(a.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
               </tr>
             </template>
           </table>
