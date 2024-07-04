@@ -2,7 +2,7 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.compound.AssignmentWithRole;
+import com.sadesoft.portal.core.detailed.DetailedAssignment;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
@@ -41,19 +41,20 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     }
 
     @Override
-    public List<AssignmentWithRole> listWithRole() {
+    public List<DetailedAssignment> listWithRole() {
         return call(() -> queryFor(createStatement(selectWithRoleSql), this::toAssignmentWithRole));
     }
 
     @Override
-    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
         String sql = selectWithRoleSql + " where user_id = " + userId;
         return call(() -> queryFor(createStatement(sql), this::toAssignmentWithRole));
     }
 
-    public AssignmentWithRole toAssignmentWithRole(ResultSet s) throws SQLException {
-        return new AssignmentWithRole(
+    public DetailedAssignment toAssignmentWithRole(ResultSet s) throws SQLException {
+        return new DetailedAssignment(
                 toObject(s),
+                null,
                 new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 }

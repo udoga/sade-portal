@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.compound.AssignmentWithRole;
+import com.sadesoft.portal.core.detailed.DetailedAssignment;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
 
@@ -25,7 +25,7 @@ public class AssignmentService {
         return repo.delete(id);
     }
 
-    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
         return (userId == null)? repo.listWithRole() : repo.listWithRoleByUserId(userId);
     }
 }

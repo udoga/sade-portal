@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.mock;
 
-import com.sadesoft.portal.core.compound.AssignmentWithRole;
+import com.sadesoft.portal.core.detailed.DetailedAssignment;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
@@ -27,7 +27,7 @@ public class MockAssignmentRepoTest {
     @Test
     void whenRoleIsNotFound_doesNotInitializeRole() {
         assignmentRepo.create(assignment);
-        List<AssignmentWithRole> assignments = assignmentRepo.listWithRole();
+        List<DetailedAssignment> assignments = assignmentRepo.listWithRole();
         assertEquals(assignment, assignments.get(0));
         assertNull(assignments.get(0).role);
     }
@@ -48,7 +48,7 @@ public class MockAssignmentRepoTest {
 
         @Test
         void whenListsWithRoles_initializesAssignmentsWithRole() {
-            List<AssignmentWithRole> assignments = assignmentRepo.listWithRole();
+            List<DetailedAssignment> assignments = assignmentRepo.listWithRole();
             assertEquals(roleRepo.read("1"), assignments.get(0).role);
             assertEquals(roleRepo.read("0"), assignments.get(1).role);
         }

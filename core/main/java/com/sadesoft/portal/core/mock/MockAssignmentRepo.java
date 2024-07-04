@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.base.repo.MockRepo;
-import com.sadesoft.portal.core.compound.AssignmentWithRole;
+import com.sadesoft.portal.core.detailed.DetailedAssignment;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
@@ -18,12 +18,12 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
     }
 
     @Override
-    public List<AssignmentWithRole> listWithRole() {
-        return records.stream().map(a -> new AssignmentWithRole(a, getRole(a.roleId))).toList();
+    public List<DetailedAssignment> listWithRole() {
+        return records.stream().map(a -> new DetailedAssignment(a).withRole(getRole(a.roleId))).toList();
     }
 
     @Override
-    public List<AssignmentWithRole> listWithRoleByUserId(String userId) {
+    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
         return listWithRole().stream().filter(a -> a.userId.equals(userId)).toList();
     }
 
