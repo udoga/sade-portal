@@ -20,7 +20,8 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 new JdbcColumn("vacation_start_date"),
                 new JdbcColumn("vacation_end_date"),
                 new JdbcColumn("total_days"),
-                new JdbcColumn("description")));
+                new JdbcColumn("description"),
+                new JdbcColumn("vacation_status")));
     }
 
     @Override
@@ -33,7 +34,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 getLocalDateTime(s, "vacation_end_date"),
                 s.getInt("total_days"),
                 s.getString("description"),
-                null);
+                s.getString("vacation_status"));
     }
 
     @Override
@@ -45,6 +46,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         setLocalDateTime(s, i++, o.endTime);
         s.setInt(i++, o.dayCount);
         s.setString(i++, o.description);
+        s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
     }
 

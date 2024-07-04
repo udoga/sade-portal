@@ -17,7 +17,8 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 new JdbcColumn("id"),
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("expense_date"),
-                new JdbcColumn("description")));
+                new JdbcColumn("description"),
+                new JdbcColumn("expense_status")));
     }
 
     @Override
@@ -27,7 +28,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 getId(s, "employee_id"),
                 getLocalDateTime(s, "expense_date").toLocalDate(),
                 s.getString("description"),
-                null);
+                s.getString("expense_status"));
     }
 
     @Override
@@ -36,6 +37,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         setId(s, i++, o.employeeId);
         setLocalDateTime(s, i++, o.formDate.atTime(0, 0, 0));
         s.setString(i++, o.description);
+        s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
     }
 }

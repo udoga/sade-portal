@@ -28,8 +28,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 getId(s, "employee_id"),
                 getLocalDate(s, "form_date"),
                 s.getString("description"),
-                s.getString("approval_status")
-        );
+                s.getString("approval_status"));
     }
 
     @Override
