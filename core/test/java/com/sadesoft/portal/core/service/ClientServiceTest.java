@@ -20,6 +20,14 @@ public class ClientServiceTest {
         validClient = new Client(null, "Sample Firm");
     }
 
+    @Test
+    public void createsClient() {
+        Client client = service.create(validClient);
+        assertEquals(validClient.withId("0"), client);
+        assertEquals(1, repo.list().size());
+        assertEquals(client, repo.read("0"));
+    }
+
     @Nested
     public class GivenServiceWithOneClient {
         @BeforeEach

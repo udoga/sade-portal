@@ -1,0 +1,18 @@
+<div x-data="new RolePageComponent(router, roleApi, notifier)" x-init="load()">
+  <h2>Role</h2>
+  <div>
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="role.id"></span>
+    </div>
+    <div class="field">
+      <label>Name</label>
+      <span x-text="role.name"></span>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#/role-list">Back</a>
+      <a class="yellow form button" :href="'#/role-form/' + role.id">Edit</a>
+      <a class="red form button" @click="remove()">Delete</a>
+    </div>
+  </div>
+</div>

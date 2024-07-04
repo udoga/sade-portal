@@ -20,6 +20,14 @@ public class RoleServiceTest {
         validRole = new Role(null, "admin");
     }
 
+    @Test
+    public void createsRole() {
+        Role role = service.create(validRole);
+        assertEquals(validRole.withId("0"), role);
+        assertEquals(1, repo.list().size());
+        assertEquals(role, repo.read("0"));
+    }
+
     @Nested
     public class GivenServiceWithOneRole {
         @BeforeEach
@@ -36,6 +44,20 @@ public class RoleServiceTest {
         @Test
         public void readsRoles() {
             assertEquals(validRole.withId("0"), service.read("0"));
+        }
+
+        @Test
+        public void updatesRoleById() {
+            Role role = service.update("0", validRole.withName("updated"));
+            assertEquals(validRole.withId("0").withName("updated"), role);
+            assertEquals(role, service.read("0"));
+        }
+
+        @Test
+        public void deletesRoleById() {
+            Role role = service.delete("0");
+            assertEquals(validRole.withId("0"), role);
+            assertEquals(0, service.list().size());
         }
     }
 }

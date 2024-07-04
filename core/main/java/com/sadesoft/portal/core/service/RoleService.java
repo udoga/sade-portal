@@ -12,11 +12,23 @@ public class RoleService {
         this.repo = repo;
     }
 
+    public List<Role> list() {
+        return repo.list();
+    }
+
     public Role read(String id) {
         return repo.read(id);
     }
 
-    public List<Role> list() {
-        return repo.list();
+    public Role create(Role role) {
+        return repo.create(role);
+    }
+
+    public Role update(String id, Role role) {
+        return repo.update(id, role);
+    }
+
+    public Role delete(String id) {
+        return repo.delete(id);
     }
 }
