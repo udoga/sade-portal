@@ -1,20 +1,37 @@
-<div x-data="new LayoutComponent(sessionApi)" @resize.window="handleResize()"
-     @hashchange.window="handleHashChange()">
+<div x-data="new LayoutComponent(sessionApi)" @resize.window="handleResize()" @hashchange.window="handleHashChange()">
   <header>
     <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
     <h1>Sade Portal</h1>
     <a class="right" @click="logout()"><i class="fas fa-right-from-bracket"></i></a>
   </header>
   <nav :class="{ opened: hasNavigation }">
-    <a href="#/home"><i class="fa-solid fa-home"></i>Home</a>
-    <a href="#/user-list"><i class="fa-solid fa-user"></i>Users</a>
-    <a href="#/role-list"><i class="fa-solid fa-hat-cowboy"></i>Roles</a>
-    <a href="#/employee-list"><i class="fa-solid fa-address-card"></i>Employees</a>
-    <a href="#/client-list"><i class="fa-solid fa-handshake"></i>Clients</a>
-    <a href="#/project-list"><i class="fa-solid fa-diagram-project"></i>Projects</a>
-    <a href="#/worklog-list"><i class="fa-solid fa-calendar-days"></i>Worklogs</a>
-    <a href="#/vacation-list"><i class="fa-solid fa-umbrella-beach"></i>Vacations</a>
-    <a href="#/expense-list"><i class="fa-solid fa-file-invoice-dollar"></i>Expenses</a>
+    <a href="#/home" @click="select('home')" :class="getClass('home')">
+      <i class="fa-solid fa-home"></i>Home
+    </a>
+    <a href="#/user-list" @click="select('users')" :class="getClass('users')">
+      <i class="fa-solid fa-user"></i>Users
+    </a>
+    <a href="#/role-list" @click="select('roles')" :class="getClass('roles')">
+      <i class="fa-solid fa-hat-cowboy"></i>Roles
+    </a>
+    <a href="#/employee-list" @click="select('employees')" :class="getClass('employees')">
+      <i class="fa-solid fa-address-card"></i>Employees
+    </a>
+    <a href="#/client-list" @click="select('clients')" :class="getClass('clients')">
+      <i class="fa-solid fa-handshake"></i>Clients
+    </a>
+    <a href="#/project-list" @click="select('projects')" :class="getClass('projects')">
+      <i class="fa-solid fa-diagram-project"></i>Projects
+    </a>
+    <a href="#/worklog-list" @click="select('worklogs')" :class="getClass('worklogs')">
+      <i class="fa-solid fa-calendar-days"></i>Worklogs
+    </a>
+    <a href="#/vacation-list" @click="select('vacations')" :class="getClass('vacations')">
+      <i class="fa-solid fa-umbrella-beach"></i>Vacations
+    </a>
+    <a href="#/expense-list" @click="select('expenses')" :class="getClass('expenses')">
+      <i class="fa-solid fa-file-invoice-dollar"></i>Expenses
+    </a>
   </nav>
   <main :class="{ shifted: isShifted }">
     <div x-html="(await httpClient.get('view/notifications.html')).text()"></div>

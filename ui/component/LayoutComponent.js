@@ -4,6 +4,7 @@ class LayoutComponent {
     hasNavigation = true;
     isShifted = true;
     hasOverlay = false;
+    selectedTitle = "";
 
     constructor(sessionApi) {
         this.sessionApi = sessionApi;
@@ -36,5 +37,13 @@ class LayoutComponent {
         this.hasNavigation = hasNavigation;
         this.isShifted = this.isWide && this.hasNavigation;
         this.hasOverlay = !this.isWide && this.hasNavigation;
+    }
+
+    select = function (title) {
+        this.selectedTitle = title;
+    }
+
+    getClass = function (title) {
+        return (this.selectedTitle === title)? "selected" : "";
     }
 }

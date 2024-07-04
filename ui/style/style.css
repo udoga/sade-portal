@@ -126,9 +126,8 @@ nav i {
   text-align: center;
 }
 
-i.fa {
-    font-family: FontAwesome !important;
-    font-style: normal;
+nav .selected, nav .selected:hover {
+    background-color: #e5e5e5;
 }
 
 main {
