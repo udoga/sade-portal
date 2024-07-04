@@ -171,19 +171,12 @@ th {
 
 td {
   border: 1px solid var(--main-border-color);
-  padding: 8px;
+  vertical-align: middle;
 }
 
 th.narrow, td.narrow {
   width: 1%;
   white-space: nowrap;
-}
-
-th.last, td.last {
-  padding: 4px;
-  min-width: 120px;
-  text-align: center;
-  vertical-align: middle;
 }
 
 table.records {
@@ -195,8 +188,22 @@ table.records th {
   background: #f9fafb;
 }
 
+table.records td {
+  padding: 8px;
+}
+
+table.records th.last, table.records td.last {
+  padding: 4px;
+  min-width: 120px;
+  text-align: center;
+}
+
 table.relations th {
   font-weight: bold;
+}
+
+table.relations td {
+  padding: 4px 8px 4px 8px;
 }
 
 .field {
@@ -366,6 +373,7 @@ a.button.light-blue:active {
 
 .panel {
   border: 1px solid var(--navigation-border-color);
+  margin-top: 20px;
 }
 
 .panel-header {

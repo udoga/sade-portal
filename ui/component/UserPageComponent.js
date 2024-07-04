@@ -1,25 +1,25 @@
 class UserPageComponent extends PageComponent {
     user = this.record;
-    employee = {};
     assignments = [];
+    employee = {};
     selectedTitle = "";
     employeeApi = null;
     assignmentApi = null;
 
     constructor(router, api, notifier, employeeApi, assignmentApi) {
         super(router, api, notifier, "user");
-        this.employeeApi = employeeApi;
         this.assignmentApi = assignmentApi;
+        this.employeeApi = employeeApi;
     }
 
     loadRelations = function () {
-        this.select("employee");
+        this.select("assignments");
     }
 
     select = function (title) {
         this.selectedTitle = title;
-        if (title == "employee") this.loadEmployee();
-        else if (title == "assignments") this.loadAssignments();
+        if (title == "assignments") this.loadAssignments();
+        else if (title == "employee") this.loadEmployee();
     }
 
     isSelected = function (title) {

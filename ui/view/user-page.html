@@ -11,29 +11,10 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="select('employee')" :class="getClass('employee')">Employee</span>
         <span class="panel-item" @click="select('assignments')" :class="getClass('assignments')">Roles</span>
+        <span class="panel-item" @click="select('employee')" :class="getClass('employee')">Employee</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelected('employee')">
-          <div x-show="isEmployee()">
-            <div class="field">
-              <label>Employee Id:</label>
-              <span x-text="employee.id"></span>
-            </div>
-            <div class="field">
-              <label>First Name:</label>
-              <span x-text="employee.firstName"></span>
-            </div>
-            <div class="last field">
-              <label>Last Name:</label>
-              <span x-text="employee.lastName"></span>
-            </div>
-          </div>
-          <div x-show="!isEmployee()">
-            <div class="panel-message">This user is not an employee.</div>
-          </div>
-        </div>
         <div x-show="isSelected('assignments')">
           <table class="relations">
             <tr>
@@ -53,6 +34,25 @@
               </tr>
             </template>
           </table>
+        </div>
+        <div x-show="isSelected('employee')">
+          <div x-show="isEmployee()">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="employee.id"></span>
+            </div>
+            <div class="field">
+              <label>First Name:</label>
+              <span x-text="employee.firstName"></span>
+            </div>
+            <div class="last field">
+              <label>Last Name:</label>
+              <span x-text="employee.lastName"></span>
+            </div>
+          </div>
+          <div x-show="!isEmployee()">
+            <div class="panel-message">This user is not an employee.</div>
+          </div>
         </div>
       </div>
     </div>
