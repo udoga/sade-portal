@@ -19,7 +19,7 @@ class PageComponent {
     }
 
     remove = function () {
-        if (confirm("Are you sure you want to delete?"))
+        if (confirm("Are you sure?"))
             this.api.delete(this.record.id).then(json => this.handleRemoveResponse(json));
     }
 

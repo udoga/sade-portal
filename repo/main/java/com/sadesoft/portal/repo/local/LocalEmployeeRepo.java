@@ -2,7 +2,9 @@ package com.sadesoft.portal.repo.local;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.detailed.DetailedEmployee;
 import com.sadesoft.portal.core.model.Employee;
+import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
 
 import java.sql.Connection;
@@ -12,6 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo {
+    private final String selectWithUserSql =
+            "SELECT e.*, u.username username FROM employees e JOIN users u ON e.user_id = u.id";
+
     public LocalEmployeeRepo(Connection connection) {
         super(connection, "employees", List.of(
                 new JdbcColumn("id"),
@@ -41,5 +46,16 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     @Override
     public List<Employee> listByUserId(String userId) {
         return call(() -> query(createStatement(createSelectSql(" where user_id = " + userId))));
+    }
+
+    @Override
+    public List<DetailedEmployee> listWithUser() {
+        return call(() -> queryFor(createStatement(selectWithUserSql), this::toDetailedEmployee));
+    }
+
+    public DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
+    return new DetailedEmployee(
+            toObject(s),
+            new User(getId(s, "user_id"), s.getString("username"), null));
     }
 }

@@ -10,6 +10,9 @@ public class Employee implements Record {
     public String firstName;
     public String lastName;
 
+    public Employee() {
+    }
+
     public Employee(String id, String userId, String firstName, String lastName) {
         this.id = id;
         this.userId = userId;
@@ -17,7 +20,8 @@ public class Employee implements Record {
         this.lastName = lastName;
     }
 
-    public Employee() {
+    public Employee(Employee e) {
+        this(e.id, e.userId, e.firstName, e.lastName);
     }
 
     @Override

@@ -22,7 +22,8 @@ class ExpensePageComponent extends PageComponent {
     }
 
     removeReceipt = function (id) {
-        this.receiptApi.delete(id)
-            .then(json => json.data ? this.removeFromTable(this.receipts, json) : this.notifyError(json));
+        if (confirm("Are you sure?"))
+            this.receiptApi.delete(id)
+                .then(json => json.data ? this.removeFromTable(this.receipts, json) : this.notifyError(json));
     }
 }

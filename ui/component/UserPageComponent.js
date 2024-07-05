@@ -31,7 +31,8 @@ class UserPageComponent extends PageComponent {
     }
 
     removeAssignment = function (id) {
-        this.assignmentApi.delete(id)
-            .then(json => json.data ? this.removeFromTable(this.assignments, json) : this.notifyError(json));
+        if (confirm("Are you sure?"))
+            this.assignmentApi.delete(id)
+                .then(json => json.data ? this.removeFromTable(this.assignments, json) : this.notifyError(json));
     }
 }

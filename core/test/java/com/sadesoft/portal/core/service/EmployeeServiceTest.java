@@ -2,22 +2,28 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
+import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Employee;
+import com.sadesoft.portal.core.model.User;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class EmployeeServiceTest {
-    private MockEmployeeRepo repo;
+    private MockEmployeeRepo employeeRepo;
+    private MockUserRepo userRepo;
     private EmployeeService service;
     private Employee validEmployee;
 
     @BeforeEach
     public void setup() {
-        repo = new MockEmployeeRepo();
-        service = new EmployeeService(repo);
+        userRepo = new MockUserRepo();
+        employeeRepo = new MockEmployeeRepo(userRepo);
+        service = new EmployeeService(employeeRepo);
         validEmployee = new Employee(null, "1", "John", "Green");
     }
 
@@ -25,8 +31,8 @@ public class EmployeeServiceTest {
     public void createsEmployee() {
         Employee employee = service.create(validEmployee);
         assertEquals(validEmployee.withId("0"), employee);
-        assertEquals(1, repo.list().size());
-        assertEquals(employee.firstName, repo.read("0").firstName);
+        assertEquals(1, employeeRepo.list().size());
+        assertEquals(employee.firstName, employeeRepo.read("0").firstName);
     }
 
     @Test
@@ -34,6 +40,14 @@ public class EmployeeServiceTest {
         assertMissingFieldOnCreate(validEmployee.withUserId(null));
         assertMissingFieldOnCreate(validEmployee.withFirstName(null));
         assertMissingFieldOnCreate(validEmployee.withLastName(null));
+    }
+
+    @Test
+    public void listsEmployeesWithUser() {
+        userRepo.create(new User("0", "jane.doe", null));
+        employeeRepo.create(new Employee(null, "0", "Jane", "Doe"));
+        assertEquals(1, service.listWithUser().size());
+        assertEquals(employeeRepo.listWithUser(), service.listWithUser());
     }
 
     private void assertMissingFieldOnCreate(Employee employee) {

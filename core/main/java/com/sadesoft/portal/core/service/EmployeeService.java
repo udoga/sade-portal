@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.detailed.DetailedEmployee;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
 
@@ -37,6 +38,10 @@ public class EmployeeService {
 
     public Employee delete(String id) {
         return repo.delete(id);
+    }
+    
+    public List<DetailedEmployee> listWithUser() {
+        return repo.listWithUser();
     }
 
     private void check(Employee employee) {

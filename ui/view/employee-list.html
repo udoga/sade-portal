@@ -1,4 +1,4 @@
-<div x-data="new EmployeeListComponent(employeeApi, notifier)" x-init="loadAll(userApi)">
+<div x-data="new EmployeeListComponent(employeeApi, notifier)" x-init="load()">
   <h2>Employees</h2>
   <table class="records">
     <tr>
@@ -13,7 +13,7 @@
     <template x-for="employee in employees">
       <tr>
         <td x-text="employee.id" class="narrow"></td>
-        <td x-text="getUsername(employee.userId)"></td>
+        <td x-text="employee.user.username"></td>
         <td x-text="employee.firstName"></td>
         <td x-text="employee.lastName"></td>
         <td class="narrow last">
