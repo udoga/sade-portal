@@ -16,7 +16,8 @@ class ListComponent {
     }
 
     remove = function (id) {
-        this.api.delete(id).then(json => this.handleRemoveResponse(json));
+        if (confirm("Are you sure you want to delete?"))
+            this.api.delete(id).then(json => this.handleRemoveResponse(json));
     }
 
     handleLoadResponse = function (json) {
