@@ -3,6 +3,7 @@ package com.sadesoft.portal.base.util;
 import com.sadesoft.portal.base.error.InvalidNumberError;
 import org.junit.jupiter.api.Test;
 
+import static com.sadesoft.portal.base.util.StringUtil.convertTurkishToAscii;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StringUtilTest {
@@ -19,6 +20,12 @@ public class StringUtilTest {
         assertEquals(StringUtil.getInteger("1"), 1);
         assertEquals(StringUtil.getInteger("10"), 10);
         assertEquals(StringUtil.getInteger("0"), 0);
+    }
+
+    @Test
+    public void convertsTurkishToAscii() {
+        assertEquals("abc", convertTurkishToAscii("abc"));
+        assertEquals("gusiocGUSIOC", convertTurkishToAscii("ğüşiöçĞÜŞİÖÇ"));
     }
 
     @Test

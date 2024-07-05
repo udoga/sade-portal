@@ -18,6 +18,13 @@ public class StringUtil {
         return bytesToHex(encodedHash);
     }
 
+    public static String convertTurkishToAscii(String input) {
+        String[][] pairs = {{"ç", "c"}, {"Ç", "C"}, {"ğ", "g"}, {"Ğ", "G"}, {"ı", "i"}, {"İ", "I"}, {"ö", "o"},
+                {"Ö", "O"}, {"ş", "s"}, {"Ş", "S"}, {"ü", "u"}, {"Ü", "U"}};
+        for (String[] pair : pairs) input = input.replace(pair[0], pair[1]);
+        return input;
+    }
+
     private static String bytesToHex(byte[] bytes) {
         StringBuilder hex = new StringBuilder(2 * bytes.length);
         for (byte b : bytes) hex.append(byteToHex(b));

@@ -143,33 +143,28 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected String createSelectSql(String appendedSQL) {
-        return "select " + repeat("%1$s", true) + " from " + tableName + appendedSQL;
+        return "select " + repeat("%1$s", columns) + " from " + tableName + appendedSQL;
     }
 
     protected String createInsertSql() {
-        return "insert into " + tableName + " (" + repeat("%1$s") + ") values (" + repeat("%2$s") + ")";
+        List<JdbcColumn> list = columns.subList(1, columns.size());
+        return "insert into " + tableName + " (" + repeat("%1$s", list) + ") values (" + repeat("%2$s", list) + ")";
     }
 
     protected String createUpdateSql() {
-        return "update " + tableName + " set " + repeat("%1$s = %2$s") + " where " + getIdName() + " = ?";
+        List<JdbcColumn> list = columns.stream().filter(JdbcColumn::isUpdatable).toList();
+        return "update " + tableName + " set " + repeat("%1$s = %2$s", list) + " where " + getIdName() + " = ?";
     }
 
     protected String createDeleteSql(String id) {
         return "delete from " + tableName + " where " + getIdName() + " = " + id;
     }
 
-    protected String repeat(String template) {
-        return repeat(template, false);
-    }
-
-    protected String repeat(String template, boolean includeId) {
-        return repeat(template, includeId, ", ");
-    }
-
-    protected String repeat(String template, boolean includeId, String delimiter) {
+    protected String repeat(String template, List<JdbcColumn> columnList) {
+        String delimiter = ", ";
         StringBuilder result = new StringBuilder();
-        for (JdbcColumn column: columns.subList(includeId? 0 : 1, columns.size()))
-            result.append(String.format(template, column.name, getPlaceholder(column))).append(delimiter);
+        for (JdbcColumn c: columnList)
+            result.append(String.format(template, c.name, getPlaceholder(c))).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
     }
 
