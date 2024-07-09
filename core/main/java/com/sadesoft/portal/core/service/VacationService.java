@@ -19,8 +19,8 @@ public class VacationService {
         return repo.list();
     }
 
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
-        return repo.paginateByStatus(pageNo, pageSize, status);
+    public List<Vacation> listByStatus(String status) {
+        return (status == null)? repo.list() : repo.listByStatus(status);
     }
 
     public Vacation read(String id) {

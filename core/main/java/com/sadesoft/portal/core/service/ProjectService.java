@@ -17,10 +17,6 @@ public class ProjectService {
         return repo.list();
     }
 
-    public List<Project> paginate(int pageNo, int pageSize) {
-        return repo.paginate(pageNo, pageSize);
-    }
-
     public Project read(String id) {
         return repo.read(id);
     }

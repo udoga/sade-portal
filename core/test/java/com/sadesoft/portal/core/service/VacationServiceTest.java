@@ -91,6 +91,13 @@ public class VacationServiceTest {
         }
 
         @Test
+        public void listsByStatus() {
+            assertEquals(1, service.listByStatus(null).size());
+            assertEquals(1, service.listByStatus("Waiting").size());
+            assertEquals(0, service.listByStatus("Approved").size());
+        }
+
+        @Test
         public void updatesVacationById() {
             Vacation vacation = repo.read("0");
             Vacation updatedVacation = service.update("0", validVacation.withDescription("updated"));

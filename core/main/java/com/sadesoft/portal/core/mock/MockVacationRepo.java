@@ -13,8 +13,7 @@ public class MockVacationRepo extends MockRepo<Vacation> implements VacationRepo
     }
 
     @Override
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
-        if (status != null) records.removeIf(r -> !Objects.equals(r.status.toString(), status.toString()));
-        return paginate(pageNo, pageSize);
+    public List<Vacation> listByStatus(String status) {
+        return records.stream().filter(v -> v.status.equals(status)).toList();
     }
 }

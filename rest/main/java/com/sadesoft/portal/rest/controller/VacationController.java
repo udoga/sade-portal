@@ -9,7 +9,7 @@ import io.javalin.http.HandlerType;
 public class VacationController extends RestController {
     public VacationController(VacationService service) {
         super("/vacations");
-        add(HandlerType.GET, "", c ->  send(c, service.paginateByStatus(getPageNo(c), getPageSize(c), getStatus(c))));
+        add(HandlerType.GET, "", c ->  send(c, service.listByStatus(getStatus(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getVacation(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getVacation(c))));
@@ -21,7 +21,6 @@ public class VacationController extends RestController {
     }
 
     private String getStatus(Context c) {
-        String queryParameter = getQueryParameter(c, "status", null);
-        return queryParameter;
+        return getQueryParameter(c, "status", null);
     }
 }

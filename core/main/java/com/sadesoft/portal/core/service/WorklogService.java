@@ -17,10 +17,6 @@ public class WorklogService {
         return repo.list();
     }
 
-    public List<Worklog> paginate(int pageNo, int pageSize) {
-        return repo.paginate(pageNo, pageSize);
-    }
-
     public Worklog read(String id) {
         return repo.read(id);
     }

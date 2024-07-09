@@ -6,5 +6,5 @@ import com.sadesoft.portal.core.model.Vacation;
 import java.util.List;
 
 public interface VacationRepo extends Repo<Vacation> {
-    List<Vacation> paginateByStatus(int pageNo, int pageSize, String status);
+    List<Vacation> listByStatus(String status);
 }

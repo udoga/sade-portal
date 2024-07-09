@@ -134,61 +134,6 @@ public class MockRepoTest {
         }
     }
 
-    @Nested
-    public class GivenMockRepoWithTenRecords {
-        private void assertInvalidPageNo(int pageNo) {
-            RuntimeException e = assertThrows(RuntimeException.class, () -> repo.paginate(pageNo, 1));
-            assertEquals("Page number should be greater than zero", e.getMessage());
-        }
-
-        private void assertPage(List<String> expectedIds, int pageNo, int pageSize) {
-            List<MockRecord> records = repo.paginate(pageNo, pageSize);
-            List<String> actualIds = records.stream().map(MockRecord::getId).collect(Collectors.toList());
-            assertEquals(expectedIds, actualIds);
-        }
-
-        @BeforeEach
-        public void setup() {
-            for (int i = 0; i < 10; i++)
-                repo.create(new MockRecord(String.valueOf(i), "name" + i));
-        }
-
-        @Test
-        public void whenPageNumberIsLessThanOne_throwsError() {
-            assertInvalidPageNo(0);
-            assertInvalidPageNo(-1);
-        }
-
-        @Test
-        public void whenPageSizeIsZero_returnsEmptyList() {
-            assertPage(List.of(), 1, 0);
-        }
-
-        @Test
-        public void whenPageSizeIsOne_returnsListWithSingleRecord() {
-            assertPage(List.of("0"), 1, 1);
-            assertPage(List.of("1"), 2, 1);
-        }
-
-        @Test
-        public void whenPageSizeIsTwo_returnsCorrectSubList() {
-            assertPage(List.of("0", "1"), 1, 2);
-            assertPage(List.of("0", "1", "2"), 1, 3);
-            assertPage(List.of("3", "4", "5"), 2, 3);
-        }
-
-        @Test
-        public void whenLastPageRequested_returnsCorrectSublist() {
-            assertPage(List.of("9"), 4, 3);
-            assertPage(List.of("8", "9"), 3, 4);
-        }
-
-        @Test
-        public void whenNoneExistentPageIsRequested_returnsEmptyList() {
-            assertPage(List.of(), 5, 3);
-        }
-    }
-
     private static class MockRecord implements Record {
         public String id;
         public final String name;

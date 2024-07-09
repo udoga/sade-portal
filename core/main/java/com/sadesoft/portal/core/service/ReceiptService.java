@@ -23,10 +23,6 @@ public class ReceiptService {
         return (expenseId == null)? repo.list() : repo.listByExpenseId(expenseId);
     }
 
-    public List<Receipt> paginate(int pageNo, int pageSize) {
-        return repo.paginate(pageNo, pageSize);
-    }
-
     public Receipt read(String id) {
         return repo.read(id);
     }

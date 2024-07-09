@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface Repo<T extends Record> {
     List<T> list();
-    List<T> paginate(int pageNo, int pageSize);
     T create(T record);
     T read(String id);
     T update(String id, T record);

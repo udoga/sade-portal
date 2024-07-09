@@ -51,10 +51,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    public List<Vacation> paginateByStatus(int pageNo, int pageSize, String status) {
-        if (status == null) return paginate(pageNo, pageSize);
-        return call(() -> query(createStatement(createSelectSql(" WHERE " + " status = " + "'" + status + "'"
-                + " LIMIT " + pageSize
-                + " OFFSET " + ((pageNo-1) * pageSize)))));
+    public List<Vacation> listByStatus(String status) {
+        return call(() -> query(createStatement(createSelectSql(" WHERE status = '" + status + "'"))));
     }
 }

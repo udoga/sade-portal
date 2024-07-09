@@ -18,10 +18,6 @@ public class ExpenseService {
         return repo.list();
     }
 
-    public List<Expense> paginate(int pageNo, int pageSize) {
-        return repo.paginate(pageNo, pageSize);
-    }
-
     public Expense read(String id) {
         return repo.read(id);
     }

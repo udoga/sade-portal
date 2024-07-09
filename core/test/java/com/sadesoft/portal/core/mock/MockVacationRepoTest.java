@@ -31,26 +31,18 @@ public class MockVacationRepoTest {
     }
 
     @Test
-    public void whenVacationStatusIsNull_doesNotFilter() {
-        vacationRepo.create(validVacation.withStatus("Waiting"));
-        assertEquals(vacationRepo.list(), vacationRepo.paginateByStatus(1, 5, null));
-    }
-
-    @Test
     public void whenThereIsOneVacation_filtersByStatus() {
         vacationRepo.create(validVacation.withStatus("Approved"));
-        assertEquals(vacationRepo.list(), vacationRepo.paginateByStatus(1, 5, "Approved"));
-        assertEquals(new ArrayList<Vacation>(), vacationRepo.paginateByStatus(1, 5, "Rejected"));
+        assertEquals(vacationRepo.list(), vacationRepo.listByStatus("Approved"));
+        assertEquals(new ArrayList<Vacation>(), vacationRepo.listByStatus("Rejected"));
     }
 
     @Test
     public void whenTwoVacationsHaveDifferentStatus_filtersByStatus() {
         vacationRepo.create(validVacation.withStatus("Rejected"));
         vacationRepo.create(validVacation.withStatus("Approved"));
-        List<Vacation> filteredVacations = vacationRepo.paginateByStatus(1, 5, "Rejected");
+        List<Vacation> filteredVacations = vacationRepo.listByStatus("Rejected");
         assertEquals(1, filteredVacations.size());
         assertEquals("Rejected", filteredVacations.get(0).status);
     }
 }
-
-
