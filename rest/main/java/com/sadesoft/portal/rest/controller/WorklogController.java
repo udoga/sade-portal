@@ -10,6 +10,7 @@ public class WorklogController extends RestController {
     public WorklogController(WorklogService service) {
         super("/worklogs");
         add(HandlerType.GET, "", c -> send(c, service.paginate(getPageNo(c), getPageSize(c))));
+        add(HandlerType.GET, "/with-details", c -> send(c, service.listWithDetails()));
         add(HandlerType.POST, "", c -> send(c, service.create(getWorklog(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getWorklog(c))));

@@ -15,6 +15,8 @@ public class Worklog implements Record {
     public String status;
     public String description;
 
+    public Worklog(){}
+
     public Worklog(String id, String projectId, String employeeId, String activityId, LocalDate workDate,
             Integer duration, String status, String description) {
         this.id = id;
@@ -27,7 +29,16 @@ public class Worklog implements Record {
         this.description = description;
     }
 
-    public Worklog(){}
+    public Worklog(Worklog w) {
+        this.id = w.id;
+        this.projectId = w.projectId;
+        this.employeeId = w.employeeId;
+        this.activityId = w.activityId;
+        this.workDate = w.workDate;
+        this.duration = w.duration;
+        this.status = w.status;
+        this.description = w.description;
+    }
 
     @Override
     public boolean equals(Object o) {

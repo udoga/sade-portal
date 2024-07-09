@@ -1,11 +1,46 @@
 package com.sadesoft.portal.core.mock;
 
-import com.sadesoft.portal.base.repo.MockRepo;
+import java.util.List;
+
+import com.sadesoft.portal.core.detailed.DetailedWorklog;
+import com.sadesoft.portal.core.model.Activity;
+import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Worklog;
+import com.sadesoft.portal.core.model.Project;
+import com.sadesoft.portal.base.repo.MockRepo;
+import com.sadesoft.portal.core.repo.EmployeeRepo;
+import com.sadesoft.portal.core.repo.ActivityRepo;
+import com.sadesoft.portal.core.repo.ProjectRepo;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 
 public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
-    public MockWorklogRepo() {
+    private final ProjectRepo projectRepo;
+    private final EmployeeRepo employeeRepo;
+    private final ActivityRepo activityRepo;
+
+    public MockWorklogRepo(ProjectRepo projectRepo, EmployeeRepo employeeRepo, ActivityRepo activityRepo) {
         super("Worklog");
+        this.projectRepo = projectRepo;
+        this.employeeRepo = employeeRepo;
+        this.activityRepo = activityRepo;
+    }
+
+    @Override
+    public List<DetailedWorklog> listWithDetails() {
+        return records.stream().map(w -> new DetailedWorklog(w).withProject(getProject(w.projectId))
+                .withEmployee(getEmployee(w.employeeId))
+                .withActivity(getActivity(w.activityId))).toList();
+    }
+
+    private Project getProject(String projectId) {
+        return (projectRepo == null)? null : projectRepo.read(projectId);
+    }
+
+    private Employee getEmployee(String employeeId) {
+        return (employeeRepo == null)? null : employeeRepo.read(employeeId);
+    }
+
+    private Activity getActivity(String activityId) {
+        return (activityRepo == null)? null : activityRepo.read(activityId);
     }
 }

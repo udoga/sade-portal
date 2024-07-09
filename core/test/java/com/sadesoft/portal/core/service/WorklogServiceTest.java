@@ -1,6 +1,12 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockWorklogRepo;
+import com.sadesoft.portal.core.mock.MockProjectRepo;
+import com.sadesoft.portal.core.mock.MockEmployeeRepo;
+import com.sadesoft.portal.core.mock.MockActivityRepo;
+import com.sadesoft.portal.core.model.Project;
+import com.sadesoft.portal.core.model.Employee;
+import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Worklog;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,14 +18,20 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WorklogServiceTest {
-    private MockWorklogRepo repo;
+    private MockWorklogRepo worklogRepo;
+    private MockProjectRepo projectRepo;
+    private MockEmployeeRepo employeeRepo;
+    private MockActivityRepo activityRepo;
     private WorklogService service;
     private Worklog validWorklog;
 
     @BeforeEach
     public void setup() {
-        repo = new MockWorklogRepo();
-        service = new WorklogService(repo);
+        projectRepo = new MockProjectRepo(null);
+        employeeRepo = new MockEmployeeRepo(null);
+        activityRepo = new MockActivityRepo();
+        worklogRepo = new MockWorklogRepo(projectRepo, employeeRepo, activityRepo);
+        service = new WorklogService(worklogRepo);
         validWorklog = new Worklog(
                 null,
                 "1",
@@ -31,11 +43,21 @@ public class WorklogServiceTest {
                 "Sample Worklog");
     }
 
+    @Test
+    public void listWithDetails() {
+        projectRepo.create(new Project(null, "0", "Project", "Sample Description"));
+        employeeRepo.create(new Employee(null, "0", "Jane", "Doe"));
+        activityRepo.create(new Activity(null, "Activity"));
+        worklogRepo.create(new Worklog(null, "0", "0", "0", LocalDate.of(2024, 1, 1), 2, "Approved", "Sample"));
+        assertEquals(1, service.listWithDetails().size());
+        assertEquals(worklogRepo.listWithDetails(), service.listWithDetails());
+    }
+
     @Nested
     public class GivenServiceWithOneWorklog {
         @BeforeEach
         public void setup() {
-            repo.create(validWorklog);
+            worklogRepo.create(validWorklog);
         }
 
         @Test

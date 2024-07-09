@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 
@@ -34,5 +35,9 @@ public class WorklogService {
 
     public Worklog delete(String id) {
         return repo.delete(id);
+    }
+
+    public List<DetailedWorklog> listWithDetails() {
+        return repo.listWithDetails();
     }
 }

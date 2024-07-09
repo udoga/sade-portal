@@ -9,9 +9,4 @@ class ProjectListComponent extends ListComponent {
     load = function () {
         this.api.listWithClient().then(json => this.handleLoadResponse(json));
     }
-
-    getClientName = function (clientId) {
-        for (let c of this.clients) if (c.id === clientId) return (c.name);
-        return "-";
-    }
 }
