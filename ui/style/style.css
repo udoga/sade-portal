@@ -165,7 +165,6 @@ table {
 
 th {
   border: 1px solid var(--main-border-color);
-  padding: 12px 8px 12px 8px;
   text-align: left;
 }
 
@@ -185,6 +184,7 @@ table.records {
 }
 
 table.records th {
+  padding: 12px 8px 12px 8px;
   background: #f9fafb;
 }
 
@@ -199,11 +199,22 @@ table.records th.last, table.records td.last {
 }
 
 table.relations th {
+  padding: 4px 8px 4px 8px;
   font-weight: bold;
+}
+
+table.relations th.last {
+  font-weight: normal;
+  min-width: 80px;
+  text-align: center;
 }
 
 table.relations td {
   padding: 4px 8px 4px 8px;
+}
+
+table.relations td.last {
+  text-align: center;
 }
 
 .field {

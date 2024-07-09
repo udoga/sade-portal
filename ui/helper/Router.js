@@ -48,9 +48,21 @@ class Router {
     }
 
     getId = function () {
-        var parts = location.hash.split("/");
+        var parts = this.getUrlWithoutQuery().split("/");
         var id = parts[parts.length - 1];
         return isNaN(id) ? null : id;
+    }
+
+    getUrlWithoutQuery = function () {
+        var hash = window.location.hash;
+        var index = hash.indexOf("?");
+        return (index === -1)? hash : hash.substring(0, index);
+    }
+
+    getUrlParams = function () {
+        var hash = window.location.hash;
+        if (!hash.includes("?")) return {};
+        return Object.fromEntries(new URLSearchParams(hash.substring(hash.indexOf('?') + 1)));
     }
 
     findViews = function () {
@@ -80,6 +92,7 @@ class Router {
         if (location.hash === "#/expense-list") return ["layout", "expense-list"];
         if (location.hash.startsWith("#/expense-form")) return ["layout", "expense-form"];
         if (location.hash.startsWith("#/expense-page")) return ["layout", "expense-page"];
+        if (location.hash.startsWith("#/receipt-form")) return ["layout", "receipt-form"];
         return ["layout", "not-found"];
     }
 }

@@ -33,19 +33,21 @@
               <th>Receipt Date</th>
               <th>Category Id</th>
               <th>Amount</th>
-              <th>Currency</th>
-              <th>Vat Rate</th>
-              <th></th>
+              <th>Description</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/receipt-form?expenseId=' + expense.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
             </tr>
             <template x-for="r in receipts">
               <tr>
-                <td x-text="r.id" class="narrow"></td>
+                <td class="narrow" x-text="r.id"></td>
                 <td x-text="r.receiptDate"></td>
                 <td x-text="r.categoryId"></td>
-                <td x-text="r.amount"></td>
-                <td x-text="r.currency"></td>
-                <td x-text="r.vatRate"></td>
-                <td class="narrow">
+                <td x-text="r.amount + ' ' + r.currency + ' + VAT (' + r.vatRate + '%)'"></td>
+                <td x-text="r.description"></td>
+                <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeReceipt(r.id)">
                     <i class="fas fa-trash"></i>
                   </a>

@@ -15,6 +15,7 @@ class FormComponent {
     load = function () {
         var id = this.router.getId();
         if (id) this.api.read(id).then(json => this.handleLoadResponse(json));
+        else Object.assign(this.record, this.router.getUrlParams());
     }
 
     save = function () {
