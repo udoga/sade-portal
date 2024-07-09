@@ -48,6 +48,9 @@
                 <td x-text="r.amount + ' ' + r.currency + ' + VAT (' + r.vatRate + '%)'"></td>
                 <td x-text="r.description"></td>
                 <td class="last narrow">
+                  <a title="Edit" class="yellow row button" :href="'#/receipt-form/' + r.id">
+                    <i class="fas fa-pencil"></i>
+                  </a>
                   <a title="Delete" class="red row button" @click="removeReceipt(r.id)">
                     <i class="fas fa-trash"></i>
                   </a>

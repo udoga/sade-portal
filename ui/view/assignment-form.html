@@ -1,0 +1,17 @@
+<div x-data="new AssignmentFormComponent(router, assignmentApi, notifier)" x-init="load()">
+  <h2>Assignment Form</h2>
+  <form>
+    <div class="field">
+      <label>User Id</label>
+      <input type="text" placeholder="User Id" x-model="assignment.userId"/>
+    </div>
+    <div class="field">
+      <label>Role Id</label>
+      <input type="text" placeholder="Role Id" x-model="assignment.roleId"/>
+    </div>
+  </form>
+  <div class="options">
+    <a class="white form button" @click="quit()">Back</a>
+    <a class="green form button" @click="save()">Save</a>
+  </div>
+</div>

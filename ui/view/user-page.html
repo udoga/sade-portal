@@ -20,13 +20,17 @@
             <tr>
               <th class="narrow">Role Id</th>
               <th>Role Name</th>
-              <th></th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/assignment-form?userId=' + user.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
             </tr>
             <template x-for="a in assignments">
               <tr>
                 <td x-text="a.role.id" class="narrow"></td>
                 <td x-text="a.role.name"></td>
-                <td class="narrow">
+                <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeAssignment(a.id)">
                     <i class="fas fa-trash"></i>
                   </a>
