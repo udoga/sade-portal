@@ -3,8 +3,12 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockVacationRepo;
+import com.sadesoft.portal.core.mock.MockVacationCategoryRepo;
+import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Vacation;
+import com.sadesoft.portal.core.model.VacationCategory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -16,7 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VacationServiceTest {
-    private MockVacationRepo repo;
+    private MockVacationRepo vacationRepo;
+    private MockEmployeeRepo employeeRepo;
+    private MockVacationCategoryRepo categoryRepo;
     private VacationService service;
     private Vacation validVacation;
 
@@ -35,8 +41,10 @@ public class VacationServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new MockVacationRepo();
-        service = new VacationService(repo);
+        employeeRepo = new MockEmployeeRepo(null);
+        categoryRepo = new MockVacationCategoryRepo();
+        vacationRepo = new MockVacationRepo(employeeRepo, categoryRepo);
+        service = new VacationService(vacationRepo);
         validVacation = new Vacation(
                 null,
                 "4",
@@ -49,11 +57,21 @@ public class VacationServiceTest {
     }
 
     @Test
+    public void listsWithDetails() {
+        employeeRepo.create(new Employee(null, "0", "John", "Doe"));
+        categoryRepo.create(new VacationCategory(null, "Sample Category"));
+        vacationRepo.create(new Vacation(null, "0", "0", LocalDateTime.of(2022,5,4,9,18),
+                LocalDateTime.of(2022,5,4,9,19), 5, "descriptionExample", "Waiting"));
+        assertEquals(1, service.listWithDetails().size());
+        assertEquals(vacationRepo.listWithDetails(), service.listWithDetails());
+    }
+
+    @Test
     public void createsVacations() {
         Vacation vacation = service.create(validVacation);
         assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
-        assertEquals(1, repo.list().size());
-        assertEquals(vacation, repo.read("0"));
+        assertEquals(1, vacationRepo.list().size());
+        assertEquals(vacation, vacationRepo.read("0"));
     }
 
     @Test
@@ -86,8 +104,8 @@ public class VacationServiceTest {
         @Test
         public void listsVacations() {
             assertEquals(1, service.list().size());
-            assertEquals(repo.read("0"), service.list().get(0));
-            assertEquals(repo.read("0"), service.read("0"));
+            assertEquals(vacationRepo.read("0"), service.list().get(0));
+            assertEquals(vacationRepo.read("0"), service.read("0"));
         }
 
         @Test
@@ -99,22 +117,22 @@ public class VacationServiceTest {
 
         @Test
         public void updatesVacationById() {
-            Vacation vacation = repo.read("0");
+            Vacation vacation = vacationRepo.read("0");
             Vacation updatedVacation = service.update("0", validVacation.withDescription("updated"));
             assertEquals(vacation.withDescription("updated"), updatedVacation);
-            assertEquals(updatedVacation, repo.read("0"));
+            assertEquals(updatedVacation, vacationRepo.read("0"));
         }
 
         @Test
         public void whenUpdatesVacation_makesStatusWaiting() {
-            repo.update("0", repo.read("0").withStatus("Approved"));
+            vacationRepo.update("0", vacationRepo.read("0").withStatus("Approved"));
             Vacation vacation = service.update("0", validVacation);
             assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
         }
 
         @Test
         public void deletesVacationById() {
-            Vacation firstVacation = repo.read("0");
+            Vacation firstVacation = vacationRepo.read("0");
             Vacation deletedVacation = service.delete("0");
             assertEquals(firstVacation, deletedVacation);
             assertEquals(0, service.list().size());

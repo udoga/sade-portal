@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.core.model.Vacation;
+import com.sadesoft.portal.core.repo.EmployeeRepo;
+import com.sadesoft.portal.core.repo.VacationCategoryRepo;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MockVacationRepoTest {
     VacationRepo vacationRepo;
     Vacation validVacation;
+    EmployeeRepo employeeRepo;
+    VacationCategoryRepo categoryRepo;
 
     @BeforeEach
     public void setup() {
-        vacationRepo = new MockVacationRepo();
+        employeeRepo = null;
+        categoryRepo = null;
+        vacationRepo = new MockVacationRepo(employeeRepo, categoryRepo);
         validVacation = new Vacation(
                 null,
                 "4",

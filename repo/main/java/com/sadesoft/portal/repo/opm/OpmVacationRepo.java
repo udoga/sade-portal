@@ -2,7 +2,10 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.detailed.DetailedVacation;
+import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Vacation;
+import com.sadesoft.portal.core.model.VacationCategory;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
 import java.sql.Connection;
@@ -12,6 +15,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
+    private final String selectWithDetailsSql =
+        "SELECT v.*, c.type_name category_name, v.vacation_type_id category_id " +
+        "FROM opm_hrm_vacation v " +
+        "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
+        "JOIN opm_hrm_employee e ON v.employee_id = e.id";
+
     public OpmVacationRepo(Connection connection) {
         super(connection, "opm_hrm_vacation", List.of(
                 new JdbcColumn("id"),
@@ -53,5 +62,17 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     @Override
     public List<Vacation> listByStatus(String status) {
         return call(() -> query(createStatement(createSelectSql(" WHERE status = '" + status + "'"))));
+    }
+
+    @Override
+    public List<DetailedVacation> listWithDetails() {
+        return call(() -> queryFor(createStatement(selectWithDetailsSql), this::toDetailedVacation));
+    }
+
+    public DetailedVacation toDetailedVacation(ResultSet s) throws SQLException {
+        return new DetailedVacation(
+                toObject(s),
+                new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
+                new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
     }
 }

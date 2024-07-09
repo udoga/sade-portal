@@ -15,15 +15,15 @@ public class Vacation implements Record {
     public String description;
     public String status;
 
-    public Vacation() {
-    }
-
     public Vacation copy() {
         try {
             return (Vacation) clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Vacation() {
     }
 
     public Vacation(String id,
@@ -42,6 +42,17 @@ public class Vacation implements Record {
         this.dayCount = dayCount;
         this.description = description;
         this.status = status;
+    }
+
+    public Vacation(Vacation v) {
+        this.id = v.id;
+        this.employeeId = v.employeeId;
+        this.categoryId = v.categoryId;
+        this.startTime = v.startTime;
+        this.endTime = v.endTime;
+        this.dayCount = v.dayCount;
+        this.description = v.description;
+        this.status = v.status;
     }
 
     @Override

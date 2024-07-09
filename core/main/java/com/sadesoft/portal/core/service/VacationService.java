@@ -3,6 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.detailed.DetailedVacation;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -39,6 +40,10 @@ public class VacationService {
 
     public Vacation delete(String id) {
         return repo.delete(id);
+    }
+
+    public List<DetailedVacation> listWithDetails() {
+        return repo.listWithDetails();
     }
 
     private void check(Vacation vacation) {

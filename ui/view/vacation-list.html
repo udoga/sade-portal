@@ -1,4 +1,4 @@
-<div x-data="new VacationListComponent(vacationApi, notifier)" x-init="loadAll(employeeApi)">
+<div x-data="new VacationListComponent(vacationApi, notifier)" x-init="load()">
   <h2>Vacations</h2>
   <table class="records">
     <tr>
@@ -15,8 +15,8 @@
     <template x-for="vacation in vacations">
       <tr>
         <td x-text="vacation.id" class="narrow"></td>
-        <td x-text="getEmployeeName(vacation.employeeId)"></td>
-        <td x-text="vacation.categoryId"></td>
+        <td x-text="vacation.employee.firstName + ' ' + vacation.employee.lastName"></td>
+        <td x-text="vacation.category.name"></td>
         <td x-text="vacation.startTime"></td>
         <td x-text="vacation.endTime"></td>
         <td x-text="vacation.status"></td>
