@@ -10,6 +10,9 @@ public class Project implements Record {
     public String name;
     public String description;
 
+    public Project(){
+    }
+
     public Project(String id, String clientId, String name, String description) {
         this.id = id;
         this.clientId = clientId;
@@ -17,7 +20,9 @@ public class Project implements Record {
         this.description = description;
     }
 
-    public Project(){}
+    public Project(Project p) {
+        this(p.id, p.clientId, p.name, p.description);
+    }
 
     @Override
     public boolean equals(Object o) {

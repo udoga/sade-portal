@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.detailed.DetailedProject;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.repo.ProjectRepo;
 
@@ -34,5 +35,9 @@ public class ProjectService {
 
     public Project delete(String id) {
         return repo.delete(id);
+    }
+
+    public List<DetailedProject> listWithClient() {
+        return repo.listWithClient();
     }
 }

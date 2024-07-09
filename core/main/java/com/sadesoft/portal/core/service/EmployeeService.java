@@ -39,7 +39,7 @@ public class EmployeeService {
     public Employee delete(String id) {
         return repo.delete(id);
     }
-    
+
     public List<DetailedEmployee> listWithUser() {
         return repo.listWithUser();
     }

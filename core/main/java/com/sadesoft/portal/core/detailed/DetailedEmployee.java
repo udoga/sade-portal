@@ -28,16 +28,4 @@ public class DetailedEmployee extends Employee {
         detailedEmployee.user = user;
         return detailedEmployee;
     }
-
-    public DetailedEmployee withFirstName(String firstName) {
-        DetailedEmployee detailedEmployee = copy();
-        detailedEmployee.firstName = firstName;
-        return detailedEmployee;
-    }
-
-    public DetailedEmployee withLastName(String lastName) {
-        DetailedEmployee detailedEmployee = copy();
-        detailedEmployee.lastName = lastName;
-        return detailedEmployee;
-    }
 }

@@ -1,4 +1,4 @@
-<div x-data="new ProjectListComponent(projectApi, notifier)" x-init="loadAll(clientApi)">
+<div x-data="new ProjectListComponent(projectApi, notifier)" x-init="load()">
   <h2>Projects</h2>
   <table class="records">
     <tr>
@@ -13,7 +13,7 @@
     <template x-for="project in projects">
       <tr>
         <td x-text="project.id" class="narrow"></td>
-        <td x-text="getClientName(project.clientId)"></td>
+        <td x-text="project.client.name"></td>
         <td x-text="project.name"></td>
         <td x-text="project.description"></td>
         <td class="narrow last">

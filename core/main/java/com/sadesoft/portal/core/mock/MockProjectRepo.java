@@ -1,11 +1,28 @@
 package com.sadesoft.portal.core.mock;
 
+import java.util.List;
+
 import com.sadesoft.portal.base.repo.MockRepo;
+import com.sadesoft.portal.core.detailed.DetailedProject;
 import com.sadesoft.portal.core.model.Project;
+import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.repo.ProjectRepo;
+import com.sadesoft.portal.core.repo.ClientRepo;
 
 public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
-    public MockProjectRepo() {
+    private final ClientRepo clientRepo;
+
+    public MockProjectRepo(ClientRepo clientRepo) {
         super("Project");
+        this.clientRepo = clientRepo;
+    }
+
+    @Override
+    public List<DetailedProject> listWithClient() {
+        return records.stream().map(p -> new DetailedProject(p).withClient(getClient(p.clientId))).toList();
+    }
+
+    private Client getClient(String clientId) {
+        return (clientRepo == null)? null : clientRepo.read(clientId);
     }
 }

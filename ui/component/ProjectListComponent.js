@@ -6,9 +6,8 @@ class ProjectListComponent extends ListComponent {
         super(api, notifier, "projects");
     }
 
-    loadAll = function (clientApi) {
-        this.load();
-        clientApi.list().then(json => json.data ? Object.assign(this.clients, json.data) : this.notifyError(json));
+    load = function () {
+        this.api.listWithClient().then(json => this.handleLoadResponse(json));
     }
 
     getClientName = function (clientId) {
