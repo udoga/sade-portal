@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
@@ -17,7 +16,7 @@ public class UserService {
     }
 
     public List<User> list() {
-        return repo.list().stream().map(s -> s.withPassword(null)).collect(Collectors.toList());
+        return repo.list().stream().map(s -> s.withPassword(null)).toList();
     }
 
     public User read(String id) {

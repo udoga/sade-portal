@@ -10,7 +10,6 @@ import com.sadesoft.portal.core.repo.UserRepo;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class SessionService {
     public final SessionConfig config;
@@ -24,7 +23,7 @@ public class SessionService {
     }
 
     public List<Session> list() {
-        return sessionRepo.list().stream().map(s -> s.withToken(null)).collect(Collectors.toList());
+        return sessionRepo.list().stream().map(s -> s.withToken(null)).toList();
     }
 
     public Session read(String id) {

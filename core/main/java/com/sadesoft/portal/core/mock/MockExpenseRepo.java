@@ -19,7 +19,7 @@ public class MockExpenseRepo extends MockRepo<Expense> implements ExpenseRepo {
 
     @Override
     public List<DetailedExpense> listWithEmployee() {
-        return records.stream().map(e -> new DetailedExpense(e).withEmployee(getEmployee(e.employeeId))).toList();
+        return records.stream().map(e -> new DetailedExpense(e, getEmployee(e.employeeId))).toList();
     }
 
     private Employee getEmployee(String employeeId) {

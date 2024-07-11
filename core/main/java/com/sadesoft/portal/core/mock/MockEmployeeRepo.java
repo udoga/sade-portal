@@ -8,7 +8,6 @@ import com.sadesoft.portal.core.repo.EmployeeRepo;
 import com.sadesoft.portal.core.repo.UserRepo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo {
     private final UserRepo userRepo;
@@ -20,12 +19,12 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
 
     @Override
     public List<Employee> listByUserId(String userId) {
-        return records.stream().filter(e -> e.userId.equals(userId)).collect(Collectors.toList());
+        return records.stream().filter(e -> e.userId.equals(userId)).toList();
     }
 
     @Override
     public List<DetailedEmployee> listWithUser() {
-        return records.stream().map(e -> new DetailedEmployee(e).withUser(getUser(e.userId))).toList();
+        return records.stream().map(e -> new DetailedEmployee(e, getUser(e.userId))).toList();
     }
 
     private User getUser(String userId) {
