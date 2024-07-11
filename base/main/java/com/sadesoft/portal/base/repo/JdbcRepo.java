@@ -22,7 +22,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        String sql = createSelectSql("");
+        String sql = createQuerySql("", "", "");
         return call(() -> query(createStatement(sql)));
     }
 
@@ -34,7 +34,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T read(String id) {
-        String sql = createSelectSql(" where " + getIdName() + " = " + id);
+        String sql = createQuerySql("", "", getIdName() + " = " + id);
         return call(() -> getOrThrow(query(createStatement(sql)), getIdName() + "=" + id));
     }
 
@@ -136,8 +136,12 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return getColumnName(0);
     }
 
-    protected String createSelectSql(String appendedSQL) {
-        return "select " + repeat("%1$s", columns) + " from " + tableName + appendedSQL;
+    protected String createQuerySql(String selectSql, String fromSql, String whereSql) {
+        return "select " + (selectSql.isEmpty()? repeat("%1$s", columns) : selectSql) +
+                " from " + (fromSql.isEmpty()? tableName : fromSql) +
+                (whereSql.isEmpty()? "" : (" where " + whereSql)) +
+                " order by " + getIdName() +
+                " limit 100 ";
     }
 
     protected String createInsertSql() {

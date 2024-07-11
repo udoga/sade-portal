@@ -14,9 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
-    private final String selectWithClientSql =
-        "SELECT p.*, c.name client_name FROM projects p JOIN clients c ON p.client_id = c.id";
-
     public LocalProjectRepo(Connection connection) {
         super(connection, "projects", List.of(
                 new JdbcColumn("id"),
@@ -46,12 +43,20 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
 
     @Override
     public List<DetailedProject> listWithClient() {
-        return call(() -> queryFor(createStatement(selectWithClientSql), this::toDetailedProject));
+        String sql = createQuerySqlWithClient();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
     public DetailedProject toDetailedProject(ResultSet s) throws SQLException {
-    return new DetailedProject(
+        return new DetailedProject(
             toObject(s),
             new Client(getId(s, "client_id"), s.getString("client_name")));
+    }
+
+    private String createQuerySqlWithClient() {
+        return createQuerySql(
+                "p.*, c.name client_name",
+                "projects p JOIN clients c ON p.client_id = c.id",
+                "");
     }
 }

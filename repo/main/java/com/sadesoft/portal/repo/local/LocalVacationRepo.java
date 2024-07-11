@@ -13,12 +13,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
-    private final String selectWithDetailsSql =
-        "SELECT v.*, c.name category_name, e.first_name, e.last_name " +
-        "FROM vacations v " +
-        "JOIN vacation_categories c ON v.category_id = c.id " +
-        "JOIN employees e ON v.employee_id = e.id";
-
     public LocalVacationRepo(Connection connection) {
         super(connection, "vacations", List.of(
                 new JdbcColumn("id"),
@@ -59,12 +53,13 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
 
     @Override
     public List<Vacation> listByStatus(String status) {
-        return call(() -> query(createStatement(createSelectSql(" WHERE status = '" + status + "'"))));
+        return call(() -> query(createStatement(createQuerySql("", "", "status = '" + status + "'"))));
     }
 
     @Override
     public List<DetailedVacation> listWithDetails() {
-        return call(() -> queryFor(createStatement(selectWithDetailsSql), this::toDetailedVacation));
+        String sql = createQuerySqlWithDetails();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
     public DetailedVacation toDetailedVacation(ResultSet s) throws SQLException {
@@ -72,5 +67,14 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 toObject(s),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
+    }
+
+    private String createQuerySqlWithDetails() {
+        return createQuerySql(
+                "v.*, c.name category_name, e.first_name, e.last_name",
+                "vacations v " +
+                        "JOIN vacation_categories c ON v.category_id = c.id " +
+                        "JOIN employees e ON v.employee_id = e.id",
+                "");
     }
 }

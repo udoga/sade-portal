@@ -14,9 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo {
-    private final String selectWithUserSql =
-            "SELECT e.*, u.username username FROM employees e JOIN users u ON e.user_id = u.id";
-
     public LocalEmployeeRepo(Connection connection) {
         super(connection, "employees", List.of(
                 new JdbcColumn("id"),
@@ -45,17 +42,25 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
 
     @Override
     public List<Employee> listByUserId(String userId) {
-        return call(() -> query(createStatement(createSelectSql(" where user_id = " + userId))));
+        return call(() -> query(createStatement(createQuerySql("", "", "user_id = " + userId))));
     }
 
     @Override
     public List<DetailedEmployee> listWithUser() {
-        return call(() -> queryFor(createStatement(selectWithUserSql), this::toDetailedEmployee));
+        String sql = createQuerySqlWithUser();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
     public DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
-    return new DetailedEmployee(
+        return new DetailedEmployee(
             toObject(s),
             new User(getId(s, "user_id"), s.getString("username"), null));
+    }
+
+    private String createQuerySqlWithUser() {
+        return createQuerySql(
+                "e.*, u.username username",
+                "employees e JOIN users u ON e.user_id = u.id",
+                "");
     }
 }

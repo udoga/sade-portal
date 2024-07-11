@@ -53,6 +53,6 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
 
     @Override
     public List<Receipt> listByExpenseId(String expenseId) {
-        return call(() -> query(createStatement(createSelectSql(" where expense_id = " + expenseId))));
+        return call(() -> query(createStatement(createQuerySql("", "", "expense_id = " + expenseId))));
     }
 }

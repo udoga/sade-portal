@@ -16,14 +16,6 @@ import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 
 public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
-    private final String selectWithDetailsSql =
-        "SELECT w.*, p.name project_name, a.name activity_name, " +
-        "e.first_name first_name, e.last_name last_name " +
-        "FROM worklogs w " +
-        "JOIN projects p ON w.project_id = p.id " +
-        "JOIN employees e ON w.employee_id = e.id " +
-        "JOIN activities a ON w.activity_id = a.id";
-
     public LocalWorklogRepo(Connection connection) {
         super(connection, "worklogs", List.of(
                 new JdbcColumn("id"),
@@ -65,7 +57,8 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     @Override
     public List<DetailedWorklog> listWithDetails() {
-        return call(() -> queryFor(createStatement(selectWithDetailsSql), this::toDetailedWorklog));
+        String sql = createQuerySqlWithDetails();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     public DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
@@ -74,5 +67,15 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Project(getId(s, "project_id"), null, s.getString("project_name"), null),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
+    }
+
+    private String createQuerySqlWithDetails() {
+        return createQuerySql(
+                "w.*, p.name project_name, a.name activity_name, e.first_name, e.last_name",
+                "worklogs w " +
+                        "JOIN projects p ON w.project_id = p.id " +
+                        "JOIN employees e ON w.employee_id = e.id " +
+                        "JOIN activities a ON w.activity_id = a.id",
+                "");
     }
 }

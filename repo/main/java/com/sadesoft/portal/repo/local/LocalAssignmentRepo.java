@@ -11,9 +11,6 @@ import java.sql.*;
 import java.util.List;
 
 public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements AssignmentRepo {
-    private final String selectWithRoleSql =
-            "SELECT a.*, r.name role_name FROM assignments a JOIN roles r ON a.role_id = r.id";
-
     public LocalAssignmentRepo(Connection connection) {
         super(connection, "assignments", List.of(
                 new JdbcColumn("id"),
@@ -39,12 +36,13 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
 
     @Override
     public List<DetailedAssignment> listWithRole() {
-        return call(() -> queryFor(createStatement(selectWithRoleSql), this::toDetailedAssignment));
+        String sql = createQuerySqlWithRole("");
+        return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
     @Override
     public List<DetailedAssignment> listWithRoleByUserId(String userId) {
-        String sql = selectWithRoleSql + " where user_id = " + userId;
+        String sql = createQuerySqlWithRole("user_id = " + userId);
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -53,5 +51,12 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
                 toObject(s),
                 null,
                 new Role(getId(s, "role_id"), s.getString("role_name")));
+    }
+
+    private String createQuerySqlWithRole(String whereSql) {
+        return createQuerySql(
+                "a.*, r.name role_name",
+                "assignments a JOIN roles r ON a.role_id = r.id",
+                whereSql);
     }
 }

@@ -61,7 +61,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
 
     @Override
     public List<Vacation> listByStatus(String status) {
-        return call(() -> query(createStatement(createSelectSql(" WHERE status = '" + status + "'"))));
+        return call(() -> query(createStatement(createQuerySql("", "", "status = '" + status + "'"))));
     }
 
     @Override

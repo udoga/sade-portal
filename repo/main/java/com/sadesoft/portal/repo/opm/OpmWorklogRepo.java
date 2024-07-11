@@ -16,14 +16,6 @@ import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 
 public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
-    private final String selectWithDetailsSql =
-        "SELECT w.*, p.name project_name, a.name activity_name, " +
-        "e.name first_name, e.surname last_name " +
-        "FROM opm_ps_project_work_log w " +
-        "JOIN opm_ps_project p ON w.project_id = p.id " +
-        "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
-        "JOIN opm_ps_activity a ON w.activity_id = a.id";
-
     public OpmWorklogRepo(Connection connection) {
         super(connection, "opm_ps_project_work_log", List.of(
                 new JdbcColumn("id"),
@@ -65,7 +57,8 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     @Override
     public List<DetailedWorklog> listWithDetails() {
-        return call(() -> queryFor(createStatement(selectWithDetailsSql), this::toDetailedWorklog));
+        String sql = createQuerySqlWithDetails();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     public DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
@@ -74,5 +67,15 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Project(getId(s, "project_id"), null, s.getString("project_name"), null),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
+    }
+
+    private String createQuerySqlWithDetails() {
+        return createQuerySql(
+                "w.*, p.name project_name, a.name activity_name, e.name first_name, e.surname last_name",
+                "opm_ps_project_work_log w " +
+                        "JOIN opm_ps_project p ON w.project_id = p.id " +
+                        "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
+                        "JOIN opm_ps_activity a ON w.activity_id = a.id",
+                "");
     }
 }
