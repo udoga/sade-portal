@@ -1,7 +1,7 @@
 package com.sadesoft.portal.rest;
 
 import java.sql.Connection;
-import com.sadesoft.portal.base.repo.JdbcConfig;
+import com.sadesoft.portal.base.repo.JdbcConnector;
 import com.sadesoft.portal.base.model.Props;
 import com.sadesoft.portal.base.rest.RestConfig;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
@@ -19,7 +19,7 @@ public class Main {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
         RestConfig restConfig = new RestConfig(props.getSection("rest"));
         SessionConfig sessionConfig = new SessionConfig(props.getSection("session"));
-        Connection c = new JdbcConfig(props.getSection(props.getString("repo"))).connect();
+        Connection c = new JdbcConnector(props.getSection(props.getString("repo"))).connect();
         boolean isLocalRepo = !props.getString("repo").equals("opm");
 
         UserRepo userRepo = isLocalRepo? new LocalUserRepo(c) : new OpmUserRepo(c);

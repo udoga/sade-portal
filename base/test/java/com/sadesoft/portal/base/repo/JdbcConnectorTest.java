@@ -6,23 +6,23 @@ import com.sadesoft.portal.base.model.Props;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JdbcConfigTest {
+public class JdbcConnectorTest {
     @Test
     public void initializes() {
-        Props props = new Props(Map.of("url", "url", "username", "u", "password", "p", "driver", "d", "initPath", "/"));
-        JdbcConfig c = new JdbcConfig(props);
-        assertEquals("url", c.url);
+        Props props = new Props(Map.of("url", "/", "username", "u", "password", "p", "driver", "d", "init_path", "i"));
+        JdbcConnector c = new JdbcConnector(props);
+        assertEquals("/", c.url);
         assertEquals("u", c.username);
         assertEquals("p", c.password);
         assertEquals("d", c.driver);
         assertEquals("d", c.driver);
-        assertEquals("/", c.initPath);
+        assertEquals("i", c.initPath);
     }
 
     @Test
     public void initializesWithDefaults() {
         Props props = new Props(Map.of());
-        JdbcConfig c = new JdbcConfig(props);
+        JdbcConnector c = new JdbcConnector(props);
         assertEquals("", c.url);
         assertEquals("", c.username);
         assertEquals("", c.password);
