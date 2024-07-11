@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProjectServiceTest {
-    private MockProjectRepo projectRepo;
     private MockClientRepo clientRepo;
+    private MockProjectRepo projectRepo;
     private ProjectService service;
     private Project validProject;
 
@@ -24,17 +24,9 @@ public class ProjectServiceTest {
         service = new ProjectService(projectRepo);
         validProject = new Project(
                 null,
-                "1",
+                "0",
                 "Sample Project",
                 "Sample Description");
-    }
-
-    @Test
-    public void listsProjectsWithClient() {
-        clientRepo.create(new Client(null, "Sample Client"));
-        projectRepo.create(new Project(null, "0", "Project", "Sample Description"));
-        assertEquals(1, service.listWithClient().size());
-        assertEquals(projectRepo.listWithClient(), service.listWithClient());
     }
 
     @Nested
@@ -48,6 +40,13 @@ public class ProjectServiceTest {
         public void listsProjects() {
             assertEquals(1, service.list().size());
             assertEquals(validProject.withId("0"), service.list().get(0));
+        }
+
+        @Test
+        public void listsProjectsWithClient() {
+            clientRepo.create(new Client());
+            assertEquals(1, service.listWithClient().size());
+            assertEquals(projectRepo.listWithClient(), service.listWithClient());
         }
 
         @Test

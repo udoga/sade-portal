@@ -37,18 +37,10 @@ public class ExpenseServiceTest {
         service = new ExpenseService(expenseRepo);
         validExpense = new Expense(
                 null,
-                "1",
+                "0",
                 LocalDate.of(2022, 1, 1),
                 "Example expense",
                 "Approved");
-    }
-
-    @Test
-    public void listsExpensesWithEmployee() {
-        employeeRepo.create(new Employee(null, "0", "John", "Doe"));
-        expenseRepo.create(new Expense(null, "0", LocalDate.of(2022, 1, 1),"Sample Description", "Approved"));
-        assertEquals(1, service.listWithEmployee().size());
-        assertEquals(expenseRepo.listWithEmployee(), service.listWithEmployee());
     }
 
     @Test
@@ -84,6 +76,13 @@ public class ExpenseServiceTest {
             assertEquals(1, service.list().size());
             assertEquals(validExpense.withId("0"), service.list().get(0));
             assertEquals(validExpense.withId("0"), service.read("0"));
+        }
+
+        @Test
+        public void listsExpensesWithEmployee() {
+            employeeRepo.create(new Employee());
+            assertEquals(1, service.listWithEmployee().size());
+            assertEquals(expenseRepo.listWithEmployee(), service.listWithEmployee());
         }
 
         @Test

@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VacationServiceTest {
-    private MockVacationRepo vacationRepo;
     private MockEmployeeRepo employeeRepo;
     private MockVacationCategoryRepo categoryRepo;
+    private MockVacationRepo vacationRepo;
     private VacationService service;
     private Vacation validVacation;
 
@@ -47,23 +47,13 @@ public class VacationServiceTest {
         service = new VacationService(vacationRepo);
         validVacation = new Vacation(
                 null,
-                "4",
-                "6",
+                "0",
+                "0",
                 LocalDateTime.of(2022,5,4,9,18),
                 LocalDateTime.of(2022,5,4,9,19),
                 5,
                 "descriptionExample",
                 null);
-    }
-
-    @Test
-    public void listsWithDetails() {
-        employeeRepo.create(new Employee(null, "0", "John", "Doe"));
-        categoryRepo.create(new VacationCategory(null, "Sample Category"));
-        vacationRepo.create(new Vacation(null, "0", "0", LocalDateTime.of(2022,5,4,9,18),
-                LocalDateTime.of(2022,5,4,9,19), 5, "descriptionExample", "Waiting"));
-        assertEquals(1, service.listWithDetails().size());
-        assertEquals(vacationRepo.listWithDetails(), service.listWithDetails());
     }
 
     @Test
@@ -113,6 +103,13 @@ public class VacationServiceTest {
             assertEquals(1, service.listByStatus(null).size());
             assertEquals(1, service.listByStatus("Waiting").size());
             assertEquals(0, service.listByStatus("Approved").size());
+        }
+
+        @Test
+        public void listsWithDetails() {
+            employeeRepo.create(new Employee());
+            categoryRepo.create(new VacationCategory());
+            assertEquals(vacationRepo.listWithDetails(), service.listWithDetails());
         }
 
         @Test

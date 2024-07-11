@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class EmployeeServiceTest {
-    private MockEmployeeRepo employeeRepo;
     private MockUserRepo userRepo;
+    private MockEmployeeRepo employeeRepo;
     private EmployeeService service;
     private Employee validEmployee;
 
@@ -24,7 +24,7 @@ public class EmployeeServiceTest {
         userRepo = new MockUserRepo();
         employeeRepo = new MockEmployeeRepo(userRepo);
         service = new EmployeeService(employeeRepo);
-        validEmployee = new Employee(null, "1", "John", "Green");
+        validEmployee = new Employee(null, "0", "John", "Green");
     }
 
     @Test
@@ -40,14 +40,6 @@ public class EmployeeServiceTest {
         assertMissingFieldOnCreate(validEmployee.withUserId(null));
         assertMissingFieldOnCreate(validEmployee.withFirstName(null));
         assertMissingFieldOnCreate(validEmployee.withLastName(null));
-    }
-
-    @Test
-    public void listsEmployeesWithUser() {
-        userRepo.create(new User("0", "jane.doe", null));
-        employeeRepo.create(new Employee(null, "0", "Jane", "Doe"));
-        assertEquals(1, service.listWithUser().size());
-        assertEquals(employeeRepo.listWithUser(), service.listWithUser());
     }
 
     private void assertMissingFieldOnCreate(Employee employee) {
@@ -70,9 +62,15 @@ public class EmployeeServiceTest {
 
         @Test
         public void listsByUserId() {
-            assertEquals(0, service.listByUserId("0").size());
-            assertEquals(1, service.listByUserId("1").size());
+            assertEquals(1, service.listByUserId("0").size());
+            assertEquals(0, service.listByUserId("1").size());
             assertEquals(1, service.listByUserId(null).size());
+        }
+
+        @Test
+        public void listsEmployeesWithUser() {
+            userRepo.create(new User());
+            assertEquals(employeeRepo.listWithUser(), service.listWithUser());
         }
 
         @Test

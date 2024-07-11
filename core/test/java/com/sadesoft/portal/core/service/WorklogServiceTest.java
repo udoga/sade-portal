@@ -18,10 +18,10 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WorklogServiceTest {
-    private MockWorklogRepo worklogRepo;
     private MockProjectRepo projectRepo;
     private MockEmployeeRepo employeeRepo;
     private MockActivityRepo activityRepo;
+    private MockWorklogRepo worklogRepo;
     private WorklogService service;
     private Worklog validWorklog;
 
@@ -34,23 +34,13 @@ public class WorklogServiceTest {
         service = new WorklogService(worklogRepo);
         validWorklog = new Worklog(
                 null,
-                "1",
-                "1",
-                "1",
+                "0",
+                "0",
+                "0",
                 LocalDate.of(2024, 1, 1),
                 2,
                 "Approved",
                 "Sample Worklog");
-    }
-
-    @Test
-    public void listWithDetails() {
-        projectRepo.create(new Project(null, "0", "Project", "Sample Description"));
-        employeeRepo.create(new Employee(null, "0", "Jane", "Doe"));
-        activityRepo.create(new Activity(null, "Activity"));
-        worklogRepo.create(new Worklog(null, "0", "0", "0", LocalDate.of(2024, 1, 1), 2, "Approved", "Sample"));
-        assertEquals(1, service.listWithDetails().size());
-        assertEquals(worklogRepo.listWithDetails(), service.listWithDetails());
     }
 
     @Nested
@@ -64,6 +54,15 @@ public class WorklogServiceTest {
         public void listsWorklogs() {
             assertEquals(1, service.list().size());
             assertEquals(validWorklog.withId("0"), service.list().get(0));
+        }
+
+        @Test
+        public void listWithDetails() {
+            projectRepo.create(new Project());
+            employeeRepo.create(new Employee());
+            activityRepo.create(new Activity());
+            assertEquals(1, service.listWithDetails().size());
+            assertEquals(worklogRepo.listWithDetails(), service.listWithDetails());
         }
 
         @Test
