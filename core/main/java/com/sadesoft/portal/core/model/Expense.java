@@ -12,6 +12,9 @@ public class Expense implements Record {
     public String description;
     public String status;
 
+    public Expense() {
+    }
+
     public Expense(String id,
                    String employeeId,
                    LocalDate formDate,
@@ -24,7 +27,12 @@ public class Expense implements Record {
         this.status = status;
     }
 
-    public Expense() {
+    public Expense(Expense e) {
+        this.id = e.id;
+        this.employeeId = e.employeeId;
+        this.formDate = e.formDate;
+        this.description = e.description;
+        this.status = e.status;
     }
 
     @Override

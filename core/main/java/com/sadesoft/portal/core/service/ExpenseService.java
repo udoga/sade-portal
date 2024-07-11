@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.detailed.DetailedExpense;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
@@ -34,6 +35,10 @@ public class ExpenseService {
 
     public Expense delete(String id) {
         return repo.delete(id);
+    }
+
+    public List<DetailedExpense> listWithEmployee() {
+        return repo.listWithEmployee();
     }
 
     private void check(Expense expense) {

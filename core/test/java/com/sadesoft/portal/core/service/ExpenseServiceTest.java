@@ -3,7 +3,10 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
+import com.sadesoft.portal.core.mock.MockEmployeeRepo;
+import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Expense;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +16,8 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ExpenseServiceTest {
-    private MockExpenseRepo repo;
+    private MockExpenseRepo expenseRepo;
+    private MockEmployeeRepo employeeRepo;
     private ExpenseService service;
     private Expense validExpense;
 
@@ -28,8 +32,9 @@ public class ExpenseServiceTest {
 
     @BeforeEach
     public void setup() {
-        repo = new MockExpenseRepo();
-        service = new ExpenseService(repo);
+        employeeRepo = new MockEmployeeRepo(null);
+        expenseRepo = new MockExpenseRepo(employeeRepo);
+        service = new ExpenseService(expenseRepo);
         validExpense = new Expense(
                 null,
                 "1",
@@ -39,11 +44,19 @@ public class ExpenseServiceTest {
     }
 
     @Test
+    public void listsExpensesWithEmployee() {
+        employeeRepo.create(new Employee(null, "0", "John", "Doe"));
+        expenseRepo.create(new Expense(null, "0", LocalDate.of(2022, 1, 1),"Sample Description", "Approved"));
+        assertEquals(1, service.listWithEmployee().size());
+        assertEquals(expenseRepo.listWithEmployee(), service.listWithEmployee());
+    }
+
+    @Test
     public void createsExpense() {
         Expense expense = service.create(validExpense);
         assertEquals(validExpense.withId("0"), expense);
-        assertEquals(1, repo.list().size());
-        assertEquals(expense, repo.read("0"));
+        assertEquals(1, expenseRepo.list().size());
+        assertEquals(expense, expenseRepo.read("0"));
     }
 
     @Test
@@ -77,7 +90,7 @@ public class ExpenseServiceTest {
         public void updatesExpenseById() {
             Expense expense = service.update("0", validExpense.withDescription("updated"));
             assertEquals(validExpense.withId("0").withDescription("updated"), expense);
-            assertEquals(expense, repo.read("0"));
+            assertEquals(expense, expenseRepo.read("0"));
         }
 
         @Test

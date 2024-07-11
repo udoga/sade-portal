@@ -1,6 +1,6 @@
 class ProjectListComponent extends ListComponent {
     projects = this.records;
-    
+
     constructor(api, notifier) {
         super(api, notifier, "projects");
     }
