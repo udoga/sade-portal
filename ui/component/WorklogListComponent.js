@@ -6,6 +6,6 @@ class WorklogListComponent extends ListComponent {
     }
 
     load = function () {
-        this.api.listWithDetails().then(json => this.handleLoadResponse(json));
+        this.api.listDetailed().then(json => this.handleLoadResponse(json));
     }
 }

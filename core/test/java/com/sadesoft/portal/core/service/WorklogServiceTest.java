@@ -57,12 +57,12 @@ public class WorklogServiceTest {
         }
 
         @Test
-        public void listWithDetails() {
+        public void listsDetailedWorklogs() {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            assertEquals(1, service.listWithDetails().size());
-            assertEquals(worklogRepo.listWithDetails(), service.listWithDetails());
+            assertEquals(1, service.listDetailed().size());
+            assertEquals(worklogRepo.listDetailed(), service.listDetailed());
         }
 
         @Test

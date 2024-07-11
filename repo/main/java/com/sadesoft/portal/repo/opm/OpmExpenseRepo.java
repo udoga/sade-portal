@@ -14,11 +14,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
-    private final String selectWithEmployeeSql =
-        "SELECT e.*, " +
-        "m.name first_name, m.surname last_name " +
-        "FROM opm_acc_expense e JOIN opm_hrm_employee m ON e.employee_id = m.id";
-
     public OpmExpenseRepo(Connection connection) {
         super(connection, "opm_acc_expense", List.of(
                 new JdbcColumn("id"),
@@ -49,13 +44,21 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    public List<DetailedExpense> listWithEmployee() {
-        return call(() -> queryFor(createStatement(selectWithEmployeeSql), this::toDetailedExpense));
+    public List<DetailedExpense> listDetailed() {
+        String sql = createDetailedQuerySql();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
     public DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
-    return new DetailedExpense(
+        return new DetailedExpense(
             toObject(s),
             new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")));
+    }
+
+    private String createDetailedQuerySql() {
+        return createQuerySql(
+                "e.*, m.name first_name, m.surname last_name",
+                "opm_acc_expense e JOIN opm_hrm_employee m ON e.employee_id = m.id",
+                "");
     }
 }

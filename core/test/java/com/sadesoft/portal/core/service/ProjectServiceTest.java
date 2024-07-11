@@ -45,8 +45,8 @@ public class ProjectServiceTest {
         @Test
         public void listsProjectsWithClient() {
             clientRepo.create(new Client());
-            assertEquals(1, service.listWithClient().size());
-            assertEquals(projectRepo.listWithClient(), service.listWithClient());
+            assertEquals(1, service.listDetailed().size());
+            assertEquals(projectRepo.listDetailed(), service.listDetailed());
         }
 
         @Test

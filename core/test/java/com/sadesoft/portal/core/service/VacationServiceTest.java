@@ -106,10 +106,10 @@ public class VacationServiceTest {
         }
 
         @Test
-        public void listsWithDetails() {
+        public void listsDetailedVacations() {
             employeeRepo.create(new Employee());
             categoryRepo.create(new VacationCategory());
-            assertEquals(vacationRepo.listWithDetails(), service.listWithDetails());
+            assertEquals(vacationRepo.listDetailed(), service.listDetailed());
         }
 
         @Test

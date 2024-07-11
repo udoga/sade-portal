@@ -46,8 +46,8 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    public List<DetailedEmployee> listWithUser() {
-        String sql = createQuerySqlWithUser();
+    public List<DetailedEmployee> listDetailed() {
+        String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
@@ -57,7 +57,7 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
             new User(getId(s, "user_id"), s.getString("username"), null));
     }
 
-    private String createQuerySqlWithUser() {
+    private String createDetailedQuerySql() {
         return createQuerySql(
                 "e.*, u.username username",
                 "employees e JOIN users u ON e.user_id = u.id",

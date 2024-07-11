@@ -13,9 +13,6 @@ import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
 public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
-    private final String selectWithEmployeeSql =
-        "SELECT e.*, m.first_name, m.last_name FROM expenses e JOIN employees m ON e.employee_id = m.id";
-
     public LocalExpenseRepo(Connection connection) {
         super(connection, "expenses", List.of(
                 new JdbcColumn("id"),
@@ -46,13 +43,21 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    public List<DetailedExpense> listWithEmployee() {
-        return call(() -> queryFor(createStatement(selectWithEmployeeSql), this::toDetailedExpense));
+    public List<DetailedExpense> listDetailed() {
+        String sql = createDetailedQuerySql();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
     public DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
-    return new DetailedExpense(
+        return new DetailedExpense(
             toObject(s),
             new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")));
+    }
+
+    private String createDetailedQuerySql() {
+        return createQuerySql(
+                "e.*, m.first_name, m.last_name",
+                "expenses e JOIN employees m ON e.employee_id = m.id",
+                "");
     }
 }

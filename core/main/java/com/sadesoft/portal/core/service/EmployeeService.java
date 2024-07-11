@@ -22,6 +22,10 @@ public class EmployeeService {
         return (userId == null)? repo.list() : repo.listByUserId(userId);
     }
 
+    public List<DetailedEmployee> listDetailed() {
+        return repo.listDetailed();
+    }
+
     public Employee read(String id) {
         return repo.read(id);
     }
@@ -38,10 +42,6 @@ public class EmployeeService {
 
     public Employee delete(String id) {
         return repo.delete(id);
-    }
-
-    public List<DetailedEmployee> listWithUser() {
-        return repo.listWithUser();
     }
 
     private void check(Employee employee) {

@@ -46,8 +46,8 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     @Override
-    public List<DetailedEmployee> listWithUser() {
-        String sql = createQuerySqlWithUser();
+    public List<DetailedEmployee> listDetailed() {
+        String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
@@ -57,7 +57,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
             new User(getId(s, "user_id"), s.getString("username"), null));
     }
 
-    private String createQuerySqlWithUser() {
+    private String createDetailedQuerySql() {
         return createQuerySql(
                 "e.*, u.user_name username",
                 "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",

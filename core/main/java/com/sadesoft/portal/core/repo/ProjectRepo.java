@@ -7,5 +7,5 @@ import com.sadesoft.portal.core.model.Project;
 import java.util.List;
 
 public interface ProjectRepo extends Repo<Project> {
-    List<DetailedProject> listWithClient();
+    List<DetailedProject> listDetailed();
 }

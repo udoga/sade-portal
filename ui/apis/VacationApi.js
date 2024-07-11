@@ -3,7 +3,7 @@ class VacationApi extends RestApi {
         super("/vacations/");
     }
 
-    listWithDetails = function () {
-        return this.list("with-details");
+    listDetailed = function () {
+        return this.list("detailed");
     }
 }

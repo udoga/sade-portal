@@ -27,7 +27,7 @@ public class MockVacationRepo extends MockRepo<Vacation> implements VacationRepo
     }
 
     @Override
-    public List<DetailedVacation> listWithDetails() {
+    public List<DetailedVacation> listDetailed() {
         return records.stream().map(v -> new DetailedVacation(v, getEmployee(v.employeeId),
                 getCategory(v.categoryId))).toList();
     }

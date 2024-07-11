@@ -42,8 +42,8 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<DetailedProject> listWithClient() {
-        String sql = createQuerySqlWithClient();
+    public List<DetailedProject> listDetailed() {
+        String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
@@ -53,7 +53,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
             new Client(getId(s, "client_id"), s.getString("client_name")));
     }
 
-    private String createQuerySqlWithClient() {
+    private String createDetailedQuerySql() {
         return createQuerySql(
                 "p.*, c.name client_name",
                 "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",

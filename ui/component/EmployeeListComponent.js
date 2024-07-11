@@ -6,6 +6,6 @@ class EmployeeListComponent extends ListComponent {
     }
 
     load = function () {
-        this.api.listWithUser().then(json => this.handleLoadResponse(json));
+        this.api.listDetailed().then(json => this.handleLoadResponse(json));
     }
 }

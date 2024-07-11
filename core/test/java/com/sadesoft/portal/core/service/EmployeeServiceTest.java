@@ -70,7 +70,7 @@ public class EmployeeServiceTest {
         @Test
         public void listsEmployeesWithUser() {
             userRepo.create(new User());
-            assertEquals(employeeRepo.listWithUser(), service.listWithUser());
+            assertEquals(employeeRepo.listDetailed(), service.listDetailed());
         }
 
         @Test

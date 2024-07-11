@@ -57,8 +57,8 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    public List<DetailedVacation> listWithDetails() {
-        String sql = createQuerySqlWithDetails();
+    public List<DetailedVacation> listDetailed() {
+        String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
@@ -69,7 +69,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
     }
 
-    private String createQuerySqlWithDetails() {
+    private String createDetailedQuerySql() {
         return createQuerySql(
                 "v.*, c.name category_name, e.first_name, e.last_name",
                 "vacations v " +

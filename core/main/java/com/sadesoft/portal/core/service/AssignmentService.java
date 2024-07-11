@@ -17,15 +17,15 @@ public class AssignmentService {
         return repo.list();
     }
 
+    public List<DetailedAssignment> listDetailedByUserId(String userId) {
+        return (userId == null)? repo.listDetailed() : repo.listDetailedByUserId(userId);
+    }
+
     public Assignment create(Assignment assignment) {
         return repo.create(assignment);
     }
 
     public Assignment delete(String id) {
         return repo.delete(id);
-    }
-
-    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
-        return (userId == null)? repo.listWithRole() : repo.listWithRoleByUserId(userId);
     }
 }

@@ -81,8 +81,8 @@ public class ExpenseServiceTest {
         @Test
         public void listsExpensesWithEmployee() {
             employeeRepo.create(new Employee());
-            assertEquals(1, service.listWithEmployee().size());
-            assertEquals(expenseRepo.listWithEmployee(), service.listWithEmployee());
+            assertEquals(1, service.listDetailed().size());
+            assertEquals(expenseRepo.listDetailed(), service.listDetailed());
         }
 
         @Test

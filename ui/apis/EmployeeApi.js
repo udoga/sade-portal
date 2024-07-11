@@ -7,7 +7,7 @@ class EmployeeApi extends RestApi {
         return this.list("?userId=" + userId);
     }
 
-    listWithUser = function () {
-        return this.list("with-user");
+    listDetailed = function () {
+        return this.list("detailed");
     }
 }

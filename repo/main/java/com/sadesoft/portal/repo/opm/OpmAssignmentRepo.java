@@ -49,25 +49,25 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     }
 
     @Override
-    public List<DetailedAssignment> listWithRole() {
-        String sql = createQuerySqlWithRole("");
-        return call(() -> queryFor(createStatement(sql), this::toAssignmentWithRole));
+    public List<DetailedAssignment> listDetailed() {
+        String sql = createDetailedQuerySql("");
+        return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
     @Override
-    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
-        String sql = createQuerySqlWithRole("user_id = " + userId);
-        return call(() -> queryFor(createStatement(sql), this::toAssignmentWithRole));
+    public List<DetailedAssignment> listDetailedByUserId(String userId) {
+        String sql = createDetailedQuerySql("user_id = " + userId);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
-    public DetailedAssignment toAssignmentWithRole(ResultSet s) throws SQLException {
+    public DetailedAssignment toDetailedAssignment(ResultSet s) throws SQLException {
         return new DetailedAssignment(
                 toObject(s),
                 null,
                 new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 
-    private String createQuerySqlWithRole(String whereSql) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
                 "a.*, r.name role_name",
                 "opm_sys_user_role a JOIN opm_sys_role r ON a.role_id = r.id",

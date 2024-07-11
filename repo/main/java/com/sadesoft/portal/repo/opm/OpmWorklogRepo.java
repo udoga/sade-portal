@@ -56,8 +56,8 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<DetailedWorklog> listWithDetails() {
-        String sql = createQuerySqlWithDetails();
+    public List<DetailedWorklog> listDetailed() {
+        String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
@@ -69,7 +69,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
-    private String createQuerySqlWithDetails() {
+    private String createDetailedQuerySql() {
         return createQuerySql(
                 "w.*, p.name project_name, a.name activity_name, e.name first_name, e.surname last_name",
                 "opm_ps_project_work_log w " +

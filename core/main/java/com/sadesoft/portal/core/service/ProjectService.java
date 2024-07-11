@@ -17,6 +17,10 @@ public class ProjectService {
         return repo.list();
     }
 
+    public List<DetailedProject> listDetailed() {
+        return repo.listDetailed();
+    }
+
     public Project read(String id) {
         return repo.read(id);
     }
@@ -31,9 +35,5 @@ public class ProjectService {
 
     public Project delete(String id) {
         return repo.delete(id);
-    }
-
-    public List<DetailedProject> listWithClient() {
-        return repo.listWithClient();
     }
 }

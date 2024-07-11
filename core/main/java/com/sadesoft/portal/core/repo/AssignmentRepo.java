@@ -7,6 +7,6 @@ import com.sadesoft.portal.core.model.Assignment;
 import java.util.List;
 
 public interface AssignmentRepo extends Repo<Assignment> {
-    List<DetailedAssignment> listWithRole();
-    List<DetailedAssignment> listWithRoleByUserId(String userId);
+    List<DetailedAssignment> listDetailed();
+    List<DetailedAssignment> listDetailedByUserId(String userId);
 }

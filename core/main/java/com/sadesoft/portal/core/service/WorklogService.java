@@ -17,6 +17,10 @@ public class WorklogService {
         return repo.list();
     }
 
+    public List<DetailedWorklog> listDetailed() {
+        return repo.listDetailed();
+    }
+
     public Worklog read(String id) {
         return repo.read(id);
     }
@@ -31,9 +35,5 @@ public class WorklogService {
 
     public Worklog delete(String id) {
         return repo.delete(id);
-    }
-
-    public List<DetailedWorklog> listWithDetails() {
-        return repo.listWithDetails();
     }
 }

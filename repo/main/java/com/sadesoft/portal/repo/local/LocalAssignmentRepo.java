@@ -35,14 +35,14 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     }
 
     @Override
-    public List<DetailedAssignment> listWithRole() {
-        String sql = createQuerySqlWithRole("");
+    public List<DetailedAssignment> listDetailed() {
+        String sql = createDetailedQuerySql("");
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
     @Override
-    public List<DetailedAssignment> listWithRoleByUserId(String userId) {
-        String sql = createQuerySqlWithRole("user_id = " + userId);
+    public List<DetailedAssignment> listDetailedByUserId(String userId) {
+        String sql = createDetailedQuerySql("user_id = " + userId);
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -53,7 +53,7 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
                 new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 
-    private String createQuerySqlWithRole(String whereSql) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
                 "a.*, r.name role_name",
                 "assignments a JOIN roles r ON a.role_id = r.id",

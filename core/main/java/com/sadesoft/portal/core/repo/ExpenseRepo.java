@@ -7,5 +7,5 @@ import com.sadesoft.portal.core.detailed.DetailedExpense;
 import com.sadesoft.portal.core.model.Expense;
 
 public interface ExpenseRepo extends Repo<Expense> {
-    List<DetailedExpense> listWithEmployee();
+    List<DetailedExpense> listDetailed();
 }

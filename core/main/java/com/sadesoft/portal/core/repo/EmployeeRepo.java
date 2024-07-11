@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface EmployeeRepo extends Repo<Employee> {
     List<Employee> listByUserId(String userId);
-    List<DetailedEmployee> listWithUser();
+    List<DetailedEmployee> listDetailed();
 }

@@ -21,7 +21,7 @@ class UserPageComponent extends PageComponent {
     }
 
     loadAssignments = function () {
-        this.assignmentApi.listWithRoleByUserId(this.router.getId())
+        this.assignmentApi.listDetailedByUserId(this.router.getId())
             .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
     }
 

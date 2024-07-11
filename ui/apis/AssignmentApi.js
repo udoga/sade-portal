@@ -3,7 +3,7 @@ class AssignmentApi extends RestApi {
         super("/assignments/");
     }
 
-    listWithRoleByUserId = function (userId) {
-        return this.list("with-role?userId=" + userId);
+    listDetailedByUserId = function (userId) {
+        return this.list("detailed?userId=" + userId);
     }
 }

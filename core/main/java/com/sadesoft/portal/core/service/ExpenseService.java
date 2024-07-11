@@ -37,8 +37,8 @@ public class ExpenseService {
         return repo.delete(id);
     }
 
-    public List<DetailedExpense> listWithEmployee() {
-        return repo.listWithEmployee();
+    public List<DetailedExpense> listDetailed() {
+        return repo.listDetailed();
     }
 
     private void check(Expense expense) {

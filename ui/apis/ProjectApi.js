@@ -3,7 +3,7 @@ class ProjectApi extends RestApi {
         super("/projects/");
     }
 
-    listWithClient = function () {
-        return this.list("with-client");
+    listDetailed = function () {
+        return this.list("detailed");
     }
 }

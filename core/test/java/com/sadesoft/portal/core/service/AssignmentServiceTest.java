@@ -48,8 +48,8 @@ public class AssignmentServiceTest {
     public void listsAssignmentsWithRoleByUserId() {
         roleRepo.create(new Role());
         assignmentRepo.create(validAssignment);
-        assertEquals(assignmentRepo.listWithRole(), service.listWithRoleByUserId(null));
-        assertEquals(assignmentRepo.listWithRoleByUserId("0"), service.listWithRoleByUserId("0"));
-        assertEquals(assignmentRepo.listWithRoleByUserId("1"), service.listWithRoleByUserId("1"));
+        assertEquals(assignmentRepo.listDetailed(), service.listDetailedByUserId(null));
+        assertEquals(assignmentRepo.listDetailedByUserId("0"), service.listDetailedByUserId("0"));
+        assertEquals(assignmentRepo.listDetailedByUserId("1"), service.listDetailedByUserId("1"));
     }
 }

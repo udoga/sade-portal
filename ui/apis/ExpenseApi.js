@@ -3,7 +3,7 @@ class ExpenseApi extends RestApi {
         super("/expenses/");
     }
 
-    listWithEmployee = function () {
-        return this.list("with-employee");
+    listDetailed = function () {
+        return this.list("detailed");
     }
 }

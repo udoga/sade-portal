@@ -15,12 +15,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
-    private final String selectWithDetailsSql =
-        "SELECT v.*, c.type_name category_name, v.vacation_type_id category_id " +
-        "FROM opm_hrm_vacation v " +
-        "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
-        "JOIN opm_hrm_employee e ON v.employee_id = e.id";
-
     public OpmVacationRepo(Connection connection) {
         super(connection, "opm_hrm_vacation", List.of(
                 new JdbcColumn("id"),
@@ -65,8 +59,9 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<DetailedVacation> listWithDetails() {
-        return call(() -> queryFor(createStatement(selectWithDetailsSql), this::toDetailedVacation));
+    public List<DetailedVacation> listDetailed() {
+        String sql = createDetailedQuerySql();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
     public DetailedVacation toDetailedVacation(ResultSet s) throws SQLException {
@@ -74,5 +69,14 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 toObject(s),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
+    }
+
+    private String createDetailedQuerySql() {
+        return createQuerySql(
+                "v.*, c.type_name category_name, v.vacation_type_id category_id",
+                "opm_hrm_vacation v " +
+                        "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
+                        "JOIN opm_hrm_employee e ON v.employee_id = e.id",
+                "");
     }
 }

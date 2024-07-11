@@ -42,8 +42,8 @@ public class VacationService {
         return repo.delete(id);
     }
 
-    public List<DetailedVacation> listWithDetails() {
-        return repo.listWithDetails();
+    public List<DetailedVacation> listDetailed() {
+        return repo.listDetailed();
     }
 
     private void check(Vacation vacation) {

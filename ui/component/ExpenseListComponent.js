@@ -6,6 +6,6 @@ class ExpenseListComponent extends ListComponent {
     }
 
     load = function () {
-        this.api.listWithEmployee().then(json => this.handleLoadResponse(json));
+        this.api.listDetailed().then(json => this.handleLoadResponse(json));
     }
 }
