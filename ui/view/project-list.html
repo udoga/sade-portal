@@ -3,9 +3,8 @@
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
-      <th>Client</th>
       <th>Name</th>
-      <th>Description</th>
+      <th>Client</th>
       <th class="narrow last">
         <a class="green header icon button" href="#/project-form"><i class="fas fa-plus"></i> New</a>
       </th>
@@ -13,9 +12,8 @@
     <template x-for="project in projects">
       <tr>
         <td x-text="project.id" class="narrow"></td>
-        <td x-text="project.client.name"></td>
         <td x-text="project.name"></td>
-        <td x-text="project.description"></td>
+        <td x-text="project.client.name"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/project-page/' + project.id">
             <i class="far fa-eye"></i>

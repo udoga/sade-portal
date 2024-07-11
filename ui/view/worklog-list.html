@@ -3,13 +3,10 @@
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
+      <th>Work Date</th>
       <th>Project</th>
       <th>Employee</th>
       <th>Activity</th>
-      <th>Work Date</th>
-      <th>Duration</th>
-      <th>Status</th>
-      <th>Description</th>
       <th class="narrow last">
         <a class="green header icon button" href="#/worklog-form"><i class="fas fa-plus"></i> New</a>
       </th>
@@ -17,13 +14,10 @@
     <template x-for="worklog in worklogs">
       <tr>
         <td x-text="worklog.id" class="narrow"></td>
+        <td x-text="worklog.workDate"></td>
         <td x-text="worklog.project.name"></td>
         <td x-text="worklog.employee.firstName + ' ' + worklog.employee.lastName"></td>
         <td x-text="worklog.activity.name"></td>
-        <td x-text="worklog.workDate"></td>
-        <td x-text="worklog.duration"></td>
-        <td x-text="worklog.status"></td>
-        <td x-text="worklog.description"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/worklog-page/' + worklog.id">
             <i class="far fa-eye"></i>

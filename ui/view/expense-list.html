@@ -3,8 +3,8 @@
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
-      <th>Employee</th>
       <th>Form Date</th>
+      <th>Employee</th>
       <th>Status</th>
       <th class="narrow last">
         <a class="green header icon button" href="#/expense-form"><i class="fas fa-plus"></i> New</a>
@@ -13,8 +13,8 @@
     <template x-for="expense in expenses">
       <tr>
         <td x-text="expense.id" class="narrow"></td>
-        <td x-text="expense.employee.firstName + ' ' + expense.employee.lastName"></td>
         <td x-text="expense.formDate"></td>
+        <td x-text="expense.employee.firstName + ' ' + expense.employee.lastName"></td>
         <td x-text="expense.status"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/expense-page/' + expense.id">
