@@ -13,6 +13,8 @@ import io.javalin.http.Context;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
 import io.javalin.plugin.bundled.CorsPluginConfig;
+
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,9 +65,10 @@ public class RestServer {
 
     private void configureErrors() {
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
-        server.exception(InvalidFormatException.class, (e, c) -> handle(c, convert(e), 400));
+        server.exception(InvalidFormatException.class, (e, c) -> handle(c, convertFormatException(e), 400));
         server.exception(ClientError.class, (e, c) -> handle(c, e, 400));
         server.exception(Exception.class, (e, c) -> handle(c, e, 500));
+        server.exception(RuntimeException.class, (e, c) -> handle(c, convertException(e), 500));
     }
 
     private void handle(Context c, Exception e, int status) {
@@ -75,7 +78,7 @@ public class RestServer {
         c.json(Map.of("error", new RestError(status, e.getClass().getSimpleName(), e.getMessage())));
     }
 
-    private Exception convert(InvalidFormatException e) {
+    private Exception convertFormatException(InvalidFormatException e) {
         Class<?> type = e.getTargetType();
         String typeName = type.getSimpleName();
         String value = e.getValue().toString();
@@ -83,6 +86,12 @@ public class RestServer {
         if (type.isEnum()) return new InvalidEnumError(typeName, value);
         if (typeName.equals("LocalDate")) return new InvalidDateError(value);
         if (typeName.equals("Boolean")) return new InvalidBoolError(value);
+        return e;
+    }
+
+    private Exception convertException(Exception e) {
+        if(e.getCause() instanceof JdbcSQLIntegrityConstraintViolationException)
+            return new ClientError("This record is used in another table.");
         return e;
     }
 }
