@@ -34,6 +34,7 @@ public class Main {
         ProjectRepo projectRepo = isLocalRepo? new LocalProjectRepo(c) : new OpmProjectRepo(c);
         ActivityRepo activityRepo = isLocalRepo? new LocalActivityRepo(c) : new OpmActivityRepo(c);
         WorklogRepo worklogRepo = isLocalRepo? new LocalWorklogRepo(c) : new OpmWorklogRepo(c);
+        VacationCategoryRepo vacationCategoryRepo = isLocalRepo? new LocalVacationCategoryRepo(c) : new OpmVacationCategoryRepo(c);
         VacationRepo vacationRepo = isLocalRepo? new LocalVacationRepo(c) : new OpmVacationRepo(c);
         ExpenseRepo expenseRepo = isLocalRepo? new LocalExpenseRepo(c) : new OpmExpenseRepo(c);
         ReceiptRepo receiptRepo = isLocalRepo? new LocalReceiptRepo(c) : new OpmReceiptRepo(c);
@@ -50,6 +51,7 @@ public class Main {
         ProjectService projectService = new ProjectService(projectRepo);
         ActivityService activityService = new ActivityService(activityRepo);
         WorklogService worklogService = new WorklogService(worklogRepo);
+        VacationCategoryService vacationCategoryService = new VacationCategoryService(vacationCategoryRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
@@ -67,6 +69,7 @@ public class Main {
         server.enrol(new ProjectController(projectService));
         server.enrol(new ActivityController(activityService));
         server.enrol(new WorklogController(worklogService));
+        server.enrol(new VacationCategoryController(vacationCategoryService));
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
         server.enrol(new ReceiptController(receiptService));

@@ -13,6 +13,7 @@ var clientApi = new ClientApi();
 var projectApi = new ProjectApi();
 var activityApi = new ActivityApi();
 var worklogApi = new WorklogApi();
+var vacationCategoryApi = new VacationCategoryApi();
 var vacationApi = new VacationApi();
 var expenseApi = new ExpenseApi();
 var receiptApi = new ReceiptApi();
