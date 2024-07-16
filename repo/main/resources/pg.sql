@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS worklogs CASCADE;
 DROP TABLE IF EXISTS activities CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
 DROP TABLE IF EXISTS clients CASCADE;
+DROP TABLE IF EXISTS sectors CASCADE;
 DROP TABLE IF EXISTS employees CASCADE;
 DROP TABLE IF EXISTS grants CASCADE;
 DROP TABLE IF EXISTS assignments CASCADE;
@@ -65,6 +66,11 @@ CREATE TABLE employees(
 );
 
 CREATE TABLE clients(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE sectors(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
 );
@@ -173,6 +179,11 @@ INSERT INTO clients VALUES
 --   id,      name
     (default, 'Client One'),
     (default, 'Client Two');
+
+INSERT INTO sectors VALUES
+--   id,      name
+    (default, 'Sector One'),
+    (default, 'Sector Two');
 
 INSERT INTO projects VALUES
 --   id,      client_id, name,          description

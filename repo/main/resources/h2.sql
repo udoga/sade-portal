@@ -51,6 +51,11 @@ CREATE TABLE clients(
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE sectors(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE projects(
     id IDENTITY PRIMARY KEY NOT NULL,
     client_id INT NOT NULL,
@@ -156,6 +161,11 @@ INSERT INTO clients VALUES
 --   id,      name
     (default, 'Client One'),
     (default, 'Client Two');
+
+INSERT INTO sectors VALUES
+--   id,      name
+    (default, 'Sector One'),
+    (default, 'Sector Two');
 
 INSERT INTO projects VALUES
 --   id,      client_id, name,          description
