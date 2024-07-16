@@ -29,6 +29,7 @@ public class Main {
         AssignmentRepo assignmentRepo = isLocalRepo? new LocalAssignmentRepo(c) : new OpmAssignmentRepo(c);
         GrantRepo grantRepo = isLocalRepo? new LocalGrantRepo(c) : new OpmGrantRepo(c);
         EmployeeRepo employeeRepo = isLocalRepo? new LocalEmployeeRepo(c) : new OpmEmployeeRepo(c);
+        SectorRepo sectorRepo = isLocalRepo? new LocalSectorRepo(c) : new OpmSectorRepo(c);
         ClientRepo clientRepo = isLocalRepo? new LocalClientRepo(c) : new OpmClientRepo(c);
         ProjectRepo projectRepo = isLocalRepo? new LocalProjectRepo(c) : new OpmProjectRepo(c);
         ActivityRepo activityRepo = isLocalRepo? new LocalActivityRepo(c) : new OpmActivityRepo(c);
@@ -44,6 +45,7 @@ public class Main {
         AssignmentService assignmentService = new AssignmentService(assignmentRepo);
         GrantService grantService = new GrantService(grantRepo);
         EmployeeService employeeService = new EmployeeService(employeeRepo);
+        SectorService sectorService = new SectorService(sectorRepo);
         ClientService clientService = new ClientService(clientRepo);
         ProjectService projectService = new ProjectService(projectRepo);
         ActivityService activityService = new ActivityService(activityRepo);
@@ -60,6 +62,7 @@ public class Main {
         server.enrol(new AssignmentController(assignmentService));
         server.enrol(new GrantController(grantService));
         server.enrol(new EmployeeController(employeeService));
+        server.enrol(new SectorController(sectorService));
         server.enrol(new ClientController(clientService));
         server.enrol(new ProjectController(projectService));
         server.enrol(new ActivityController(activityService));

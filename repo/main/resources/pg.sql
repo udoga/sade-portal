@@ -65,12 +65,12 @@ CREATE TABLE employees(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
-CREATE TABLE clients(
+CREATE TABLE sectors(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE sectors(
+CREATE TABLE clients(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
 );
@@ -175,15 +175,15 @@ INSERT INTO grants VALUES
     (default,       1,             2),
     (default,       2,             1);
 
-INSERT INTO clients VALUES
---   id,      name
-    (default, 'Client One'),
-    (default, 'Client Two');
-
 INSERT INTO sectors VALUES
 --   id,      name
     (default, 'Sector One'),
     (default, 'Sector Two');
+
+INSERT INTO clients VALUES
+--   id,      name
+    (default, 'Client One'),
+    (default, 'Client Two');
 
 INSERT INTO projects VALUES
 --   id,      client_id, name,          description

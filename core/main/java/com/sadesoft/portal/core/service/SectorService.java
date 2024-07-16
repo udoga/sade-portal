@@ -24,10 +24,6 @@ public class SectorService {
         return repo.create(sector);
     }
 
-    public Sector update(String id, Sector sector) {
-        return repo.update(id, sector);
-    }
-
     public Sector delete(String id) {
         return repo.delete(id);
     }
