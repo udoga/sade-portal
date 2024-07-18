@@ -42,7 +42,7 @@ class PageComponent {
 
     selectTab = function (tab) {
         this.selectedTab = tab;
-        this.loadTab(tab);
+        if (this.loadTab) this.loadTab(tab);
     }
 
     isSelectedTab = function (tab) {

@@ -25,4 +25,9 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
     private Client getClient(String clientId) {
         return (clientRepo == null)? null : clientRepo.read(clientId);
     }
+
+    @Override
+    public DetailedProject readDetailed(String id) {
+        return new DetailedProject(read(id), getClient(id));
+    }
 }

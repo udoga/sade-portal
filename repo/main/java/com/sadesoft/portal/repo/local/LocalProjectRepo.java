@@ -47,6 +47,12 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
+    @Override
+    public DetailedProject readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
+    }
+
     public DetailedProject toDetailedProject(ResultSet s) throws SQLException {
         return new DetailedProject(
             toObject(s),
@@ -58,5 +64,12 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
                 "p.*, c.name client_name",
                 "projects p JOIN clients c ON p.client_id = c.id",
                 "");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "p.*, c.name client_name",
+            "projects p JOIN clients c ON p.client_id = c.id",
+                "p.id = " + id);
     }
 }

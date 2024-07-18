@@ -25,6 +25,10 @@ public class ProjectService {
         return repo.read(id);
     }
 
+    public DetailedProject readDetailed(String id) {
+        return repo.readDetailed(id);
+    }
+
     public Project create(Project project) {
         return repo.create(project);
     }

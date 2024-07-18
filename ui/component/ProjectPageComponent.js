@@ -4,4 +4,8 @@ class ProjectPageComponent extends PageComponent {
     constructor(router, api, notifier) {
         super(router, api, notifier, "project");
     }
+
+    loadRelations = function () {
+        this.selectTab("client");
+    }
 }

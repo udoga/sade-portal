@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ProjectRepo extends Repo<Project> {
     List<DetailedProject> listDetailed();
+    DetailedProject readDetailed(String id);
 }
