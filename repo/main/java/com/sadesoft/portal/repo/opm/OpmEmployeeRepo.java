@@ -51,6 +51,12 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
+    @Override
+    public DetailedEmployee readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
+    }
+
     public DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
         return new DetailedEmployee(
             toObject(s),
@@ -62,5 +68,12 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
                 "e.*, u.user_name username",
                 "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
                 "");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "e.*, u.user_name username",
+            "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
+                "e.id = " + id);
     }
 }

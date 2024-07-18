@@ -22,12 +22,12 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
         return records.stream().map(p -> new DetailedProject(p, getClient(p.clientId))).toList();
     }
 
-    private Client getClient(String clientId) {
-        return (clientRepo == null)? null : clientRepo.read(clientId);
-    }
-
     @Override
     public DetailedProject readDetailed(String id) {
-        return new DetailedProject(read(id), getClient(id));
+        return new DetailedProject(read(id), getClient(read(id).clientId));
+    }
+
+    private Client getClient(String clientId) {
+        return (clientRepo == null)? null : clientRepo.read(clientId);
     }
 }

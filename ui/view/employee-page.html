@@ -17,6 +17,25 @@
       <label>Last Name:</label>
       <span x-text="employee.lastName"></span>
     </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="selectTab('user')" :class="getTabClass('user')">Client</span>
+      </div>
+      <template x-if="hasData(employee)">
+        <div class="panel-content">
+          <div x-show="isSelectedTab('user')">
+            <div class="field">
+              <label>User Id:</label>
+              <span x-text="employee.user.id"></span>
+            </div>
+            <div class="last field">
+              <label>Username:</label>
+              <span x-text="employee.user.username"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
     <div class="options">
       <a class="white form button" href="#/employee-list">Back</a>
       <a class="yellow form button" :href="'#/employee-form/' + employee.id">Edit</a>

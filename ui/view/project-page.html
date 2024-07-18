@@ -1,45 +1,45 @@
 <div x-data="new ProjectPageComponent(router, projectApi, notifier)" x-init="load()">
-    <h2>Project</h2>
-    <div>
-      <div class="field">
-        <label>Id:</label>
-        <span x-text="project.id"></span>
+  <h2>Project</h2>
+  <div>
+    <div class="field">
+      <label>Id:</label>
+      <span x-text="project.id"></span>
+    </div>
+    <div class="field">
+      <label>Client Id:</label>
+      <span x-text="project.clientId"></span>
+    </div>
+    <div class="field">
+      <label>Name:</label>
+      <span x-text="project.name"></span>
+    </div>
+    <div class="field">
+      <label>Description:</label>
+      <span x-text="project.description"></span>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
       </div>
-      <div class="field">
-          <label>Client Id:</label>
-          <span x-text="project.clientId"></span>
-      </div>
-      <div class="field">
-          <label>Name:</label>
-          <span x-text="project.name"></span>
-      </div>
-      <div class="field">
-        <label>Description:</label>
-        <span x-text="project.description"></span>
-      </div>
-      <div class="panel">
-        <div class="panel-header">
-          <span class="panel-item" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
-        </div>
-        <template x-if="hasData(project)">
-          <div class="panel-content">
-            <div x-show="isSelectedTab('client')">
-              <div class="field">
-                <label>Client Id:</label>
-                <span x-text="project.client.id"></span>
-              </div>
-              <div class="field">
-                <label>Client Name:</label>
-                <span x-text="project.client.name"></span>
-              </div>
+      <template x-if="hasData(project)">
+        <div class="panel-content">
+          <div x-show="isSelectedTab('client')">
+            <div class="field">
+              <label>Client Id:</label>
+              <span x-text="project.client.id"></span>
+            </div>
+            <div class="last field">
+              <label>Client Name:</label>
+              <span x-text="project.client.name"></span>
             </div>
           </div>
-        </template>
-      </div>
-      <div class="options">
-        <a class="white form button" href="#/project-list">Back</a>
-        <a class="yellow form button" :href="'#/project-form/' + project.id">Edit</a>
-        <a class="red form button" @click="remove()">Delete</a>
-      </div>
+        </div>
+      </template>
+    </div>
+    <div class="options">
+      <a class="white form button" href="#/project-list">Back</a>
+      <a class="yellow form button" :href="'#/project-form/' + project.id">Edit</a>
+      <a class="red form button" @click="remove()">Delete</a>
     </div>
   </div>
+</div>

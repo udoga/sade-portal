@@ -74,6 +74,12 @@ public class EmployeeServiceTest {
         }
 
         @Test
+        public void readsEmployeeWithUser() {
+            userRepo.create(new User(null, "username", "pwd"));
+            assertEquals(employeeRepo.readDetailed("0"), service.readDetailed("0"));
+        }
+
+        @Test
         public void updatesEmployeeById() {
             Employee employee = service.update("0", validEmployee.withFirstName("updated"));
             assertEquals(validEmployee.withId("0").withFirstName("updated"), employee);

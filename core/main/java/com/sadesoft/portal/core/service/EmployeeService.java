@@ -30,6 +30,10 @@ public class EmployeeService {
         return repo.read(id);
     }
 
+    public DetailedEmployee readDetailed(String id) {
+        return repo.readDetailed(id);
+    }
+
     public Employee create(Employee employee) {
         check(employee);
         return repo.create(employee);
