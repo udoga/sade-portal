@@ -32,6 +32,12 @@ public class MockVacationRepo extends MockRepo<Vacation> implements VacationRepo
                 getCategory(v.categoryId))).toList();
     }
 
+    @Override
+    public DetailedVacation readDetailed(String id) {
+        Vacation vacation = read(id);
+        return new DetailedVacation(vacation, getEmployee(vacation.employeeId), getCategory(vacation.categoryId));
+    }
+
     private Employee getEmployee(String employeeId) {
         return (employeeRepo == null)? null : employeeRepo.read(employeeId);
     }

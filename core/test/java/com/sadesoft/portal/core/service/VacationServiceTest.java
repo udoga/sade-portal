@@ -113,6 +113,13 @@ public class VacationServiceTest {
         }
 
         @Test
+        public void readsDetailedVacation() {
+            employeeRepo.create(new Employee(null, null, "first", "last"));
+            categoryRepo.create(new VacationCategory(null, "category"));
+            assertEquals(vacationRepo.readDetailed("0"), service.readDetailed("0"));
+        }
+
+        @Test
         public void updatesVacationById() {
             Vacation vacation = vacationRepo.read("0");
             Vacation updatedVacation = service.update("0", validVacation.withDescription("updated"));

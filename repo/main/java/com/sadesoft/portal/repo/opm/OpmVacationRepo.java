@@ -64,6 +64,12 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
+    @Override
+    public DetailedVacation readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
+    }
+
     public DetailedVacation toDetailedVacation(ResultSet s) throws SQLException {
         return new DetailedVacation(
                 toObject(s),
@@ -73,10 +79,21 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
 
     private String createDetailedQuerySql() {
         return createQuerySql(
-                "v.*, c.type_name category_name, v.vacation_type_id category_id",
-                "opm_hrm_vacation v " +
-                        "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
-                        "JOIN opm_hrm_employee e ON v.employee_id = e.id",
-                "");
+            "v.*, c.type_name category_name, v.vacation_type_id category_id," +
+            "e.name first_name, e.surname last_name",
+            "opm_hrm_vacation v " +
+                    "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
+                    "JOIN opm_hrm_employee e ON v.employee_id = e.id",
+            "");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "v.*, c.type_name category_name, v.vacation_type_id category_id," +
+            "e.name first_name, e.surname last_name",
+            "opm_hrm_vacation v " +
+                    "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
+                    "JOIN opm_hrm_employee e ON v.employee_id = e.id",
+                    "v.id = " + id);
     }
 }

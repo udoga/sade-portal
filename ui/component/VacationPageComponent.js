@@ -4,4 +4,8 @@ class VacationPageComponent extends PageComponent {
     constructor(router, api, notifier) {
         super(router, api, notifier, "vacation");
     }
+
+    loadRelations = function () {
+        this.selectTab("employee");
+    }
 }

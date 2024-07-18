@@ -9,4 +9,5 @@ import java.util.List;
 public interface VacationRepo extends Repo<Vacation> {
     List<Vacation> listByStatus(String status);
     public List<DetailedVacation> listDetailed();
+    DetailedVacation readDetailed(String id);
 }

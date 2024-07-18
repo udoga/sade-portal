@@ -62,6 +62,12 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
+    @Override
+    public DetailedVacation readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
+    }
+
     public DetailedVacation toDetailedVacation(ResultSet s) throws SQLException {
         return new DetailedVacation(
                 toObject(s),
@@ -76,5 +82,14 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                         "JOIN vacation_categories c ON v.category_id = c.id " +
                         "JOIN employees e ON v.employee_id = e.id",
                 "");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "v.*, c.name category_name, e.first_name, e.last_name",
+                    "vacations v " +
+                    "JOIN vacation_categories c ON v.category_id = c.id " +
+                    "JOIN employees e ON v.employee_id = e.id",
+                    "v.id = " + id);
     }
 }

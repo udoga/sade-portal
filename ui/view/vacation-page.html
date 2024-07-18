@@ -33,6 +33,25 @@
       <label>Status:</label>
       <span x-text="vacation.status"></span>
     </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
+      </div>
+      <template x-if="hasData(vacation)">
+        <div class="panel-content">
+          <div x-show="isSelectedTab('employee')">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="vacation.employee.id"></span>
+            </div>
+            <div class="last field">
+              <label>Employee Name:</label>
+              <span x-text="vacation.employee.firstName + ' ' + vacation.employee.lastName"></span>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
     <div class="options">
       <a class="white form button" href="#/vacation-list">Back</a>
       <a class="yellow form button" :href="'#/vacation-form/' + vacation.id">Edit</a>

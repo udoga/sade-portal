@@ -28,6 +28,10 @@ public class VacationService {
         return repo.read(id);
     }
 
+    public DetailedVacation readDetailed(String id) {
+        return repo.readDetailed(id);
+    }
+
     public Vacation create(Vacation vacation) {
         check(vacation);
         return repo.create(vacation.withStatus("Waiting"));
