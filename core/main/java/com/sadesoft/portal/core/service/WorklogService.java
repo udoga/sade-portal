@@ -17,8 +17,8 @@ public class WorklogService {
         return repo.listBy(afterId);
     }
 
-    public List<DetailedWorklog> listDetailed() {
-        return repo.listDetailed();
+    public List<DetailedWorklog> listDetailedBy(String afterId) {
+        return repo.listDetailedBy(afterId);
     }
 
     public Worklog read(String id) {

@@ -61,18 +61,18 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<DetailedWorklog> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<DetailedWorklog> listDetailedBy(String afterId) {
+        String sql = createDetailedQuerySql(createWhereSql(afterId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     @Override
     public DetailedWorklog readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("w.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog)).get(0);
     }
 
-    public DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
+    private DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
         return new DetailedWorklog(
                 toObject(s),
                 new Project(getId(s, "project_id"), null, s.getString("project_name"), s.getString("description")),
@@ -80,11 +80,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String whereSql) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "w.*, p.name project_name, p.description, a.name activity_name, e.name first_name, e.surname last_name",
             "opm_ps_project_work_log w " +
@@ -95,6 +91,6 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createWhereSql(String afterId) {
-        return (afterId == null)? "" : "id > " + afterId;
+        return (afterId == null)? "" : "w.id > " + afterId;
     }
 }

@@ -70,8 +70,20 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            assertEquals(1, service.listDetailed().size());
-            assertEquals(worklogRepo.listDetailed(), service.listDetailed());
+            assertEquals(1, service.listDetailedBy(null).size());
+            assertEquals(worklogRepo.listDetailedBy(null), service.listDetailedBy(null));
+        }
+
+        @Test
+        public void listsDetailedAfterGivenId() {
+            projectRepo.create(new Project());
+            employeeRepo.create(new Employee());
+            activityRepo.create(new Activity());
+            worklogRepo.create(validWorklog.copy());
+            worklogRepo.create(validWorklog.copy());
+            assertEquals(2, service.listDetailedBy("0").size());
+            assertEquals(1, service.listDetailedBy("1").size());
+            assertEquals(0, service.listDetailedBy("2").size());
         }
 
         @Test

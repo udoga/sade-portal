@@ -61,14 +61,14 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<DetailedWorklog> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<DetailedWorklog> listDetailedBy(String afterId) {
+        String sql = createDetailedQuerySql(createWhereSql(afterId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     @Override
     public DetailedWorklog readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("w.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog)).get(0);
     }
 
@@ -80,11 +80,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String whereSql) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
             "worklogs w " +
