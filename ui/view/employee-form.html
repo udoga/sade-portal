@@ -1,9 +1,14 @@
-<div x-data="new EmployeeFormComponent(router, employeeApi, notifier)" x-init="load()">
+<div x-data="new EmployeeFormComponent(router, employeeApi, notifier)" x-init="loadAll(userApi)">
   <h2>Employee Form</h2>
   <form>
     <div class="field">
-      <label>User Id</label>
-      <input type="text" placeholder="User Id" x-model="employee.userId"/>
+      <label>User</label>
+      <input type="text" x-model="search" @input="filterOptions" placeholder="Username" class="dropdown-input"/>
+      <div x-show="search.length > 0" x-model="employee.userId" class="dropdown-menu">
+        <template x-for="user in filteredUsers">
+          <div x-text="user.username" @click="selectUser(user)" class="dropdown-item"></div>
+        </template>
+      </div>
     </div>
     <div class="field">
       <label>First Name</label>
