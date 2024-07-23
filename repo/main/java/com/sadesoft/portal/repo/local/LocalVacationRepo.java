@@ -64,7 +64,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
 
     @Override
     public DetailedVacation readDetailed(String id) {
-        String sql = createDetailedQuerySql("id = " + id);
+        String sql = createDetailedQuerySql("v.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
     }
 

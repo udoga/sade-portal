@@ -53,7 +53,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
 
     @Override
     public DetailedEmployee readDetailed(String id) {
-        String sql = createDetailedQuerySql("id = " + id);
+        String sql = createDetailedQuerySql("e.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
     }
 
