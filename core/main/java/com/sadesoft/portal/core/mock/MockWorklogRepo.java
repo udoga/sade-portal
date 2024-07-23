@@ -26,6 +26,11 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
+    public List<Worklog> listBy(String afterId) {
+        return records.stream().filter(w -> w.matches(afterId)).toList();
+    }
+
+    @Override
     public List<DetailedWorklog> listDetailed() {
         return records.stream().map(w -> new DetailedWorklog(w, getProject(w.projectId), getEmployee(w.employeeId),
                 getActivity(w.activityId))).toList();

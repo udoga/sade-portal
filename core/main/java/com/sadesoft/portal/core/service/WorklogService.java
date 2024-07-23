@@ -13,8 +13,8 @@ public class WorklogService {
         this.repo = repo;
     }
 
-    public List<Worklog> list() {
-        return repo.list();
+    public List<Worklog> listBy(String afterId) {
+        return repo.listBy(afterId);
     }
 
     public List<DetailedWorklog> listDetailed() {

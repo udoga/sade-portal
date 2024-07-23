@@ -7,6 +7,7 @@ import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.model.Worklog;
 
 public interface WorklogRepo extends Repo<Worklog> {
+      List<Worklog> listBy(String afterId);
       List<DetailedWorklog> listDetailed();
       DetailedWorklog readDetailed(String id);
 }

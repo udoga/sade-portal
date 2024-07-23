@@ -133,4 +133,8 @@ public class Worklog implements Record {
         worklog.description = description;
         return worklog;
     }
+
+    public boolean matches(String afterId) {
+        return afterId == null || id.compareTo(afterId) > 0;
+    }
 }

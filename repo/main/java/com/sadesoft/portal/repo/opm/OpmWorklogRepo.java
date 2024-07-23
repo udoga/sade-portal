@@ -56,6 +56,11 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
+    public List<Worklog> listBy(String afterId) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(afterId)))));
+    }
+
+    @Override
     public List<DetailedWorklog> listDetailed() {
         String sql = createDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
@@ -79,13 +84,17 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         return createDetailedQuerySqlWithId("");
     }
 
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySqlWithId(String whereSql) {
         return createQuerySql(
             "w.*, p.name project_name, p.description, a.name activity_name, e.name first_name, e.surname last_name",
             "opm_ps_project_work_log w " +
-                    "JOIN opm_ps_project p ON w.project_id = p.id " +
-                    "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
-                    "JOIN opm_ps_activity a ON w.activity_id = a.id",
-                    id.isEmpty()? "" : (" w.id = " + id));
+                "JOIN opm_ps_project p ON w.project_id = p.id " +
+                "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
+                "JOIN opm_ps_activity a ON w.activity_id = a.id",
+            whereSql);
+    }
+
+    private String createWhereSql(String afterId) {
+        return (afterId == null)? "" : "id > " + afterId;
     }
 }

@@ -52,8 +52,17 @@ public class WorklogServiceTest {
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.list().size());
-            assertEquals(validWorklog.withId("0"), service.list().get(0));
+            assertEquals(1, service.listBy(null).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(null).get(0));
+        }
+
+        @Test
+        public void listsAfterGivenId() {
+            worklogRepo.create(validWorklog.copy());
+            worklogRepo.create(validWorklog.copy());
+            assertEquals(2, service.listBy("0").size());
+            assertEquals(1, service.listBy("1").size());
+            assertEquals(0, service.listBy("2").size());
         }
 
         @Test
@@ -89,7 +98,7 @@ public class WorklogServiceTest {
         public void deletesWorklogById() {
             Worklog client = service.delete("0");
             assertEquals(validWorklog.withId("0"), client);
-            assertEquals(0, service.list().size());
+            assertEquals(0, worklogRepo.list().size());
         }
     }
 }
