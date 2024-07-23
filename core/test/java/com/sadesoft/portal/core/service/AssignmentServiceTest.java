@@ -33,7 +33,7 @@ public class AssignmentServiceTest {
     @Test
     public void listsAssignments() {
         service.create(validAssignment);
-        assertEquals(assignmentRepo.list(), service.list());
+        assertEquals(assignmentRepo.list(), service.listBy(null));
     }
 
     @Test
@@ -41,14 +41,13 @@ public class AssignmentServiceTest {
         service.create(validAssignment);
         Assignment assignment = service.delete("0");
         assertEquals(validAssignment.withId("0"), assignment);
-        assertEquals(0, service.list().size());
+        assertEquals(0, assignmentRepo.list().size());
     }
 
     @Test
-    public void listsAssignmentsWithRoleByUserId() {
+    public void listsDetailedAssignmentsByUserId() {
         roleRepo.create(new Role());
         assignmentRepo.create(validAssignment);
-        assertEquals(assignmentRepo.listDetailed(), service.listDetailedBy(null));
         assertEquals(assignmentRepo.listDetailedBy("0"), service.listDetailedBy("0"));
         assertEquals(assignmentRepo.listDetailedBy("1"), service.listDetailedBy("1"));
     }

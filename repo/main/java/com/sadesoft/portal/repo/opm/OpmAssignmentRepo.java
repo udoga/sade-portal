@@ -49,9 +49,8 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     }
 
     @Override
-    public List<DetailedAssignment> listDetailed() {
-        String sql = createDetailedQuerySql("");
-        return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
+    public List<Assignment> listBy(String userId) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(userId)))));
     }
 
     @Override
@@ -60,7 +59,7 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
-    public DetailedAssignment toDetailedAssignment(ResultSet s) throws SQLException {
+    private DetailedAssignment toDetailedAssignment(ResultSet s) throws SQLException {
         return new DetailedAssignment(
                 toObject(s),
                 null,

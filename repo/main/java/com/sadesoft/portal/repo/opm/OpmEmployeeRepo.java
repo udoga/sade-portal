@@ -46,32 +46,28 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     @Override
-    public List<DetailedEmployee> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<DetailedEmployee> listDetailedBy(String userId) {
+        String sql = createDetailedQuerySql(createWhereSql(userId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
     @Override
     public DetailedEmployee readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
     }
 
-    public DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
+    private DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
         return new DetailedEmployee(
             toObject(s),
             new User(getId(s, "user_id"), s.getString("username"), null));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "e.*, u.user_name username",
             "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
-            id.isEmpty()? "" : (" e.id = " + id));
+            whereSql);
     }
 
     private String createWhereSql(String userId) {

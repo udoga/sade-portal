@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EmployeeRepo extends Repo<Employee> {
     List<Employee> listBy(String userId);
-    List<DetailedEmployee> listDetailed();
+    List<DetailedEmployee> listDetailedBy(String userId);
     DetailedEmployee readDetailed(String id);
 }

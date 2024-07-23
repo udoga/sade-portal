@@ -57,14 +57,14 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    public List<DetailedVacation> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<DetailedVacation> listDetailedBy(String status) {
+        String sql = createDetailedQuerySql(createWhereSql(status));
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
     @Override
     public DetailedVacation readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
     }
 
@@ -75,17 +75,13 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
                 "v.*, c.name category_name, e.first_name, e.last_name",
                 "vacations v " +
                         "JOIN vacation_categories c ON v.category_id = c.id " +
                         "JOIN employees e ON v.employee_id = e.id",
-                        id.isEmpty()? "" : (" v.id = " + id));
+                        whereSql);
     }
 
     private String createWhereSql(String status) {

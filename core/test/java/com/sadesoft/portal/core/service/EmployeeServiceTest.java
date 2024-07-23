@@ -68,9 +68,9 @@ public class EmployeeServiceTest {
         }
 
         @Test
-        public void listsEmployeesWithUser() {
+        public void listsDetailedEmployees() {
             userRepo.create(new User());
-            assertEquals(employeeRepo.listDetailed(), service.listDetailed());
+            assertEquals(employeeRepo.listDetailedBy(null), service.listDetailedBy(null));
         }
 
         @Test

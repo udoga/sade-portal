@@ -16,12 +16,12 @@ public class VacationService {
         this.repo = repo;
     }
 
-    public List<Vacation> list() {
-        return repo.list();
-    }
-
     public List<Vacation> listBy(String status) {
         return repo.listBy(status);
+    }
+
+    public List<DetailedVacation> listDetailedBy(String status) {
+        return repo.listDetailedBy(status);
     }
 
     public Vacation read(String id) {
@@ -44,10 +44,6 @@ public class VacationService {
 
     public Vacation delete(String id) {
         return repo.delete(id);
-    }
-
-    public List<DetailedVacation> listDetailed() {
-        return repo.listDetailed();
     }
 
     private void check(Vacation vacation) {

@@ -13,8 +13,8 @@ public class AssignmentService {
         this.repo = repo;
     }
 
-    public List<Assignment> list() {
-        return repo.list();
+    public List<Assignment> listBy(String userId) {
+        return repo.listBy(userId);
     }
 
     public List<DetailedAssignment> listDetailedBy(String userId) {

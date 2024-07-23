@@ -93,8 +93,8 @@ public class VacationServiceTest {
 
         @Test
         public void listsVacations() {
-            assertEquals(1, service.list().size());
-            assertEquals(vacationRepo.read("0"), service.list().get(0));
+            assertEquals(1, service.listBy(null).size());
+            assertEquals(vacationRepo.read("0"), service.listBy(null).get(0));
             assertEquals(vacationRepo.read("0"), service.read("0"));
         }
 
@@ -109,7 +109,7 @@ public class VacationServiceTest {
         public void listsDetailedVacations() {
             employeeRepo.create(new Employee());
             categoryRepo.create(new VacationCategory());
-            assertEquals(vacationRepo.listDetailed(), service.listDetailed());
+            assertEquals(vacationRepo.listDetailedBy(null), service.listDetailedBy(null));
         }
 
         @Test
@@ -139,7 +139,7 @@ public class VacationServiceTest {
             Vacation firstVacation = vacationRepo.read("0");
             Vacation deletedVacation = service.delete("0");
             assertEquals(firstVacation, deletedVacation);
-            assertEquals(0, service.list().size());
+            assertEquals(0, vacationRepo.list().size());
         }
 
         @Test

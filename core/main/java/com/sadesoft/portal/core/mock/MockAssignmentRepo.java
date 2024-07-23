@@ -18,13 +18,13 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
     }
 
     @Override
-    public List<DetailedAssignment> listDetailed() {
-        return records.stream().map(a -> new DetailedAssignment(a).withRole(getRole(a.roleId))).toList();
+    public List<Assignment> listBy(String userId) {
+        return records.stream().filter(e -> e.matches(userId)).toList();
     }
 
     @Override
     public List<DetailedAssignment> listDetailedBy(String userId) {
-        return listDetailed().stream().filter(a -> a.matches(userId)).toList();
+        return listBy(userId).stream().map(a -> new DetailedAssignment(a).withRole(getRole(a.roleId))).toList();
     }
 
     private Role getRole(String roleId) {

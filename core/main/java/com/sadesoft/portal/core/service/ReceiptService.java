@@ -15,10 +15,6 @@ public class ReceiptService {
         this.repo = repo;
     }
 
-    public List<Receipt> list() {
-        return repo.list();
-    }
-
     public List<Receipt> listBy(String expenseId) {
         return repo.listBy(expenseId);
     }

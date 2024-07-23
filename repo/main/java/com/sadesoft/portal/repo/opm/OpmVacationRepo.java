@@ -59,14 +59,14 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<DetailedVacation> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<DetailedVacation> listDetailedBy(String status) {
+        String sql = createDetailedQuerySql(createWhereSql(status));
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
     @Override
     public DetailedVacation readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
     }
 
@@ -77,18 +77,14 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "v.*, c.type_name category_name, v.vacation_type_id category_id," +
             "e.name first_name, e.surname last_name",
             "opm_hrm_vacation v " +
                     "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
                     "JOIN opm_hrm_employee e ON v.employee_id = e.id",
-                    id.isEmpty()? "" : (" v.id = " + id));
+                    whereSql);
     }
 
     private String createWhereSql(String status) {

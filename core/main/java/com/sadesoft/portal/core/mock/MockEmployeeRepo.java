@@ -23,8 +23,8 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
     }
 
     @Override
-    public List<DetailedEmployee> listDetailed() {
-        return records.stream().map(e -> new DetailedEmployee(e, getUser(e.userId))).toList();
+    public List<DetailedEmployee> listDetailedBy(String userId) {
+        return listBy(userId).stream().map(e -> new DetailedEmployee(e, getUser(e.userId))).toList();
     }
 
     @Override

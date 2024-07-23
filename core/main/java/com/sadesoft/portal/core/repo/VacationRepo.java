@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface VacationRepo extends Repo<Vacation> {
     List<Vacation> listBy(String status);
-    List<DetailedVacation> listDetailed();
+    List<DetailedVacation> listDetailedBy(String status);
     DetailedVacation readDetailed(String id);
 }

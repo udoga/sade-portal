@@ -22,8 +22,8 @@ public class EmployeeService {
         return repo.listBy(userId);
     }
 
-    public List<DetailedEmployee> listDetailed() {
-        return repo.listDetailed();
+    public List<DetailedEmployee> listDetailedBy(String userId) {
+        return repo.listDetailedBy(userId);
     }
 
     public Employee read(String id) {

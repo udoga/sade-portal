@@ -93,8 +93,8 @@ public class ReceiptServiceTest {
 
         @Test
         public void listsReceipts() {
-            assertEquals(1, service.list().size());
-            assertEquals(validReceipt.withId("0"), service.list().get(0));
+            assertEquals(1, service.listBy(null).size());
+            assertEquals(validReceipt.withId("0"), service.listBy(null).get(0));
             assertEquals(validReceipt.withId("0"), service.read("0"));
         }
 
@@ -116,7 +116,7 @@ public class ReceiptServiceTest {
         public void deletesReceiptById() {
             Receipt receipt = service.delete("0");
             assertEquals(validReceipt.withId("0"), receipt);
-            assertEquals(0, service.list().size());
+            assertEquals(0, repo.list().size());
         }
 
         @Test
