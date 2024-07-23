@@ -31,6 +31,13 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
                 getActivity(w.activityId))).toList();
     }
 
+    @Override
+    public DetailedWorklog readDetailed(String id) {
+        Worklog worklog = read(id);
+        return new DetailedWorklog(worklog, getProject(worklog.projectId), getEmployee(worklog.employeeId),
+                getActivity(worklog.activityId));
+    }
+
     private Project getProject(String projectId) {
         return (projectRepo == null)? null : projectRepo.read(projectId);
     }

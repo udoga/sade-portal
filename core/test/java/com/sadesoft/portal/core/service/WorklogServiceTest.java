@@ -71,6 +71,14 @@ public class WorklogServiceTest {
         }
 
         @Test
+        public void readsDetailedWorklog() {
+            projectRepo.create(new Project(null, null, "Name", "Description"));
+            employeeRepo.create(new Employee(null, null, "first", "last"));
+            activityRepo.create(new Activity(null, "Sample Activity"));
+            assertEquals(worklogRepo.readDetailed("0"), service.readDetailed("0"));
+        }
+
+        @Test
         public void updatesWorklogById() {
             Worklog client = service.update("0", validWorklog.withDescription("updated"));
             assertEquals(validWorklog.withId("0").withDescription("updated"), client);

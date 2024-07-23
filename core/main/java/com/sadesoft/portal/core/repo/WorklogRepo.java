@@ -8,4 +8,5 @@ import com.sadesoft.portal.core.model.Worklog;
 
 public interface WorklogRepo extends Repo<Worklog> {
       public List<DetailedWorklog> listDetailed();
+      DetailedWorklog readDetailed(String id);
 }

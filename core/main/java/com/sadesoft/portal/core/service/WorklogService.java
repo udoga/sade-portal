@@ -25,6 +25,10 @@ public class WorklogService {
         return repo.read(id);
     }
 
+    public DetailedWorklog readDetailed(String id) {
+        return repo.readDetailed(id);
+    }
+
     public Worklog create(Worklog worklog) {
         return repo.create(worklog);
     }

@@ -12,7 +12,7 @@ public class WorklogController extends RestController {
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailed()));
         add(HandlerType.POST, "", c -> send(c, service.create(getWorklog(c))));
-        add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
+        add(HandlerType.GET, "/{id}", c -> send(c, service.readDetailed(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getWorklog(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
     }

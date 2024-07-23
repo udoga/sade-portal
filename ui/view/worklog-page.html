@@ -6,16 +6,16 @@
       <span x-text="worklog.id"></span>
     </div>
     <div class="field">
-        <label>Project Id:</label>
-        <span x-text="worklog.projectId"></span>
-      </div>
+      <label>Project Id:</label>
+      <span x-text="worklog.projectId"></span>
+    </div>
     <div class="field">
       <label>Employee Id:</label>
       <span x-text="worklog.employeeId"></span>
     </div>
     <div class="field">
-        <label>Activity Id:</label>
-        <span x-text="worklog.activityId"></span>
+      <label>Activity Id:</label>
+      <span x-text="worklog.activityId"></span>
     </div>
     <div class="field">
       <label>Work Date:</label>
@@ -32,6 +32,39 @@
     <div class="field">
       <label>Description:</label>
       <span x-text="worklog.description"></span>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="selectTab('project')" :class="getTabClass('project')">Project</span>
+        <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
+      </div>
+      <template x-if="hasData(worklog)">
+        <div class="panel-content">
+          <div x-show="isSelectedTab('project')">
+            <div class="field">
+              <label>Project Id:</label>
+              <span x-text="worklog.project.id"></span>
+            </div>
+            <div class="field">
+              <label>Project Name:</label>
+              <span x-text="worklog.project.name"></span>
+            </div>
+            <div class="last field">
+              <label>Project Description:</label>
+              <span x-text="worklog.project.description"></span>
+            </div>
+          </div>
+          <div x-show="isSelectedTab('employee')">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="worklog.employee.id"></span>
+            </div>
+            <div class="last field">
+              <label>Employee Name:</label>
+              <span x-text="worklog.employee.firstName + ' ' + worklog.employee.lastName"></span>
+            </div>
+        </div>
+      </template>
     </div>
     <div class="options">
       <a class="white form button" href="#/worklog-list">Back</a>

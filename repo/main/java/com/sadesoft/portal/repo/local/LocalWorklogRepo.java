@@ -61,21 +61,37 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
+    @Override
+    public DetailedWorklog readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog)).get(0);
+    }
+
     public DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
         return new DetailedWorklog(
                 toObject(s),
-                new Project(getId(s, "project_id"), null, s.getString("project_name"), null),
+                new Project(getId(s, "project_id"), null, s.getString("project_name"), s.getString("description")),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
     private String createDetailedQuerySql() {
         return createQuerySql(
-                "w.*, p.name project_name, a.name activity_name, e.first_name, e.last_name",
+                "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
                 "worklogs w " +
                         "JOIN projects p ON w.project_id = p.id " +
                         "JOIN employees e ON w.employee_id = e.id " +
                         "JOIN activities a ON w.activity_id = a.id",
                 "");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
+            "worklogs w " +
+                    "JOIN projects p ON w.project_id = p.id " +
+                    "JOIN employees e ON w.employee_id = e.id " +
+                    "JOIN activities a ON w.activity_id = a.id",
+                    "w.id = " + id);
     }
 }
