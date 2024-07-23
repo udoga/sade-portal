@@ -6,9 +6,11 @@ class RestApi extends HttpClient {
         this.url = "/api" + url;
     }
 
-    list = function (appendedUrl = "") {
-        return this.getJson(this.get(this.url + appendedUrl, { headers: this.getHeaders() }));
-    };
+    list = function (appendedUrl = "", params = {}) {
+        if (this.hasData(params)) appendedUrl += "?";
+        return this.getJson(this.get(this.url + appendedUrl + new URLSearchParams(params),
+                { headers: this.getHeaders() }));
+    }
 
     create = function (data) {
         return this.getJson(this.post(this.url, { headers: this.getHeaders(), body: JSON.stringify(data) }));
@@ -44,5 +46,9 @@ class RestApi extends HttpClient {
         if (e && e.type === "SessionError" && e.message !== "Invalid username or password.")
             window.dispatchEvent(new CustomEvent("logout-event"));
         return json;
+    }
+
+    hasData = function (obj) {
+        return Object.keys(obj).length !== 0;
     }
 }

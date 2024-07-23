@@ -3,7 +3,7 @@ class WorklogApi extends RestApi {
         super("/worklogs/");
     }
 
-    listDetailed = function () {
-        return this.list("detailed");
+    listDetailedBy = function (params) {
+        return this.list("detailed", params);
     }
 }

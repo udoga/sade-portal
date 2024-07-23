@@ -21,7 +21,7 @@ class ListComponent {
     }
 
     handleLoadResponse = function (json) {
-        json.data ? Object.assign(this.records, json.data) : this.notifyError(json);
+        json.data ? this.records.push(...json.data) : this.notifyError(json);
     }
 
     handleRemoveResponse = function (json) {
