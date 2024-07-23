@@ -18,8 +18,8 @@ public class EmployeeService {
         return repo.list();
     }
 
-    public List<Employee> listByUserId(String userId) {
-        return (userId == null)? repo.list() : repo.listByUserId(userId);
+    public List<Employee> listBy(String userId) {
+        return repo.listBy(userId);
     }
 
     public List<DetailedEmployee> listDetailed() {

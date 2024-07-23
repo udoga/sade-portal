@@ -12,7 +12,7 @@ public class MockReceiptRepo extends MockRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    public List<Receipt> listByExpenseId(String expenseId) {
-        return records.stream().filter(e -> e.expenseId.equals(expenseId)).toList();
+    public List<Receipt> listBy(String expenseId) {
+        return records.stream().filter(r -> r.matches(expenseId)).toList();
     }
 }

@@ -41,8 +41,8 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedByUserId(String userId) {
-        String sql = createDetailedQuerySql("user_id = " + userId);
+    public List<DetailedAssignment> listDetailedBy(String userId) {
+        String sql = createDetailedQuerySql(createWhereSql(userId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -58,5 +58,9 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
                 "a.*, r.name role_name",
                 "assignments a JOIN roles r ON a.role_id = r.id",
                 whereSql);
+    }
+
+    private String createWhereSql(String userId) {
+        return (userId == null)? "" : ("user_id = " + userId);
     }
 }

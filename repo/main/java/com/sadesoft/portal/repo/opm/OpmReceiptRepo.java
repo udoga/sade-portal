@@ -52,7 +52,11 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    public List<Receipt> listByExpenseId(String expenseId) {
-        return call(() -> query(createStatement(createQuerySql("", "", "expense_id = " + expenseId))));
+    public List<Receipt> listBy(String expenseId) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(expenseId)))));
+    }
+
+    private String createWhereSql(String expenseId) {
+        return (expenseId == null)? "" : ("expense_id = " + expenseId);
     }
 }

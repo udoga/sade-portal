@@ -55,8 +55,8 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedByUserId(String userId) {
-        String sql = createDetailedQuerySql("user_id = " + userId);
+    public List<DetailedAssignment> listDetailedBy(String userId) {
+        String sql = createDetailedQuerySql(createWhereSql(userId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -72,5 +72,9 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
                 "a.*, r.name role_name",
                 "opm_sys_user_role a JOIN opm_sys_role r ON a.role_id = r.id",
                 whereSql);
+    }
+
+    private String createWhereSql(String userId) {
+        return (userId == null)? "" : ("user_id = " + userId);
     }
 }

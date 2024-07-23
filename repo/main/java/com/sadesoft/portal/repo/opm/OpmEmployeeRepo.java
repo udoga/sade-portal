@@ -41,8 +41,8 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     @Override
-    public List<Employee> listByUserId(String userId) {
-        return call(() -> query(createStatement(createQuerySql("", "", "user_id = " + userId))));
+    public List<Employee> listBy(String userId) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(userId)))));
     }
 
     @Override
@@ -72,5 +72,9 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
             "e.*, u.user_name username",
             "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
             id.isEmpty()? "" : (" e.id = " + id));
+    }
+
+    private String createWhereSql(String userId) {
+        return (userId == null)? "" : ("user_id = " + userId);
     }
 }

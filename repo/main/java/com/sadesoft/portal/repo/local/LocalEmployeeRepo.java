@@ -41,8 +41,8 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    public List<Employee> listByUserId(String userId) {
-        return call(() -> query(createStatement(createQuerySql("", "", "user_id = " + userId))));
+    public List<Employee> listBy(String userId) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(userId)))));
     }
 
     @Override
@@ -72,5 +72,9 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
             "e.*, u.username username",
             "employees e JOIN users u ON e.user_id = u.id",
             id.isEmpty()? "" : (" e.id = " + id));
+    }
+
+    private String createWhereSql(String userId) {
+        return (userId == null)? "" : ("user_id = " + userId);
     }
 }

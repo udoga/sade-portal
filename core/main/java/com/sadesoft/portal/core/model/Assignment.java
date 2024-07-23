@@ -76,4 +76,8 @@ public class Assignment implements Record {
         copy.roleId = roleId;
         return copy;
     }
+
+    public boolean matches(String userId) {
+        return userId == null || this.userId.equals(userId);
+    }
 }

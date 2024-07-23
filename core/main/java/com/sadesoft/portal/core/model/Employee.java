@@ -85,4 +85,8 @@ public class Employee implements Record {
         employee.lastName = lastName;
         return employee;
     }
+
+    public boolean matches(String userId) {
+        return userId == null || this.userId.equals(userId);
+    }
 }

@@ -52,8 +52,8 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    public List<Vacation> listByStatus(String status) {
-        return call(() -> query(createStatement(createQuerySql("", "", "status = '" + status + "'"))));
+    public List<Vacation> listBy(String status) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(status)))));
     }
 
     @Override
@@ -86,5 +86,9 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                         "JOIN vacation_categories c ON v.category_id = c.id " +
                         "JOIN employees e ON v.employee_id = e.id",
                         id.isEmpty()? "" : (" v.id = " + id));
+    }
+
+    private String createWhereSql(String status) {
+        return (status == null)? "" : ("status = '" + status + "'");
     }
 }

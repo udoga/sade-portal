@@ -100,9 +100,9 @@ public class ReceiptServiceTest {
 
         @Test
         public void listsByExpenseId() {
-            assertEquals(0, service.listByExpenseId("0").size());
-            assertEquals(1, service.listByExpenseId("1").size());
-            assertEquals(1, service.listByExpenseId(null).size());
+            assertEquals(0, service.listBy("0").size());
+            assertEquals(1, service.listBy("1").size());
+            assertEquals(1, service.listBy(null).size());
         }
 
         @Test

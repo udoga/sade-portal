@@ -54,8 +54,8 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<Vacation> listByStatus(String status) {
-        return call(() -> query(createStatement(createQuerySql("", "", "status = '" + status + "'"))));
+    public List<Vacation> listBy(String status) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(status)))));
     }
 
     @Override
@@ -89,5 +89,9 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                     "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
                     "JOIN opm_hrm_employee e ON v.employee_id = e.id",
                     id.isEmpty()? "" : (" v.id = " + id));
+    }
+
+    private String createWhereSql(String status) {
+        return (status == null)? "" : ("status = '" + status + "'");
     }
 }

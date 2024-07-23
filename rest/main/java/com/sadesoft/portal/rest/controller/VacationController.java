@@ -9,7 +9,7 @@ import io.javalin.http.HandlerType;
 public class VacationController extends RestController {
     public VacationController(VacationService service) {
         super("/vacations");
-        add(HandlerType.GET, "", c ->  send(c, service.listByStatus(getStatus(c))));
+        add(HandlerType.GET, "", c ->  send(c, service.listBy(getStatus(c))));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailed()));
         add(HandlerType.POST, "", c -> send(c, service.create(getVacation(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.readDetailed(getId(c))));

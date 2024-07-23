@@ -18,8 +18,8 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
     }
 
     @Override
-    public List<Employee> listByUserId(String userId) {
-        return records.stream().filter(e -> e.userId.equals(userId)).toList();
+    public List<Employee> listBy(String userId) {
+        return records.stream().filter(e -> e.matches(userId)).toList();
     }
 
     @Override

@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface AssignmentRepo extends Repo<Assignment> {
     List<DetailedAssignment> listDetailed();
-    List<DetailedAssignment> listDetailedByUserId(String userId);
+    List<DetailedAssignment> listDetailedBy(String userId);
 }

@@ -17,8 +17,8 @@ public class AssignmentService {
         return repo.list();
     }
 
-    public List<DetailedAssignment> listDetailedByUserId(String userId) {
-        return (userId == null)? repo.listDetailed() : repo.listDetailedByUserId(userId);
+    public List<DetailedAssignment> listDetailedBy(String userId) {
+        return repo.listDetailedBy(userId);
     }
 
     public Assignment create(Assignment assignment) {

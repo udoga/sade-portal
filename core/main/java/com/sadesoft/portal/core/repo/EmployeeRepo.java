@@ -7,7 +7,7 @@ import com.sadesoft.portal.core.model.Employee;
 import java.util.List;
 
 public interface EmployeeRepo extends Repo<Employee> {
-    List<Employee> listByUserId(String userId);
+    List<Employee> listBy(String userId);
     List<DetailedEmployee> listDetailed();
     DetailedEmployee readDetailed(String id);
 }

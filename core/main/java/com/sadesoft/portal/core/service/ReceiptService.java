@@ -19,8 +19,8 @@ public class ReceiptService {
         return repo.list();
     }
 
-    public List<Receipt> listByExpenseId(String expenseId) {
-        return (expenseId == null)? repo.list() : repo.listByExpenseId(expenseId);
+    public List<Receipt> listBy(String expenseId) {
+        return repo.listBy(expenseId);
     }
 
     public Receipt read(String id) {

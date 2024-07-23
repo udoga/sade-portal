@@ -9,7 +9,7 @@ import io.javalin.http.HandlerType;
 public class EmployeeController extends RestController {
     public EmployeeController(EmployeeService service) {
         super("/employees");
-        add(HandlerType.GET, "", c -> send(c, service.listByUserId(getUserId(c))));
+        add(HandlerType.GET, "", c -> send(c, service.listBy(getUserId(c))));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailed()));
         add(HandlerType.POST, "", c -> send(c, service.create(getEmployee(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.readDetailed(getId(c))));

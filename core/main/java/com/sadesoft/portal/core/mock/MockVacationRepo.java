@@ -22,8 +22,8 @@ public class MockVacationRepo extends MockRepo<Vacation> implements VacationRepo
     }
 
     @Override
-    public List<Vacation> listByStatus(String status) {
-        return records.stream().filter(v -> v.status.equals(status)).toList();
+    public List<Vacation> listBy(String status) {
+        return records.stream().filter(v -> v.matches(status)).toList();
     }
 
     @Override

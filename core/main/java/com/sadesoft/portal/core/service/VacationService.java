@@ -20,8 +20,8 @@ public class VacationService {
         return repo.list();
     }
 
-    public List<Vacation> listByStatus(String status) {
-        return (status == null)? repo.list() : repo.listByStatus(status);
+    public List<Vacation> listBy(String status) {
+        return repo.listBy(status);
     }
 
     public Vacation read(String id) {

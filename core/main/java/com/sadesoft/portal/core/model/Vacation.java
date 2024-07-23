@@ -140,4 +140,8 @@ public class Vacation implements Record {
         vacation.status = status;
         return vacation;
     }
+
+    public boolean matches(String status) {
+        return status == null || this.status.equals(status);
+    }
 }

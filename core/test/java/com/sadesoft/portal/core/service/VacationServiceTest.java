@@ -100,9 +100,9 @@ public class VacationServiceTest {
 
         @Test
         public void listsByStatus() {
-            assertEquals(1, service.listByStatus(null).size());
-            assertEquals(1, service.listByStatus("Waiting").size());
-            assertEquals(0, service.listByStatus("Approved").size());
+            assertEquals(1, service.listBy(null).size());
+            assertEquals(1, service.listBy("Waiting").size());
+            assertEquals(0, service.listBy("Approved").size());
         }
 
         @Test

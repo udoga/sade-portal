@@ -130,4 +130,7 @@ public class Receipt implements Record {
         return receipt;
     }
 
+    public boolean matches(String expenseId) {
+        return expenseId == null || this.expenseId.equals(expenseId);
+    }
 }
