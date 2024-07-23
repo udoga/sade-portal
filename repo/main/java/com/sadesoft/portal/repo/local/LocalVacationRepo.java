@@ -76,20 +76,15 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     private String createDetailedQuerySql() {
+        return createDetailedQuerySqlWithId("");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
                 "v.*, c.name category_name, e.first_name, e.last_name",
                 "vacations v " +
                         "JOIN vacation_categories c ON v.category_id = c.id " +
                         "JOIN employees e ON v.employee_id = e.id",
-                "");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
-        return createQuerySql(
-            "v.*, c.name category_name, e.first_name, e.last_name",
-                    "vacations v " +
-                    "JOIN vacation_categories c ON v.category_id = c.id " +
-                    "JOIN employees e ON v.employee_id = e.id",
-                    "v.id = " + id);
+                        id.isEmpty()? "" : (" v.id = " + id));
     }
 }

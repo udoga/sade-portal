@@ -48,6 +48,12 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
+    @Override
+    public DetailedExpense readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedExpense)).get(0);
+    }
+
     public DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
         return new DetailedExpense(
             toObject(s),
@@ -55,9 +61,13 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     private String createDetailedQuerySql() {
+        return createDetailedQuerySqlWithId("");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
-                "e.*, m.first_name, m.last_name",
-                "expenses e JOIN employees m ON e.employee_id = m.id",
-                "");
+            "e.*, m.first_name, m.last_name",
+            "expenses e JOIN employees m ON e.employee_id = m.id",
+            id.isEmpty()? "" : (" e.id = " + id));
     }
 }

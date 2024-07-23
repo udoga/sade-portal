@@ -64,16 +64,13 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-                "e.*, u.user_name username",
-                "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
             "e.*, u.user_name username",
             "opm_hrm_employee e JOIN opm_sys_user u ON e.user_id = u.id",
-                "e.id = " + id);
+            id.isEmpty()? "" : (" e.id = " + id));
     }
 }

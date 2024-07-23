@@ -76,13 +76,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-            "w.*, p.name project_name, p.description,a.name activity_name, e.name first_name, e.surname last_name",
-            "opm_ps_project_work_log w " +
-                    "JOIN opm_ps_project p ON w.project_id = p.id " +
-                    "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
-                    "JOIN opm_ps_activity a ON w.activity_id = a.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
@@ -92,6 +86,6 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                     "JOIN opm_ps_project p ON w.project_id = p.id " +
                     "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
                     "JOIN opm_ps_activity a ON w.activity_id = a.id",
-                    "w.id = " + id);
+                    id.isEmpty()? "" : (" w.id = " + id));
     }
 }

@@ -60,16 +60,13 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-                "p.*, c.name client_name",
-                "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
             "p.*, c.name client_name",
             "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",
-                "p.id = " + id);
+            id.isEmpty()? "" : (" p.id = " + id));
     }
 }

@@ -86,6 +86,12 @@ public class ExpenseServiceTest {
         }
 
         @Test
+        public void readsDetailedVacation() {
+            employeeRepo.create(new Employee(null, null, "first", "last"));
+            assertEquals(expenseRepo.readDetailed("0"), service.readDetailed("0"));
+        }
+
+        @Test
         public void updatesExpenseById() {
             Expense expense = service.update("0", validExpense.withDescription("updated"));
             assertEquals(validExpense.withId("0").withDescription("updated"), expense);

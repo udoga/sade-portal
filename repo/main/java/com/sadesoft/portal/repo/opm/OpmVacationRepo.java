@@ -78,13 +78,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-            "v.*, c.type_name category_name, v.vacation_type_id category_id," +
-            "e.name first_name, e.surname last_name",
-            "opm_hrm_vacation v " +
-                    "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
-                    "JOIN opm_hrm_employee e ON v.employee_id = e.id",
-            "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
@@ -94,6 +88,6 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
             "opm_hrm_vacation v " +
                     "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
                     "JOIN opm_hrm_employee e ON v.employee_id = e.id",
-                    "v.id = " + id);
+                    id.isEmpty()? "" : (" v.id = " + id));
     }
 }

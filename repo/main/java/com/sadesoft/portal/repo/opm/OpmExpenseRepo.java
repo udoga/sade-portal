@@ -49,6 +49,12 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
+    @Override
+    public DetailedExpense readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedExpense)).get(0);
+    }
+
     public DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
         return new DetailedExpense(
             toObject(s),
@@ -56,9 +62,13 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     private String createDetailedQuerySql() {
+        return createDetailedQuerySqlWithId("");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
-                "e.*, m.name first_name, m.surname last_name",
-                "opm_acc_expense e JOIN opm_hrm_employee m ON e.employee_id = m.id",
-                "");
+            "e.*, m.name first_name, m.surname last_name",
+            "opm_acc_expense e JOIN opm_hrm_employee m ON e.employee_id = m.id",
+            id.isEmpty()? "" : (" e.id = " + id));
     }
 }

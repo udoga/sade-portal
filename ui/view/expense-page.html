@@ -24,42 +24,55 @@
     <div class="panel">
       <div class="panel-header">
         <span class="panel-item" @click="selectTab('receipts')" :class="getTabClass('receipts')">Receipts</span>
+        <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
-      <div class="panel-content">
-        <div x-show="isSelectedTab('receipts')">
-          <table class="relations">
-            <tr>
-              <th class="narrow">Receipt Id</th>
-              <th>Receipt Date</th>
-              <th>Category Id</th>
-              <th>Amount</th>
-              <th>Description</th>
-              <th class="last narrow">
-                <a class="green header icon button" :href="'#/receipt-form?expenseId=' + expense.id">
-                  <i class="fas fa-plus"></i> New
-                </a>
-              </th>
-            </tr>
-            <template x-for="r in receipts">
+      <template x-if="hasData(expense)">
+        <div class="panel-content">
+          <div x-show="isSelectedTab('receipts')">
+            <table class="relations">
               <tr>
-                <td class="narrow" x-text="r.id"></td>
-                <td x-text="r.receiptDate"></td>
-                <td x-text="r.categoryId"></td>
-                <td x-text="r.amount + ' ' + r.currency + ' + VAT (' + r.vatRate + '%)'"></td>
-                <td x-text="r.description"></td>
-                <td class="last narrow">
-                  <a title="Edit" class="yellow row button" :href="'#/receipt-form/' + r.id">
-                    <i class="fas fa-pencil"></i>
+                <th class="narrow">Receipt Id</th>
+                <th>Receipt Date</th>
+                <th>Category Id</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th class="last narrow">
+                  <a class="green header icon button" :href="'#/receipt-form?expenseId=' + expense.id">
+                    <i class="fas fa-plus"></i> New
                   </a>
-                  <a title="Delete" class="red row button" @click="removeReceipt(r.id)">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </td>
+                </th>
               </tr>
-            </template>
-          </table>
+              <template x-for="r in receipts">
+                <tr>
+                  <td class="narrow" x-text="r.id"></td>
+                  <td x-text="r.receiptDate"></td>
+                  <td x-text="r.categoryId"></td>
+                  <td x-text="r.amount + ' ' + r.currency + ' + VAT (' + r.vatRate + '%)'"></td>
+                  <td x-text="r.description"></td>
+                  <td class="last narrow">
+                    <a title="Edit" class="yellow row button" :href="'#/receipt-form/' + r.id">
+                      <i class="fas fa-pencil"></i>
+                    </a>
+                    <a title="Delete" class="red row button" @click="removeReceipt(r.id)">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+              </template>
+            </table>
+          </div>
+          <div x-show="isSelectedTab('employee')">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="expense.employee.id"></span>
+            </div>
+            <div class="last field">
+              <label>Employee Name:</label>
+              <span x-text="expense.employee.firstName + ' ' + expense.employee.lastName"></span>
+            </div>
+          </div>
         </div>
-      </div>
+      </template>
     </div>
     <div class="options">
       <a class="white form button" href="#/expense-list">Back</a>

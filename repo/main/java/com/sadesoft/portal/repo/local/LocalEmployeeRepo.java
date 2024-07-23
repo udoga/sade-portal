@@ -64,16 +64,13 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-                "e.*, u.username username",
-                "employees e JOIN users u ON e.user_id = u.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
             "e.*, u.username username",
             "employees e JOIN users u ON e.user_id = u.id",
-                "e.id = " + id);
+            id.isEmpty()? "" : (" e.id = " + id));
     }
 }

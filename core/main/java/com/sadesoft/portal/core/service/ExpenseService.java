@@ -23,6 +23,10 @@ public class ExpenseService {
         return repo.read(id);
     }
 
+    public DetailedExpense readDetailed(String id) {
+        return repo.readDetailed(id);
+    }
+
     public Expense create(Expense expense) {
         check(expense);
         return repo.create(expense);

@@ -60,16 +60,13 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-                "p.*, c.name client_name",
-                "projects p JOIN clients c ON p.client_id = c.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
         return createQuerySql(
             "p.*, c.name client_name",
             "projects p JOIN clients c ON p.client_id = c.id",
-                "p.id = " + id);
+            id.isEmpty()? "" : (" p.id = " + id));
     }
 }

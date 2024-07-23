@@ -8,4 +8,5 @@ import com.sadesoft.portal.core.model.Expense;
 
 public interface ExpenseRepo extends Repo<Expense> {
     List<DetailedExpense> listDetailed();
+    DetailedExpense readDetailed(String id);
 }

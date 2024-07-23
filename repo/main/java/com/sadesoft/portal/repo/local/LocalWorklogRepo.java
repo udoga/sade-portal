@@ -76,13 +76,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createDetailedQuerySql() {
-        return createQuerySql(
-                "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
-                "worklogs w " +
-                        "JOIN projects p ON w.project_id = p.id " +
-                        "JOIN employees e ON w.employee_id = e.id " +
-                        "JOIN activities a ON w.activity_id = a.id",
-                "");
+        return createDetailedQuerySqlWithId("");
     }
 
     private String createDetailedQuerySqlWithId(String id) {
@@ -92,6 +86,6 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                     "JOIN projects p ON w.project_id = p.id " +
                     "JOIN employees e ON w.employee_id = e.id " +
                     "JOIN activities a ON w.activity_id = a.id",
-                    "w.id = " + id);
+                    id.isEmpty()? "" : (" w.id = " + id));
     }
 }
