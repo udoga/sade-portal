@@ -53,6 +53,7 @@ CREATE TABLE sectors(
 
 CREATE TABLE clients(
     id IDENTITY PRIMARY KEY NOT NULL,
+    sector_id INT NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
@@ -163,9 +164,9 @@ INSERT INTO sectors VALUES
     (default, 'Sector Two');
 
 INSERT INTO clients VALUES
---   id,      name
-    (default, 'Client One'),
-    (default, 'Client Two');
+--   id,      sector_id            name
+    (default,         1,   'Client One'),
+    (default,         2,   'Client Two');
 
 INSERT INTO projects VALUES
 --   id,      client_id, name,          description

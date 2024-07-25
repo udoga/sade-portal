@@ -56,7 +56,7 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     public DetailedProject toDetailedProject(ResultSet s) throws SQLException {
         return new DetailedProject(
             toObject(s),
-            new Client(getId(s, "client_id"), s.getString("client_name")));
+            new Client(getId(s, "client_id"), null, s.getString("client_name")));
     }
 
     private String createDetailedQuerySql() {

@@ -6,10 +6,12 @@ import java.util.Objects;
 
 public class Client implements Record {
     public String id;
+    public String sectorId;
     public String name;
 
-    public Client(String id, String name) {
+    public Client(String id, String sectorId, String name) {
         this.id = id;
+        this.sectorId = sectorId;
         this.name = name;
     }
 
@@ -19,13 +21,14 @@ public class Client implements Record {
     public boolean equals(Object o) {
         if (!(o instanceof Client)) return false;
         Client c = (Client) o;
-        return Objects.equals(id, c.id) && Objects.equals(name, c.name);
+        return Objects.equals(id, c.id) && Objects.equals(sectorId, c.sectorId) && Objects.equals(name, c.name);
     }
 
     @Override
     public String toString() {
         return "Client[" +
                 "id=" + id +
+                " sectorId=" + sectorId +
                 " name=" + name +
                 ']';
     }
@@ -51,6 +54,12 @@ public class Client implements Record {
     public Client withId(String id) {
         Client client = copy();
         client.id = id;
+        return client;
+    }
+
+    public Client withSectorId(String sectorId) {
+        Client client = copy();
+        client.sectorId = sectorId;
         return client;
     }
 

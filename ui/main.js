@@ -9,6 +9,7 @@ var permissionApi = new PermissionApi();
 var assignmentApi = new AssignmentApi();
 var grantApi = new GrantApi();
 var employeeApi = new EmployeeApi();
+var sectorApi = new SectorApi();
 var clientApi = new ClientApi();
 var projectApi = new ProjectApi();
 var activityApi = new ActivityApi();

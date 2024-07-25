@@ -17,7 +17,7 @@ public class ClientServiceTest {
     public void setup() {
         repo = new MockClientRepo();
         service = new ClientService(repo);
-        validClient = new Client(null, "Sample Firm");
+        validClient = new Client(null, "Sample Firm", null);
     }
 
     @Test

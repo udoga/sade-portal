@@ -1,9 +1,18 @@
-<div x-data="new ClientFormComponent(router, clientApi, notifier)" x-init="load()">
+<div x-data="new ClientFormComponent(router, clientApi, notifier)" x-init="loadAll(sectorApi)">
   <h2>Client Form</h2>
   <form>
     <div class="field">
       <label>Name</label>
       <input type="text" placeholder="Name" x-model="client.name" />
+    </div>
+    <div class="field">
+      <label>Sector</label>
+      <select x-model="client.sectorId">
+        <option value="" disabled selected>Select Sector</option>
+        <template x-for="sector in sectors" :key="sector.id">
+          <option :value="sector.id" x-text="sector.name" :selected="client.sectorId === sector.id"></option>
+        </template>
+      </select>
     </div>
     <div class="options">
       <a class="white form button" @click="quit()">Back</a>
