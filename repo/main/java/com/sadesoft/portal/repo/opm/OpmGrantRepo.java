@@ -9,14 +9,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     public OpmGrantRepo(Connection connection) {
         super(connection, "opm_sys_role_permission", List.of(
                 new JdbcColumn("id"),
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("permission_id"),
                 new JdbcColumn("role_id"),
-                new JdbcColumn("permission_id")));
+                new JdbcColumn("uuid")));
     }
 
     @Override
@@ -30,8 +36,13 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Grant o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.roleId);
+        boolean inserting = (o.id == null);
+        if (inserting) s.setInt(i++, 1);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setInt(i++, 1);
         setId(s, i++, o.permissionId);
-        if (o.id != null) setId(s, i, o.id);
+        setId(s, i++, o.roleId);
+        s.setObject(i++, UUID.randomUUID());
+        if (!inserting) setId(s, i, o.id);
     }
 }
