@@ -12,7 +12,8 @@ public class EmployeeController extends RestController {
         add(HandlerType.GET, "", c -> send(c, service.listBy(getUserId(c))));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getUserId(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getEmployee(c))));
-        add(HandlerType.GET, "/{id}", c -> send(c, service.readDetailed(getId(c))));
+        add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
+        add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getEmployee(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
     }
