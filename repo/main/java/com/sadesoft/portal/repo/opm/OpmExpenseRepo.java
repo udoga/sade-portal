@@ -11,16 +11,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     public OpmExpenseRepo(Connection connection) {
         super(connection, "opm_acc_expense", List.of(
                 new JdbcColumn("id"),
+                new JdbcColumn("business_card"),
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
+                new JdbcColumn("description"),
                 new JdbcColumn("employee_id"),
                 new JdbcColumn("expense_date"),
-                new JdbcColumn("description"),
-                new JdbcColumn("expense_status")));
+                new JdbcColumn("expense_status"),
+                new JdbcColumn("last_updated_by"),
+                new JdbcColumn("last_updated_time"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("project_id"),
+                new JdbcColumn("status"),
+                new JdbcColumn("uuid")));
     }
 
     @Override
@@ -36,11 +47,21 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
+        boolean inserting = (o.id == null);
+        s.setBoolean(i++, false);
+        if (inserting) s.setInt(i++, 1);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setString(i++, o.description);
         setId(s, i++, o.employeeId);
         setLocalDateTime(s, i++, o.formDate.atTime(0, 0, 0));
-        s.setString(i++, o.description);
         s.setString(i++, o.status);
-        if (o.id != null) setId(s, i, o.id);
+        s.setInt(i++, 1);
+        setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setInt(i++, 1);
+        s.setInt(i++, 1);
+        s.setString(i++, "A");
+        s.setObject(i++, UUID.randomUUID());
+        if (!inserting) setId(s, i, o.id);
     }
 
     @Override
