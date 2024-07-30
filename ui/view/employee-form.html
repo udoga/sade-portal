@@ -3,10 +3,10 @@
   <form>
     <div class="field">
       <label>User</label>
-      <input type="text" x-model="search" @input="filterOptions" placeholder="Username" class="dropdown-input"/>
-      <div x-show="search.length > 0" x-model="employee.userId" class="dropdown-menu">
-        <template x-for="user in filteredUsers">
-          <div x-text="user.username" @click="selectUser(user)" class="dropdown-item"></div>
+      <input type="text" x-model="username" placeholder="Username" class="dropdown-input"/>
+      <div class="dropdown-menu">
+        <template x-for="user in getFilteredUsers(username)">
+          <div class="dropdown-item" x-text="user.username" @click="username = user.username"></div>
         </template>
       </div>
     </div>
@@ -20,7 +20,7 @@
     </div>
     <div class="options">
       <a class="white form button" @click="quit()">Back</a>
-      <a class="green form button" @click="save()">Save</a>
+      <a class="green form button" @click="saveEmployee()">Save</a>
     </div>
   </form>
 </div>

@@ -1,8 +1,7 @@
 class EmployeeFormComponent extends FormComponent {
     employee = this.record;
-    search = "";
     users = [];
-    filteredUsers = [];
+    username = "";
 
     constructor(router, api, notifier) {
         super(router, api, notifier, "employee");
@@ -10,20 +9,17 @@ class EmployeeFormComponent extends FormComponent {
 
     loadAll = function (userApi) {
         this.load();
-        userApi.list()
-            .then(json => json.data ? Object.assign(this.users, json.data) : this.notifyError(json));
-        this.filteredUsers = this.users;
+        userApi.list().then(json => json.data ? Object.assign(this.users, json.data) : this.notifyError(json));
     }
 
-    filterOptions = function () {
-        this.filteredUsers = this.users.filter((user) =>
-            user.username.toLowerCase().includes(this.search.toLowerCase())
-        );
+    getFilteredUsers = function () {
+        var input = this.username.toLowerCase();
+        return this.users.filter(u => input && u.username !== input && u.username.toLowerCase().includes(input));
     }
 
-    selectUser= function (user) {
-        this.employee.userId = user.id;
-        this.search = user.username;
-        this.filteredUsers = [];
+    saveEmployee = function () {
+        var user = this.users.find(user => user.username === this.username);
+        this.employee.userId = user? user.id : null;
+        this.save();
     }
 }
