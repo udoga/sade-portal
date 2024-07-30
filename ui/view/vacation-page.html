@@ -1,4 +1,4 @@
-<div x-data="new VacationPageComponent(router, vacationApi, notifier)" x-init="load()">
+<div x-data="new VacationPageComponent(router, vacationApi, notifier, employeeApi)" x-init="load()">
   <h2>Vacation</h2>
   <div>
     <div class="field">
@@ -37,20 +37,18 @@
       <div class="panel-header">
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
-      <template x-if="hasData(vacation)">
-        <div class="panel-content">
-          <div x-show="isSelectedTab('employee')">
-            <div class="field">
-              <label>Employee Id:</label>
-              <span x-text="vacation.employee.id"></span>
-            </div>
-            <div class="last field">
-              <label>Employee Name:</label>
-              <span x-text="vacation.employee.firstName + ' ' + vacation.employee.lastName"></span>
-            </div>
+      <div class="panel-content">
+        <div x-show="isSelectedTab('employee')">
+          <div class="field">
+            <label>Employee Id:</label>
+            <span x-text="employee.id"></span>
+          </div>
+          <div class="last field">
+            <label>Employee Name:</label>
+            <span x-text="employee.firstName + ' ' + employee.lastName"></span>
           </div>
         </div>
-      </template>
+      </div>
     </div>
     <div class="options">
       <a class="white form button" href="#/vacation-list">Back</a>

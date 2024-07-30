@@ -1,4 +1,4 @@
-<div x-data="new WorklogPageComponent(router, worklogApi, notifier)" x-init="load()">
+<div x-data="new WorklogPageComponent(router, worklogApi, notifier, projectApi, employeeApi)" x-init="load()">
   <h2>Worklog</h2>
   <div>
     <div class="field">
@@ -38,33 +38,32 @@
         <span class="panel-item" @click="selectTab('project')" :class="getTabClass('project')">Project</span>
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
-      <template x-if="hasData(worklog)">
-        <div class="panel-content">
-          <div x-show="isSelectedTab('project')">
-            <div class="field">
-              <label>Project Id:</label>
-              <span x-text="worklog.project.id"></span>
-            </div>
-            <div class="field">
-              <label>Project Name:</label>
-              <span x-text="worklog.project.name"></span>
-            </div>
-            <div class="last field">
-              <label>Project Description:</label>
-              <span x-text="worklog.project.description"></span>
-            </div>
+      <div class="panel-content">
+        <div x-show="isSelectedTab('project')">
+          <div class="field">
+            <label>Project Id:</label>
+            <span x-text="project.id"></span>
           </div>
-          <div x-show="isSelectedTab('employee')">
-            <div class="field">
-              <label>Employee Id:</label>
-              <span x-text="worklog.employee.id"></span>
-            </div>
-            <div class="last field">
-              <label>Employee Name:</label>
-              <span x-text="worklog.employee.firstName + ' ' + worklog.employee.lastName"></span>
-            </div>
+          <div class="field">
+            <label>Project Name:</label>
+            <span x-text="project.name"></span>
           </div>
-      </template>
+          <div class="last field">
+            <label>Project Description:</label>
+            <span x-text="project.description"></span>
+          </div>
+        </div>
+        <div x-show="isSelectedTab('employee')">
+          <div class="field">
+            <label>Employee Id:</label>
+            <span x-text="employee.id"></span>
+          </div>
+          <div class="last field">
+            <label>Employee Name:</label>
+            <span x-text="employee.firstName + ' ' + employee.lastName"></span>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="options">
       <a class="white form button" href="#/worklog-list">Back</a>

@@ -15,7 +15,6 @@ class PageComponent {
 
     load = function () {
         this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
-        if (this.loadRelations) this.loadRelations();
     }
 
     remove = function () {
@@ -25,6 +24,7 @@ class PageComponent {
 
     handleLoadResponse = function (json) {
         json.data ? Object.assign(this.record, json.data) : this.notifyError(json);
+        if (this.loadRelations) this.loadRelations();
     }
 
     handleRemoveResponse = function (json) {

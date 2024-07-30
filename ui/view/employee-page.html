@@ -1,4 +1,4 @@
-<div x-data="new EmployeePageComponent(router, employeeApi, notifier)" x-init="load()">
+<div x-data="new EmployeePageComponent(router, employeeApi, notifier, userApi)" x-init="load()">
   <h2>Employee</h2>
   <div>
     <div class="field">
@@ -21,20 +21,18 @@
       <div class="panel-header">
         <span class="panel-item" @click="selectTab('user')" :class="getTabClass('user')">User</span>
       </div>
-      <template x-if="hasData(employee)">
-        <div class="panel-content">
-          <div x-show="isSelectedTab('user')">
-            <div class="field">
-              <label>User Id:</label>
-              <span x-text="employee.user.id"></span>
-            </div>
-            <div class="last field">
-              <label>Username:</label>
-              <span x-text="employee.user.username"></span>
-            </div>
+      <div class="panel-content">
+        <div x-show="isSelectedTab('user')">
+          <div class="field">
+            <label>User Id:</label>
+            <span x-text="user.id"></span>
+          </div>
+          <div class="last field">
+            <label>Username:</label>
+            <span x-text="user.username"></span>
           </div>
         </div>
-      </template>
+      </div>
     </div>
     <div class="options">
       <a class="white form button" href="#/employee-list">Back</a>
