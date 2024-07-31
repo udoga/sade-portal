@@ -9,13 +9,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     public OpmRoleRepo(Connection connection) {
         super(connection, "opm_sys_role", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
+                new JdbcColumn("description"),
+                new JdbcColumn("last_updated_by"),
+                new JdbcColumn("last_updated_time"),
+                new JdbcColumn("name"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("uuid")));
     }
 
     @Override
@@ -28,7 +37,15 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Role o) throws SQLException {
         int i = 1;
+        boolean inserting = (o.id == null);
+        if (inserting) s.setInt(i++, 1);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.name);
-        if (o.id != null) setId(s, i, o.id);
+        s.setInt(i++, 1);
+        setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setString(i++, o.name);
+        s.setInt(i++, 1);
+        s.setObject(i++, UUID.randomUUID());
+        if (!inserting) setId(s, i, o.id);
     }
 }
