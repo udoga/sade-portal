@@ -2,14 +2,21 @@ class EmployeeFormComponent extends FormComponent {
     employee = this.record;
     users = [];
     username = "";
+    userApi = null;
 
-    constructor(router, api, notifier) {
+    constructor(router, api, notifier, userApi) {
         super(router, api, notifier, "employee");
+        this.userApi = userApi;
     }
 
-    loadAll = function (userApi) {
-        this.load();
-        userApi.list().then(json => json.data ? Object.assign(this.users, json.data) : this.notifyError(json));
+    loadRelations = function () {
+        this.userApi.list().then(json => json.data ? this.loadUsersAndUsername(json.data) : this.notifyError(json));
+    }
+
+    loadUsersAndUsername = function (users) {
+        Object.assign(this.users, users);
+        if (this.employee.userId)
+            this.username = users.find(user => user.id === this.employee.userId).username;
     }
 
     getFilteredUsers = function () {
