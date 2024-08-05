@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
@@ -19,13 +21,21 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public OpmWorklogRepo(Connection connection) {
         super(connection, "opm_ps_project_work_log", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("project_id"),
-                new JdbcColumn("employee_id"),
                 new JdbcColumn("activity_id"),
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
+                new JdbcColumn("description"),
+                new JdbcColumn("employee_id"),
+                new JdbcColumn("last_updated_by"),
+                new JdbcColumn("last_updated_time"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("project_id"),
+                new JdbcColumn("uuid"),
+                new JdbcColumn("work_content"),
                 new JdbcColumn("work_date"),
                 new JdbcColumn("work_duration_in_minutes"),
-                new JdbcColumn("worklog_status"),
-                new JdbcColumn("work_content")));
+                new JdbcColumn("worklog_flag"),
+                new JdbcColumn("worklog_status")));
     }
 
     @Override
@@ -45,14 +55,23 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     @Override
     protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.projectId);
-        setId(s, i++, o.employeeId);
+        boolean inserting = (o.id == null);
         setId(s, i++, o.activityId);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setString(i++, o.description);
+        setId(s, i++, o.employeeId);
+        s.setInt(i++, 0);
+        setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setInt(i++, 0);
+        setId(s, i++, o.projectId);
+        s.setObject(i++, UUID.randomUUID());
+        s.setNull(i++, java.sql.Types.VARCHAR);
         setLocalDate(s, i++, o.workDate);
         s.setInt(i++, o.duration);
+        s.setNull(i++, java.sql.Types.BOOLEAN);
         s.setString(i++, o.status);
-        s.setString(i++, o.description);
-        if (o.id != null) setId(s, i, o.id);
+        if (!inserting) setId(s, i, o.id);
     }
 
     @Override
