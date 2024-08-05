@@ -57,7 +57,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     @Override
     public List<Worklog> listBy(String afterId) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(afterId)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " w", createWhereSql(afterId)))));
     }
 
     @Override
@@ -91,6 +91,6 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createWhereSql(String afterId) {
-        return (afterId == null)? "" : "w.id > " + afterId;
+        return (afterId == null)? "" : ("w.id > " + afterId);
     }
 }
