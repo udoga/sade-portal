@@ -6,11 +6,14 @@ class WorklogListComponent extends ListComponent {
     }
 
     load = function () {
-        this.api.listDetailedBy({}).then(json => this.handleLoadResponse(json));
+        this.api.listDetailedBy(this.getFilters()).then(json => this.handleLoadResponse(json));
     }
 
-    loadMore = function () {
-        var lastWorklog = this.worklogs.slice(-1)[0];
-        this.api.listDetailedBy({afterId: lastWorklog.id}).then(json => this.handleLoadResponse(json));
+    getFilters = function () {
+        return this.worklogs.length ? { afterId: this.worklogs.slice(-1)[0].id } : {};
+    }
+
+    hasMore = function() {
+        return this.worklogs.length % 100 == 0;
     }
 }

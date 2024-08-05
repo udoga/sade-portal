@@ -33,6 +33,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" @click="loadMore()">Load More</a>
+    <a class="white form button" @click="load()" x-show="hasMore()">Load More</a>
   </div>
 </div>
