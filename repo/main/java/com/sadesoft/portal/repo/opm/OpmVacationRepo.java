@@ -12,19 +12,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
     public OpmVacationRepo(Connection connection) {
         super(connection, "opm_hrm_vacation", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("employee_id"),
-                new JdbcColumn("vacation_type_id"),
-                new JdbcColumn("vacation_start_date"),
-                new JdbcColumn("vacation_end_date"),
-                new JdbcColumn("total_days"),
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
                 new JdbcColumn("description"),
-                new JdbcColumn("vacation_status")));
+                new JdbcColumn("employee_id"),
+                new JdbcColumn("last_updated_by"),
+                new JdbcColumn("last_updated_time"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("total_days"),
+                new JdbcColumn("uuid"),
+                new JdbcColumn("vacation_end_date"),
+                new JdbcColumn("vacation_start_date"),
+                new JdbcColumn("vacation_status"),
+                new JdbcColumn("vacation_time"),
+                new JdbcColumn("vacation_type_id")));
     }
 
     @Override
@@ -43,14 +52,22 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     @Override
     protected void fillStatement(PreparedStatement s, Vacation o) throws SQLException {
         int i = 1;
-        setId(s, i++, o.employeeId);
-        setId(s, i++, o.categoryId);
-        setLocalDateTime(s, i++, o.startTime);
-        setLocalDateTime(s, i++, o.endTime);
-        s.setInt(i++, o.dayCount);
+        boolean inserting = (o.id == null);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.description);
+        setId(s, i++, o.employeeId);
+        s.setInt(i++, 0);
+        setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setInt(i++, 0);
+        s.setNull(i++, java.sql.Types.NUMERIC);
+        s.setObject(i++, UUID.randomUUID());
+        setLocalDateTime(s, i++, o.endTime);
+        setLocalDateTime(s, i++, o.startTime);
         s.setString(i++, o.status);
-        if (o.id != null) setId(s, i, o.id);
+        s.setInt(i++, o.dayCount);
+        setId(s, i++, o.categoryId);
+        if (!inserting) setId(s, i, o.id);
     }
 
     @Override
