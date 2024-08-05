@@ -17,20 +17,6 @@
   --main-border-color: #e0e0e0;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-  cursor: pointer;
-}
-
-input {
-  outline: 0;
-}
-
-textarea {
-  outline: 0;
-}
-
 body {
   font-family: sans-serif;
   font-size: 14px;
@@ -50,6 +36,25 @@ body {
   color: darkred;
   text-align: center;
   margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+a.blue {
+  text-decoration: underline;
+  color: #2274c7;
+}
+
+input {
+  outline: 0;
+}
+
+textarea {
+  outline: 0;
 }
 
 header {

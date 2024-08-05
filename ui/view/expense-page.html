@@ -7,7 +7,7 @@
     </div>
     <div class="field">
       <label>Employee:</label>
-      <span x-text="getFullName(expense.employee)"></span>
+      <a class="blue" x-text="getFullName(expense.employee)" :href="'#/employee-page/' + expense.employeeId"></a>
     </div>
     <div class="field">
       <label>Form Date:</label>
