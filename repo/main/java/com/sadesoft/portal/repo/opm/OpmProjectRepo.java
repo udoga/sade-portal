@@ -106,34 +106,34 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         int i = 1;
         boolean inserting = (o.id == null);
         setId(s, i++, o.clientId);
-        s.setString(i++, ""); // client_sales_responsible
-        s.setString(i++, ""); // client_sponsor
-        s.setString(i++, ""); // code
-        s.setBigDecimal(i++, null); // commercial_product_expense
-        s.setBigDecimal(i++, null); // commercial_service_expense
-        s.setInt(i++, 0); // contract_client_id
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // contract_date
-        s.setString(i++, ""); // contract_no
-        s.setString(i++, ""); // contract_status
-        s.setBigDecimal(i++, null); // contracted_amount
-        s.setString(i++, "TRY"); // contracted_currency
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // contracted_end_date
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // contracted_start_date
-        if (inserting) s.setInt(i++, 1); // created_by
+        s.setNull(i++, java.sql.Types.VARCHAR); // client_sales_responsible
+        s.setNull(i++, java.sql.Types.VARCHAR); // client_sponsor
+        s.setString(i++, o.clientId); // code
+        s.setNull(i++, java.sql.Types.NUMERIC); // commercial_product_expense
+        s.setNull(i++, java.sql.Types.NUMERIC); // commercial_service_expense
+        s.setNull(i++, java.sql.Types.BIGINT); // contract_client_id
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // contract_date
+        s.setNull(i++, java.sql.Types.VARCHAR); // contract_no
+        s.setNull(i++, java.sql.Types.VARCHAR); // contract_status
+        s.setNull(i++, java.sql.Types.NUMERIC); // contracted_amount
+        s.setNull(i++, java.sql.Types.VARCHAR); // contracted_currency
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // contracted_end_date
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // contracted_start_date
+        if (inserting) s.setInt(i++, 0); // created_by
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now()); // created_time
-        s.setInt(i++, 0); // department_id
+        s.setNull(i++, java.sql.Types.BIGINT); // department_id
         s.setString(i++, o.description); // description
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // due_date
-        s.setBigDecimal(i++, null); // estimated_amount
-        s.setBigDecimal(i++, null); // estimated_contract_exp_budget
-        s.setString(i++, "TRY"); // estimated_currency
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // estimated_end_date
-        s.setBigDecimal(i++, null); // estimated_offer_exp_budget
-        s.setBigDecimal(i++, null); // estimated_opportunity_exp_budget
-        s.setBigDecimal(i++, null); // estimated_probability
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // estimated_start_date
-        s.setString(i++, ""); // expense
-        s.setBigDecimal(i++, null); // fiscal_year_amount
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // due_date
+        s.setNull(i++, java.sql.Types.NUMERIC); // estimated_amount
+        s.setNull(i++, java.sql.Types.NUMERIC); // estimated_contract_exp_budget
+        s.setNull(i++, java.sql.Types.VARCHAR); // estimated_currency
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // estimated_end_date
+        s.setNull(i++, java.sql.Types.NUMERIC); // estimated_offer_exp_budget
+        s.setNull(i++, java.sql.Types.NUMERIC); // estimated_opportunity_exp_budget
+        s.setNull(i++, java.sql.Types.NUMERIC); // estimated_probability
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // estimated_start_date
+        s.setNull(i++, java.sql.Types.VARCHAR); // expense
+        s.setNull(i++, java.sql.Types.NUMERIC); // fiscal_year_amount
         s.setBoolean(i++, false); // flag_activity
         s.setBoolean(i++, false); // flag_chancellery
         s.setBoolean(i++, false); // flag_contract
@@ -142,39 +142,39 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         s.setBoolean(i++, false); // flag_main_project
         s.setBoolean(i++, false); // flag_offer
         s.setBoolean(i++, false); // flag_opportunity
-        s.setBigDecimal(i++, null); // guarentee_letter_amount
-        s.setInt(i++, 0); // income_group_id
-        s.setString(i++, ""); // income_type
-        s.setInt(i++, 0); // income_type_id
-        s.setString(i++, ""); // invoicing_period
-        s.setInt(i++, 1); // last_updated_by
+        s.setNull(i++, java.sql.Types.NUMERIC); // guarentee_letter_amount
+        s.setNull(i++, java.sql.Types.BIGINT); // income_group_id
+        s.setNull(i++, java.sql.Types.VARCHAR); // income_type
+        s.setNull(i++, java.sql.Types.BIGINT); // income_type_id
+        s.setNull(i++, java.sql.Types.VARCHAR); // invoicing_period
+        s.setInt(i++, 0); // last_updated_by
         setLocalDateTime(s, i++, LocalDateTime.now()); // last_updated_time
-        s.setInt(i++, 0); // manager_id
+        s.setNull(i++, java.sql.Types.BIGINT); // manager_id
         s.setString(i++, o.name); // name
         s.setInt(i++, 0); // organization_id
-        s.setString(i++, ""); // organization_unit
-        s.setString(i++, ""); // overtime
-        s.setString(i++, ""); // payment_period
-        s.setInt(i++, 0); // pre_sales_responsible_id
-        s.setInt(i++,0); // pre_sales_support
-        s.setString(i++, ""); // pricing_card_status
-        s.setString(i++, ""); // pricing_card_description
-        s.setInt(i++, 0); // project_effort
-        s.setInt(i++, 0); // project_initiator
-        s.setInt(i++, 0); // project_parent_id
-        s.setInt(i++, 0); // project_responsible
-        s.setString(i++, ""); // project_type
-        s.setString(i++, ""); // quarter
-        s.setInt(i++, 0); // sales_channel_id
-        s.setInt(i++, 0); // sales_responsible_id
-        s.setInt(i++, 0); // sales_support
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0)); // signed_date
-        s.setInt(i++, 0); // sponsor_id
+        s.setNull(i++, java.sql.Types.VARCHAR); // organization_unit
+        s.setNull(i++, java.sql.Types.VARCHAR); // overtime
+        s.setNull(i++, java.sql.Types.VARCHAR); // payment_period
+        s.setNull(i++, java.sql.Types.BIGINT); // pre_sales_responsible_id
+        s.setNull(i++, java.sql.Types.BIGINT); // pre_sales_support
+        s.setNull(i++, java.sql.Types.VARCHAR); // pricing_card_status
+        s.setNull(i++, java.sql.Types.VARCHAR); // pricing_card_description
+        s.setNull(i++, java.sql.Types.BIGINT); // project_effort
+        s.setNull(i++, java.sql.Types.BIGINT); // project_initiator
+        s.setNull(i++, java.sql.Types.BIGINT); // project_parent_id
+        s.setNull(i++, java.sql.Types.BIGINT); // project_responsible
+        s.setNull(i++, java.sql.Types.VARCHAR); // project_type
+        s.setNull(i++, java.sql.Types.VARCHAR); // quarter
+        s.setNull(i++, java.sql.Types.BIGINT); // sales_channel_id
+        s.setNull(i++, java.sql.Types.BIGINT); // sales_responsible_id
+        s.setNull(i++, java.sql.Types.BIGINT); // sales_support
+        s.setNull(i++, java.sql.Types.TIMESTAMP); // signed_date
+        s.setNull(i++, java.sql.Types.BIGINT); // sponsor_id
         s.setString(i++, ""); // status
-        s.setInt(i++, 0); // type
+        s.setNull(i++, java.sql.Types.BIGINT); // type
         s.setObject(i++, UUID.randomUUID()); // uuid
-        s.setString(i++, ""); // work_field
-        s.setInt(i++, 0); // pricing_card_director
+        s.setNull(i++, java.sql.Types.VARCHAR); // work_field
+        s.setNull(i++, java.sql.Types.BIGINT); // pricing_card_director
         if (!inserting) setId(s, i, o.id);
     }
 

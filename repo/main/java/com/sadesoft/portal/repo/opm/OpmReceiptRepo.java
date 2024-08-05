@@ -54,7 +54,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setBigDecimal(i++, o.amount);
-        if (inserting) s.setInt(i++, 1);
+        if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.currency);
         s.setString(i++, o.description);
@@ -63,9 +63,9 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         setId(s, i++, o.categoryId);
         s.setNull(i++, java.sql.Types.BIGINT);
         s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setInt(i++, 1);
+        s.setInt(i++, 0);
         setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 1);
+        s.setInt(i++, 0);
         s.setObject(i++, UUID.randomUUID());
         s.setShort(i++, o.vatRate);
         s.setNull(i++, java.sql.Types.VARCHAR);

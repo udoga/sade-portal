@@ -49,17 +49,17 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setBoolean(i++, false);
-        if (inserting) s.setInt(i++, 1);
+        if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.description);
         setId(s, i++, o.employeeId);
         setLocalDateTime(s, i++, o.formDate.atTime(0, 0, 0));
         s.setString(i++, o.status);
-        s.setInt(i++, 1);
+        s.setInt(i++, 0);
         setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 1);
-        s.setInt(i++, 1);
-        s.setString(i++, "A");
+        s.setInt(i++, 0);
+        s.setNull(i++, java.sql.Types.BIGINT);
+        s.setString(i++, "");
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }

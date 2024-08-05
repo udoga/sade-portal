@@ -45,16 +45,16 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
         int i = 1;
         boolean inserting = (o.id == null);
         s.setString(i++, convertTurkishToAscii(o.name));
-        if (inserting) s.setInt(i++, 1);
+        if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setString(i++, o.name);
-        setLocalDateTime(s, i++, null);
-        s.setInt(i++, 1);
+        s.setString(i++, "");
+        s.setNull(i++, java.sql.Types.TIMESTAMP);
+        s.setInt(i++, 0);
         setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.name);
-        s.setInt(i++, 1);
-        setLocalDateTime(s, i++, LocalDateTime.of(2022, 1, 1, 0, 0, 0));
-        s.setString(i++, "A");
+        s.setInt(i++, 0);
+        s.setNull(i++, java.sql.Types.TIMESTAMP);
+        s.setString(i++, "");
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }

@@ -37,9 +37,9 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     protected void fillStatement(PreparedStatement s, Grant o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
-        if (inserting) s.setInt(i++, 1);
+        if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 1);
+        s.setInt(i++, 0);
         setId(s, i++, o.permissionId);
         setId(s, i++, o.roleId);
         s.setObject(i++, UUID.randomUUID());
