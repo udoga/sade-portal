@@ -8,7 +8,7 @@ class ExpensePageComponent extends PageComponent {
         this.receiptApi = receiptApi;
     }
 
-    loadRelations = function () {
+    afterLoad = function () {
         this.loadReceipts();
         this.selectTab("receipts");
     }

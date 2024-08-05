@@ -15,7 +15,7 @@ class FormComponent {
     load = function () {
         var id = this.router.getId();
         if (id) this.api.read(id).then(json => this.handleLoadResponse(json));
-        else this.loadRecord(this.router.getUrlParams());
+        else Object.assign(this.record, this.router.getUrlParams());
     }
 
     save = function () {
@@ -24,16 +24,11 @@ class FormComponent {
     }
 
     handleLoadResponse = function (json) {
-        json.data ? this.loadRecord(json.data) : this.notifyError(json);
+        json.data ? Object.assign(this.record, json.data) : this.notifyError(json);
     }
 
     handleSaveResponse = function (json) {
         json.data ? this.notifySuccess() : this.notifyError(json);
-    }
-
-    loadRecord = function (data) {
-        Object.assign(this.record, data);
-        if (this.loadRelations) this.loadRelations();
     }
 
     notifySuccess = function () {

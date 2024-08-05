@@ -5,7 +5,7 @@ class EmployeePageComponent extends PageComponent {
         super(router, api, notifier, "employee");
     }
 
-    loadRelations = function () {
+    afterLoad = function () {
         this.selectTab("user");
     }
 

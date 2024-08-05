@@ -5,7 +5,7 @@ class WorklogPageComponent extends PageComponent {
         super(router, api, notifier, "worklog");
     }
 
-    loadRelations = function () {
+    afterLoad = function () {
         this.selectTab("project");
     }
 

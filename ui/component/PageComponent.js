@@ -28,7 +28,7 @@ class PageComponent {
 
     handleLoadResponse = function (json) {
         json.data ? Object.assign(this.record, json.data) : this.notifyError(json);
-        if (this.loadRelations) this.loadRelations();
+        if (this.afterLoad) this.afterLoad();
     }
 
     handleRemoveResponse = function (json) {
@@ -46,7 +46,6 @@ class PageComponent {
 
     selectTab = function (tab) {
         this.selectedTab = tab;
-        if (this.loadTab) this.loadTab(tab);
     }
 
     isSelectedTab = function (tab) {
