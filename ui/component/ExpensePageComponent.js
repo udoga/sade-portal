@@ -27,4 +27,8 @@ class ExpensePageComponent extends PageComponent {
     getEmployee = function () {
         return this.expense.employee ? this.expense.employee : {};
     }
+
+    getEmployeeName = function () {
+        return this.getEmployee().firstName + " " + this.getEmployee().lastName;
+    }
 }
