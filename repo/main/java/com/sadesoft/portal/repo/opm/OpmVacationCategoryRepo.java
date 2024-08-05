@@ -9,13 +9,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implements VacationCategoryRepo {
     public OpmVacationCategoryRepo(Connection connection) {
         super(connection, "opm_hrm_vacation_type", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("type_name")));
+                new JdbcColumn("base_vacation_type"),
+                new JdbcColumn("created_by"),
+                new JdbcColumn("created_time"),
+                new JdbcColumn("last_updated_by"),
+                new JdbcColumn("last_updated_time"),
+                new JdbcColumn("max_day"),
+                new JdbcColumn("organization_id"),
+                new JdbcColumn("type_name"),
+                new JdbcColumn("uuid")));
     }
 
     @Override
@@ -28,7 +38,16 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
     @Override
     protected void fillStatement(PreparedStatement s, VacationCategory o) throws SQLException {
         int i = 1;
+        boolean inserting = (o.id == null);
+        s.setString(i++, "");
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setInt(i++, 0);
+        setLocalDateTime(s, i++, LocalDateTime.now());
+        s.setNull(i++, java.sql.Types.BIGINT);
+        s.setInt(i++, 0);
         s.setString(i++, o.name);
-        if (o.id != null) setId(s, i, o.id);
+        s.setObject(i++, UUID.randomUUID());
+        if (!inserting) setId(s, i, o.id);
     }
 }
