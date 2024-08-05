@@ -10,7 +10,7 @@
       <span x-text="client.name"></span>
     </div>
     <div class="options">
-      <a class="white form button" href="#/client-list">Back</a>
+      <a class="white form button" href="javascript:history.back()">Back</a>
       <a class="yellow form button" :href="'#/client-form/' + client.id">Edit</a>
       <a class="red form button" @click="remove()">Delete</a>
     </div>

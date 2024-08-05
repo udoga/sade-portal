@@ -37,7 +37,7 @@ class FormComponent {
     }
 
     notifySuccess = function () {
-        this.quit();
+        this.router.route("#/" + this.name + "-list");
         this.notifier.notifyLater(new Notification("success", "Successfully saved."));
     }
 
@@ -51,9 +51,5 @@ class FormComponent {
 
     update = function () {
         this.api.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
-    }
-
-    quit = function () {
-        this.router.route("#/" + this.name + "-list");
     }
 }
