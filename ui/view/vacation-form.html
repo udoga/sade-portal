@@ -1,9 +1,15 @@
-<div x-data="new VacationFormComponent(router, vacationApi, notifier)" x-init="loadAll(vacationCategoryApi)">
+<div x-data="new VacationFormComponent(router, vacationApi, notifier)"
+     x-init="loadAll(employeeApi, vacationCategoryApi)">
   <h2>Vacation Form</h2>
   <form>
     <div class="field">
-      <label>Employee Id</label>
-      <input type="text" placeholder="Employee Id" x-model="vacation.employeeId">
+      <label>Employee</label>
+      <select x-model="vacation.employeeId">
+        <option value="" disabled selected>Select Employee</option>
+        <template x-for="e in employees" :key="e.id">
+          <option :value="e.id" x-text="getFullName(e)" :selected="vacation.employeeId === e.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
       <label>Category</label>
