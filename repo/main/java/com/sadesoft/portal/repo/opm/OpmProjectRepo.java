@@ -11,9 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.Random;
 
 public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     public OpmProjectRepo(Connection connection) {
@@ -108,7 +110,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         setId(s, i++, o.clientId);
         s.setNull(i++, java.sql.Types.VARCHAR); // client_sales_responsible
         s.setNull(i++, java.sql.Types.VARCHAR); // client_sponsor
-        s.setString(i++, o.clientId); // code
+        s.setString(i++, "P" + getRandomCode()); //code
         s.setNull(i++, java.sql.Types.NUMERIC); // commercial_product_expense
         s.setNull(i++, java.sql.Types.NUMERIC); // commercial_service_expense
         s.setNull(i++, java.sql.Types.BIGINT); // contract_client_id
@@ -205,5 +207,9 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
             "p.*, c.name client_name",
             "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",
             id.isEmpty()? "" : (" p.id = " + id));
+    }
+
+    private String getRandomCode() {
+        return (LocalDate.now().getYear() % 100) + String.format("%05d", new Random().nextInt(100000));
     }
 }
