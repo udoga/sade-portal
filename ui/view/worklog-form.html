@@ -1,33 +1,49 @@
-<div x-data="new WorklogFormComponent(router, worklogApi, notifier)" x-init="load()">
+<div x-data="new WorklogFormComponent(router, worklogApi, notifier)"
+     x-init="loadAll(projectApi, employeeApi, activityApi)">
   <h2>Worklog Form</h2>
   <form>
     <div class="field">
-        <label>Project Id</label>
-        <input type="text" placeholder="Project Id" x-model="worklog.projectId"/>
+      <label>Project</label>
+      <select x-model="worklog.projectId">
+        <option value="" disabled selected>Select Project</option>
+        <template x-for="p in projects" :key="p.id">
+          <option :value="p.id" x-text="p.name" :selected="worklog.projectId === p.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
-        <label>Employee Id</label>
-        <input type="text" placeholder="Employee Id" x-model="worklog.employeeId"/>
+      <label>Employee</label>
+      <select x-model="worklog.employeeId">
+        <option value="" disabled selected>Select Employee</option>
+        <template x-for="e in employees" :key="e.id">
+          <option :value="e.id" x-text="getFullName(e)" :selected="worklog.employeeId === e.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
-        <label>Activity Id</label>
-        <input type="text" placeholder="Activity Id" x-model="worklog.activityId"/>
-      </div>
-    <div class="field">
-        <label>Work Date</label>
-        <input type="date" placeholder="Work Date" x-model="worklog.workDate"/>
+      <label>Activity</label>
+      <select x-model="worklog.activityId">
+        <option value="" disabled selected>Select Activity</option>
+        <template x-for="a in activities" :key="a.id">
+          <option :value="a.id" x-text="a.name" :selected="worklog.activityId === a.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
-        <label>Duration</label>
-        <input type="text" placeholder="Duration" x-model="worklog.duration"/>
+      <label>Work Date</label>
+      <input type="date" placeholder="Work Date" x-model="worklog.workDate" />
     </div>
     <div class="field">
-        <label>Status</label>
-        <input type="text" placeholder="Status" x-model="worklog.status"/>
+      <label>Duration</label>
+      <input type="text" placeholder="Duration" x-model="worklog.duration" />
     </div>
     <div class="field">
-        <label>Description</label>
-        <textarea placeholder="Description" x-model="worklog.description"></textarea>
+      <label>Status</label>
+      <input type="text" placeholder="Status" x-model="worklog.status" />
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea placeholder="Description" x-model="worklog.description"></textarea>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>
