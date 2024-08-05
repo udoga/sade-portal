@@ -1,19 +1,24 @@
-<div x-data="new ProjectFormComponent(router, projectApi, notifier)" x-init="load()">
+<div x-data="new ProjectFormComponent(router, projectApi, notifier)" x-init="loadAll(clientApi)">
   <h2>Project Form</h2>
   <form>
     <div class="field">
-      <label>Client Id</label>
-      <input type="text" placeholder="Client Id" x-model="project.clientId"/>
-      </div>
-      <div class="field">
-          <label>Name</label>
-          <input type="text" placeholder="Name" x-model="project.name"/>
-      </div>
-      <div class="field">
-          <label>Description</label>
-          <input type="text" placeholder="Description" x-model="project.description"/>
-      </div>
-      <div class="options">
+      <label>Client</label>
+      <select x-model="project.clientId">
+        <option value="" disabled selected>Select Client</option>
+        <template x-for="c in clients" :key="c.id">
+          <option :value="c.id" x-text="c.name" :selected="project.clientId === c.id"></option>
+        </template>
+      </select>
+    </div>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" placeholder="Name" x-model="project.name" />
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <input type="text" placeholder="Description" x-model="project.description" />
+    </div>
+    <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>
       <a class="green form button" @click="save()">Save</a>
     </div>
