@@ -1,14 +1,14 @@
-<div x-data="new EmployeeFormComponent(router, employeeApi, notifier, userApi)" x-init="load()">
+<div x-data="new EmployeeFormComponent(router, employeeApi, notifier)" x-init="loadAll(userApi)">
   <h2>Employee Form</h2>
   <form>
     <div class="field">
       <label>User</label>
-      <input type="text" x-model="username" placeholder="Username" class="dropdown-input"/>
-      <div class="dropdown-menu">
-        <template x-for="user in getFilteredUsers(username)">
-          <div class="dropdown-item" x-text="user.username" @click="username = user.username"></div>
+      <select x-model="employee.userId">
+        <option value="" disabled selected>Select User</option>
+        <template x-for="u in users" :key="u.id">
+          <option :value="u.id" x-text="u.username" :selected="employee.userId === u.id"></option>
         </template>
-      </div>
+      </select>
     </div>
     <div class="field">
       <label>First Name</label>
@@ -20,7 +20,7 @@
     </div>
     <div class="options">
       <a class="white form button" @click="quit()">Back</a>
-      <a class="green form button" @click="saveEmployee()">Save</a>
+      <a class="green form button" @click="save()">Save</a>
     </div>
   </form>
 </div>

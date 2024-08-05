@@ -415,30 +415,3 @@ a.button.light-blue:active {
   text-align: center;
   color: gray;
 }
-
-.dropdown-input {
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid var(--main-border-color);
-}
-
-.dropdown-menu {
-    position: absolute;
-    width: 50%;
-    background-color: var(--navigation-background-color);
-    margin-top: 4px;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.dropdown-item {
-    padding: 8px;
-    cursor: pointer;
-    color: var(--navigation-font-color);
-}
-
-.dropdown-item:hover {
-    background-color: var(--navigation-hover-color);
-}
