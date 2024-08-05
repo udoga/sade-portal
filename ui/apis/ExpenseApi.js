@@ -6,4 +6,8 @@ class ExpenseApi extends RestApi {
     listDetailed = function () {
         return this.list("detailed");
     }
+
+    readDetailed = function (id) {
+        return this.read(id, "detailed/");
+    }
 }

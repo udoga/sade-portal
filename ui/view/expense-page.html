@@ -1,4 +1,4 @@
-<div x-data="new ExpensePageComponent(router, expenseApi, notifier, receiptApi, employeeApi)" x-init="load()">
+<div x-data="new ExpensePageComponent(router, expenseApi, notifier, receiptApi)" x-init="loadDetailed()">
   <h2>Expense</h2>
   <div>
     <div class="field">
@@ -6,8 +6,8 @@
       <span x-text="expense.id"></span>
     </div>
     <div class="field">
-      <label>Employee Id:</label>
-      <span x-text="expense.employeeId"></span>
+      <label>Employee:</label>
+      <span x-text="getFullName(expense.employee)"></span>
     </div>
     <div class="field">
       <label>Form Date:</label>
@@ -60,16 +60,18 @@
             </template>
           </table>
         </div>
-        <div x-show="isSelectedTab('employee')">
-          <div class="field">
-            <label>Employee Id:</label>
-            <span x-text="employee.id"></span>
+        <template x-if="expense.employee">
+          <div x-show="isSelectedTab('employee')">
+            <div class="field">
+              <label>Employee Id:</label>
+              <span x-text="expense.employee.id"></span>
+            </div>
+            <div class="last field">
+              <label>Employee Name:</label>
+              <span x-text="getFullName(expense.employee)"></span>
+            </div>
           </div>
-          <div class="last field">
-            <label>Employee Name:</label>
-            <span x-text="employee.firstName + ' ' + employee.lastName"></span>
-          </div>
-        </div>
+        </template>
       </div>
     </div>
     <div class="options">

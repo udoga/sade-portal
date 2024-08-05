@@ -16,8 +16,8 @@ class RestApi extends HttpClient {
         return this.getJson(this.post(this.url, { headers: this.getHeaders(), body: JSON.stringify(data) }));
     }
 
-    read = function (id) {
-        return this.getJson(this.get(this.url + id, { headers: this.getHeaders() }));
+    read = function (id, appendedUrl = "") {
+        return this.getJson(this.get(this.url + appendedUrl + id, { headers: this.getHeaders() }));
     }
 
     update = function (id, data) {

@@ -17,6 +17,10 @@ class PageComponent {
         this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
     }
 
+    loadDetailed = function () {
+        this.api.readDetailed(this.router.getId()).then(json => this.handleLoadResponse(json));
+    }
+
     remove = function () {
         if (confirm("Are you sure?"))
             this.api.delete(this.record.id).then(json => this.handleRemoveResponse(json));
