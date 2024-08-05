@@ -1,4 +1,4 @@
-<div x-data="new WorklogPageComponent(router, worklogApi, notifier, projectApi, employeeApi)" x-init="load()">
+<div x-data="new WorklogPageComponent(router, worklogApi, notifier)" x-init="loadDetailed()">
   <h2>Worklog</h2>
   <div>
     <div class="field">
@@ -42,25 +42,25 @@
         <div x-show="isSelectedTab('project')">
           <div class="field">
             <label>Project Id:</label>
-            <span x-text="project.id"></span>
+            <span x-text="getProject().id"></span>
           </div>
           <div class="field">
             <label>Project Name:</label>
-            <span x-text="project.name"></span>
+            <span x-text="getProject().name"></span>
           </div>
           <div class="last field">
             <label>Project Description:</label>
-            <span x-text="project.description"></span>
+            <span x-text="getProject().description"></span>
           </div>
         </div>
         <div x-show="isSelectedTab('employee')">
           <div class="field">
             <label>Employee Id:</label>
-            <span x-text="employee.id"></span>
+            <span x-text="getEmployee().id"></span>
           </div>
           <div class="last field">
             <label>Employee Name:</label>
-            <span x-text="employee.firstName + ' ' + employee.lastName"></span>
+            <span x-text="getEmployee().firstName + ' ' + getEmployee().lastName"></span>
           </div>
         </div>
       </div>

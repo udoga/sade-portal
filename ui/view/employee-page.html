@@ -1,4 +1,4 @@
-<div x-data="new EmployeePageComponent(router, employeeApi, notifier, userApi)" x-init="load()">
+<div x-data="new EmployeePageComponent(router, employeeApi, notifier)" x-init="loadDetailed()">
   <h2>Employee</h2>
   <div>
     <div class="field">
@@ -25,11 +25,11 @@
         <div x-show="isSelectedTab('user')">
           <div class="field">
             <label>User Id:</label>
-            <span x-text="user.id"></span>
+            <span x-text="getUser().id"></span>
           </div>
           <div class="last field">
             <label>Username:</label>
-            <span x-text="user.username"></span>
+            <span x-text="getUser().username"></span>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-<div x-data="new ProjectPageComponent(router, projectApi, notifier, clientApi)" x-init="load()">
+<div x-data="new ProjectPageComponent(router, projectApi, notifier)" x-init="loadDetailed()">
   <h2>Project</h2>
   <div>
     <div class="field">
@@ -25,11 +25,11 @@
         <div x-show="isSelectedTab('client')">
           <div class="field">
             <label>Client Id:</label>
-            <span x-text="client.id"></span>
+            <span x-text="getClient().id"></span>
           </div>
           <div class="last field">
             <label>Client Name:</label>
-            <span x-text="client.name"></span>
+            <span x-text="getClient().name"></span>
           </div>
         </div>
       </div>

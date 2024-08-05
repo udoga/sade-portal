@@ -60,18 +60,16 @@
             </template>
           </table>
         </div>
-        <template x-if="expense.employee">
-          <div x-show="isSelectedTab('employee')">
-            <div class="field">
-              <label>Employee Id:</label>
-              <span x-text="expense.employee.id"></span>
-            </div>
-            <div class="last field">
-              <label>Employee Name:</label>
-              <span x-text="getFullName(expense.employee)"></span>
-            </div>
+        <div x-show="isSelectedTab('employee')">
+          <div class="field">
+            <label>Employee Id:</label>
+            <span x-text="getEmployee().id"></span>
           </div>
-        </template>
+          <div class="last field">
+            <label>Employee Name:</label>
+            <span x-text="getEmployee().firstName + ' ' + getEmployee().lastName"></span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="options">

@@ -1,4 +1,4 @@
-<div x-data="new VacationPageComponent(router, vacationApi, notifier, employeeApi)" x-init="load()">
+<div x-data="new VacationPageComponent(router, vacationApi, notifier)" x-init="loadDetailed()">
   <h2>Vacation</h2>
   <div>
     <div class="field">
@@ -41,11 +41,11 @@
         <div x-show="isSelectedTab('employee')">
           <div class="field">
             <label>Employee Id:</label>
-            <span x-text="employee.id"></span>
+            <span x-text="getEmployee().id"></span>
           </div>
           <div class="last field">
             <label>Employee Name:</label>
-            <span x-text="employee.firstName + ' ' + employee.lastName"></span>
+            <span x-text="getEmployee().firstName + ' ' + getEmployee().lastName"></span>
           </div>
         </div>
       </div>

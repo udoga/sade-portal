@@ -1,9 +1,9 @@
 class UserPageComponent extends PageComponent {
     user = this.record;
-    assignments = [];
-    employee = {};
     employeeApi = null;
     assignmentApi = null;
+    employee = {};
+    assignments = [];
 
     constructor(router, api, notifier, employeeApi, assignmentApi) {
         super(router, api, notifier, "user");
