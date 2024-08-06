@@ -260,9 +260,18 @@ form .field label {
   padding: 8px;
 }
 
+.field select {
+  padding: 4px;
+  border-radius: 4px;
+}
+
 .options {
   text-align: center;
   margin-top: 20px;
+}
+
+.centered {
+  text-align: center;
 }
 
 a.button {
@@ -278,9 +287,8 @@ a.button.form {
   margin: 0px 2px 0px 2px;
 }
 
-a.button.query {
-  font-size: 13px;
-  padding: 5px 10px 5px 10px;
+a.button.form i {
+  padding-right: 10px;
 }
 
 a.button.header {
@@ -427,9 +435,9 @@ a.button.light-blue:active {
 }
 
 .query-panel {
-  background: #fff9cf;
+  background: #fffaeb;
   border: 1px solid #f2e79b;
   border-radius: 5px;
   margin-bottom: 20px;
-  padding: 15px;
+  padding: 10px;
 }
