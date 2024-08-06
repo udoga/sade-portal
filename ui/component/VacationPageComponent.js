@@ -1,8 +1,10 @@
 class VacationPageComponent extends PageComponent {
     vacation = this.record;
+    formatter = null;
 
-    constructor(router, api, notifier) {
+    constructor(router, api, notifier, formatter) {
         super(router, api, notifier, "vacation");
+        this.formatter = formatter;
     }
 
     afterLoad = function () {

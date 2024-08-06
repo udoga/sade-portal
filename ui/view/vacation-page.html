@@ -1,4 +1,4 @@
-<div x-data="new VacationPageComponent(router, vacationApi, notifier)" x-init="loadDetailed()">
+<div x-data="new VacationPageComponent(router, vacationApi, notifier, formatter)" x-init="loadDetailed()">
   <h2>Vacation</h2>
   <div>
     <div class="field">
@@ -15,11 +15,11 @@
     </div>
     <div class="field">
       <label>Start Time:</label>
-      <span x-text="vacation.startTime"></span>
+      <span x-text="formatter.formatTime(vacation.startTime)"></span>
     </div>
     <div class="field">
       <label>End Time:</label>
-      <span x-text="vacation.endTime"></span>
+      <span x-text="formatter.formatTime(vacation.endTime)"></span>
     </div>
     <div class="field">
       <label>Day Count:</label>

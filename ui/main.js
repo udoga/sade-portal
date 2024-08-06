@@ -1,5 +1,6 @@
-var notifier = new Notifier();
+var formatter = new Formatter();
 var httpClient = new HttpClient();
+var notifier = new Notifier();
 var router = new Router(notifier, httpClient);
 
 var userApi = new UserApi();
