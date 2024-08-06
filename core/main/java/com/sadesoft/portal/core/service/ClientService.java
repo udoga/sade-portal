@@ -16,6 +16,10 @@ public class ClientService {
         return repo.list();
     }
 
+    public List<Client> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public Client read(String id) {
         return repo.read(id);
     }

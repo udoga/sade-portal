@@ -34,4 +34,14 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
         setId(s, i++, o.sectorId);
         if (o.id != null) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Client> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
+    }
+
+    private Client toSummarizedClient(ResultSet s) throws SQLException {
+        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

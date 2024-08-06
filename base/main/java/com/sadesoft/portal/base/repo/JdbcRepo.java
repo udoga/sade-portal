@@ -137,11 +137,15 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected String createQuerySql(String selectSql, String fromSql, String whereSql) {
+        return createQuerySql(selectSql, fromSql, whereSql, getIdName(), "100");
+    }
+
+    protected String createQuerySql(String selectSql, String fromSql, String whereSql, String orderBy, String limit) {
         return "select " + (selectSql.isEmpty()? repeat("%1$s", columns) : selectSql) +
                 " from " + (fromSql.isEmpty()? tableName : fromSql) +
                 (whereSql.isEmpty()? "" : (" where " + whereSql)) +
-                " order by " + getIdName() +
-                " limit 100 ";
+                (orderBy.isEmpty()? "" : (" order by " + orderBy)) +
+                (limit.isEmpty()? "" : (" limit " + limit));
     }
 
     protected String createInsertSql() {

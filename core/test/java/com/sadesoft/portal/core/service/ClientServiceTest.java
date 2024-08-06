@@ -17,7 +17,7 @@ public class ClientServiceTest {
     public void setup() {
         repo = new MockClientRepo();
         service = new ClientService(repo);
-        validClient = new Client(null, "Sample Firm", null);
+        validClient = new Client(null, "0", "Sample Firm");
     }
 
     @Test
@@ -39,6 +39,12 @@ public class ClientServiceTest {
         public void listsClients() {
             assertEquals(1, service.list().size());
             assertEquals(validClient.withId("0"), service.list().get(0));
+        }
+
+        @Test
+        public void listSummarizedClients() {
+            assertEquals(1, service.listSummarized().size());
+            assertEquals(null, service.listSummarized().get(0).sectorId);
         }
 
         @Test

@@ -32,6 +32,10 @@ class RestApi extends HttpClient {
         return this.list("detailed", params);
     }
 
+    listSummarized = function (params = {}) {
+        return this.list("summarized", params);
+    }
+
     readDetailed = function (id) {
         return this.read(id, "detailed/");
     }

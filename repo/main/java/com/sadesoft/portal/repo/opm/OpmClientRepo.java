@@ -51,4 +51,14 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Client> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
+    }
+
+    private Client toSummarizedClient(ResultSet s) throws SQLException {
+        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }
