@@ -94,14 +94,17 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     private DetailedWorklog toDetailedWorklog(ResultSet s) throws SQLException {
         return new DetailedWorklog(
                 toObject(s),
-                new Project(getId(s, "project_id"), null, s.getString("project_name"), s.getString("description")),
+                new Project(getId(s, "project_id"), null, s.getString("project_name"),
+                        s.getString("project_description")),
                 new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
     private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
-            "w.*, p.name project_name, p.description, a.name activity_name, e.name first_name, e.surname last_name",
+            "w.*, p.name project_name, p.description project_description, " +
+                 "a.name activity_name," +
+                 "e.name first_name, e.surname last_name",
             "opm_ps_project_work_log w " +
                 "JOIN opm_ps_project p ON w.project_id = p.id " +
                 "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
