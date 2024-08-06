@@ -1,13 +1,18 @@
-<div x-data="new ExpenseFormComponent(router, expenseApi, notifier)" x-init="load()">
+<div x-data="new ExpenseFormComponent(router, expenseApi, notifier)" x-init="loadAll(employeeApi)">
   <h2>Expense Form</h2>
   <form>
     <div class="field">
-      <label>Employee Id</label>
-      <input type="text" placeholder="Employee Id" x-model="expense.employeeId"/>
+      <label>Employee</label>
+      <select x-model="expense.employeeId">
+        <option value="" disabled selected>Select Employee</option>
+        <template x-for="e in employees" :key="e.id">
+          <option :value="e.id" x-text="getFullName(e)" :selected="expense.employeeId === e.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
       <label>Form Date</label>
-      <input type="date" placeholder="Form Date" x-model="expense.formDate"/>
+      <input type="date" placeholder="Form Date" x-model="expense.formDate" />
     </div>
     <div class="field">
       <label>Description</label>
@@ -15,7 +20,7 @@
     </div>
     <div class="field">
       <label>Status</label>
-      <input list="status" placeholder="Status" x-model="expense.status"/>
+      <input list="status" placeholder="Status" x-model="expense.status" />
       <datalist id="status">
         <option value="Approved">
         <option value="Rejected">

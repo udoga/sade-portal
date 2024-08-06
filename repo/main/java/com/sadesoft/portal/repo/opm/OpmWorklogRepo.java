@@ -103,7 +103,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "w.*, p.name project_name, p.description project_description, " +
-                 "a.name activity_name," +
+                 "a.name activity_name, " +
                  "e.name first_name, e.surname last_name",
             "opm_ps_project_work_log w " +
                 "JOIN opm_ps_project p ON w.project_id = p.id " +
