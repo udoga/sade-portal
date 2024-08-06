@@ -85,4 +85,8 @@ public class Project implements Record {
         project.description = description;
         return project;
     }
+
+    public boolean matches(String clientId) {
+        return clientId == null || this.clientId.equals(clientId);
+    }
 }

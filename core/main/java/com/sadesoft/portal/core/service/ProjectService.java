@@ -17,8 +17,12 @@ public class ProjectService {
         return repo.list();
     }
 
-    public List<DetailedProject> listDetailed() {
-        return repo.listDetailed();
+    public List<Project> listBy(String clientId) {
+        return repo.listBy(clientId);
+    }
+
+    public List<DetailedProject> listDetailedBy(String clientId) {
+        return repo.listDetailedBy(clientId);
     }
 
     public Project read(String id) {

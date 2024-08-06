@@ -9,8 +9,8 @@ import io.javalin.http.HandlerType;
 public class ProjectController extends RestController {
     public ProjectController(ProjectService service) {
         super("/projects");
-        add(HandlerType.GET, "", c -> send(c, service.list()));
-        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailed()));
+        add(HandlerType.GET, "", c -> send(c, service.listBy(getClientId(c))));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getClientId(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getProject(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
@@ -20,5 +20,9 @@ public class ProjectController extends RestController {
 
     private Project getProject(Context c) {
         return c.bodyAsClass(Project.class);
+    }
+
+    private String getClientId(Context c) {
+        return c.queryParam("clientId");
     }
 }

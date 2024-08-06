@@ -43,10 +43,25 @@ public class ProjectServiceTest {
         }
 
         @Test
-        public void listsProjectsWithClient() {
+        public void listsProjectsByClientId() {
             clientRepo.create(new Client(null, "Sample Client", null));
-            assertEquals(1, service.listDetailed().size());
-            assertEquals(projectRepo.listDetailed(), service.listDetailed());
+            assertEquals(1, service.listBy("0").size());
+            assertEquals(0, service.listBy("1").size());
+        }
+
+        @Test
+        public void listsDetailedProjects() {
+            clientRepo.create(new Client(null, "Sample Client", null));
+            assertEquals(1, service.listDetailedBy(null).size());
+            assertEquals(projectRepo.listDetailedBy(null), service.listDetailedBy(null));
+        }
+
+        @Test
+        public void listsDetailedProjectsByClientId() {
+            clientRepo.create(new Client(null, "Sample Client", null));
+            assertEquals(1, service.listDetailedBy("0").size());
+            assertEquals(clientRepo.read("0"), service.listDetailedBy("0").get(0).client);
+            assertEquals(0, service.listDetailedBy("1").size());
         }
 
         @Test

@@ -181,14 +181,19 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<DetailedProject> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<Project> listBy(String clientId) {
+        return call(() -> query(createStatement(createQuerySql(tableName + " p", "", createWhereSql(clientId)))));
+    }
+
+    @Override
+    public List<DetailedProject> listDetailedBy(String clientId) {
+        String sql = createDetailedQuerySql(createWhereSql(clientId));
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
     @Override
     public DetailedProject readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("p.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
     }
 
@@ -198,18 +203,18 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
             new Client(getId(s, "client_id"), null, s.getString("client_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "p.*, c.name client_name",
             "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",
-            id.isEmpty()? "" : (" p.id = " + id));
+            whereSql);
     }
 
     private String getRandomCode() {
         return (LocalDate.now().getYear() % 100) + String.format("%05d", new Random().nextInt(100000));
+    }
+
+    private String createWhereSql(String clientId) {
+        return (clientId == null)? "" : ("p.client_id = " + clientId);
     }
 }

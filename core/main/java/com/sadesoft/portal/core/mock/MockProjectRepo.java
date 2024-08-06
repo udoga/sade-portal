@@ -18,8 +18,13 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<DetailedProject> listDetailed() {
-        return records.stream().map(p -> new DetailedProject(p, getClient(p.clientId))).toList();
+    public List<Project> listBy(String clientId) {
+        return records.stream().filter(p -> p.matches(clientId)).toList();
+    }
+
+    @Override
+    public List<DetailedProject> listDetailedBy(String clientId) {
+        return listBy(clientId).stream().map(p -> new DetailedProject(p, getClient(p.clientId))).toList();
     }
 
     @Override
