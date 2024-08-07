@@ -6,8 +6,8 @@
       <span x-text="employee.id"></span>
     </div>
     <div class="field">
-      <label>User Id:</label>
-      <span x-text="employee.userId"></span>
+      <label>User:</label>
+      <a class="blue" x-text="getUser().username" :href="'#/user-page/' + employee.userId"></a>
     </div>
     <div class="field">
       <label>First Name:</label>

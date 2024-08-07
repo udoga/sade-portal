@@ -6,8 +6,8 @@
       <span x-text="project.id"></span>
     </div>
     <div class="field">
-      <label>Client Id:</label>
-      <span x-text="project.clientId"></span>
+      <label>Client:</label>
+      <a class="blue" x-text="getClient().name" :href="'#/client-page/' + project.clientId"></a>
     </div>
     <div class="field">
       <label>Name:</label>

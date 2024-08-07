@@ -6,16 +6,16 @@
       <span x-text="worklog.id"></span>
     </div>
     <div class="field">
-      <label>Project Id:</label>
-      <span x-text="worklog.projectId"></span>
+      <label>Project:</label>
+      <a class="blue" x-text="getProject().name" :href="'#/project-page/' + worklog.projectId"></a>
     </div>
     <div class="field">
-      <label>Employee Id:</label>
-      <span x-text="worklog.employeeId"></span>
+      <label>Employee:</label>
+      <a class="blue" x-text="getEmployeeName()" :href="'#/employee-page/' + worklog.employeeId"></a>
     </div>
     <div class="field">
-      <label>Activity Id:</label>
-      <span x-text="worklog.activityId"></span>
+      <label>Activity:</label>
+      <span x-text="getActivity().name"></span>
     </div>
     <div class="field">
       <label>Work Date:</label>

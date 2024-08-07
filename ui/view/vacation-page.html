@@ -6,12 +6,12 @@
       <span x-text="vacation.id"></span>
     </div>
     <div class="field">
-      <label>Employee Id:</label>
-      <span x-text="vacation.employeeId"></span>
+      <label>Employee:</label>
+      <a class="blue" x-text="getEmployeeName()" :href="'#/employee-page/' + vacation.employeeId"></a>
     </div>
     <div class="field">
-      <label>Category Id:</label>
-      <span x-text="vacation.categoryId"></span>
+      <label>Category:</label>
+      <span x-text="getCategory().name"></span>
     </div>
     <div class="field">
       <label>Start Time:</label>
