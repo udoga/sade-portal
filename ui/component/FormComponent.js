@@ -32,7 +32,7 @@ class FormComponent {
     }
 
     notifySuccess = function () {
-        this.router.route("#/" + this.name + "-list");
+        history.back();
         this.notifier.notifyLater(new Notification("success", "Successfully saved."));
     }
 
