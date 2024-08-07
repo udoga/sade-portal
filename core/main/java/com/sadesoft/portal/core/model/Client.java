@@ -9,13 +9,19 @@ public class Client implements Record {
     public String sectorId;
     public String name;
 
+    public Client(){}
+
     public Client(String id, String sectorId, String name) {
         this.id = id;
         this.sectorId = sectorId;
         this.name = name;
     }
 
-    public Client(){}
+    public Client(Client c) {
+        this.id = c.id;
+        this.sectorId = c.sectorId;
+        this.name = c.name;
+    }
 
     @Override
     public boolean equals(Object o) {

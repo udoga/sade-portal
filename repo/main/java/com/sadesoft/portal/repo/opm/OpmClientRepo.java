@@ -2,7 +2,9 @@ package com.sadesoft.portal.repo.opm;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.detailed.DetailedClient;
 import com.sadesoft.portal.core.model.Client;
+import com.sadesoft.portal.core.model.Sector;
 import com.sadesoft.portal.core.repo.ClientRepo;
 
 import java.sql.Connection;
@@ -60,5 +62,33 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     private Client toSummarizedClient(ResultSet s) throws SQLException {
         return new Client().withId(getId(s, "id")).withName(s.getString("name"));
+    }
+
+    public List<DetailedClient> listDetailed() {
+        String sql = createDetailedQuerySql();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
+    }
+
+    @Override
+    public DetailedClient readDetailed(String id) {
+        String sql = createDetailedQuerySqlWithId(id);
+        return call(() -> queryFor(createStatement(sql), this::toDetailedClient)).get(0);
+    }
+
+    public DetailedClient toDetailedClient(ResultSet s) throws SQLException {
+        return new DetailedClient(
+            toObject(s),
+            new Sector(getId(s, "sector"), s.getString("sector_name")));
+    }
+
+    private String createDetailedQuerySql() {
+        return createDetailedQuerySqlWithId("");
+    }
+
+    private String createDetailedQuerySqlWithId(String id) {
+        return createQuerySql(
+            "c.*, s.name sector_name",
+            "opm_ps_client c JOIN opm_ps_client_sector s ON c.sector = s.id",
+            id.isEmpty()? "" : (" c.id = " + id));
     }
 }

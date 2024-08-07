@@ -1,7 +1,10 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.mock.MockClientRepo;
+import com.sadesoft.portal.core.mock.MockSectorRepo;
 import com.sadesoft.portal.core.model.Client;
+import com.sadesoft.portal.core.model.Sector;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,14 +12,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ClientServiceTest {
-    private MockClientRepo repo;
+    private MockClientRepo clientRepo;
+    private MockSectorRepo sectorRepo;
     private ClientService service;
     private Client validClient;
 
     @BeforeEach
     public void setup() {
-        repo = new MockClientRepo();
-        service = new ClientService(repo);
+        sectorRepo = new MockSectorRepo();
+        clientRepo = new MockClientRepo(sectorRepo);
+        service = new ClientService(clientRepo);
         validClient = new Client(null, "0", "Sample Firm");
     }
 
@@ -24,21 +29,27 @@ public class ClientServiceTest {
     public void createsClient() {
         Client client = service.create(validClient);
         assertEquals(validClient.withId("0"), client);
-        assertEquals(1, repo.list().size());
-        assertEquals(client, repo.read("0"));
+        assertEquals(1, clientRepo.list().size());
+        assertEquals(client, clientRepo.read("0"));
     }
 
     @Nested
     public class GivenServiceWithOneClient {
         @BeforeEach
         public void setup() {
-            repo.create(validClient);
+            clientRepo.create(validClient);
         }
 
         @Test
         public void listsClients() {
             assertEquals(1, service.list().size());
             assertEquals(validClient.withId("0"), service.list().get(0));
+        }
+
+        @Test
+        public void listsDetailedClients() {
+            sectorRepo.create(new Sector(null, "Sample"));
+            assertEquals(clientRepo.listDetailed(), service.listDetailed());
         }
 
         @Test
@@ -50,6 +61,12 @@ public class ClientServiceTest {
         @Test
         public void readsClients() {
             assertEquals(validClient.withId("0"), service.read("0"));
+        }
+
+        @Test
+        public void readsDetailedClient() {
+            sectorRepo.create(new Sector(null, "Sample"));
+            assertEquals(clientRepo.readDetailed("0"), service.readDetailed("0"));
         }
 
         @Test

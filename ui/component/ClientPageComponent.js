@@ -4,4 +4,8 @@ class ClientPageComponent extends PageComponent {
     constructor(router, api, notifier) {
         super(router, api, notifier, "client");
     }
+
+    getSector = function () {
+        return this.client.sector ? this.client.sector : {};
+    }
 }

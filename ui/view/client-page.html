@@ -1,4 +1,4 @@
-<div x-data="new ClientPageComponent(router, clientApi, notifier)" x-init="load()">
+<div x-data="new ClientPageComponent(router, clientApi, notifier)" x-init="loadDetailed()">
   <h2>Client</h2>
   <div>
     <div class="field">
@@ -8,6 +8,10 @@
     <div class="field">
       <label>Name:</label>
       <span x-text="client.name"></span>
+    </div>
+    <div class="field">
+      <label>Sector:</label>
+      <span x-text="getSector().name"></span>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

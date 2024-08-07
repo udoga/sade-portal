@@ -19,7 +19,7 @@ public class ProjectServiceTest {
 
     @BeforeEach
     public void setup() {
-        clientRepo = new MockClientRepo();
+        clientRepo = new MockClientRepo(null);
         projectRepo = new MockProjectRepo(clientRepo);
         service = new ProjectService(projectRepo);
         validProject = new Project(

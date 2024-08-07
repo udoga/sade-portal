@@ -11,8 +11,10 @@ public class ClientController extends RestController {
         super("/clients");
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.GET, "/summarized", c -> send(c, service.listSummarized()));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailed()));
         add(HandlerType.POST, "", c -> send(c, service.create(getClient(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
+        add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
         add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getClient(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
     }

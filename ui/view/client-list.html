@@ -4,6 +4,7 @@
     <tr>
       <th class="narrow">Id</th>
       <th>Name</th>
+      <th>Sector</th>
       <th class="narrow last">
         <a class="green header icon button" href="#/client-form"><i class="fas fa-plus"></i> New</a>
       </th>
@@ -12,6 +13,7 @@
       <tr>
         <td x-text="client.id" class="narrow"></td>
         <td x-text="client.name"></td>
+        <td x-text="client.sector.name"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/client-page/' + client.id">
             <i class="far fa-eye"></i>
