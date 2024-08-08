@@ -8,6 +8,7 @@ class ProjectFormComponent extends FormComponent {
 
     loadAll = function (clientApi) {
         this.load();
-        clientApi.list().then(json => json.data? Object.assign(this.clients, json.data) : this.notifyError(json));
+        clientApi.listSummarized()
+            .then(json => json.data? Object.assign(this.clients, json.data) : this.notifyError(json));
     }
 }
