@@ -5,15 +5,12 @@ class WorklogListComponent extends ListComponent {
         super(router, api, notifier, "worklogs");
     }
 
-    load = function () {
-        this.api.listDetailedBy(this.getFilters()).then(json => this.handleLoadResponse(json));
+    loadMore = function () {
+        this.query.afterId = this.worklogs.slice(-1)[0].id;
+        this.load("detailed");
     }
 
-    getFilters = function () {
-        return this.worklogs.length ? { afterId: this.worklogs.slice(-1)[0].id } : {};
-    }
-
-    hasMore = function() {
+    hasMore = function () {
         return this.worklogs.length % 100 == 0;
     }
 }

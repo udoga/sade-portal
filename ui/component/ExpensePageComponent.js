@@ -14,7 +14,7 @@ class ExpensePageComponent extends PageComponent {
     }
 
     loadReceipts = function () {
-        this.receiptApi.listByExpenseId(this.router.getId())
+        this.receiptApi.list("", { expenseId: this.router.getId() })
             .then(json => json.data ? Object.assign(this.receipts, json.data) : this.notifyError(json));
     }
 

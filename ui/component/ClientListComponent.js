@@ -4,8 +4,4 @@ class ClientListComponent extends ListComponent {
     constructor(router, api, notifier) {
         super(router, api, notifier, "clients");
     }
-
-    load = function () {
-        this.api.listDetailed().then(json => this.handleLoadResponse(json));
-    }
 }

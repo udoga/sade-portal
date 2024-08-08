@@ -1,4 +1,4 @@
-<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="load()">
+<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="load('detailed')">
   <h2>Worklogs</h2>
   <table class="records">
     <tr>
@@ -33,6 +33,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" @click="load()" x-show="hasMore()">Load More</a>
+    <a class="white form button" x-show="hasMore()" @click="loadMore()">Load More</a>
   </div>
 </div>

@@ -18,12 +18,12 @@ class UserPageComponent extends PageComponent {
     }
 
     loadAssignments = function () {
-        this.assignmentApi.listDetailedByUserId(this.router.getId())
+        this.assignmentApi.list("detailed", { userId: this.router.getId() })
             .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
     }
 
     loadEmployee = function () {
-        this.employeeApi.listByUserId(this.router.getId())
+        this.employeeApi.list("", { userId: this.router.getId() })
             .then(json => json.data ? Object.assign(this.employee, json.data[0]) : this.notifyError(json));
     }
 

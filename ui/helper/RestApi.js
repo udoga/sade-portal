@@ -28,10 +28,6 @@ class RestApi extends HttpClient {
         return this.getJson(this.delete_(this.url + id, { headers: this.getHeaders() }));
     }
 
-    listDetailed = function (params = {}) {
-        return this.list("detailed", params);
-    }
-
     listSummarized = function (params = {}) {
         return this.list("summarized", params);
     }

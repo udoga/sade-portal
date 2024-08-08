@@ -6,8 +6,4 @@ class VacationListComponent extends ListComponent {
         super(router, api, notifier, "vacations");
         this.formatter = formatter;
     }
-
-    load = function () {
-        this.api.listDetailed().then(json => this.handleLoadResponse(json));
-    }
 }
