@@ -3,7 +3,7 @@
   <form>
     <div class="field">
       <label>User</label>
-      <select x-model="employee.userId">
+      <select class="padded" x-model="employee.userId">
         <option value="" disabled selected>Select User</option>
         <template x-for="u in users" :key="u.id">
           <option :value="u.id" x-text="u.username" :selected="employee.userId === u.id"></option>

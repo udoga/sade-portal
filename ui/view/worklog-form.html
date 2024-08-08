@@ -4,7 +4,7 @@
   <form>
     <div class="field">
       <label>Project</label>
-      <select x-model="worklog.projectId">
+      <select class="padded" x-model="worklog.projectId">
         <option value="" disabled selected>Select Project</option>
         <template x-for="p in projects" :key="p.id">
           <option :value="p.id" x-text="p.name" :selected="worklog.projectId === p.id"></option>
@@ -13,7 +13,7 @@
     </div>
     <div class="field">
       <label>Employee</label>
-      <select x-model="worklog.employeeId">
+      <select class="padded" x-model="worklog.employeeId">
         <option value="" disabled selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
           <option :value="e.id" x-text="getFullName(e)" :selected="worklog.employeeId === e.id"></option>
@@ -22,7 +22,7 @@
     </div>
     <div class="field">
       <label>Activity</label>
-      <select x-model="worklog.activityId">
+      <select class="padded" x-model="worklog.activityId">
         <option value="" disabled selected>Select Activity</option>
         <template x-for="a in activities" :key="a.id">
           <option :value="a.id" x-text="a.name" :selected="worklog.activityId === a.id"></option>

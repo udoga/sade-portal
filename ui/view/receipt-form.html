@@ -11,7 +11,7 @@
     </div>
     <div class="field">
       <label>Category</label>
-      <select x-model="receipt.categoryId">
+      <select class="padded" x-model="receipt.categoryId">
         <option value="" disabled selected>Select Category</option>
         <template x-for="c in categories" :key="c.id">
           <option :value="c.id" x-text="c.name" :selected="receipt.categoryId === c.id"></option>

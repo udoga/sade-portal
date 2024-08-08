@@ -7,7 +7,7 @@
     </div>
     <div class="field">
       <label>Sector</label>
-      <select x-model="client.sectorId">
+      <select class="padded" x-model="client.sectorId">
         <option value="" disabled selected>Select Sector</option>
         <template x-for="sector in sectors" :key="sector.id">
           <option :value="sector.id" x-text="sector.name" :selected="client.sectorId === sector.id"></option>
