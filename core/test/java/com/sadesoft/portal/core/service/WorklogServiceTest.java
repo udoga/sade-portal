@@ -67,6 +67,12 @@ public class WorklogServiceTest {
         }
 
         @Test
+        public void listsByEmployeeId() {
+            assertEquals(1, service.listBy(new WorklogFilter().withEmployeeId("0")).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withEmployeeId("1")).size());
+        }
+
+        @Test
         public void listsDetailedWorklogs() {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());

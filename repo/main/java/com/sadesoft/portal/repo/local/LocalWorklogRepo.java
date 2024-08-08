@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
@@ -92,6 +93,9 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createWhereSql(WorklogFilter f) {
-        return (f.afterId == null)? "" : ("w.id > " + f.afterId);
+        List<String> conditions = new ArrayList<>();
+        if (f.afterId != null) conditions.add("w.id > " + f.afterId);
+        if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
+        return String.join(" and ", conditions);
     }
 }

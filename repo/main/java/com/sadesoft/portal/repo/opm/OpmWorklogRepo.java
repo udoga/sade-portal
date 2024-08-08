@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,7 +78,8 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     @Override
     public List<Worklog> listBy(WorklogFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " w", createWhereSql(filter)))));
+        String sql = createQuerySql("", tableName + " w", createWhereSql(filter));
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
@@ -114,6 +116,9 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     private String createWhereSql(WorklogFilter f) {
-        return (f.afterId == null)? "" : ("w.id > " + f.afterId);
+        List<String> conditions = new ArrayList<>();
+        if (f.afterId != null) conditions.add("w.id > " + f.afterId);
+        if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
+        return String.join(" and ", conditions);
     }
 }

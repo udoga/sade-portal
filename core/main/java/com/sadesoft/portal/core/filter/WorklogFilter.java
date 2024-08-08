@@ -2,12 +2,9 @@ package com.sadesoft.portal.core.filter;
 
 public class WorklogFilter implements Cloneable {
     public String afterId;
+    public String employeeId;
 
     public WorklogFilter() {
-    }
-
-    public WorklogFilter(String afterId) {
-        this.afterId = afterId;
     }
 
     public WorklogFilter copy() {
@@ -21,6 +18,12 @@ public class WorklogFilter implements Cloneable {
     public WorklogFilter withAfterId(String afterId) {
         WorklogFilter filter = copy();
         filter.afterId = afterId;
+        return filter;
+    }
+
+    public WorklogFilter withEmployeeId(String employeeId) {
+        WorklogFilter filter = copy();
+        filter.employeeId = employeeId;
         return filter;
     }
 }
