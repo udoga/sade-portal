@@ -23,6 +23,6 @@ class ProjectListComponent extends ListComponent {
     }
 
     getParams = function() {
-      return Object.fromEntries(Object.entries(this.query).filter(([_, v]) => v != null));
+      return Object.fromEntries(Object.entries(this.query).filter(([_, v]) => v != null && v != ""));
     }
 }

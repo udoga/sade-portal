@@ -53,6 +53,11 @@ input {
   outline: 0;
 }
 
+select.padded {
+  padding: 4px;
+  border-radius: 4px;
+}
+
 textarea {
   outline: 0;
 }
@@ -260,11 +265,6 @@ form .field label {
   padding: 8px;
 }
 
-.field select {
-  padding: 4px;
-  border-radius: 4px;
-}
-
 .options {
   text-align: center;
   margin-top: 20px;
@@ -434,10 +434,6 @@ a.button.light-blue:active {
   color: gray;
 }
 
-.query-panel {
-  background: #fffaeb;
-  border: 1px solid #f2e79b;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  padding: 10px;
+.query {
+  padding-bottom: 10px;
 }

@@ -1,18 +1,12 @@
 <div x-data="new ProjectListComponent(projectApi, notifier)" x-init="loadAll(clientApi)">
   <h2>Projects</h2>
-  <div class="query-panel">
-    <div class="field">
-      <label>Client: </label>
-      <select x-model="query.clientId">
-        <option value="" selected>Select Client</option>
-        <template x-for="c in clients" :key="c.id">
-          <option :value="c.id" x-text="c.name" :selected="query.clientId === c.id"></option>
-        </template>
-      </select>
-    </div>
-    <div class="centered">
-      <a class="white form button" @click="loadProjects()"><i class="fas fa-filter"></i> Filter</a>
-    </div>
+  <div class="query">
+    <select class="padded" x-model="query.clientId" @change="loadProjects()">
+      <option value="" selected>Select Client</option>
+      <template x-for="c in clients" :key="c.id">
+        <option :value="c.id" x-text="c.name" :selected="query.clientId === c.id"></option>
+      </template>
+    </select>
   </div>
   <table class="records">
     <tr>
