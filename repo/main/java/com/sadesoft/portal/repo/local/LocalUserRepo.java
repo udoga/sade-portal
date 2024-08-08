@@ -34,4 +34,14 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
         s.setString(i++, u.password);
         if (u.id != null) setId(s, i, u.id);
     }
+
+    @Override
+    public List<User> listSummarized() {
+        String sql = createQuerySql("id, username", "", "", "username", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedUser));
+    }
+
+    private User toSummarizedUser(ResultSet s) throws SQLException {
+        return new User().withId(getId(s, "id")).withUsername(s.getString("username"));
+    }
 }

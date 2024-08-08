@@ -67,6 +67,12 @@ public class UserServiceTest {
         }
 
         @Test
+        public void listSummarizedUsers() {
+            assertEquals(1, service.listSummarized().size());
+            assertEquals(null, service.listSummarized().get(0).password);
+        }
+
+        @Test
         public void updatesUserById() {
             User user = service.update("0", validUser.withUsername("updated"));
             assertEquals(validUser.withId("0").withUsername("updated").withPassword(null), user);

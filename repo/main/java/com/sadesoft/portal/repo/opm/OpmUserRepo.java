@@ -67,4 +67,14 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<User> listSummarized() {
+        String sql = createQuerySql("id, user_name", "", "", "user_name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedUser));
+    }
+
+    private User toSummarizedUser(ResultSet s) throws SQLException {
+        return new User().withId(getId(s, "id")).withUsername(s.getString("user_name"));
+    }
 }

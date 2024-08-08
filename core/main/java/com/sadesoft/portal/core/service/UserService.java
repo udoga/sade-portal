@@ -19,6 +19,10 @@ public class UserService {
         return repo.list().stream().map(s -> s.withPassword(null)).toList();
     }
 
+    public List<User> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public User read(String id) {
         return repo.read(id).withPassword(null);
     }
