@@ -182,7 +182,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
 
     @Override
     public List<Project> listBy(String clientId) {
-        return call(() -> query(createStatement(createQuerySql(tableName + " p", "", createWhereSql(clientId)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " p", createWhereSql(clientId)))));
     }
 
     @Override
