@@ -3,6 +3,7 @@ package com.sadesoft.portal.core.mock;
 import java.util.List;
 
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
+import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Worklog;
@@ -26,13 +27,13 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(String afterId) {
-        return records.stream().filter(w -> w.matches(afterId)).toList();
+    public List<Worklog> listBy(WorklogFilter filter) {
+        return records.stream().filter(w -> w.passes(filter)).toList();
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(String afterId) {
-        return listBy(afterId).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter) {
+        return listBy(filter).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
                 getEmployee(w.employeeId), getActivity(w.activityId))).toList();
     }
 

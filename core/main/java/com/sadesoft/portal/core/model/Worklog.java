@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.WorklogFilter;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -134,7 +135,7 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public boolean matches(String afterId) {
-        return afterId == null || id.compareTo(afterId) > 0;
+    public boolean passes(WorklogFilter f) {
+        return f.afterId == null || id.compareTo(f.afterId) > 0;
     }
 }

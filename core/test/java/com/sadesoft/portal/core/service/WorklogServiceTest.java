@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.mock.MockWorklogRepo;
 import com.sadesoft.portal.core.mock.MockProjectRepo;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
@@ -52,17 +53,17 @@ public class WorklogServiceTest {
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.listBy(null).size());
-            assertEquals(validWorklog.withId("0"), service.listBy(null).get(0));
+            assertEquals(1, service.listBy(new WorklogFilter()).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogFilter()).get(0));
         }
 
         @Test
         public void listsAfterGivenId() {
             worklogRepo.create(validWorklog.copy());
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy("0").size());
-            assertEquals(1, service.listBy("1").size());
-            assertEquals(0, service.listBy("2").size());
+            assertEquals(2, service.listBy(new WorklogFilter().withAfterId("0")).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withAfterId("1")).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withAfterId("2")).size());
         }
 
         @Test
@@ -70,8 +71,8 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            assertEquals(1, service.listDetailedBy(null).size());
-            assertEquals(worklogRepo.listDetailedBy(null), service.listDetailedBy(null));
+            assertEquals(1, service.listDetailedBy(new WorklogFilter()).size());
+            assertEquals(worklogRepo.listDetailedBy(new WorklogFilter()), service.listDetailedBy(new WorklogFilter()));
         }
 
         @Test
@@ -81,9 +82,9 @@ public class WorklogServiceTest {
             activityRepo.create(new Activity());
             worklogRepo.create(validWorklog.copy());
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listDetailedBy("0").size());
-            assertEquals(1, service.listDetailedBy("1").size());
-            assertEquals(0, service.listDetailedBy("2").size());
+            assertEquals(2, service.listDetailedBy(new WorklogFilter().withAfterId("0")).size());
+            assertEquals(1, service.listDetailedBy(new WorklogFilter().withAfterId("1")).size());
+            assertEquals(0, service.listDetailedBy(new WorklogFilter().withAfterId("2")).size());
         }
 
         @Test

@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
+import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
 
@@ -13,12 +14,12 @@ public class WorklogService {
         this.repo = repo;
     }
 
-    public List<Worklog> listBy(String afterId) {
-        return repo.listBy(afterId);
+    public List<Worklog> listBy(WorklogFilter filter) {
+        return repo.listBy(filter);
     }
 
-    public List<DetailedWorklog> listDetailedBy(String afterId) {
-        return repo.listDetailedBy(afterId);
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter) {
+        return repo.listDetailedBy(filter);
     }
 
     public Worklog read(String id) {

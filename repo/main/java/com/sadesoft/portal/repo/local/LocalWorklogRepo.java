@@ -9,6 +9,7 @@ import java.util.List;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
+import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Activity;
@@ -56,13 +57,13 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(String afterId) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " w", createWhereSql(afterId)))));
+    public List<Worklog> listBy(WorklogFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", tableName + " w", createWhereSql(filter)))));
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(String afterId) {
-        String sql = createDetailedQuerySql(createWhereSql(afterId));
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
@@ -90,7 +91,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
             whereSql);
     }
 
-    private String createWhereSql(String afterId) {
-        return (afterId == null)? "" : ("w.id > " + afterId);
+    private String createWhereSql(WorklogFilter f) {
+        return (f.afterId == null)? "" : ("w.id > " + f.afterId);
     }
 }
