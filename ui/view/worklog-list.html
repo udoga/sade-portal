@@ -1,5 +1,13 @@
-<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="load('detailed')">
+<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="loadAll(employeeApi)">
   <h2>Worklogs</h2>
+  <div class="query">
+    <select class="padded" x-model="query.employeeId" @change="reload('detailed')">
+      <option value="" selected>Select Employee</option>
+      <template x-for="e in employees" :key="e.id">
+        <option :value="e.id" x-text="getFullName(e)" :selected="query.employeeId === e.id"></option>
+      </template>
+    </select>
+  </div>
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
