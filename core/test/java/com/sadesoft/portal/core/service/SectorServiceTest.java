@@ -40,7 +40,8 @@ public class SectorServiceTest {
 
     @Test
     public void listSummarizedSectors() {
-        assertEquals(1, service.listSummarized().size());
+        service.create(validSector);
+        assertEquals(sectorRepo.listSummarized(), service.listSummarized());
     }
 
     @Test
