@@ -1,7 +1,7 @@
-<div x-data="new ProjectListComponent(projectApi, notifier)" x-init="loadAll(clientApi)">
+<div x-data="new ProjectListComponent(router, projectApi, notifier)" x-init="loadAll(clientApi)">
   <h2>Projects</h2>
   <div class="query">
-    <select class="padded" x-model="query.clientId" @change="loadProjects()">
+    <select class="padded" x-model="query.clientId" @change="reload('detailed')">
       <option value="" selected>Select Client</option>
       <template x-for="c in clients" :key="c.id">
         <option :value="c.id" x-text="c.name" :selected="query.clientId === c.id"></option>

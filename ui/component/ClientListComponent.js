@@ -1,8 +1,8 @@
 class ClientListComponent extends ListComponent {
     clients = this.records;
 
-    constructor(api, notifier) {
-        super(api, notifier, "clients");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "clients");
     }
 
     load = function () {

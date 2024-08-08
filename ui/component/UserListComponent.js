@@ -1,7 +1,7 @@
 class UserListComponent extends ListComponent {
     users = this.records;
 
-    constructor(api, notifier) {
-        super(api, notifier, "users");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "users");
     }
 }

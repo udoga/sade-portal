@@ -1,7 +1,7 @@
 class RoleListComponent extends ListComponent {
     roles = this.records;
 
-    constructor(api, notifier) {
-        super(api, notifier, "roles");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "roles");
     }
 }

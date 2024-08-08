@@ -2,8 +2,8 @@ class VacationListComponent extends ListComponent {
     vacations = this.records;
     formatter = null;
 
-    constructor(api, notifier, formatter) {
-        super(api, notifier, "vacations");
+    constructor(router, api, notifier, formatter) {
+        super(router, api, notifier, "vacations");
         this.formatter = formatter;
     }
 

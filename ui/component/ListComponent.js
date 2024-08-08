@@ -1,18 +1,27 @@
 class ListComponent {
+    router = null;
     api = null;
     notifier = null;
     name = null;
+    query = {};
     records = [];
     error = {};
 
-    constructor(api, notifier, name) {
+    constructor(router, api, notifier, name) {
+        this.router = router;
         this.api = api;
         this.notifier = notifier;
         this.name = name;
+        this.query = this.router.getUrlParams();
     }
 
-    load = function () {
-        this.api.list().then(json => this.handleLoadResponse(json));
+    load = function (appendedUrl = "") {
+        this.api.list(appendedUrl, this.getFilledQuery()).then(json => this.handleLoadResponse(json));
+    }
+
+    reload = function (appendedUrl = "") {
+        this.records.length = 0;
+        this.load(appendedUrl);
     }
 
     remove = function (id) {
@@ -22,6 +31,7 @@ class ListComponent {
 
     handleLoadResponse = function (json) {
         json.data ? this.records.push(...json.data) : this.notifyError(json);
+
     }
 
     handleRemoveResponse = function (json) {
@@ -40,5 +50,9 @@ class ListComponent {
     getIndex = function (id) {
         for (let i = 0; i < this.records.length; i++) if (this.records[i].id === id) return i;
         return null;
+    }
+
+    getFilledQuery = function() {
+      return Object.fromEntries(Object.entries(this.query).filter(([_, v]) => v != null && v != ""));
     }
 }

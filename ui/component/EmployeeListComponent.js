@@ -1,8 +1,8 @@
 class EmployeeListComponent extends ListComponent {
     employees = this.records;
 
-    constructor(api, notifier) {
-        super(api, notifier, "employees");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "employees");
     }
 
     load = function () {

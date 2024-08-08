@@ -1,8 +1,8 @@
 class ExpenseListComponent extends ListComponent {
     expenses = this.records;
 
-    constructor(api, notifier) {
-        super(api, notifier, "expenses");
+    constructor(router, api, notifier) {
+        super(router, api, notifier, "expenses");
     }
 
     load = function () {
