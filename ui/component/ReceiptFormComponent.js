@@ -10,4 +10,8 @@ class ReceiptFormComponent extends FormComponent {
         this.load();
         categoryApi.list().then(json => json.data? Object.assign(this.categories, json.data) : this.notifyError(json));
     }
+
+    routeOnSuccess = function () {
+        this.router.route("#/expense-page/" + this.receipt.expenseId);
+    }
 }

@@ -32,7 +32,7 @@ class FormComponent {
     }
 
     notifySuccess = function () {
-        history.back();
+        this.routeOnSuccess();
         this.notifier.notifyLater(new Notification("success", "Successfully saved."));
     }
 
@@ -46,5 +46,9 @@ class FormComponent {
 
     update = function () {
         this.api.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
+    }
+
+    routeOnSuccess = function () {
+        this.router.route("#/" + this.name + "-list");
     }
 }

@@ -12,4 +12,8 @@ class AssignmentFormComponent extends FormComponent {
         userApi.list().then(json => json.data? Object.assign(this.users, json.data) : this.notifyError(json));
         roleApi.list().then(json => json.data? Object.assign(this.roles, json.data) : this.notifyError(json));
     }
+
+    routeOnSuccess = function () {
+        this.router.route("#/user-page/" + this.assignment.userId);
+    }
 }
