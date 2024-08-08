@@ -39,6 +39,11 @@ public class SectorServiceTest {
     }
 
     @Test
+    public void listSummarizedSectors() {
+        assertEquals(1, service.listSummarized().size());
+    }
+
+    @Test
     public void deletesSectorById() {
         service.create(validSector);
         Sector sector = service.delete("0");

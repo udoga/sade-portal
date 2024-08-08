@@ -31,4 +31,14 @@ public class LocalSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
         s.setString(i++, o.name);
         if (o.id != null) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Sector> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedSector));
+    }
+
+    private Sector toSummarizedSector(ResultSet s) throws SQLException {
+        return new Sector().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

@@ -8,7 +8,7 @@ class ClientFormComponent extends FormComponent {
 
     loadAll = function (sectorApi) {
         this.load();
-        sectorApi.list()
-            .then(json => json.data ? Object.assign(this.sectors, json.data) : this.notifyError(json));
+        sectorApi.listSummarized()
+            .then(json => json.data? Object.assign(this.sectors, json.data) : this.notifyError(json.error));
     }
 }

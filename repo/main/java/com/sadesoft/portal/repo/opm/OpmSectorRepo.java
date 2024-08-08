@@ -46,4 +46,14 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Sector> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedSector));
+    }
+
+    private Sector toSummarizedSector(ResultSet s) throws SQLException {
+        return new Sector().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }
