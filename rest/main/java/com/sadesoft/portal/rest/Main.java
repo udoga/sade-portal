@@ -37,6 +37,7 @@ public class Main {
         VacationCategoryRepo vacationCategoryRepo = isLocalRepo? new LocalVacationCategoryRepo(c) : new OpmVacationCategoryRepo(c);
         VacationRepo vacationRepo = isLocalRepo? new LocalVacationRepo(c) : new OpmVacationRepo(c);
         ExpenseRepo expenseRepo = isLocalRepo? new LocalExpenseRepo(c) : new OpmExpenseRepo(c);
+        ReceiptCategoryRepo receiptCategoryRepo = isLocalRepo? new LocalReceiptCategoryRepo(c) : new OpmReceiptCategoryRepo(c);
         ReceiptRepo receiptRepo = isLocalRepo? new LocalReceiptRepo(c) : new OpmReceiptRepo(c);
 
         UserService userService = new UserService(userRepo, sessionConfig.salt);
@@ -54,6 +55,7 @@ public class Main {
         VacationCategoryService vacationCategoryService = new VacationCategoryService(vacationCategoryRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);
+        ReceiptCategoryService receiptCategoryService = new ReceiptCategoryService(receiptCategoryRepo);
         ReceiptService receiptService = new ReceiptService(receiptRepo);
 
         RestServer server = new RestServer(restConfig);
@@ -72,6 +74,7 @@ public class Main {
         server.enrol(new VacationCategoryController(vacationCategoryService));
         server.enrol(new VacationController(vacationService));
         server.enrol(new ExpenseController(expenseService));
+        server.enrol(new ReceiptCategoryController(receiptCategoryService));
         server.enrol(new ReceiptController(receiptService));
         server.run();
     }

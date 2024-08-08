@@ -18,4 +18,5 @@ var worklogApi = new WorklogApi();
 var vacationCategoryApi = new VacationCategoryApi();
 var vacationApi = new VacationApi();
 var expenseApi = new ExpenseApi();
+var receiptCategoryApi = new ReceiptCategoryApi();
 var receiptApi = new ReceiptApi();

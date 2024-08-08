@@ -1,17 +1,22 @@
-<div x-data="new ReceiptFormComponent(router, receiptApi, notifier)" x-init="load()">
+<div x-data="new ReceiptFormComponent(router, receiptApi, notifier)" x-init="loadAll(receiptCategoryApi)">
   <h2>Receipt Form</h2>
   <form>
     <div class="field">
       <label>Expense Id</label>
-      <input type="text" placeholder="Expense Id" x-model="receipt.expenseId" />
+      <input type="text" disabled placeholder="Expense Id" x-model="receipt.expenseId" />
     </div>
     <div class="field">
       <label>Receipt Date</label>
       <input type="date" placeholder="Date" x-model="receipt.receiptDate" />
     </div>
     <div class="field">
-      <label>Category Id</label>
-      <input type="text" placeholder="Category Id" x-model="receipt.categoryId" />
+      <label>Category</label>
+      <select x-model="receipt.categoryId">
+        <option value="" disabled selected>Select Category</option>
+        <template x-for="c in categories" :key="c.id">
+          <option :value="c.id" x-text="c.name" :selected="receipt.categoryId === c.id"></option>
+        </template>
+      </select>
     </div>
     <div class="field">
       <label>Amount</label>
