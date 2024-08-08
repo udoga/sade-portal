@@ -32,6 +32,11 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
         return new DetailedProject(read(id), getClient(read(id).clientId));
     }
 
+    @Override
+    public List<Project> listSummarized() {
+        return list().stream().map(c -> new Project().withId(c.id).withName(c.name)).toList();
+    }
+
     private Client getClient(String clientId) {
         return (clientRepo == null)? null : clientRepo.read(clientId);
     }

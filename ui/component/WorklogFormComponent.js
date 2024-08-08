@@ -10,9 +10,24 @@ class WorklogFormComponent extends FormComponent {
 
     loadAll = function (projectApi, employeeApi, activityApi) {
         this.load();
-        projectApi.list().then(json => json.data? Object.assign(this.projects, json.data) : this.notifyError(json));
-        employeeApi.list().then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json));
-        activityApi.list().then(json => json.data? Object.assign(this.activities, json.data) : this.notifyError(json));
+        this.loadProject(projectApi);
+        this.loadEmployee(employeeApi);
+        this.loadActivity(activityApi);
+    }
+
+    loadProject = function (projectApi) {
+        projectApi.listSummarized()
+            .then(json => json.data? Object.assign(this.projects, json.data) : this.notifyError(json));
+    }
+
+    loadEmployee = function (employeeApi) {
+        employeeApi.listSummarized()
+            .then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json));
+    }
+
+    loadActivity = function (activityApi) {
+        activityApi.listSummarized()
+            .then(json => json.data? Object.assign(this.activities, json.data) : this.notifyError(json));
     }
 
     getFullName = function (employee) {

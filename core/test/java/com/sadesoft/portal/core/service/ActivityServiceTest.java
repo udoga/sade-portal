@@ -34,6 +34,11 @@ public class ActivityServiceTest {
         }
 
         @Test
+        public void listSummarizedActivities() {
+            assertEquals(repo.listSummarized(), service.listSummarized());
+        }
+
+        @Test
         public void readsActivity() {
             assertEquals(validActivity.withId("0"), service.read("0"));
         }

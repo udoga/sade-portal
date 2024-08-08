@@ -43,6 +43,12 @@ public class ProjectServiceTest {
         }
 
         @Test
+        public void listSummarizedProjects() {
+            assertEquals(1, service.listSummarized().size());
+            assertEquals(null, service.listSummarized().get(0).clientId);
+        }
+
+        @Test
         public void listsProjectsByClientId() {
             clientRepo.create(new Client(null, "Sample Client", null));
             assertEquals(1, service.listBy("0").size());

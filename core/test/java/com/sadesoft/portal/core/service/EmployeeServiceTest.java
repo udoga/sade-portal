@@ -61,6 +61,12 @@ public class EmployeeServiceTest {
         }
 
         @Test
+        public void listSummarizedEmployees() {
+            assertEquals(1, service.listSummarized().size());
+            assertEquals(null, service.listSummarized().get(0).userId);
+        }
+
+        @Test
         public void listsByUserId() {
             assertEquals(1, service.listBy("0").size());
             assertEquals(0, service.listBy("1").size());

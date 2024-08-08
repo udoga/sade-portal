@@ -17,6 +17,10 @@ public class ProjectService {
         return repo.list();
     }
 
+    public List<Project> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public List<Project> listBy(String clientId) {
         return repo.listBy(clientId);
     }

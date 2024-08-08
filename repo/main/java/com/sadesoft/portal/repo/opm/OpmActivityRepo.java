@@ -58,4 +58,14 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Activity> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedActivity));
+    }
+
+    private Activity toSummarizedActivity(ResultSet s) throws SQLException {
+        return new Activity().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

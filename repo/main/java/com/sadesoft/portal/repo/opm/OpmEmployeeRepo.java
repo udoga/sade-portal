@@ -192,6 +192,18 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
     }
 
+    @Override
+    public List<Employee> listSummarized() {
+        String sql = createQuerySql("id, name, surname", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedEmployee));
+    }
+
+    private Employee toSummarizedEmployee(ResultSet s) throws SQLException {
+        return new Employee().withId(getId(s, "id"))
+                .withFirstName(s.getString("name"))
+                .withLastName(s.getString("surname"));
+    }
+
     private DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
         return new DetailedEmployee(
             toObject(s),

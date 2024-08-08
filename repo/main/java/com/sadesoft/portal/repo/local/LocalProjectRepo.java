@@ -58,6 +58,16 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
     }
 
+    @Override
+    public List<Project> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedProject));
+    }
+
+    private Project toSummarizedProject(ResultSet s) throws SQLException {
+        return new Project().withId(getId(s, "id")).withName(s.getString("name"));
+    }
+
     public DetailedProject toDetailedProject(ResultSet s) throws SQLException {
         return new DetailedProject(
             toObject(s),

@@ -16,6 +16,10 @@ public class ActivityService {
         return repo.list();
     }
 
+    public List<Activity> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public Activity read(String id) {
         return repo.read(id);
     }

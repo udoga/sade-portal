@@ -217,4 +217,14 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     private String createWhereSql(String clientId) {
         return (clientId == null)? "" : ("p.client_id = " + clientId);
     }
+
+    @Override
+    public List<Project> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedProject));
+    }
+
+    private Project toSummarizedProject(ResultSet s) throws SQLException {
+        return new Project().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

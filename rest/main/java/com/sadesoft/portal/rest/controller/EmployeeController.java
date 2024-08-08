@@ -10,6 +10,7 @@ public class EmployeeController extends RestController {
     public EmployeeController(EmployeeService service) {
         super("/employees");
         add(HandlerType.GET, "", c -> send(c, service.listBy(getUserId(c))));
+        add(HandlerType.GET, "/summarized", c -> send(c, service.listSummarized()));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getUserId(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getEmployee(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));

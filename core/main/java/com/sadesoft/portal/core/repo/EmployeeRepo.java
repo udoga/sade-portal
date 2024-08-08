@@ -10,4 +10,5 @@ public interface EmployeeRepo extends Repo<Employee> {
     List<Employee> listBy(String userId);
     List<DetailedEmployee> listDetailedBy(String userId);
     DetailedEmployee readDetailed(String id);
+    List<Employee> listSummarized();
 }

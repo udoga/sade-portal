@@ -10,4 +10,5 @@ public interface ProjectRepo extends Repo<Project> {
     List<Project> listBy(String clientId);
     List<DetailedProject> listDetailedBy(String clientId);
     DetailedProject readDetailed(String id);
+    List<Project> listSummarized();
 }

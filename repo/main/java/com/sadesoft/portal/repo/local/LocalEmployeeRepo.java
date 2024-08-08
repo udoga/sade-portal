@@ -57,6 +57,18 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
     }
 
+    @Override
+    public List<Employee> listSummarized() {
+        String sql = createQuerySql("id, first_name, last_name", "", "", "first_name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedEmployee));
+    }
+
+    private Employee toSummarizedEmployee(ResultSet s) throws SQLException {
+        return new Employee().withId(getId(s, "id"))
+                .withFirstName(s.getString("first_name"))
+                .withLastName(s.getString("last_name"));
+    }
+
     private DetailedEmployee toDetailedEmployee(ResultSet s) throws SQLException {
         return new DetailedEmployee(
             toObject(s),

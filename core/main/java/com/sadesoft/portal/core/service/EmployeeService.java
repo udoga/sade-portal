@@ -18,6 +18,10 @@ public class EmployeeService {
         return repo.list();
     }
 
+    public List<Employee> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public List<Employee> listBy(String userId) {
         return repo.listBy(userId);
     }
