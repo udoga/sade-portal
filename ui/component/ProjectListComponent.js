@@ -3,7 +3,7 @@ class ProjectListComponent extends ListComponent {
     clients = [];
 
     constructor(api, notifier) {
-        super(api, notifier, "projects");
+        super(api, notifier);
     }
 
     loadAll = function (clientApi) {

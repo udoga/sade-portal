@@ -2,16 +2,14 @@ class ListComponent {
     router = null;
     api = null;
     notifier = null;
-    name = null;
     query = {};
     records = [];
     error = {};
 
-    constructor(router, api, notifier, name) {
+    constructor(router, api, notifier) {
         this.router = router;
         this.api = api;
         this.notifier = notifier;
-        this.name = name;
         this.query = this.router.getUrlParams();
     }
 
@@ -31,7 +29,6 @@ class ListComponent {
 
     handleLoadResponse = function (json) {
         json.data ? this.records.push(...json.data) : this.notifyError(json);
-
     }
 
     handleRemoveResponse = function (json) {

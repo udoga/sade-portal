@@ -40,15 +40,15 @@ class FormComponent {
         this.notifier.notify(new Notification("error", json.error.message));
     }
 
+    routeOnSuccess = function () {
+        this.router.route("#/" + this.name + "-list");
+    }
+
     create = function () {
         this.api.create(this.record).then((json) => this.handleSaveResponse(json));
     }
 
     update = function () {
         this.api.update(this.router.getId(), this.record).then((json) => this.handleSaveResponse(json));
-    }
-
-    routeOnSuccess = function () {
-        this.router.route("#/" + this.name + "-list");
     }
 }

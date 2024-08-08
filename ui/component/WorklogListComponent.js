@@ -2,7 +2,7 @@ class WorklogListComponent extends ListComponent {
     worklogs = this.records;
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "worklogs");
+        super(router, api, notifier);
     }
 
     loadMore = function () {
