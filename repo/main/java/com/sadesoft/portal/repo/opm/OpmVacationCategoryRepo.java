@@ -50,4 +50,14 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<VacationCategory> listSummarized() {
+        String sql = createQuerySql("id, type_name", "", "", "type_name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedVacationCategory));
+    }
+
+    private VacationCategory toSummarizedVacationCategory(ResultSet s) throws SQLException {
+        return new VacationCategory().withId(getId(s, "id")).withName(s.getString("type_name"));
+    }
 }

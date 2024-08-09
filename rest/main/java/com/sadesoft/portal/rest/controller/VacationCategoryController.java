@@ -10,6 +10,7 @@ public class VacationCategoryController extends RestController {
     public VacationCategoryController(VacationCategoryService service) {
         super("/vacation-categories");
         add(HandlerType.GET, "", c -> send(c, service.list()));
+        add(HandlerType.GET, "/summarized", c -> send(c, service.listSummarized()));
         add(HandlerType.POST, "", c -> send(c, service.create(getVacationCategory(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));

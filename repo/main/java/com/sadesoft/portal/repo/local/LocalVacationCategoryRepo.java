@@ -31,4 +31,14 @@ public class LocalVacationCategoryRepo extends JdbcRepo<VacationCategory> implem
         s.setString(i++, o.name);
         if (o.id != null) setId(s, i, o.id);
     }
+
+    @Override
+    public List<VacationCategory> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedVacationCategory));
+    }
+
+    private VacationCategory toSummarizedVacationCategory(ResultSet s) throws SQLException {
+        return new VacationCategory().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

@@ -16,6 +16,10 @@ public class VacationCategoryService {
         return repo.list();
     }
 
+    public List<VacationCategory> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public VacationCategory read(String id) {
         return repo.read(id);
     }

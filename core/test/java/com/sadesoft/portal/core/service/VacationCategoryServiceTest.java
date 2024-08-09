@@ -39,6 +39,12 @@ public class VacationCategoryServiceTest {
     }
 
     @Test
+    public void listSummarizedSectors() {
+        service.create(validVacationCategory);
+        assertEquals(vacationCategoryRepo.listSummarized(), service.listSummarized());
+    }
+
+    @Test
     public void deletesVacationCategoryById() {
         service.create(validVacationCategory);
         VacationCategory vacationCategory = service.delete("0");
