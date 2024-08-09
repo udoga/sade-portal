@@ -9,8 +9,18 @@ class AssignmentFormComponent extends FormComponent {
 
     loadAll = function (userApi, roleApi) {
         this.load();
-        userApi.list().then(json => json.data? Object.assign(this.users, json.data) : this.notifyError(json));
-        roleApi.list().then(json => json.data? Object.assign(this.roles, json.data) : this.notifyError(json));
+        this.loadUsers(userApi);
+        this.loadRoles(roleApi);
+    }
+
+    loadUsers = function (userApi) {
+        userApi.listSummarized()
+            .then(json => json.data? Object.assign(this.users, json.data) : this.notifyError(json));
+    }
+    
+    loadRoles = function (roleApi) {
+        roleApi.listSummarized()
+            .then(json => json.data? Object.assign(this.roles, json.data) : this.notifyError(json));
     }
 
     routeOnSuccess = function () {

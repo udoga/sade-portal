@@ -52,4 +52,14 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<ReceiptCategory> listSummarized() {
+        String sql = createQuerySql("id, type_description", "", "", "type_description", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedReceiptCategory));
+    }
+
+    private ReceiptCategory toSummarizedReceiptCategory(ResultSet s) throws SQLException {
+        return new ReceiptCategory().withId(getId(s, "id")).withName(s.getString("type_description"));
+    }
 }

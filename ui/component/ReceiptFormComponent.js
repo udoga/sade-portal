@@ -8,7 +8,8 @@ class ReceiptFormComponent extends FormComponent {
 
     loadAll = function (categoryApi) {
         this.load();
-        categoryApi.list().then(json => json.data? Object.assign(this.categories, json.data) : this.notifyError(json));
+        categoryApi.listSummarized()
+            .then(json => json.data? Object.assign(this.categories, json.data) : this.notifyError(json));
     }
 
     routeOnSuccess = function () {

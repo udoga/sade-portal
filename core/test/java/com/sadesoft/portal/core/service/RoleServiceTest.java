@@ -42,6 +42,11 @@ public class RoleServiceTest {
         }
 
         @Test
+        public void listSummarizedSectors() {
+            assertEquals(repo.listSummarized(), service.listSummarized());
+        }
+
+        @Test
         public void readsRoles() {
             assertEquals(validRole.withId("0"), service.read("0"));
         }

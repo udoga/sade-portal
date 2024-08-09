@@ -48,4 +48,14 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
     }
+
+    @Override
+    public List<Role> listSummarized() {
+        String sql = createQuerySql("id, name", "", "", "name", "");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedRole));
+    }
+
+    private Role toSummarizedRole(ResultSet s) throws SQLException {
+        return new Role().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

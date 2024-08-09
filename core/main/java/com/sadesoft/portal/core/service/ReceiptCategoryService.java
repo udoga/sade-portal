@@ -16,6 +16,10 @@ public class ReceiptCategoryService {
         return repo.list();
     }
 
+    public List<ReceiptCategory> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public ReceiptCategory read(String id) {
         return repo.read(id);
     }

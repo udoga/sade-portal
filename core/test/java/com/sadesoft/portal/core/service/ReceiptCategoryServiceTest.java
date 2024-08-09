@@ -39,6 +39,12 @@ public class ReceiptCategoryServiceTest {
     }
 
     @Test
+    public void listSummarizedSectors() {
+        service.create(validReceiptCategory);
+        assertEquals(receiptCategoryRepo.listSummarized(), service.listSummarized());
+    }
+
+    @Test
     public void deletesReceiptCategoryById() {
         service.create(validReceiptCategory);
         ReceiptCategory receiptCategory = service.delete("0");
