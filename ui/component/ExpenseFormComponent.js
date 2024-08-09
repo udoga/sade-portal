@@ -8,7 +8,8 @@ class ExpenseFormComponent extends FormComponent {
 
     loadAll = function (employeeApi) {
         this.load();
-        employeeApi.list().then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json));
+        employeeApi.listSummarized()
+            .then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json));
     }
 
     getFullName = function (employee) {
