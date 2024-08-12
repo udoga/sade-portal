@@ -104,7 +104,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Project o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Project o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         setId(s, i++, o.clientId);
@@ -178,6 +178,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         s.setNull(i++, java.sql.Types.VARCHAR); // work_field
         s.setNull(i++, java.sql.Types.BIGINT); // pricing_card_director
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

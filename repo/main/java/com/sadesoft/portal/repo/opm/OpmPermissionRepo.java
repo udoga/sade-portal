@@ -27,9 +27,10 @@ public class OpmPermissionRepo extends JdbcRepo<Permission> implements Permissio
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Permission o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Permission o) throws SQLException {
         int i = 1;
         s.setString(i++, o.name);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 }

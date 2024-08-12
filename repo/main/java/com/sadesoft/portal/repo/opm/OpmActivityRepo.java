@@ -41,7 +41,7 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Activity o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Activity o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setString(i++, convertTurkishToAscii(o.name));
@@ -57,6 +57,7 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
         s.setString(i++, "");
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

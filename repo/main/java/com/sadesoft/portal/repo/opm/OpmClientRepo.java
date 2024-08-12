@@ -39,7 +39,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Client o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Client o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setNull(i++, java.sql.Types.VARCHAR);
@@ -52,6 +52,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
         setId(s, i++, o.sectorId);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

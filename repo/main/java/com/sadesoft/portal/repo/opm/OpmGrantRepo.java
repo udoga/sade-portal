@@ -34,7 +34,7 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Grant o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Grant o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -44,5 +44,6 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
         setId(s, i++, o.roleId);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 }

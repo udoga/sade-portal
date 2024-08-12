@@ -30,11 +30,12 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Client o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Client o) throws SQLException {
         int i = 1;
         s.setString(i++, o.name);
         setId(s, i++, o.sectorId);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

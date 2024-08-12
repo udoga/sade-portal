@@ -34,7 +34,7 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Sector o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Sector o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -45,6 +45,7 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
         s.setInt(i++, 0);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

@@ -28,11 +28,12 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, User u) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, User u) throws SQLException {
         int i = 1;
         s.setString(i++, u.username);
         s.setString(i++, u.password);
         if (u.id != null) setId(s, i, u.id);
+        return s;
     }
 
     @Override

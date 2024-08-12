@@ -39,7 +39,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Vacation l) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Vacation l) throws SQLException {
         int i = 1;
         setId(s, i++, l.employeeId);
         setId(s, i++, l.categoryId);
@@ -49,6 +49,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         s.setString(i++, l.description);
         s.setString(i++, l.status);
         if (l.id != null) setId(s, i, l.id);
+        return s;
     }
 
     @Override

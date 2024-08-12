@@ -45,7 +45,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
         setId(s, i++, o.projectId);
         setId(s, i++, o.employeeId);
@@ -55,6 +55,7 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         s.setString(i++, o.status);
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

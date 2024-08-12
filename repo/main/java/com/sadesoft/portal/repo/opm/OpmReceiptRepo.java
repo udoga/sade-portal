@@ -50,7 +50,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Receipt o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Receipt o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setBigDecimal(i++, o.amount);
@@ -70,6 +70,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         s.setShort(i++, o.vatRate);
         s.setNull(i++, java.sql.Types.VARCHAR);
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

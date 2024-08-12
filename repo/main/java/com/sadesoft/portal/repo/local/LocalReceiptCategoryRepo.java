@@ -26,10 +26,11 @@ public class LocalReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implemen
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, ReceiptCategory o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, ReceiptCategory o) throws SQLException {
         int i = 1;
         s.setString(i++, o.name);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

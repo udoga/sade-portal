@@ -36,7 +36,7 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, VacationCategory o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, VacationCategory o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setString(i++, "");
@@ -49,6 +49,7 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
         s.setString(i++, o.name);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Vacation o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Vacation o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -68,6 +68,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         s.setInt(i++, o.dayCount);
         setId(s, i++, o.categoryId);
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

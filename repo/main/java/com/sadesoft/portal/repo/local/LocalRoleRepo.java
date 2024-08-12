@@ -26,10 +26,11 @@ public class LocalRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Role o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Role o) throws SQLException {
         int i = 1;
         s.setString(i++, o.name);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

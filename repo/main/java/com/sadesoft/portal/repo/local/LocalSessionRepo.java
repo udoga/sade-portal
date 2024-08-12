@@ -32,12 +32,13 @@ public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Session o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Session o) throws SQLException {
         int i = 1;
         setId(s, i++, o.userId);
         setLocalDateTime(s, i++, o.beginTime);
         setLocalDateTime(s, i++, o.endTime);
         s.setString(i++, o.token);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 }

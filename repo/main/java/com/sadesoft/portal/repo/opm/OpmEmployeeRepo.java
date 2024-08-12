@@ -100,7 +100,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Employee o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Employee o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setNull(i++, java.sql.Types.VARCHAR); //address
@@ -173,6 +173,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
         setId(s, i++, o.userId);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

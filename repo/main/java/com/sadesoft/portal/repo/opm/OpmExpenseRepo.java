@@ -45,7 +45,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Expense o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         s.setBoolean(i++, false);
@@ -62,6 +62,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         s.setString(i++, "");
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

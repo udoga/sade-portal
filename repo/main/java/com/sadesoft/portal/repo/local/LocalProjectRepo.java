@@ -33,12 +33,13 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Project o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Project o) throws SQLException {
         int i = 1;
         setId(s, i++, o.clientId);
         s.setString(i++, o.name);
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

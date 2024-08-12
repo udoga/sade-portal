@@ -35,7 +35,7 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Role o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Role o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -47,6 +47,7 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
         s.setInt(i++, 0);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

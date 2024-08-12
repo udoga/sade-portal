@@ -37,7 +37,7 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, ReceiptCategory o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, ReceiptCategory o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -51,6 +51,7 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
         s.setString(i++, "");
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

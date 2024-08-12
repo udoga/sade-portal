@@ -39,7 +39,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Receipt o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Receipt o) throws SQLException {
         int i = 1;
         setId(s, i++, o.expenseId);
         setLocalDate(s, i++, o.receiptDate);
@@ -49,6 +49,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         s.setShort(i++, o.vatRate);
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

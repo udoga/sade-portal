@@ -32,12 +32,13 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Employee o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Employee o) throws SQLException {
         int i = 1;
         setId(s, i++, o.userId);
         s.setString(i++, o.firstName);
         s.setString(i++, o.lastName);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

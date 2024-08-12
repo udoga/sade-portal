@@ -55,7 +55,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Worklog o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Worklog o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         setId(s, i++, o.activityId);
@@ -74,6 +74,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         s.setNull(i++, java.sql.Types.BOOLEAN);
         s.setString(i++, o.status);
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

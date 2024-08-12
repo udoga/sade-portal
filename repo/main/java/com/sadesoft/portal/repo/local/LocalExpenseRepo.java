@@ -33,13 +33,14 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, Expense o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
         setId(s, i++, o.employeeId);
         setLocalDate(s, i++, o.formDate);
         s.setString(i++, o.description);
         s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
+        return s;
     }
 
     @Override

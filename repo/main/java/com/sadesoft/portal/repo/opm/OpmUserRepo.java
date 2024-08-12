@@ -45,7 +45,7 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
     }
 
     @Override
-    protected void fillStatement(PreparedStatement s, User o) throws SQLException {
+    protected PreparedStatement fillStatement(PreparedStatement s, User o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
@@ -66,6 +66,7 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
         s.setString(i++, o.username);
         s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
+        return s;
     }
 
     @Override

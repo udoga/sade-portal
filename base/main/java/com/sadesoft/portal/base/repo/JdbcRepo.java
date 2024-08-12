@@ -29,7 +29,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     @Override
     public T create(T record) {
         String sql = createInsertSql();
-        return call(() -> command(fill(createCommandStatement(sql), record)));
+        return call(() -> command(fillStatement(createCommandStatement(sql), record)));
     }
 
     @Override
@@ -41,7 +41,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     @Override
     public T update(String id, T record) {
         record.setId(id);
-        return call(() -> command(fill(createCommandStatement(createUpdateSql()), record)));
+        return call(() -> command(fillStatement(createCommandStatement(createUpdateSql()), record)));
     }
 
     @Override
@@ -53,7 +53,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected abstract T toObject(ResultSet s) throws SQLException;
 
-    protected abstract void fillStatement(PreparedStatement s, T t)  throws SQLException;
+    protected abstract PreparedStatement fillStatement(PreparedStatement s, T t)  throws SQLException;
 
     protected String getId(ResultSet set, String columnName) throws SQLException {
         return String.valueOf(set.getInt(columnName));
@@ -104,11 +104,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected PreparedStatement createCommandStatement(String sql) throws SQLException {
         return connection.prepareStatement(sql, getColumnNames().toArray(new String[0]));
-    }
-
-    protected PreparedStatement fill(PreparedStatement s, T t) throws SQLException {
-        fillStatement(s, t);
-        return s;
     }
 
     protected T getOrThrow(List<T> objects, String message) {
