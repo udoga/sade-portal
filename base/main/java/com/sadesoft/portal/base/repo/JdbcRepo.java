@@ -161,17 +161,8 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         String delimiter = ", ";
         StringBuilder result = new StringBuilder();
         for (JdbcColumn c: columnList)
-            result.append(String.format(template, c.name, getPlaceholder(c))).append(delimiter);
+            result.append(String.format(template, c.name, "?")).append(delimiter);
         return result.substring(0, result.length() - delimiter.length());
-    }
-
-    protected String getPlaceholder(JdbcColumn column) {
-        if (isPostgresql() && !column.type.isEmpty()) return "?::" + column.type;
-        return "?";
-    }
-
-    protected boolean isPostgresql() {
-        return call(() -> connection.getMetaData().getDriverName().toLowerCase().contains("postgresql"));
     }
 
     protected <V> V call(Callable<V> callable) {

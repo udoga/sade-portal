@@ -4,15 +4,9 @@ import java.util.List;
 
 public class JdbcColumn {
     public String name;
-    public String type;
-
-    public JdbcColumn(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
 
     public JdbcColumn(String name) {
-        this(name, "");
+        this.name = name;
     }
 
     public boolean isUpdatable() {
