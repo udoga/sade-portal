@@ -22,8 +22,8 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("role_id"),
-                new JdbcColumn("user_id"),
+                new JdbcColumn("role_id", true),
+                new JdbcColumn("user_id", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -41,10 +41,10 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
+        if (inserting) s.setInt(i++, 1);
         setId(s, i++, o.roleId);
         setId(s, i++, o.userId);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

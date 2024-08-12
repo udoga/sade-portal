@@ -22,10 +22,10 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 new JdbcColumn("business_card"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
-                new JdbcColumn("description"),
-                new JdbcColumn("employee_id"),
-                new JdbcColumn("expense_date"),
-                new JdbcColumn("expense_status"),
+                new JdbcColumn("description", true),
+                new JdbcColumn("employee_id", true),
+                new JdbcColumn("expense_date", true),
+                new JdbcColumn("expense_status", true),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
                 new JdbcColumn("organization_id"),
@@ -48,19 +48,19 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     protected PreparedStatement fillStatement(PreparedStatement s, Expense o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
-        s.setBoolean(i++, false);
+        if (inserting) s.setBoolean(i++, false);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.description);
         setId(s, i++, o.employeeId);
         setLocalDateTime(s, i++, o.formDate.atTime(0, 0, 0));
         s.setString(i++, o.status);
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        s.setNull(i++, java.sql.Types.BIGINT);
-        s.setString(i++, "");
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT);
+        if (inserting) s.setString(i++, "");
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

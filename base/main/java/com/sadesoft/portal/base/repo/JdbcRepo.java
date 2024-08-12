@@ -149,7 +149,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected String createUpdateSql() {
-        List<JdbcColumn> list = columns.stream().filter(JdbcColumn::isUpdatable).toList();
+        List<JdbcColumn> list = columns.stream().filter(c -> c.updatable).toList();
         return "update " + tableName + " set " + repeat("%1$s = %2$s", list) + " where " + getIdName() + " = ?";
     }
 

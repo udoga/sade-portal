@@ -15,8 +15,8 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     public LocalGrantRepo(Connection connection) {
         super(connection, "grants", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("role_id"),
-                new JdbcColumn("permission_id")));
+                new JdbcColumn("role_id", true),
+                new JdbcColumn("permission_id", true)));
     }
 
     @Override

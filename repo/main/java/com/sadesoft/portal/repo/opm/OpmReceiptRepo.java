@@ -17,21 +17,21 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     public OpmReceiptRepo(Connection connection) {
         super(connection, "opm_acc_expense_item", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("amount"),
+                new JdbcColumn("amount", true),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
-                new JdbcColumn("currency"),
-                new JdbcColumn("description"),
-                new JdbcColumn("expense_id"),
-                new JdbcColumn("expense_item_date"),
-                new JdbcColumn("expense_item_type_id"),
+                new JdbcColumn("currency", true),
+                new JdbcColumn("description", true),
+                new JdbcColumn("expense_id", true),
+                new JdbcColumn("expense_item_date", true),
+                new JdbcColumn("expense_item_type_id", true),
                 new JdbcColumn("gl_account_no_id"),
                 new JdbcColumn("invoice_no"),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
                 new JdbcColumn("organization_id"),
                 new JdbcColumn("uuid"),
-                new JdbcColumn("vat"),
+                new JdbcColumn("vat", true),
                 new JdbcColumn("image")));
     }
 
@@ -61,14 +61,14 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         setId(s, i++, o.expenseId);
         setLocalDateTime(s, i++, o.receiptDate.atTime(0, 0, 0));
         setId(s, i++, o.categoryId);
-        s.setNull(i++, java.sql.Types.BIGINT);
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         s.setShort(i++, o.vatRate);
-        s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         if (!inserting) setId(s, i, o.id);
         return s;
     }

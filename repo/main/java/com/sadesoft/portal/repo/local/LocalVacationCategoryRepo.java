@@ -15,7 +15,7 @@ public class LocalVacationCategoryRepo extends JdbcRepo<VacationCategory> implem
     public LocalVacationCategoryRepo(Connection connection) {
         super(connection, "vacation_categories", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("name", true)));
     }
 
     @Override

@@ -24,9 +24,9 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
                 new JdbcColumn("created_time"),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
-                new JdbcColumn("name"),
+                new JdbcColumn("name", true),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("sector"),
+                new JdbcColumn("sector", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -42,15 +42,15 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
     protected PreparedStatement fillStatement(PreparedStatement s, Client o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
-        s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.name);
-        s.setInt(i++, 0);
+        if (inserting) s.setInt(i++, 0);
         setId(s, i++, o.sectorId);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

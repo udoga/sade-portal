@@ -17,9 +17,9 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     public LocalProjectRepo(Connection connection) {
         super(connection, "projects", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("client_id"),
-                new JdbcColumn("name"),
-                new JdbcColumn("description")));
+                new JdbcColumn("client_id", true),
+                new JdbcColumn("name", true),
+                new JdbcColumn("description", true)));
     }
 
     @Override

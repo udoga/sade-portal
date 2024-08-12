@@ -15,7 +15,7 @@ public class LocalRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     public LocalRoleRepo(Connection connection) {
         super(connection, "roles", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("name", true)));
     }
 
     @Override

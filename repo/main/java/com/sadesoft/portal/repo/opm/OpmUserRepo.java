@@ -26,13 +26,13 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("password_hash_sha512"),
+                new JdbcColumn("password_hash_sha512", true),
                 new JdbcColumn("reset_token"),
                 new JdbcColumn("security_password_hash_sha512"),
                 new JdbcColumn("status"),
                 new JdbcColumn("timezone"),
                 new JdbcColumn("user_email"),
-                new JdbcColumn("user_name"),
+                new JdbcColumn("user_name", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -50,21 +50,21 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setNull(i++, java.sql.Types.TIMESTAMP);
-        s.setNull(i++, java.sql.Types.TIMESTAMP);
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
         s.setString(i++, o.password);
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setString(i++, "");
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setString(i++, "");
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         s.setString(i++, o.username);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

@@ -17,9 +17,9 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     public LocalEmployeeRepo(Connection connection) {
         super(connection, "employees", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("user_id"),
-                new JdbcColumn("first_name"),
-                new JdbcColumn("last_name")));
+                new JdbcColumn("user_id", true),
+                new JdbcColumn("first_name", true),
+                new JdbcColumn("last_name", true)));
     }
 
     @Override

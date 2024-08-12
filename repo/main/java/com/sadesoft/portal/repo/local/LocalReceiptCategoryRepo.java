@@ -15,7 +15,7 @@ public class LocalReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implemen
     public LocalReceiptCategoryRepo(Connection connection) {
         super(connection, "receipt_categories", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("name", true)));
     }
 
     @Override

@@ -15,10 +15,10 @@ public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
     public LocalSessionRepo(Connection connection) {
         super(connection, "sessions", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("user_id"),
-                new JdbcColumn("begin_time"),
-                new JdbcColumn("end_time"),
-                new JdbcColumn("token")));
+                new JdbcColumn("user_id", true),
+                new JdbcColumn("begin_time", true),
+                new JdbcColumn("end_time", true),
+                new JdbcColumn("token", true)));
     }
 
     @Override

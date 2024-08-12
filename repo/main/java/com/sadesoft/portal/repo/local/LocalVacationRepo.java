@@ -16,13 +16,13 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     public LocalVacationRepo(Connection connection) {
         super(connection, "vacations", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("employee_id"),
-                new JdbcColumn("category_id"),
-                new JdbcColumn("start_time"),
-                new JdbcColumn("end_time"),
-                new JdbcColumn("day_count"),
-                new JdbcColumn("description"),
-                new JdbcColumn("status")));
+                new JdbcColumn("employee_id", true),
+                new JdbcColumn("category_id", true),
+                new JdbcColumn("start_time", true),
+                new JdbcColumn("end_time", true),
+                new JdbcColumn("day_count", true),
+                new JdbcColumn("description", true),
+                new JdbcColumn("status", true)));
     }
 
     @Override

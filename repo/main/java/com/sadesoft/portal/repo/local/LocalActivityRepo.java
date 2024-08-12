@@ -15,7 +15,7 @@ public class LocalActivityRepo extends JdbcRepo<Activity> implements ActivityRep
     public LocalActivityRepo(Connection connection) {
         super(connection, "activities", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("name", true)));
     }
 
     @Override

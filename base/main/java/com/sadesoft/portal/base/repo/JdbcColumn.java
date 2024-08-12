@@ -1,15 +1,15 @@
 package com.sadesoft.portal.base.repo;
 
-import java.util.List;
-
 public class JdbcColumn {
-    public String name;
+    public final String name;
+    public final boolean updatable;
 
-    public JdbcColumn(String name) {
+    public JdbcColumn(String name, boolean updatable) {
         this.name = name;
+        this.updatable = updatable;
     }
 
-    public boolean isUpdatable() {
-        return !List.of("id", "created_by", "created_time").contains(name);
+    public JdbcColumn(String name) {
+        this(name, false);
     }
 }

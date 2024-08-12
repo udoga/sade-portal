@@ -19,14 +19,14 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
     public OpmActivityRepo(Connection connection) {
         super(connection, "opm_ps_activity", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("code"),
+                new JdbcColumn("code", true),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
                 new JdbcColumn("description"),
                 new JdbcColumn("end_date"),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
-                new JdbcColumn("name"),
+                new JdbcColumn("name", true),
                 new JdbcColumn("organization_id"),
                 new JdbcColumn("start_date"),
                 new JdbcColumn("status"),
@@ -47,15 +47,15 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
         s.setString(i++, convertTurkishToAscii(o.name));
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setString(i++, "");
-        s.setNull(i++, java.sql.Types.TIMESTAMP);
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setString(i++, "");
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.name);
-        s.setInt(i++, 0);
-        s.setNull(i++, java.sql.Types.TIMESTAMP);
-        s.setString(i++, "");
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);
+        if (inserting) s.setString(i++, "");
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

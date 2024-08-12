@@ -16,10 +16,10 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     public LocalExpenseRepo(Connection connection) {
         super(connection, "expenses", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("employee_id"),
-                new JdbcColumn("form_date"),
-                new JdbcColumn("description"),
-                new JdbcColumn("approval_status")));
+                new JdbcColumn("employee_id", true),
+                new JdbcColumn("form_date", true),
+                new JdbcColumn("description", true),
+                new JdbcColumn("approval_status", true)));
     }
 
     @Override

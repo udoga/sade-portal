@@ -24,7 +24,7 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
                 new JdbcColumn("last_updated_time"),
                 new JdbcColumn("max_day"),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("type_name"),
+                new JdbcColumn("type_name", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -39,15 +39,15 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
     protected PreparedStatement fillStatement(PreparedStatement s, VacationCategory o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
-        s.setString(i++, "");
+        if (inserting) s.setString(i++, "");
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setNull(i++, java.sql.Types.BIGINT);
-        s.setInt(i++, 0);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT);
+        if (inserting) s.setInt(i++, 0);
         s.setString(i++, o.name);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

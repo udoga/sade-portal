@@ -14,8 +14,8 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     public LocalAssignmentRepo(Connection connection) {
         super(connection, "assignments", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("user_id"),
-                new JdbcColumn("role_id")));
+                new JdbcColumn("user_id", true),
+                new JdbcColumn("role_id", true)));
     }
 
     @Override

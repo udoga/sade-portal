@@ -21,7 +21,7 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
                 new JdbcColumn("created_time"),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
-                new JdbcColumn("name"),
+                new JdbcColumn("name", true),
                 new JdbcColumn("organization_id"),
                 new JdbcColumn("uuid")));
     }
@@ -39,11 +39,11 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.name);
-        s.setInt(i++, 0);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

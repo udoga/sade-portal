@@ -22,18 +22,18 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
-                new JdbcColumn("description"),
-                new JdbcColumn("employee_id"),
+                new JdbcColumn("description", true),
+                new JdbcColumn("employee_id", true),
                 new JdbcColumn("last_updated_by"),
                 new JdbcColumn("last_updated_time"),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("total_days"),
+                new JdbcColumn("total_days", true),
                 new JdbcColumn("uuid"),
-                new JdbcColumn("vacation_end_date"),
-                new JdbcColumn("vacation_start_date"),
-                new JdbcColumn("vacation_status"),
+                new JdbcColumn("vacation_end_date", true),
+                new JdbcColumn("vacation_start_date", true),
+                new JdbcColumn("vacation_status", true),
                 new JdbcColumn("vacation_time"),
-                new JdbcColumn("vacation_type_id")));
+                new JdbcColumn("vacation_type_id", true)));
     }
 
     @Override
@@ -57,15 +57,15 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         s.setString(i++, o.description);
         setId(s, i++, o.employeeId);
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        s.setNull(i++, java.sql.Types.NUMERIC);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setInt(i++, 0);
+        s.setInt(i++, o.dayCount);
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         setLocalDateTime(s, i++, o.endTime);
         setLocalDateTime(s, i++, o.startTime);
         s.setString(i++, o.status);
-        s.setInt(i++, o.dayCount);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         setId(s, i++, o.categoryId);
         if (!inserting) setId(s, i, o.id);
         return s;

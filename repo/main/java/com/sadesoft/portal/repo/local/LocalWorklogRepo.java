@@ -21,13 +21,13 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public LocalWorklogRepo(Connection connection) {
         super(connection, "worklogs", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("project_id"),
-                new JdbcColumn("employee_id"),
-                new JdbcColumn("activity_id"),
-                new JdbcColumn("work_date"),
-                new JdbcColumn("duration"),
-                new JdbcColumn("status"),
-                new JdbcColumn("description")));
+                new JdbcColumn("project_id", true),
+                new JdbcColumn("employee_id", true),
+                new JdbcColumn("activity_id", true),
+                new JdbcColumn("work_date", true),
+                new JdbcColumn("duration", true),
+                new JdbcColumn("status", true),
+                new JdbcColumn("description", true)));
     }
 
     @Override

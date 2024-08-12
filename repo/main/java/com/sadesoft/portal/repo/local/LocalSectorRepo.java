@@ -15,7 +15,7 @@ public class LocalSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
     public LocalSectorRepo(Connection connection) {
         super(connection, "sectors", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name")));
+                new JdbcColumn("name", true)));
     }
 
     @Override

@@ -15,8 +15,8 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
     public LocalUserRepo(Connection connection) {
         super(connection, "users", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("username"),
-                new JdbcColumn("password")));
+                new JdbcColumn("username", true),
+                new JdbcColumn("password", true)));
     }
 
     @Override

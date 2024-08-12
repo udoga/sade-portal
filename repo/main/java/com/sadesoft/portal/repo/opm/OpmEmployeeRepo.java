@@ -65,7 +65,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
                 new JdbcColumn("mobile_personal"),
                 new JdbcColumn("mobile_work"),
                 new JdbcColumn("mother_name"),
-                new JdbcColumn("name"),
+                new JdbcColumn("name", true),
                 new JdbcColumn("nationality"),
                 new JdbcColumn("organization_id"),
                 new JdbcColumn("organization_node_id"),
@@ -85,8 +85,8 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
                 new JdbcColumn("spouse_name"),
                 new JdbcColumn("start_date"),
                 new JdbcColumn("status"),
-                new JdbcColumn("surname"),
-                new JdbcColumn("user_id"),
+                new JdbcColumn("surname", true),
+                new JdbcColumn("user_id", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -103,75 +103,75 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     protected PreparedStatement fillStatement(PreparedStatement s, Employee o) throws SQLException {
         int i = 1;
         boolean inserting = (o.id == null);
-        s.setNull(i++, java.sql.Types.VARCHAR); //address
-        s.setNull(i++, java.sql.Types.VARCHAR); //bank name
-        s.setNull(i++, java.sql.Types.VARCHAR); //birth place
-        s.setNull(i++, java.sql.Types.TIMESTAMP);//birthday
-        s.setNull(i++, java.sql.Types.VARCHAR); //blood type
-        s.setNull(i++, java.sql.Types.BIGINT); //branch id
-        s.setNull(i++, java.sql.Types.VARCHAR); //city
-        s.setNull(i++, java.sql.Types.VARCHAR); //country
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //address
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //bank name
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //birth place
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);//birthday
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //blood type
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //branch id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //city
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //country
         if (inserting) s.setInt(i++, 0); //created by
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now()); //created time
-        s.setNull(i++, java.sql.Types.VARCHAR); //disabled description
-        s.setNull(i++, java.sql.Types.INTEGER); //disabled rate
-        s.setNull(i++, java.sql.Types.VARCHAR); //disabled status
-        s.setNull(i++, java.sql.Types.VARCHAR); //driving license
-        s.setNull(i++, java.sql.Types.VARCHAR); //email personal
-        s.setNull(i++, java.sql.Types.VARCHAR); //email work
-        s.setNull(i++, java.sql.Types.VARCHAR); //employee code
-        s.setNull(i++, java.sql.Types.BIGINT); //employee type id
-        s.setNull(i++, java.sql.Types.VARCHAR); //father name
-        s.setNull(i++, java.sql.Types.VARCHAR); //first aid card
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //first aid card expiration date
-        s.setNull(i++, java.sql.Types.TIMESTAMP);  //first employment date
-        s.setNull(i++, java.sql.Types.NUMERIC); //food card first month amount
-        s.setNull(i++, java.sql.Types.VARCHAR); //food card type5
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //fuel right end date
-        s.setNull(i++, java.sql.Types.VARCHAR); //function
-        s.setNull(i++, java.sql.Types.VARCHAR); //gender
-        s.setNull(i++, java.sql.Types.VARCHAR);//iban
-        s.setNull(i++, java.sql.Types.VARCHAR);//identity card no
-        s.setNull(i++, java.sql.Types.VARCHAR);//identity card serial no
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //identity card validity date
-        s.setInt(i++, 0); //last updated by
-        setLocalDateTime(s, i++, LocalDateTime.now()); //last updated time
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //leave date
-        s.setNull(i++, java.sql.Types.VARCHAR); //leave description
-        s.setNull(i++, java.sql.Types.BIGINT); //level id
-        s.setNull(i++, java.sql.Types.VARCHAR); //maiden name
-        s.setNull(i++, java.sql.Types.BIGINT); //manager id
-        s.setNull(i++, java.sql.Types.VARCHAR); //marital status
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //marriage date
-        s.setNull(i++, java.sql.Types.VARCHAR); //military description
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //military discharge date
-        s.setNull(i++, java.sql.Types.VARCHAR); //military status
-        s.setNull(i++, java.sql.Types.VARCHAR); //mobile personal
-        s.setNull(i++, java.sql.Types.VARCHAR); //mobile work
-        s.setNull(i++, java.sql.Types.VARCHAR); //mother name
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //disabled description
+        if (inserting) s.setNull(i++, java.sql.Types.INTEGER); //disabled rate
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //disabled status
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //driving license
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //email personal
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //email work
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //employee code
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //employee type id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //father name
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //first aid card
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //first aid card expiration date
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP);  //first employment date
+        if (inserting) s.setNull(i++, java.sql.Types.NUMERIC); //food card first month amount
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //food card type5
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //fuel right end date
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //function
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //gender
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);//iban
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);//identity card no
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);//identity card serial no
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //identity card validity date
+        if (inserting) s.setInt(i++, 0); //last updated by
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now()); //last updated time
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //leave date
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //leave description
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //level id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //maiden name
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //manager id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //marital status
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //marriage date
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //military description
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //military discharge date
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //military status
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //mobile personal
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //mobile work
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //mother name
         s.setString(i++, o.firstName);
-        s.setNull(i++, java.sql.Types.VARCHAR); //nationality
-        s.setInt(i++, 0); //organization id
-        s.setNull(i++, java.sql.Types.BIGINT);
-        s.setNull(i++, java.sql.Types.VARCHAR); //passport no
-        s.setNull(i++, java.sql.Types.VARCHAR); //passport type
-        s.setNull(i++, java.sql.Types.VARCHAR); //phone extension
-        s.setNull(i++, java.sql.Types.BIGINT); //position code id
-        s.setNull(i++, java.sql.Types.BIGINT); //position id
-        s.setNull(i++, java.sql.Types.VARCHAR); //postal code
-        s.setNull(i++, java.sql.Types.BIGINT); //reference person id
-        s.setNull(i++, java.sql.Types.BIGINT); //salary bucket id
-        s.setNull(i++, java.sql.Types.VARCHAR); //salary currency
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //salary effective date
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //salary end date
-        s.setNull(i++, java.sql.Types.NUMERIC); //salary gross
-        s.setNull(i++, java.sql.Types.NUMERIC); //salary net
-        s.setNull(i++, java.sql.Types.VARCHAR); //spouse name
-        s.setNull(i++, java.sql.Types.TIMESTAMP); //start date
-        s.setString(i++, ""); //status
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //nationality
+        if (inserting) s.setInt(i++, 0); //organization id
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //passport no
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //passport type
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //phone extension
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //position code id
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //position id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //postal code
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //reference person id
+        if (inserting) s.setNull(i++, java.sql.Types.BIGINT); //salary bucket id
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //salary currency
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //salary effective date
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //salary end date
+        if (inserting) s.setNull(i++, java.sql.Types.NUMERIC); //salary gross
+        if (inserting) s.setNull(i++, java.sql.Types.NUMERIC); //salary net
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR); //spouse name
+        if (inserting) s.setNull(i++, java.sql.Types.TIMESTAMP); //start date
+        if (inserting) s.setString(i++, ""); //status
         s.setString(i++, o.lastName);
         setId(s, i++, o.userId);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

@@ -15,7 +15,7 @@ public class OpmPermissionRepo extends JdbcRepo<Permission> implements Permissio
     public OpmPermissionRepo(Connection connection) {
         super(connection, "opm_sys_permission", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("code"))
+                new JdbcColumn("code", true))
         );
     }
 

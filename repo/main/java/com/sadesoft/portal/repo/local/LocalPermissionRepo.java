@@ -15,7 +15,7 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
     public LocalPermissionRepo(Connection connection) {
         super(connection, "permissions", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name"))
+                new JdbcColumn("name", true))
         );
     }
 

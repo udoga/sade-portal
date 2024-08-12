@@ -24,7 +24,7 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
                 new JdbcColumn("migration_desc"),
                 new JdbcColumn("organization_id"),
                 new JdbcColumn("type_code"),
-                new JdbcColumn("type_description"),
+                new JdbcColumn("type_description", true),
                 new JdbcColumn("type_name"),
                 new JdbcColumn("uuid")));
     }
@@ -42,14 +42,14 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
-        setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setNull(i++, java.sql.Types.VARCHAR);
-        s.setInt(i++, 0);
-        s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
+        if (inserting) s.setInt(i++, 0);
+        if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         s.setString(i++, o.name);
-        s.setString(i++, "");
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setString(i++, "");
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

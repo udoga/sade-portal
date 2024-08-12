@@ -17,8 +17,8 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
     public LocalClientRepo(Connection connection) {
         super(connection, "clients", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("name"),
-                new JdbcColumn("sector_id")));
+                new JdbcColumn("name", true),
+                new JdbcColumn("sector_id", true)));
     }
 
     @Override

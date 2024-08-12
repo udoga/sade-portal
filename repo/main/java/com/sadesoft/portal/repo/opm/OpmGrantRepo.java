@@ -20,8 +20,8 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
                 new JdbcColumn("organization_id"),
-                new JdbcColumn("permission_id"),
-                new JdbcColumn("role_id"),
+                new JdbcColumn("permission_id", true),
+                new JdbcColumn("role_id", true),
                 new JdbcColumn("uuid")));
     }
 
@@ -39,10 +39,10 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
         boolean inserting = (o.id == null);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
-        s.setInt(i++, 0);
+        if (inserting) s.setInt(i++, 0);
         setId(s, i++, o.permissionId);
         setId(s, i++, o.roleId);
-        s.setObject(i++, UUID.randomUUID());
+        if (inserting) s.setObject(i++, UUID.randomUUID());
         if (!inserting) setId(s, i, o.id);
         return s;
     }

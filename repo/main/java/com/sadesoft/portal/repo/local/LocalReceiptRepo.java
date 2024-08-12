@@ -15,13 +15,13 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     public LocalReceiptRepo(Connection connection) {
         super(connection, "receipts", List.of(
                 new JdbcColumn("id"),
-                new JdbcColumn("expense_id"),
-                new JdbcColumn("receipt_date"),
-                new JdbcColumn("category_id"),
-                new JdbcColumn("amount"),
-                new JdbcColumn("currency"),
-                new JdbcColumn("vat_rate"),
-                new JdbcColumn("description")));
+                new JdbcColumn("expense_id", true),
+                new JdbcColumn("receipt_date", true),
+                new JdbcColumn("category_id", true),
+                new JdbcColumn("amount", true),
+                new JdbcColumn("currency", true),
+                new JdbcColumn("vat_rate", true),
+                new JdbcColumn("description", true)));
     }
 
     @Override
