@@ -22,9 +22,9 @@ class RolePageComponent extends PageComponent {
             .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
     }
 
-    loadGrants = function () {
-        this.grantApi.list("detailed", { roleId: this.role.id })
-            .then(json => json.data ? Object.assign(this.grants, json.data) : this.notifyError(json));
+    loadGrants = function (afterId = 0) {
+        this.grantApi.list("detailed", { roleId: this.role.id, afterId: afterId })
+            .then(json => json.data ? this.grants.push(...json.data) : this.notifyError(json));
     }
 
     removeAssignment = function (id) {
@@ -37,5 +37,13 @@ class RolePageComponent extends PageComponent {
         if (confirm("Are you sure?"))
             this.grantApi.delete(id)
                 .then(json => json.data ? this.removeFromTable(this.grants, json) : this.notifyError(json));
+    }
+
+    loadMoreGrants = function () {
+        this.loadGrants(this.grants.slice(-1)[0].id);
+    }
+
+    hasMoreGrants = function () {
+        return this.grants.length % 100 == 0;
     }
 }

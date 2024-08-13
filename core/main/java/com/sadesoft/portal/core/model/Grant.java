@@ -69,6 +69,7 @@ public class Grant implements Record {
     }
 
     public boolean passes(GrantFilter f) {
+        if (f.afterId != null && id.compareTo(f.afterId) <= 0) return false;
         if (f.roleId != null && !roleId.equals(f.roleId)) return false;
         if (f.permissionId != null && !permissionId.equals(f.permissionId)) return false;
         return true;

@@ -43,6 +43,14 @@ public class GrantServiceTest {
             assertEquals(validGrant.withId("0"), service.list().get(0));
         }
 
+        public void listsAfterGivenId() {
+            grantRepo.create(validGrant.copy());
+            grantRepo.create(validGrant.copy());
+            assertEquals(2, service.listBy(new GrantFilter().withAfterId("0")).size());
+            assertEquals(1, service.listBy(new GrantFilter().withAfterId("1")).size());
+            assertEquals(0, service.listBy(new GrantFilter().withAfterId("2")).size());
+        }
+
         @Test
         public void listsDetailedGrantsByRoleId() {
             roleRepo.create(new Role());
@@ -57,6 +65,17 @@ public class GrantServiceTest {
             permissionRepo.create(new Permission());
             assertEquals(1, service.listDetailedBy(new GrantFilter().withPermissionId("0")).size());
             assertEquals(0, service.listDetailedBy(new GrantFilter().withPermissionId("1")).size());
+        }
+
+        @Test
+        public void listsDetailedAfterGivenId() {
+            roleRepo.create(new Role());
+            permissionRepo.create(new Permission());
+            grantRepo.create(validGrant.copy());
+            grantRepo.create(validGrant.copy());
+            assertEquals(2, service.listDetailedBy(new GrantFilter().withAfterId("0")).size());
+            assertEquals(1, service.listDetailedBy(new GrantFilter().withAfterId("1")).size());
+            assertEquals(0, service.listDetailedBy(new GrantFilter().withAfterId("2")).size());
         }
 
         @Test

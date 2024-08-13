@@ -70,6 +70,7 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
 
     private String createWhereSql(GrantFilter f) {
         List<String> conditions = new ArrayList<>();
+        if (f.afterId != null) conditions.add("g.id > " + f.afterId);
         if (f.roleId != null) conditions.add("g.role_id = " + f.roleId);
         if (f.permissionId != null) conditions.add("g.permission_id = " + f.permissionId);
         return String.join(" and ", conditions);

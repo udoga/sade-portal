@@ -23,6 +23,7 @@ public class GrantController extends RestController {
     private GrantFilter getGrantFilter(Context c) {
         return new GrantFilter()
                 .withRoleId(c.queryParam("roleId"))
+                .withAfterId(c.queryParam("afterId"))
                 .withPermissionId(c.queryParam("permissionId"));
     }
 }
