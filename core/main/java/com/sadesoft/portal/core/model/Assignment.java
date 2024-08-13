@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.AssignmentFilter;
 
 import java.util.Objects;
 
@@ -79,5 +80,11 @@ public class Assignment implements Record {
 
     public boolean matches(String userId) {
         return userId == null || this.userId.equals(userId);
+    }
+
+    public boolean passes(AssignmentFilter f) {
+        if (f.userId != null && !userId.equals(f.userId)) return false;
+        if (f.roleId != null && !roleId.equals(f.roleId)) return false;
+        return true;
     }
 }

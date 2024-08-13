@@ -3,8 +3,10 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedAssignment;
+import com.sadesoft.portal.core.filter.AssignmentFilter;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
+import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
 
 import java.sql.Connection;
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,31 +53,36 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
     }
 
     @Override
-    public List<Assignment> listBy(String userId) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(userId)))));
+    public List<Assignment> listBy(AssignmentFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedBy(String userId) {
-        String sql = createDetailedQuerySql(createWhereSql(userId));
+    public List<DetailedAssignment> listDetailedBy(AssignmentFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
     private DetailedAssignment toDetailedAssignment(ResultSet s) throws SQLException {
         return new DetailedAssignment(
                 toObject(s),
-                null,
+                new User(getId(s, "user_id"), s.getString("user_name"), null),
                 new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 
     private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
-                "a.*, r.name role_name",
-                "opm_sys_user_role a JOIN opm_sys_role r ON a.role_id = r.id",
+                "a.*, r.name role_name, u.user_name ",
+                "opm_sys_user_role a " +
+                "JOIN opm_sys_user u ON a.user_id = u.id " +
+                "JOIN opm_sys_role r ON a.role_id = r.id ",
                 whereSql);
     }
 
-    private String createWhereSql(String userId) {
-        return (userId == null)? "" : ("user_id = " + userId);
+    private String createWhereSql(AssignmentFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.userId != null) conditions.add("a.user_id = " + f.userId);
+        if (f.roleId != null) conditions.add("a.role_id = " + f.roleId);
+        return String.join(" and ", conditions);
     }
 }

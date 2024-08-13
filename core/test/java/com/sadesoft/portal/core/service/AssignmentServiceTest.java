@@ -1,9 +1,12 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.filter.AssignmentFilter;
 import com.sadesoft.portal.core.mock.MockAssignmentRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
+import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
+import com.sadesoft.portal.core.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AssignmentServiceTest {
     private MockRoleRepo roleRepo;
+    private MockUserRepo userRepo;
     private MockAssignmentRepo assignmentRepo;
     private AssignmentService service;
     private Assignment validAssignment;
@@ -18,7 +22,8 @@ public class AssignmentServiceTest {
     @BeforeEach
     public void setup() {
         roleRepo = new MockRoleRepo();
-        assignmentRepo = new MockAssignmentRepo(roleRepo);
+        userRepo = new MockUserRepo();
+        assignmentRepo = new MockAssignmentRepo(roleRepo, userRepo);
         service = new AssignmentService(assignmentRepo);
         validAssignment = new Assignment(null, "0", "0");
     }
@@ -33,7 +38,7 @@ public class AssignmentServiceTest {
     @Test
     public void listsAssignments() {
         service.create(validAssignment);
-        assertEquals(assignmentRepo.list(), service.listBy(null));
+        assertEquals(assignmentRepo.list(), service.listBy(new AssignmentFilter()));
     }
 
     @Test
@@ -47,8 +52,18 @@ public class AssignmentServiceTest {
     @Test
     public void listsDetailedAssignmentsByUserId() {
         roleRepo.create(new Role());
+        userRepo.create(new User());
         assignmentRepo.create(validAssignment);
-        assertEquals(assignmentRepo.listDetailedBy("0"), service.listDetailedBy("0"));
-        assertEquals(assignmentRepo.listDetailedBy("1"), service.listDetailedBy("1"));
+        assertEquals(1, service.listDetailedBy(new AssignmentFilter().withUserId("0")).size());
+        assertEquals(0, service.listDetailedBy(new AssignmentFilter().withUserId("1")).size());
+    }
+
+    @Test
+    public void listsDetailedAssignmentsByRoleId() {
+        userRepo.create(new User());
+        roleRepo.create(new Role());
+        assignmentRepo.create(validAssignment);
+        assertEquals(1, service.listDetailedBy(new AssignmentFilter().withRoleId("0")).size());
+        assertEquals(0, service.listDetailedBy(new AssignmentFilter().withRoleId("1")).size());
     }
 }
