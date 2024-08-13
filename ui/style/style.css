@@ -429,6 +429,8 @@ a.button.light-blue:active {
 
 .panel-content {
   padding: 10px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .panel-message {
