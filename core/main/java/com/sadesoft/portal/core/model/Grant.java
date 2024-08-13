@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.GrantFilter;
 
 import java.util.Objects;
 
@@ -16,6 +17,12 @@ public class Grant implements Record {
         this.id = id;
         this.roleId = roleId;
         this.permissionId = permissionId;
+    }
+
+    public Grant(Grant r) {
+        this.id = r.id;
+        this.roleId = r.roleId;
+        this.permissionId = r.permissionId;
     }
 
     @Override
@@ -59,5 +66,11 @@ public class Grant implements Record {
         Grant copy = copy();
         copy.id = id;
         return copy;
+    }
+
+    public boolean passes(GrantFilter f) {
+        if (f.roleId != null && !roleId.equals(f.roleId)) return false;
+        if (f.permissionId != null && !permissionId.equals(f.permissionId)) return false;
+        return true;
     }
 }

@@ -42,14 +42,6 @@ public class AssignmentServiceTest {
     }
 
     @Test
-    public void deletesAssignmentById() {
-        service.create(validAssignment);
-        Assignment assignment = service.delete("0");
-        assertEquals(validAssignment.withId("0"), assignment);
-        assertEquals(0, assignmentRepo.list().size());
-    }
-
-    @Test
     public void listsDetailedAssignmentsByUserId() {
         roleRepo.create(new Role());
         userRepo.create(new User());
@@ -65,5 +57,13 @@ public class AssignmentServiceTest {
         assignmentRepo.create(validAssignment);
         assertEquals(1, service.listDetailedBy(new AssignmentFilter().withRoleId("0")).size());
         assertEquals(0, service.listDetailedBy(new AssignmentFilter().withRoleId("1")).size());
+    }
+
+    @Test
+    public void deletesAssignmentById() {
+        service.create(validAssignment);
+        Assignment assignment = service.delete("0");
+        assertEquals(validAssignment.withId("0"), assignment);
+        assertEquals(0, assignmentRepo.list().size());
     }
 }

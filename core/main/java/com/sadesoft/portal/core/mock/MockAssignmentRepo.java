@@ -33,11 +33,11 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
                 getRole(a.roleId))).toList();
     }
 
-    private Role getRole(String roleId) {
-        return (roleRepo == null)? null : roleRepo.read(roleId);
-    }
-
     private User getUser(String userId) {
         return (userRepo == null)? null : userRepo.read(userId);
+    }
+
+    private Role getRole(String roleId) {
+        return (roleRepo == null)? null : roleRepo.read(roleId);
     }
 }
