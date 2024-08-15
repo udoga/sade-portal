@@ -2,10 +2,16 @@
   <h2>Worklogs</h2>
   <div class="query">
     <select class="padded" x-model="query.employeeId" @change="reload('detailed')">
-      <option value="" selected>Select Employee</option>
-      <template x-for="e in employees" :key="e.id">
+      <option value="" selected>All Employees</option>
+      <template x-for="e in employees">
         <option :value="e.id" x-text="getFullName(e)" :selected="query.employeeId === e.id"></option>
       </template>
+    </select>
+    <select class="padded right" x-model="query.order" @change="reload('detailed')">
+      <option value="" selected>Sort</option>
+      <option value="id">Id</option>
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
     </select>
   </div>
   <table class="records">

@@ -441,3 +441,7 @@ a.button.light-blue:active {
 .query {
   padding-bottom: 10px;
 }
+
+.query .right {
+  float: right;
+}

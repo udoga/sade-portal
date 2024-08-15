@@ -1,6 +1,5 @@
 package com.sadesoft.portal.rest.controller;
 
-import com.sadesoft.portal.base.error.InvalidEnumError;
 import com.sadesoft.portal.base.rest.RestController;
 import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.model.Worklog;
@@ -8,8 +7,6 @@ import com.sadesoft.portal.core.order.WorklogOrder;
 import com.sadesoft.portal.core.service.WorklogService;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
-
-import java.security.InvalidParameterException;
 
 public class WorklogController extends RestController {
     public WorklogController(WorklogService service) {

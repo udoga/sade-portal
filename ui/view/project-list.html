@@ -2,8 +2,8 @@
   <h2>Projects</h2>
   <div class="query">
     <select class="padded" x-model="query.clientId" @change="reload('detailed')">
-      <option value="" selected>Select Client</option>
-      <template x-for="c in clients" :key="c.id">
+      <option value="" selected>All Clients</option>
+      <template x-for="c in clients">
         <option :value="c.id" x-text="c.name" :selected="query.clientId === c.id"></option>
       </template>
     </select>
