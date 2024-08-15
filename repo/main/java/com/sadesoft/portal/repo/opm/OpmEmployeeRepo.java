@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedEmployee;
+import com.sadesoft.portal.core.filter.EmployeeFilter;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -177,13 +179,13 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
     }
 
     @Override
-    public List<Employee> listBy(String userId) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(userId)))));
+    public List<Employee> listBy(EmployeeFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
     }
 
     @Override
-    public List<DetailedEmployee> listDetailedBy(String userId) {
-        String sql = createDetailedQuerySql(createWhereSql(userId));
+    public List<DetailedEmployee> listDetailedBy(EmployeeFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
@@ -218,7 +220,10 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
             whereSql);
     }
 
-    private String createWhereSql(String userId) {
-        return (userId == null)? "" : ("user_id = " + userId);
+    private String createWhereSql(EmployeeFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.afterId != null) conditions.add("e.id > " + f.afterId);
+        if (f.userId != null) conditions.add("e.user_id = " + f.userId);
+        return String.join(" and ", conditions);
     }
 }

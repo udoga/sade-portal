@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.EmployeeFilter;
 
 import java.util.Objects;
 
@@ -86,7 +87,9 @@ public class Employee implements Record {
         return employee;
     }
 
-    public boolean matches(String userId) {
-        return userId == null || this.userId.equals(userId);
+    public boolean passes(EmployeeFilter f) {
+        if (f.afterId != null && id.compareTo(f.afterId) <= 0) return false;
+        if (f.userId != null && !userId.equals(f.userId)) return false;
+        return true;
     }
 }

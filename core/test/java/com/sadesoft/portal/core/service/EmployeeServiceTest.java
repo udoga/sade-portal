@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.filter.EmployeeFilter;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Employee;
@@ -67,16 +68,34 @@ public class EmployeeServiceTest {
         }
 
         @Test
+        public void listsAfterGivenId() {
+            employeeRepo.create(validEmployee.copy());
+            employeeRepo.create(validEmployee.copy());
+            assertEquals(2, service.listBy(new EmployeeFilter().withAfterId("0")).size());
+            assertEquals(1, service.listBy(new EmployeeFilter().withAfterId("1")).size());
+            assertEquals(0, service.listBy(new EmployeeFilter().withAfterId("2")).size());
+        }
+
+        @Test
         public void listsByUserId() {
-            assertEquals(1, service.listBy("0").size());
-            assertEquals(0, service.listBy("1").size());
-            assertEquals(1, service.listBy(null).size());
+            assertEquals(1, service.listBy(new EmployeeFilter().withUserId("0")).size());
+            assertEquals(0, service.listBy(new EmployeeFilter().withUserId("1")).size());
         }
 
         @Test
         public void listsDetailedEmployees() {
             userRepo.create(new User());
-            assertEquals(employeeRepo.listDetailedBy(null), service.listDetailedBy(null));
+            assertEquals(employeeRepo.listDetailedBy(new EmployeeFilter()), service.listDetailedBy(new EmployeeFilter()));
+        }
+
+        @Test
+        public void listsDetailedAfterGivenId() {
+            userRepo.create(new User());
+            employeeRepo.create(validEmployee.copy());
+            employeeRepo.create(validEmployee.copy());
+            assertEquals(2, service.listDetailedBy(new EmployeeFilter().withAfterId("0")).size());
+            assertEquals(1, service.listDetailedBy(new EmployeeFilter().withAfterId("1")).size());
+            assertEquals(0, service.listDetailedBy(new EmployeeFilter().withAfterId("2")).size());
         }
 
         @Test
