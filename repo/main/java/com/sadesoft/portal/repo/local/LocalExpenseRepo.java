@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedExpense;
+import com.sadesoft.portal.core.filter.ExpenseFilter;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
@@ -44,14 +46,19 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    public List<DetailedExpense> listDetailed() {
-        String sql = createDetailedQuerySql();
+    public List<Expense> listBy(ExpenseFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+    }
+
+    @Override
+    public List<DetailedExpense> listDetailedBy(ExpenseFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
     @Override
     public DetailedExpense readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = createDetailedQuerySql("e.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense)).get(0);
     }
 
@@ -61,14 +68,16 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
             new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
-    }
-
-    private String createDetailedQuerySqlWithId(String id) {
+    private String createDetailedQuerySql(String whereSql) {
         return createQuerySql(
             "e.*, m.first_name, m.last_name",
             "expenses e JOIN employees m ON e.employee_id = m.id",
-            id.isEmpty()? "" : (" e.id = " + id));
+            whereSql);
+    }
+
+    private String createWhereSql(ExpenseFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.employeeId != null) conditions.add("e.employee_id = " + f.employeeId);
+        return String.join(" and ", conditions);
     }
 }
