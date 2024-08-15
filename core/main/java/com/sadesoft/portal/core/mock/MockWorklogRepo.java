@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.mock;
 
+import java.util.Comparator;
 import java.util.List;
 
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
@@ -13,6 +14,7 @@ import com.sadesoft.portal.core.repo.EmployeeRepo;
 import com.sadesoft.portal.core.repo.ActivityRepo;
 import com.sadesoft.portal.core.repo.ProjectRepo;
 import com.sadesoft.portal.core.repo.WorklogRepo;
+import com.sadesoft.portal.core.order.WorklogOrder;
 
 public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     private final ProjectRepo projectRepo;
@@ -27,13 +29,13 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter filter) {
-        return records.stream().filter(w -> w.passes(filter)).toList();
+    public List<Worklog> listBy(WorklogFilter filter, WorklogOrder order) {
+        return records.stream().filter(w -> w.passes(filter)).sorted(getComparator(order)).toList();
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter) {
-        return listBy(filter).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter, WorklogOrder order) {
+        return listBy(filter, order).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
                 getEmployee(w.employeeId), getActivity(w.activityId))).toList();
     }
 
@@ -54,5 +56,13 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
 
     private Activity getActivity(String activityId) {
         return (activityRepo == null)? null : activityRepo.read(activityId);
+    }
+
+    private static Comparator<Worklog> getComparator(WorklogOrder order) {
+        return switch (order) {
+            case ID -> Comparator.comparing((Worklog worklog) -> worklog.id);
+            case NEWEST -> Comparator.comparing((Worklog worklog) -> worklog.workDate).reversed();
+            case OLDEST -> Comparator.comparing((Worklog worklog) -> worklog.workDate);
+        };
     }
 }

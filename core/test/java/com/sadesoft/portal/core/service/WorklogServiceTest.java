@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.filter.WorklogFilter;
 import com.sadesoft.portal.core.mock.MockWorklogRepo;
 import com.sadesoft.portal.core.mock.MockProjectRepo;
@@ -10,11 +11,13 @@ import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Worklog;
 
+import com.sadesoft.portal.core.order.WorklogOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -53,23 +56,41 @@ public class WorklogServiceTest {
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.listBy(new WorklogFilter()).size());
-            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogFilter()).get(0));
+            assertEquals(1, service.listBy(new WorklogFilter(), WorklogOrder.ID).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogFilter(), WorklogOrder.ID).get(0));
         }
 
         @Test
         public void listsAfterGivenId() {
             worklogRepo.create(validWorklog.copy());
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy(new WorklogFilter().withAfterId("0")).size());
-            assertEquals(1, service.listBy(new WorklogFilter().withAfterId("1")).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withAfterId("2")).size());
+            assertEquals(2, service.listBy(new WorklogFilter().withAfterId("0"), WorklogOrder.ID).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withAfterId("1"), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withAfterId("2"), WorklogOrder.ID).size());
         }
 
         @Test
         public void listsByEmployeeId() {
-            assertEquals(1, service.listBy(new WorklogFilter().withEmployeeId("0")).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withEmployeeId("1")).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withEmployeeId("0"), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withEmployeeId("1"), WorklogOrder.ID).size());
+        }
+
+        @Test
+        public void listsOrderedByNewest() {
+            worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
+            List<Worklog> worklogs = service.listBy(new WorklogFilter(), WorklogOrder.NEWEST);
+            assertEquals(2, worklogs.size());
+            assertEquals("1", worklogs.get(0).id);
+            assertEquals("0", worklogs.get(1).id);
+        }
+
+        @Test
+        public void listsOrderedByOldest() {
+            worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
+            List<Worklog> worklogs = service.listBy(new WorklogFilter(), WorklogOrder.OLDEST);
+            assertEquals(2, worklogs.size());
+            assertEquals("0", worklogs.get(0).id);
+            assertEquals("1", worklogs.get(1).id);
         }
 
         @Test
@@ -77,20 +98,22 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            assertEquals(1, service.listDetailedBy(new WorklogFilter()).size());
-            assertEquals(worklogRepo.listDetailedBy(new WorklogFilter()), service.listDetailedBy(new WorklogFilter()));
+            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogFilter(), WorklogOrder.ID);
+            assertEquals(1, detailedWorklogs.size());
+            assertEquals(projectRepo.read("0"), detailedWorklogs.get(0).project);
         }
 
         @Test
-        public void listsDetailedAfterGivenId() {
+        public void listsDetailedAfterGivenIdOrderedByNewest() {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            worklogRepo.create(validWorklog.copy());
-            worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listDetailedBy(new WorklogFilter().withAfterId("0")).size());
-            assertEquals(1, service.listDetailedBy(new WorklogFilter().withAfterId("1")).size());
-            assertEquals(0, service.listDetailedBy(new WorklogFilter().withAfterId("2")).size());
+            worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 2, 1)));
+            worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 3, 1)));
+            var detailedWorklogs = service.listDetailedBy(new WorklogFilter().withAfterId("0"), WorklogOrder.NEWEST);
+            assertEquals(2, detailedWorklogs.size());
+            assertEquals("2", detailedWorklogs.get(0).id);
+            assertEquals("1", detailedWorklogs.get(1).id);
         }
 
         @Test

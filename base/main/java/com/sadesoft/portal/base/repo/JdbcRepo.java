@@ -132,7 +132,11 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     }
 
     protected String createQuerySql(String selectSql, String fromSql, String whereSql) {
-        return createQuerySql(selectSql, fromSql, whereSql, getIdName(), "100");
+        return createQuerySql(selectSql, fromSql, whereSql, getIdName());
+    }
+
+    protected String createQuerySql(String selectSql, String fromSql, String whereSql, String orderBySql) {
+        return createQuerySql(selectSql, fromSql, whereSql, orderBySql, "100");
     }
 
     protected String createQuerySql(String selectSql, String fromSql, String whereSql, String orderBy, String limit) {

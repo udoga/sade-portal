@@ -1,5 +1,6 @@
 package com.sadesoft.portal.base.rest;
 
+import com.sadesoft.portal.base.error.InvalidEnumError;
 import com.sadesoft.portal.base.util.StringUtil;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -34,16 +35,16 @@ public class RestController {
         c.json(Map.of("data", data));
     }
 
-    protected int getPageNo(Context c) {
-        return StringUtil.getInteger(getQueryParameter(c, "pageNo", "1"));
-    }
-
-    protected int getPageSize(Context c) {
-        return StringUtil.getInteger(getQueryParameter(c, "pageSize", "10"));
-    }
-
     protected String getQueryParameter(Context c, String key, String defaultValue) {
         String param = c.queryParam(key);
         return (param == null)? defaultValue : param;
+    }
+
+    protected  <T extends Enum<T>> T getEnum(Class<T> enumType, String value) {
+        try {
+            return Enum.valueOf(enumType, value.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidEnumError(enumType.getSimpleName(), value);
+        }
     }
 }

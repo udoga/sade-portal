@@ -16,6 +16,7 @@ import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
+import com.sadesoft.portal.core.order.WorklogOrder;
 
 public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public LocalWorklogRepo(Connection connection) {
@@ -59,19 +60,20 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " w", createWhereSql(filter)))));
+    public List<Worklog> listBy(WorklogFilter filter, WorklogOrder order) {
+        String sql = createQuerySql("", tableName + " w", createWhereSql(filter), createOrderBySql(order));
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter, WorklogOrder order) {
+        String sql = createDetailedQuerySql(createWhereSql(filter), createOrderBySql(order));
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     @Override
     public DetailedWorklog readDetailed(String id) {
-        String sql = createDetailedQuerySql("w.id = " + id);
+        String sql = createDetailedQuerySql("w.id = " + id, "");
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog)).get(0);
     }
 
@@ -83,14 +85,14 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
+    private String createDetailedQuerySql(String whereSql, String orderBySql) {
         return createQuerySql(
             "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
             "worklogs w " +
                 "JOIN projects p ON w.project_id = p.id " +
                 "JOIN employees e ON w.employee_id = e.id " +
                 "JOIN activities a ON w.activity_id = a.id",
-            whereSql);
+            whereSql, orderBySql);
     }
 
     private String createWhereSql(WorklogFilter f) {
@@ -98,5 +100,13 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         if (f.afterId != null) conditions.add("w.id > " + f.afterId);
         if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
         return String.join(" and ", conditions);
+    }
+
+    private String createOrderBySql(WorklogOrder o) {
+        return switch (o) {
+            case ID -> "id";
+            case NEWEST -> "work_date desc";
+            case OLDEST -> "work_date";
+        };
     }
 }
