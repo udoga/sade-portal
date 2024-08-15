@@ -3,6 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.filter.VacationFilter;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockVacationRepo;
 import com.sadesoft.portal.core.mock.MockVacationCategoryRepo;
@@ -93,23 +94,23 @@ public class VacationServiceTest {
 
         @Test
         public void listsVacations() {
-            assertEquals(1, service.listBy(null).size());
-            assertEquals(vacationRepo.read("0"), service.listBy(null).get(0));
+            assertEquals(1, service.listBy(new VacationFilter()).size());
+            assertEquals(vacationRepo.read("0"), service.listBy(new VacationFilter()).get(0));
             assertEquals(vacationRepo.read("0"), service.read("0"));
         }
 
         @Test
         public void listsByStatus() {
-            assertEquals(1, service.listBy(null).size());
-            assertEquals(1, service.listBy("Waiting").size());
-            assertEquals(0, service.listBy("Approved").size());
+            assertEquals(1, service.listBy(new VacationFilter()).size());
+            assertEquals(1, service.listBy(new VacationFilter().withStatus("Waiting")).size());
+            assertEquals(0, service.listBy(new VacationFilter().withStatus("Approved")).size());
         }
 
         @Test
         public void listsDetailedVacations() {
             employeeRepo.create(new Employee());
             categoryRepo.create(new VacationCategory());
-            assertEquals(vacationRepo.listDetailedBy(null), service.listDetailedBy(null));
+            assertEquals(vacationRepo.listDetailedBy(new VacationFilter()), service.listDetailedBy(new VacationFilter()));
         }
 
         @Test

@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedVacation;
+import com.sadesoft.portal.core.filter.VacationFilter;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.model.VacationCategory;
@@ -22,13 +23,13 @@ public class MockVacationRepo extends MockRepo<Vacation> implements VacationRepo
     }
 
     @Override
-    public List<Vacation> listBy(String status) {
-        return records.stream().filter(v -> v.matches(status)).toList();
+    public List<Vacation> listBy(VacationFilter filter) {
+        return records.stream().filter(v -> v.passes(filter)).toList();
     }
 
     @Override
-    public List<DetailedVacation> listDetailedBy(String status) {
-        return listBy(status).stream().map(v -> new DetailedVacation(v, getEmployee(v.employeeId),
+    public List<DetailedVacation> listDetailedBy(VacationFilter filter) {
+        return listBy(filter).stream().map(v -> new DetailedVacation(v, getEmployee(v.employeeId),
                 getCategory(v.categoryId))).toList();
     }
 

@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.VacationFilter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -141,7 +142,9 @@ public class Vacation implements Record {
         return vacation;
     }
 
-    public boolean matches(String status) {
-        return status == null || this.status.equals(status);
+    public boolean passes(VacationFilter f) {
+        if (f.status != null && !status.equals(f.status)) return false;
+        if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
+        return true;
     }
 }

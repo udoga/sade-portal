@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedVacation;
+import com.sadesoft.portal.core.filter.VacationFilter;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -10,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
@@ -53,13 +55,13 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     }
 
     @Override
-    public List<Vacation> listBy(String status) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(status)))));
+    public List<Vacation> listBy(VacationFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
     }
 
     @Override
-    public List<DetailedVacation> listDetailedBy(String status) {
-        String sql = createDetailedQuerySql(createWhereSql(status));
+    public List<DetailedVacation> listDetailedBy(VacationFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
@@ -85,7 +87,10 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                         whereSql);
     }
 
-    private String createWhereSql(String status) {
-        return (status == null)? "" : ("status = '" + status + "'");
+    private String createWhereSql(VacationFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.employeeId != null) conditions.add("v.employee_id = " + f.employeeId);
+        if (f.status != null) conditions.add("v.status = '" + f.status + "'");
+        return String.join(" and ", conditions);
     }
 }

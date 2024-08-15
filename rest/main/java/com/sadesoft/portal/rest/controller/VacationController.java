@@ -1,6 +1,7 @@
 package com.sadesoft.portal.rest.controller;
 
 import com.sadesoft.portal.base.rest.RestController;
+import com.sadesoft.portal.core.filter.VacationFilter;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.service.VacationService;
 import io.javalin.http.Context;
@@ -9,8 +10,8 @@ import io.javalin.http.HandlerType;
 public class VacationController extends RestController {
     public VacationController(VacationService service) {
         super("/vacations");
-        add(HandlerType.GET, "", c ->  send(c, service.listBy(getStatus(c))));
-        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getStatus(c))));
+        add(HandlerType.GET, "", c ->  send(c, service.listBy(getVacationFilter(c))));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getVacationFilter(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getVacation(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
@@ -22,7 +23,9 @@ public class VacationController extends RestController {
         return c.bodyAsClass(Vacation.class);
     }
 
-    private String getStatus(Context c) {
-        return getQueryParameter(c, "status", null);
+    private VacationFilter getVacationFilter(Context c) {
+        return new VacationFilter()
+                .withStatus(c.queryParam("status"))
+                .withEmployeeId(c.queryParam("employeeId"));
     }
 }
