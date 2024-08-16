@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.ProjectFilter;
 
 import java.util.Objects;
 
@@ -86,7 +87,8 @@ public class Project implements Record {
         return project;
     }
 
-    public boolean matches(String clientId) {
-        return clientId == null || this.clientId.equals(clientId);
+    public boolean passes(ProjectFilter f) {
+        if (f.clientId != null && !clientId.equals(f.clientId)) return false;
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.detailed.DetailedProject;
+import com.sadesoft.portal.core.filter.ProjectFilter;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.repo.ProjectRepo;
 
@@ -21,12 +22,12 @@ public class ProjectService {
         return repo.listSummarized();
     }
 
-    public List<Project> listBy(String clientId) {
-        return repo.listBy(clientId);
+    public List<Project> listBy(ProjectFilter filter) {
+        return repo.listBy(filter);
     }
 
-    public List<DetailedProject> listDetailedBy(String clientId) {
-        return repo.listDetailedBy(clientId);
+    public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
+        return repo.listDetailedBy(filter);
     }
 
     public Project read(String id) {

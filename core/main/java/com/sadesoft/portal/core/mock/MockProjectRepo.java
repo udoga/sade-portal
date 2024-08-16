@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedProject;
+import com.sadesoft.portal.core.filter.ProjectFilter;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.repo.ProjectRepo;
@@ -18,13 +19,13 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listBy(String clientId) {
-        return records.stream().filter(p -> p.matches(clientId)).toList();
+    public List<Project> listBy(ProjectFilter filter) {
+        return records.stream().filter(p -> p.passes(filter)).toList();
     }
 
     @Override
-    public List<DetailedProject> listDetailedBy(String clientId) {
-        return listBy(clientId).stream().map(p -> new DetailedProject(p, getClient(p.clientId))).toList();
+    public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
+        return listBy(filter).stream().map(p -> new DetailedProject(p, getClient(p.clientId))).toList();
     }
 
     @Override

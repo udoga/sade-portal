@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedProject;
+import com.sadesoft.portal.core.filter.ProjectFilter;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.repo.ProjectRepo;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Random;
@@ -182,13 +184,13 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listBy(String clientId) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " p", createWhereSql(clientId)))));
+    public List<Project> listBy(ProjectFilter filter) {
+        return call(() -> query(createStatement(createQuerySql("", tableName + " p", createWhereSql(filter)))));
     }
 
     @Override
-    public List<DetailedProject> listDetailedBy(String clientId) {
-        String sql = createDetailedQuerySql(createWhereSql(clientId));
+    public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
+        String sql = createDetailedQuerySql(createWhereSql(filter));
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
@@ -215,8 +217,10 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return (LocalDate.now().getYear() % 100) + String.format("%05d", new Random().nextInt(100000));
     }
 
-    private String createWhereSql(String clientId) {
-        return (clientId == null)? "" : ("p.client_id = " + clientId);
+    private String createWhereSql(ProjectFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
+        return String.join(" and ", conditions);
     }
 
     @Override
