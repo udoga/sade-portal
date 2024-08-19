@@ -12,11 +12,17 @@ import java.util.concurrent.Callable;
 public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final Connection connection;
     protected final String tableName;
+    protected final String tableAlias;
     protected final List<JdbcColumn> columns;
 
     public JdbcRepo(Connection connection, String tableName, List<JdbcColumn> columns) {
+        this(connection, tableName, "", columns);
+    }
+
+    public JdbcRepo(Connection connection, String tableName, String tableAlias, List<JdbcColumn> columns) {
         this.connection = connection;
         this.tableName = tableName;
+        this.tableAlias = tableAlias;
         this.columns = columns;
     }
 
@@ -159,6 +165,35 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected String createDeleteSql(String id) {
         return "delete from " + tableName + " where " + getIdName() + " = " + id;
+    }
+
+    protected String getQuerySql() {
+        return getQuerySql("", "");
+    }
+
+    protected String getQuerySql(String select, String from) {
+        return "select " + (select.isEmpty()? repeat("%1$s", columns) : select) +
+                " from " + (from.isEmpty()? (tableName + tableAlias) : from);
+    }
+
+    protected String getWhereSql(String content) {
+        return content.isEmpty()? "" : (" where " + content);
+    }
+
+    protected String getOrderSql(String content) {
+        return " order by " + content;
+    }
+
+    protected String getOrderSql() {
+        return getOrderSql(getIdName());
+    }
+
+    protected String getLimitSql(String content) {
+        return " limit " + content;
+    }
+
+    protected String getLimitSql() {
+        return getLimitSql("100");
     }
 
     protected String repeat(String template, List<JdbcColumn> columnList) {

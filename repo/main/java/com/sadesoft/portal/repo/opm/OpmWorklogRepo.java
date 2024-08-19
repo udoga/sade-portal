@@ -79,20 +79,20 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter filter, WorklogOrder order) {
-        String sql = createQuerySql("", tableName + " w", createWhereSql(filter), createOrderBySql(order));
+    public List<Worklog> listBy(WorklogFilter f, WorklogOrder o) {
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter, WorklogOrder order) {
-        String sql = createDetailedQuerySql(createWhereSql(filter), createOrderBySql(order));
+    public List<DetailedWorklog> listDetailedBy(WorklogFilter f, WorklogOrder o) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
     @Override
     public DetailedWorklog readDetailed(String id) {
-        String sql = createDetailedQuerySql("w.id = " + id, "");
+        String sql = getDetailedQuerySql() + getWhereSql("w.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog)).get(0);
     }
 
@@ -105,31 +105,30 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new Activity(getId(s, "project_id"), s.getString("activity_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql, String orderBySql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "w.*, p.name project_name, p.description project_description, " +
                  "a.name activity_name, " +
                  "e.name first_name, e.surname last_name",
             "opm_ps_project_work_log w " +
                 "JOIN opm_ps_project p ON w.project_id = p.id " +
                 "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
-                "JOIN opm_ps_activity a ON w.activity_id = a.id",
-            whereSql, orderBySql);
+                "JOIN opm_ps_activity a ON w.activity_id = a.id");
     }
 
-    private String createWhereSql(WorklogFilter f) {
+    private String getWhereSql(WorklogFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.afterId != null) conditions.add("w.id > " + f.afterId);
         if (f.projectId != null) conditions.add("w.project_id = " + f.projectId);
         if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 
-    private String createOrderBySql(WorklogOrder o) {
-        return switch (o) {
+    private String getOrderSql(WorklogOrder o) {
+        return getOrderSql(switch (o) {
             case ID -> "id";
             case NEWEST -> "work_date desc";
             case OLDEST -> "work_date";
-        };
+        });
     }
 }
