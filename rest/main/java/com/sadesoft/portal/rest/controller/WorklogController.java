@@ -27,6 +27,7 @@ public class WorklogController extends RestController {
     private WorklogFilter getFilter(Context c) {
         return new WorklogFilter()
                 .withAfterId(c.queryParam("afterId"))
+                .withProjectId(c.queryParam("projectId"))
                 .withEmployeeId(c.queryParam("employeeId"));
     }
 

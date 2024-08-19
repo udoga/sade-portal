@@ -120,6 +120,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     private String createWhereSql(WorklogFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.afterId != null) conditions.add("w.id > " + f.afterId);
+        if (f.projectId != null) conditions.add("w.project_id = " + f.projectId);
         if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
         return String.join(" and ", conditions);
     }

@@ -1,7 +1,6 @@
 package com.sadesoft.portal.base.rest;
 
 import com.sadesoft.portal.base.error.InvalidEnumError;
-import com.sadesoft.portal.base.util.StringUtil;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import io.javalin.http.HandlerType;
