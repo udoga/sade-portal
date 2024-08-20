@@ -18,7 +18,7 @@ public class MockRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        ArrayList<T> list = new ArrayList<T>();
+        ArrayList<T> list = new ArrayList<>();
         for (T t: records) list.add((T) t.copy());
         return list;
     }
@@ -48,6 +48,10 @@ public class MockRepo<T extends Record> implements Repo<T> {
     public T delete(String id) {
         int index = findIndex(id);
         return records.remove(index);
+    }
+
+    protected List<T> applyOffset(List<T> list, Integer offset) {
+        return (offset == null)? list : list.subList(offset, list.size());
     }
 
     private int findIndex(String id) {

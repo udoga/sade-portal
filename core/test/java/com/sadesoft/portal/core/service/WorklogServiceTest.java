@@ -63,11 +63,9 @@ public class WorklogServiceTest {
         @Test
         public void listsByOffset() {
             worklogRepo.create(validWorklog.copy());
-            worklogRepo.create(validWorklog.copy());
-            assertEquals(3, service.listBy(new WorklogFilter().withOffset(0), WorklogOrder.ID).size());
-            assertEquals(2, service.listBy(new WorklogFilter().withOffset(1), WorklogOrder.ID).size());
-            assertEquals(1, service.listBy(new WorklogFilter().withOffset(2), WorklogOrder.ID).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withOffset(3), WorklogOrder.ID).size());
+            assertEquals(2, service.listBy(new WorklogFilter().withOffset(0), WorklogOrder.ID).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withOffset(1), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withOffset(2), WorklogOrder.ID).size());
         }
 
         @Test

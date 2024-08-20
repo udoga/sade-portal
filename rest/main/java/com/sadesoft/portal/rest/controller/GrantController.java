@@ -10,8 +10,8 @@ import io.javalin.http.HandlerType;
 public class GrantController extends RestController {
     public GrantController(GrantService service) {
         super("/grants");
-        add(HandlerType.GET, "", c -> send(c, service.listBy(getGrantFilter(c))));
-        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getGrantFilter(c))));
+        add(HandlerType.GET, "", c -> send(c, service.listBy(getFilter(c))));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getFilter(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getGrant(c))));
         add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
     }
@@ -20,10 +20,10 @@ public class GrantController extends RestController {
         return c.bodyAsClass(Grant.class);
     }
 
-    private GrantFilter getGrantFilter(Context c) {
+    private GrantFilter getFilter(Context c) {
         return new GrantFilter()
+                .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0))
                 .withRoleId(c.queryParam("roleId"))
-                .withAfterId(c.queryParam("afterId"))
                 .withPermissionId(c.queryParam("permissionId"));
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     public LocalGrantRepo(Connection connection) {
-        super(connection, "grants", List.of(
+        super(connection, "grants", "g", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("role_id", true),
                 new JdbcColumn("permission_id", true)));
@@ -42,13 +42,14 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     }
 
     @Override
-    public List<Grant> listBy(GrantFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " g", createWhereSql(filter)))));
+    public List<Grant> listBy(GrantFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedGrant> listDetailedBy(GrantFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedGrant> listDetailedBy(GrantFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedGrant));
     }
 
@@ -59,20 +60,18 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
                 new Permission(getId(s, "permission_id"), s.getString("permission_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
                 "g.*, r.name role_name, p.name permission_name ",
-                "grants g " +
-                "JOIN roles r ON g.role_id = r.id " +
-                "JOIN permissions p ON g.permission_id = p.id ",
-                whereSql);
+                tableName + " " + tableAlias +
+                    " join roles r on g.role_id = r.id" +
+                    " join permissions p on g.permission_id = p.id");
     }
 
-    private String createWhereSql(GrantFilter f) {
+    private String getWhereSql(GrantFilter f) {
         List<String> conditions = new ArrayList<>();
-        if (f.afterId != null) conditions.add("g.id > " + f.afterId);
         if (f.roleId != null) conditions.add("g.role_id = " + f.roleId);
         if (f.permissionId != null) conditions.add("g.permission_id = " + f.permissionId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

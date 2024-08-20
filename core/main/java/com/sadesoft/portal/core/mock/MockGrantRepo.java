@@ -23,8 +23,8 @@ public class MockGrantRepo extends MockRepo<Grant> implements GrantRepo {
     }
 
     @Override
-    public List<Grant> listBy(GrantFilter filter) {
-        return records.stream().filter(e -> e.passes(filter)).toList();
+    public List<Grant> listBy(GrantFilter f) {
+        return applyOffset(records.stream().filter(e -> e.passes(f)).toList(), f.offset);
     }
 
     @Override

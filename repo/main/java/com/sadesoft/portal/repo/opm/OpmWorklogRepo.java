@@ -110,10 +110,10 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
             "w.*, p.name project_name, p.description project_description, " +
                  "a.name activity_name, " +
                  "e.name first_name, e.surname last_name",
-            "opm_ps_project_work_log w " +
-                "JOIN opm_ps_project p ON w.project_id = p.id " +
-                "JOIN opm_hrm_employee e ON w.employee_id = e.id " +
-                "JOIN opm_ps_activity a ON w.activity_id = a.id");
+            tableName + " " + tableAlias +
+                " join opm_ps_project p on w.project_id = p.id" +
+                " join opm_hrm_employee e on w.employee_id = e.id" +
+                " join opm_ps_activity a on w.activity_id = a.id");
     }
 
     private String getWhereSql(WorklogFilter f) {

@@ -1,9 +1,9 @@
 package com.sadesoft.portal.core.filter;
 
 public class GrantFilter implements Cloneable {
+    public Integer offset;
     public String roleId;
     public String permissionId;
-    public String afterId;
 
     public GrantFilter() {
     }
@@ -16,6 +16,12 @@ public class GrantFilter implements Cloneable {
         }
     }
 
+    public GrantFilter withOffset(Integer offset) {
+        GrantFilter filter = copy();
+        filter.offset = offset;
+        return filter;
+    }
+
     public GrantFilter withRoleId(String roleId) {
         GrantFilter filter = copy();
         filter.roleId = roleId;
@@ -25,12 +31,6 @@ public class GrantFilter implements Cloneable {
     public GrantFilter withPermissionId(String permissionId) {
         GrantFilter filter = copy();
         filter.permissionId = permissionId;
-        return filter;
-    }
-
-    public GrantFilter withAfterId(String afterId) {
-        GrantFilter filter = copy();
-        filter.afterId = afterId;
         return filter;
     }
 }

@@ -88,10 +88,10 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     private String getDetailedQuerySql() {
         return getQuerySql(
             "w.*, p.name project_name, p.description, a.name activity_name, e.first_name, e.last_name",
-            "worklogs w " +
-                "join projects p ON w.project_id = p.id " +
-                "join employees e ON w.employee_id = e.id " +
-                "join activities a ON w.activity_id = a.id");
+            tableName + " " + tableAlias +
+                " join projects p on w.project_id = p.id" +
+                " join employees e on w.employee_id = e.id" +
+                " join activities a on w.activity_id = a.id");
     }
 
     private String getWhereSql(WorklogFilter f) {

@@ -177,7 +177,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected String getQuerySql(String select, String from) {
         return "select " + (select.isEmpty()? repeat("%1$s", columns) : select) +
-                " from " + (from.isEmpty()? (tableName + tableAlias) : from);
+                " from " + (from.isEmpty()? (tableName + " " + tableAlias) : from);
     }
 
     protected String getWhereSql(String content) {
