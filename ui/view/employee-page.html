@@ -1,4 +1,5 @@
-<div x-data="new EmployeePageComponent(router, employeeApi, notifier)" x-init="loadDetailed()">
+<div x-data="new EmployeePageComponent(router, employeeApi, notifier, vacationApi, expenseApi, worklogApi)"
+    x-init="loadDetailed()">
   <h2>Employee</h2>
   <div>
     <div class="field">
@@ -20,6 +21,9 @@
     <div class="panel">
       <div class="panel-header">
         <span class="panel-item" @click="selectTab('user')" :class="getTabClass('user')">User</span>
+        <span class="panel-item" @click="selectTab('vacations')" :class="getTabClass('vacations')">Vacations</span>
+        <span class="panel-item" @click="selectTab('expenses')" :class="getTabClass('expenses')">Expenses</span>
+        <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('user')">
@@ -30,6 +34,101 @@
           <div class="last field">
             <label>Username:</label>
             <span x-text="getUser().username"></span>
+          </div>
+        </div>
+        <div x-show="isSelectedTab('vacations')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Vacation Id</th>
+              <th>Category</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Day Count</th>
+              <th>Status</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/vacation-form?employeeId=' + employee.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="v in vacations">
+              <tr>
+                <td x-text="v.id" class="narrow"></td>
+                <td x-text="v.category.name"></td>
+                <td x-text="v.startTime"></td>
+                <td x-text="v.endTime"></td>
+                <td x-text="v.dayCount"></td>
+                <td x-text="v.status"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeVacation(v.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+        </div>
+        <div x-show="isSelectedTab('expenses')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Expense Id</th>
+              <th>Form Date</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/expense-form?employeeId=' + employee.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="e in expenses">
+              <tr>
+                <td x-text="e.id" class="narrow"></td>
+                <td x-text="e.formDate"></td>
+                <td x-text="e.description"></td>
+                <td x-text="e.status"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeExpense(e.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+        </div>
+        <div x-show="isSelectedTab('worklogs')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Worklog Id</th>
+              <th>Work Date</th>
+              <th>Project</th>
+              <th>Activity</th>
+              <th>Duration</th>
+              <th>Status</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/worklog-form?employeeId=' + employee.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="w in worklogs">
+              <tr>
+                <td x-text="w.id" class="narrow"></td>
+                <td x-text="w.workDate"></td>
+                <td x-text="w.project.name"></td>
+                <td x-text="w.activity.name"></td>
+                <td x-text="w.duration"></td>
+                <td x-text="w.status"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeWorklog(w.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMoreWorklogs()" @click="loadWorklogs()">Load More</a>
           </div>
         </div>
       </div>

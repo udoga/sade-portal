@@ -269,7 +269,6 @@ form .field label {
 
 .options {
   text-align: center;
-  margin-top: 20px;
 }
 
 .centered {
@@ -286,7 +285,7 @@ a.button {
 a.button.form {
   font-size: 13px;
   padding: 7px 15px 7px 15px;
-  margin: 0px 2px 0px 2px;
+  margin: 20px 2px 0px 2px;
 }
 
 a.button.form i {
