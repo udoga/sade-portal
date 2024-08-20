@@ -20,7 +20,7 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
 
     @Override
     public List<Employee> listBy(EmployeeFilter filter) {
-        return records.stream().filter(e -> e.passes(filter)).toList();
+        return applyOffset(records.stream().filter(e -> e.passes(filter)).toList(), filter.offset);
     }
 
     @Override

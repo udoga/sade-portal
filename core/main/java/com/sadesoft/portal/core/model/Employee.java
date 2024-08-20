@@ -88,7 +88,6 @@ public class Employee implements Record {
     }
 
     public boolean passes(EmployeeFilter f) {
-        if (f.afterId != null && id.compareTo(f.afterId) <= 0) return false;
         if (f.userId != null && !userId.equals(f.userId)) return false;
         return true;
     }

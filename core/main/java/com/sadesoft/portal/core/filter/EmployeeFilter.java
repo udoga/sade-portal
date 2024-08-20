@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.filter;
 
 public class EmployeeFilter implements Cloneable {
-    public String afterId;
+    public Integer offset;
     public String userId;
 
     public EmployeeFilter() {
@@ -15,9 +15,9 @@ public class EmployeeFilter implements Cloneable {
         }
     }
 
-    public EmployeeFilter withAfterId(String afterId) {
+    public EmployeeFilter withOffset(Integer offset) {
         EmployeeFilter filter = copy();
-        filter.afterId = afterId;
+        filter.offset = offset;
         return filter;
     }
 

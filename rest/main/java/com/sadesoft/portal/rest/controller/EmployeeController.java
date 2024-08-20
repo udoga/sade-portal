@@ -26,7 +26,7 @@ public class EmployeeController extends RestController {
 
     private EmployeeFilter getEmployeeFilter(Context c) {
         return new EmployeeFilter()
-                .withAfterId(c.queryParam("afterId"))
+                .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0))
                 .withUserId(c.queryParam("userId"));
     }
 }

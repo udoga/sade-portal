@@ -64,16 +64,15 @@ public class EmployeeServiceTest {
         @Test
         public void listSummarizedEmployees() {
             assertEquals(1, service.listSummarized().size());
-            assertEquals(null, service.listSummarized().get(0).userId);
+            assertNull(service.listSummarized().get(0).userId);
         }
 
         @Test
-        public void listsAfterGivenId() {
+        public void listsByOffset() {
             employeeRepo.create(validEmployee.copy());
-            employeeRepo.create(validEmployee.copy());
-            assertEquals(2, service.listBy(new EmployeeFilter().withAfterId("0")).size());
-            assertEquals(1, service.listBy(new EmployeeFilter().withAfterId("1")).size());
-            assertEquals(0, service.listBy(new EmployeeFilter().withAfterId("2")).size());
+            assertEquals(2, service.listBy(new EmployeeFilter().withOffset(0)).size());
+            assertEquals(1, service.listBy(new EmployeeFilter().withOffset(1)).size());
+            assertEquals(0, service.listBy(new EmployeeFilter().withOffset(2)).size());
         }
 
         @Test
@@ -89,13 +88,12 @@ public class EmployeeServiceTest {
         }
 
         @Test
-        public void listsDetailedAfterGivenId() {
+        public void listsDetailedByOffset() {
             userRepo.create(new User());
             employeeRepo.create(validEmployee.copy());
-            employeeRepo.create(validEmployee.copy());
-            assertEquals(2, service.listDetailedBy(new EmployeeFilter().withAfterId("0")).size());
-            assertEquals(1, service.listDetailedBy(new EmployeeFilter().withAfterId("1")).size());
-            assertEquals(0, service.listDetailedBy(new EmployeeFilter().withAfterId("2")).size());
+            assertEquals(2, service.listDetailedBy(new EmployeeFilter().withOffset(0)).size());
+            assertEquals(1, service.listDetailedBy(new EmployeeFilter().withOffset(1)).size());
+            assertEquals(0, service.listDetailedBy(new EmployeeFilter().withOffset(2)).size());
         }
 
         @Test

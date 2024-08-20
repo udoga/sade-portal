@@ -17,7 +17,7 @@ import java.util.List;
 
 public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo {
     public LocalEmployeeRepo(Connection connection) {
-        super(connection, "employees", List.of(
+        super(connection, "employees", "e", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("user_id", true),
                 new JdbcColumn("first_name", true),
@@ -44,19 +44,20 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    public List<Employee> listBy(EmployeeFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " e", createWhereSql(filter)))));
+    public List<Employee> listBy(EmployeeFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedEmployee> listDetailedBy(EmployeeFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedEmployee> listDetailedBy(EmployeeFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
     @Override
     public DetailedEmployee readDetailed(String id) {
-        String sql = createDetailedQuerySql("e.id = " + id);
+        String sql = getDetailedQuerySql() + getWhereSql("e.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee)).get(0);
     }
 
@@ -78,17 +79,16 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
             new User(getId(s, "user_id"), s.getString("username"), null));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "e.*, u.username username",
-            "employees e JOIN users u ON e.user_id = u.id",
-            whereSql);
+            tableName + " " + tableAlias +
+                " join users u on e.user_id = u.id");
     }
 
-    private String createWhereSql(EmployeeFilter f) {
+    private String getWhereSql(EmployeeFilter f) {
         List<String> conditions = new ArrayList<>();
-        if (f.afterId != null) conditions.add("e.id > " + f.afterId);
         if (f.userId != null) conditions.add("e.user_id = " + f.userId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }
