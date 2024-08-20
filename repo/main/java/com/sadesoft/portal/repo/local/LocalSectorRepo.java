@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
     public LocalSectorRepo(Connection connection) {
-        super(connection, "sectors", List.of(
+        super(connection, "sectors", "s", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true)));
     }

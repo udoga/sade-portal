@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalPermissionRepo extends JdbcRepo<Permission> implements PermissionRepo {
     public LocalPermissionRepo(Connection connection) {
-        super(connection, "permissions", List.of(
+        super(connection, "permissions", "p", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true))
         );

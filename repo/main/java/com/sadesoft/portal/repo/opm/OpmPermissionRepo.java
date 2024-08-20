@@ -13,7 +13,7 @@ import java.util.List;
 
 public class OpmPermissionRepo extends JdbcRepo<Permission> implements PermissionRepo {
     public OpmPermissionRepo(Connection connection) {
-        super(connection, "opm_sys_permission", List.of(
+        super(connection, "opm_sys_permission", "p", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("code", true))
         );

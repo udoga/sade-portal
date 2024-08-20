@@ -13,7 +13,7 @@ import com.sadesoft.portal.core.repo.UserRepo;
 
 public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
     public LocalUserRepo(Connection connection) {
-        super(connection, "users", List.of(
+        super(connection, "users", "u", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("username", true),
                 new JdbcColumn("password", true)));

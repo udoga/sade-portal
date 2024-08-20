@@ -15,10 +15,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
     protected final String tableAlias;
     protected final List<JdbcColumn> columns;
 
-    public JdbcRepo(Connection connection, String tableName, List<JdbcColumn> columns) {
-        this(connection, tableName, "", columns);
-    }
-
     public JdbcRepo(Connection connection, String tableName, String tableAlias, List<JdbcColumn> columns) {
         this.connection = connection;
         this.tableName = tableName;
@@ -28,7 +24,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        String sql = createQuerySql("", "", "");
+        String sql = getQuerySql();
         return call(() -> query(createStatement(sql)));
     }
 
@@ -40,7 +36,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public T read(String id) {
-        String sql = createQuerySql("", "", getIdName() + " = " + id);
+        String sql = getQuerySql() + getWhereSql(getIdName() + " = " + id);
         return call(() -> getOrThrow(query(createStatement(sql)), getIdName() + "=" + id));
     }
 
@@ -135,22 +131,6 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     protected String getIdName() {
         return getColumnName(0);
-    }
-
-    protected String createQuerySql(String selectSql, String fromSql, String whereSql) {
-        return createQuerySql(selectSql, fromSql, whereSql, getIdName());
-    }
-
-    protected String createQuerySql(String selectSql, String fromSql, String whereSql, String orderBySql) {
-        return createQuerySql(selectSql, fromSql, whereSql, orderBySql, "100");
-    }
-
-    protected String createQuerySql(String selectSql, String fromSql, String whereSql, String orderBy, String limit) {
-        return "select " + (selectSql.isEmpty()? repeat("%1$s", columns) : selectSql) +
-                " from " + (fromSql.isEmpty()? tableName : fromSql) +
-                (whereSql.isEmpty()? "" : (" where " + whereSql)) +
-                (orderBy.isEmpty()? "" : (" order by " + orderBy)) +
-                (limit.isEmpty()? "" : (" limit " + limit));
     }
 
     protected String createInsertSql() {

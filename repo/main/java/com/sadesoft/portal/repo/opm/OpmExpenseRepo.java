@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     public OpmExpenseRepo(Connection connection) {
-        super(connection, "opm_acc_expense", List.of(
+        super(connection, "opm_acc_expense", "e", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("business_card"),
                 new JdbcColumn("created_by"),
@@ -68,19 +68,20 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    public List<Expense> listBy(ExpenseFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " e", createWhereSql(filter)))));
+    public List<Expense> listBy(ExpenseFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedExpense> listDetailedBy(ExpenseFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedExpense> listDetailedBy(ExpenseFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
     @Override
     public DetailedExpense readDetailed(String id) {
-        String sql = createDetailedQuerySql("e.id = " + id);
+        String sql = getDetailedQuerySql() + getWhereSql("e.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense)).get(0);
     }
 
@@ -90,16 +91,16 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
             new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "e.*, m.name first_name, m.surname last_name",
-            "opm_acc_expense e JOIN opm_hrm_employee m ON e.employee_id = m.id",
-            whereSql);
+            tableName + " " + tableAlias +
+                " join opm_hrm_employee m on e.employee_id = m.id");
     }
 
-    private String createWhereSql(ExpenseFilter f) {
+    private String getWhereSql(ExpenseFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.employeeId != null) conditions.add("e.employee_id = " + f.employeeId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     public OpmProjectRepo(Connection connection) {
-        super(connection, "opm_ps_project", List.of(
+        super(connection, "opm_ps_project", "p", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("client_id", true),
                 new JdbcColumn("client_sales_responsible"),
@@ -184,13 +184,14 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listBy(ProjectFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " p", createWhereSql(filter)))));
+    public List<Project> listBy(ProjectFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedProject> listDetailedBy(ProjectFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
@@ -202,34 +203,34 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
 
     @Override
     public DetailedProject readDetailed(String id) {
-        String sql = createDetailedQuerySql("p.id = " + id);
+        String sql = getDetailedQuerySql() + getWhereSql("p.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
     }
 
-    public DetailedProject toDetailedProject(ResultSet s) throws SQLException {
+    private Project toSummarizedProject(ResultSet s) throws SQLException {
+        return new Project().withId(getId(s, "id")).withName(s.getString("name"));
+    }
+
+    private DetailedProject toDetailedProject(ResultSet s) throws SQLException {
         return new DetailedProject(
             toObject(s),
             new Client(getId(s, "client_id"), null, s.getString("client_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "p.*, c.name client_name",
-            "opm_ps_project p JOIN opm_ps_client c ON p.client_id = c.id",
-            whereSql);
+            tableName + " " + tableAlias +
+                " join opm_ps_client c on p.client_id = c.id");
+    }
+
+    private String getWhereSql(ProjectFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
+        return getWhereSql(String.join(" and ", conditions));
     }
 
     private String getRandomCode() {
         return (LocalDate.now().getYear() % 100) + String.format("%05d", new Random().nextInt(100000));
-    }
-
-    private String createWhereSql(ProjectFilter f) {
-        List<String> conditions = new ArrayList<>();
-        if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
-        return String.join(" and ", conditions);
-    }
-
-    private Project toSummarizedProject(ResultSet s) throws SQLException {
-        return new Project().withId(getId(s, "id")).withName(s.getString("name"));
     }
 }

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo {
     public OpmVacationRepo(Connection connection) {
-        super(connection, "opm_hrm_vacation", List.of(
+        super(connection, "opm_hrm_vacation", "v", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),
@@ -74,19 +74,20 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<Vacation> listBy(VacationFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " v", createWhereSql(filter)))));
+    public List<Vacation> listBy(VacationFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedVacation> listDetailedBy(VacationFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedVacation> listDetailedBy(VacationFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
     @Override
     public DetailedVacation readDetailed(String id) {
-        String sql = createDetailedQuerySql("v.id = " + id);
+        String sql = getDetailedQuerySql() + getWhereSql("v.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation)).get(0);
     }
 
@@ -97,20 +98,19 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 new VacationCategory(getId(s, "category_id"), s.getString("category_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "v.*, c.type_name category_name, v.vacation_type_id category_id," +
-            "e.name first_name, e.surname last_name",
-            "opm_hrm_vacation v " +
-                    "JOIN opm_hrm_vacation_type c ON v.vacation_type_id = c.id " +
-                    "JOIN opm_hrm_employee e ON v.employee_id = e.id",
-                    whereSql);
+                "e.name first_name, e.surname last_name",
+            tableName + " " + tableAlias +
+                " join opm_hrm_vacation_type c on v.vacation_type_id = c.id " +
+                " join opm_hrm_employee e on v.employee_id = e.id");
     }
 
-    private String createWhereSql(VacationFilter f) {
+    private String getWhereSql(VacationFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.employeeId != null) conditions.add("v.employee_id = " + f.employeeId);
         if (f.status != null) conditions.add("v.vacation_status = '" + f.status + "'");
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

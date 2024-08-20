@@ -15,7 +15,7 @@ import com.sadesoft.portal.core.repo.ReceiptRepo;
 
 public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     public OpmReceiptRepo(Connection connection) {
-        super(connection, "opm_acc_expense_item", List.of(
+        super(connection, "opm_acc_expense_item", "r", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("amount", true),
                 new JdbcColumn("created_by"),
@@ -75,10 +75,11 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
 
     @Override
     public List<Receipt> listBy(String expenseId) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(expenseId)))));
+        String sql = getQuerySql() + createWhereSql(expenseId);
+        return call(() -> query(createStatement(sql)));
     }
 
     private String createWhereSql(String expenseId) {
-        return (expenseId == null)? "" : ("expense_id = " + expenseId);
+        return (expenseId == null)? "" : getWhereSql("r.expense_id = " + expenseId);
     }
 }

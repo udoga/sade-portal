@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
     public OpmSectorRepo(Connection connection) {
-        super(connection, "opm_ps_client_sector", List.of(
+        super(connection, "opm_ps_client_sector", "s", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements AssignmentRepo {
     public LocalAssignmentRepo(Connection connection) {
-        super(connection, "assignments", List.of(
+        super(connection, "assignments", "a", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("user_id", true),
                 new JdbcColumn("role_id", true)));
@@ -39,13 +39,14 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     }
 
     @Override
-    public List<Assignment> listBy(AssignmentFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " a", createWhereSql(filter)))));
+    public List<Assignment> listBy(AssignmentFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedBy(AssignmentFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedAssignment> listDetailedBy(AssignmentFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -56,19 +57,18 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
                 new Role(getId(s, "role_id"), s.getString("role_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
-                "a.*, r.name role_name, u.username ",
-                "assignments a " +
-                "JOIN users u ON a.user_id = u.id " +
-                "JOIN roles r ON a.role_id = r.id ",
-                whereSql);
+    private String getDetailedQuerySql() {
+        return getQuerySql(
+            "a.*, r.name role_name, u.username ",
+            tableName + " " + tableAlias +
+                " join users u on a.user_id = u.id" +
+                " join roles r on a.role_id = r.id");
     }
 
-    private String createWhereSql(AssignmentFilter f) {
+    private String getWhereSql(AssignmentFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.userId != null) conditions.add("a.user_id = " + f.userId);
         if (f.roleId != null) conditions.add("a.role_id = " + f.roleId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

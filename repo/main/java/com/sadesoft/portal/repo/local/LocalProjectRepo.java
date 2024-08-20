@@ -17,7 +17,7 @@ import java.util.List;
 
 public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     public LocalProjectRepo(Connection connection) {
-        super(connection, "projects", List.of(
+        super(connection, "projects", "p", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("client_id", true),
                 new JdbcColumn("name", true),
@@ -45,13 +45,14 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listBy(ProjectFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", tableName + " p", createWhereSql(filter)))));
+    public List<Project> listBy(ProjectFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
-        String sql = createDetailedQuerySql(createWhereSql(filter));
+    public List<DetailedProject> listDetailedBy(ProjectFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
@@ -63,7 +64,7 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
 
     @Override
     public DetailedProject readDetailed(String id) {
-        String sql = createDetailedQuerySql("p.id = " + id);
+        String sql = getDetailedQuerySql() + getWhereSql("p.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
     }
 
@@ -77,16 +78,16 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
             new Client(getId(s, "client_id"), null, s.getString("client_name")));
     }
 
-    private String createDetailedQuerySql(String whereSql) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "p.*, c.name client_name",
-            "projects p JOIN clients c ON p.client_id = c.id",
-            whereSql);
+            tableName + " " + tableAlias +
+                " join clients c on p.client_id = c.id");
     }
 
-    private String createWhereSql(ProjectFilter f) {
+    private String getWhereSql(ProjectFilter f) {
         List<String> conditions = new ArrayList<>();
         if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
-        return String.join(" and ", conditions);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

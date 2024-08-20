@@ -17,7 +17,7 @@ import static com.sadesoft.portal.base.util.StringUtil.convertTurkishToAscii;
 
 public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo {
     public OpmActivityRepo(Connection connection) {
-        super(connection, "opm_ps_activity", List.of(
+        super(connection, "opm_ps_activity", "a", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("code", true),
                 new JdbcColumn("created_by"),

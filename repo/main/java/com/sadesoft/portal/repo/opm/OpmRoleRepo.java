@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     public OpmRoleRepo(Connection connection) {
-        super(connection, "opm_sys_role", List.of(
+        super(connection, "opm_sys_role", "r", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),

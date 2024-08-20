@@ -13,7 +13,7 @@ import com.sadesoft.portal.core.repo.SessionRepo;
 
 public class LocalSessionRepo extends JdbcRepo<Session> implements SessionRepo {
     public LocalSessionRepo(Connection connection) {
-        super(connection, "sessions", List.of(
+        super(connection, "sessions", "s", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("user_id", true),
                 new JdbcColumn("begin_time", true),

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalActivityRepo extends JdbcRepo<Activity> implements ActivityRepo {
     public LocalActivityRepo(Connection connection) {
-        super(connection, "activities", List.of(
+        super(connection, "activities", "a", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true)));
     }

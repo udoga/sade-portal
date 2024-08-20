@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalRoleRepo extends JdbcRepo<Role> implements RoleRepo {
     public LocalRoleRepo(Connection connection) {
-        super(connection, "roles", List.of(
+        super(connection, "roles", "r", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true)));
     }

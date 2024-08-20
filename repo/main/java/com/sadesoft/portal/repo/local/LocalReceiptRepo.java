@@ -13,7 +13,7 @@ import com.sadesoft.portal.core.repo.ReceiptRepo;
 
 public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     public LocalReceiptRepo(Connection connection) {
-        super(connection, "receipts", List.of(
+        super(connection, "receipts", "r", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("expense_id", true),
                 new JdbcColumn("receipt_date", true),
@@ -54,10 +54,11 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
 
     @Override
     public List<Receipt> listBy(String expenseId) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(expenseId)))));
+        String sql = getQuerySql() + createWhereSql(expenseId);
+        return call(() -> query(createStatement(sql)));
     }
 
     private String createWhereSql(String expenseId) {
-        return (expenseId == null)? "" : ("expense_id = " + expenseId);
+        return (expenseId == null)? "" : getWhereSql("r.expense_id = " + expenseId);
     }
 }

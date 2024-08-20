@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implements VacationCategoryRepo {
     public OpmVacationCategoryRepo(Connection connection) {
-        super(connection, "opm_hrm_vacation_type", List.of(
+        super(connection, "opm_hrm_vacation_type", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("base_vacation_type"),
                 new JdbcColumn("created_by"),

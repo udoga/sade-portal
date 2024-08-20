@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements ReceiptCategoryRepo {
     public OpmReceiptCategoryRepo(Connection connection) {
-        super(connection, "opm_acc_expense_item_type", List.of(
+        super(connection, "opm_acc_expense_item_type", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),

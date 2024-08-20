@@ -15,7 +15,7 @@ import com.sadesoft.portal.core.repo.UserRepo;
 
 public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
     public OpmUserRepo(Connection connection) {
-        super(connection, "opm_sys_user", List.of(
+        super(connection, "opm_sys_user", "u", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("created_by"),
                 new JdbcColumn("created_time"),

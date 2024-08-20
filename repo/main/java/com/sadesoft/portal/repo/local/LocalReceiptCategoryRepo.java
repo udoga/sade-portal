@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements ReceiptCategoryRepo {
     public LocalReceiptCategoryRepo(Connection connection) {
-        super(connection, "receipt_categories", List.of(
+        super(connection, "receipt_categories", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true)));
     }

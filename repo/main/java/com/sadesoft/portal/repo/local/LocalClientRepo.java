@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
     public LocalClientRepo(Connection connection) {
-        super(connection, "clients", List.of(
+        super(connection, "clients", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true),
                 new JdbcColumn("sector_id", true)));
@@ -44,36 +44,32 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
         return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
     }
 
-    private Client toSummarizedClient(ResultSet s) throws SQLException {
-        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
-    }
-
     @Override
     public List<DetailedClient> listDetailed() {
-        String sql = createDetailedQuerySql();
+        String sql = getDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
     }
 
     @Override
     public DetailedClient readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = getDetailedQuerySql() + getWhereSql("c.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient)).get(0);
     }
 
-    public DetailedClient toDetailedClient(ResultSet s) throws SQLException {
+    private DetailedClient toDetailedClient(ResultSet s) throws SQLException {
         return new DetailedClient(
-            toObject(s),
-            new Sector(getId(s, "sector_id"), s.getString("sector_name")));
+                toObject(s),
+                new Sector(getId(s, "sector_id"), s.getString("sector_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
+    private Client toSummarizedClient(ResultSet s) throws SQLException {
+        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
     }
 
-    private String createDetailedQuerySqlWithId(String id) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "c.*, s.name sector_name",
-            "clients c JOIN sectors s ON c.sector_id = s.id",
-            id.isEmpty()? "" : (" c.id = " + id));
+            tableName + " " + tableAlias +
+                " join sectors s on c.sector_id = s.id");
     }
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
     public OpmClientRepo(Connection connection) {
-        super(connection, "opm_ps_client", List.of(
+        super(connection, "opm_ps_client", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("code"),
                 new JdbcColumn("created_by"),
@@ -61,35 +61,32 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
         return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
     }
 
-    private Client toSummarizedClient(ResultSet s) throws SQLException {
-        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
-    }
-
+    @Override
     public List<DetailedClient> listDetailed() {
-        String sql = createDetailedQuerySql();
+        String sql = getDetailedQuerySql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
     }
 
     @Override
     public DetailedClient readDetailed(String id) {
-        String sql = createDetailedQuerySqlWithId(id);
+        String sql = getDetailedQuerySql() + getWhereSql("c.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient)).get(0);
     }
 
-    public DetailedClient toDetailedClient(ResultSet s) throws SQLException {
+    private DetailedClient toDetailedClient(ResultSet s) throws SQLException {
         return new DetailedClient(
             toObject(s),
             new Sector(getId(s, "sector"), s.getString("sector_name")));
     }
 
-    private String createDetailedQuerySql() {
-        return createDetailedQuerySqlWithId("");
+    private Client toSummarizedClient(ResultSet s) throws SQLException {
+        return new Client().withId(getId(s, "id")).withName(s.getString("name"));
     }
 
-    private String createDetailedQuerySqlWithId(String id) {
-        return createQuerySql(
+    private String getDetailedQuerySql() {
+        return getQuerySql(
             "c.*, s.name sector_name",
-            "opm_ps_client c JOIN opm_ps_client_sector s ON c.sector = s.id",
-            id.isEmpty()? "" : (" c.id = " + id));
+            tableName + " " + tableAlias +
+                " join opm_ps_client_sector s on c.sector = s.id");
     }
 }

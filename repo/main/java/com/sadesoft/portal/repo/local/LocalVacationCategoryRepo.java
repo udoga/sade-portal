@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocalVacationCategoryRepo extends JdbcRepo<VacationCategory> implements VacationCategoryRepo {
     public LocalVacationCategoryRepo(Connection connection) {
-        super(connection, "vacation_categories", List.of(
+        super(connection, "vacation_categories", "c", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("name", true)));
     }
