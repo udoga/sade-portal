@@ -1,4 +1,4 @@
-<div x-data="new ClientPageComponent(router, clientApi, notifier)" x-init="loadDetailed()">
+<div x-data="new ClientPageComponent(router, clientApi, notifier, projectApi)" x-init="loadDetailed()">
   <h2>Client</h2>
   <div>
     <div class="field">
@@ -13,6 +13,42 @@
       <label>Sector:</label>
       <span x-text="getSector().name"></span>
     </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-item" @click="selectTab('projects')" :class="getTabClass('projects')">Projects</span>
+      </div>
+      <div class="panel-content">
+        <div x-show="isSelectedTab('projects')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Project Id</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/project-form?clientId=' + client.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="p in projects">
+              <tr>
+                <td x-text="p.id" class="narrow"></td>
+                <td x-text="p.name"></td>
+                <td x-text="p.description"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeProject(p.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMoreProjects()" @click="loadProjects()">Load More</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>
       <a class="yellow form button" :href="'#/client-form/' + client.id">Edit</a>
@@ -20,3 +56,4 @@
     </div>
   </div>
 </div>
+
