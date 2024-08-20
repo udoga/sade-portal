@@ -45,7 +45,7 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
 
     @Override
     public List<Employee> listBy(EmployeeFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " e", createWhereSql(filter)))));
     }
 
     @Override

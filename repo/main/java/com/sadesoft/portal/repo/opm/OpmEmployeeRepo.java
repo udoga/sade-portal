@@ -180,7 +180,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
 
     @Override
     public List<Employee> listBy(EmployeeFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " e", createWhereSql(filter)))));
     }
 
     @Override

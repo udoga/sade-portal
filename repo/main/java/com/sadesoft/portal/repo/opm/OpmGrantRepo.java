@@ -54,7 +54,7 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
 
     @Override
     public List<Grant> listBy(GrantFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " g", createWhereSql(filter)))));
     }
 
     @Override

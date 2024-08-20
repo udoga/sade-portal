@@ -54,7 +54,7 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
 
     @Override
     public List<Assignment> listBy(AssignmentFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " a", createWhereSql(filter)))));
     }
 
     @Override

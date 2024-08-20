@@ -56,7 +56,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
 
     @Override
     public List<Vacation> listBy(VacationFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " v", createWhereSql(filter)))));
     }
 
     @Override

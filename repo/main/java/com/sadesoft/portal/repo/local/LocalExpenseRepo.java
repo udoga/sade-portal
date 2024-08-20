@@ -47,7 +47,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
 
     @Override
     public List<Expense> listBy(ExpenseFilter filter) {
-        return call(() -> query(createStatement(createQuerySql("", "", createWhereSql(filter)))));
+        return call(() -> query(createStatement(createQuerySql("", tableName + " e", createWhereSql(filter)))));
     }
 
     @Override
