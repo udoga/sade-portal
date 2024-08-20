@@ -22,7 +22,7 @@ import com.sadesoft.portal.core.order.WorklogOrder;
 
 public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     public OpmWorklogRepo(Connection connection) {
-        super(connection, "opm_ps_project_work_log", List.of(
+        super(connection, "opm_ps_project_work_log", "w", List.of(
                 new JdbcColumn("id"),
                 new JdbcColumn("activity_id", true),
                 new JdbcColumn("created_by"),
