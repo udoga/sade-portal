@@ -54,7 +54,7 @@ public class OpmVacationCategoryRepo extends JdbcRepo<VacationCategory> implemen
 
     @Override
     public List<VacationCategory> listSummarized() {
-        String sql = createQuerySql("id, type_name", "", "", "type_name", "");
+        String sql = getQuerySql("id, type_name") + getOrderSql("type_name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedVacationCategory));
     }
 

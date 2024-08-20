@@ -71,7 +71,7 @@ public class OpmUserRepo extends JdbcRepo<User> implements UserRepo {
 
     @Override
     public List<User> listSummarized() {
-        String sql = createQuerySql("id, user_name", "", "", "user_name", "");
+        String sql = getQuerySql("id, user_name") + getOrderSql("user_name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedUser));
     }
 

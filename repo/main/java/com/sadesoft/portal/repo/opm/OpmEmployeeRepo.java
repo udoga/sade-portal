@@ -197,7 +197,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
 
     @Override
     public List<Employee> listSummarized() {
-        String sql = createQuerySql("id, name, surname", "", "", "name", "");
+        String sql = getQuerySql("id, name, surname") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedEmployee));
     }
 

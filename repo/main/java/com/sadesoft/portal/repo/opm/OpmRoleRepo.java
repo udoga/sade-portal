@@ -52,7 +52,7 @@ public class OpmRoleRepo extends JdbcRepo<Role> implements RoleRepo {
 
     @Override
     public List<Role> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedRole));
     }
 

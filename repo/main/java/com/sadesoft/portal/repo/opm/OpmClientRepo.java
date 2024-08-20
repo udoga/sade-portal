@@ -57,7 +57,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     @Override
     public List<Client> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
     }
 

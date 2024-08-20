@@ -56,7 +56,7 @@ public class OpmReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implements
 
     @Override
     public List<ReceiptCategory> listSummarized() {
-        String sql = createQuerySql("id, type_description", "", "", "type_description", "");
+        String sql = getQuerySql("id, type_description") + getOrderSql("type_description");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedReceiptCategory));
     }
 

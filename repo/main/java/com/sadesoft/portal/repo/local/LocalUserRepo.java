@@ -38,7 +38,7 @@ public class LocalUserRepo extends JdbcRepo<User> implements UserRepo {
 
     @Override
     public List<User> listSummarized() {
-        String sql = createQuerySql("id, username", "", "", "username", "");
+        String sql = getQuerySql("id, username") + getOrderSql("username");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedUser));
     }
 

@@ -195,6 +195,12 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
+    public List<Project> listSummarized() {
+        String sql = getQuerySql("id, name") + getOrderSql("name");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedProject));
+    }
+
+    @Override
     public DetailedProject readDetailed(String id) {
         String sql = createDetailedQuerySql("p.id = " + id);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
@@ -221,12 +227,6 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         List<String> conditions = new ArrayList<>();
         if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
         return String.join(" and ", conditions);
-    }
-
-    @Override
-    public List<Project> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedProject));
     }
 
     private Project toSummarizedProject(ResultSet s) throws SQLException {

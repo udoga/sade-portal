@@ -50,7 +50,7 @@ public class OpmSectorRepo extends JdbcRepo<Sector> implements SectorRepo {
 
     @Override
     public List<Sector> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedSector));
     }
 

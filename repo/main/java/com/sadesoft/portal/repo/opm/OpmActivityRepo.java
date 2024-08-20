@@ -62,7 +62,7 @@ public class OpmActivityRepo extends JdbcRepo<Activity> implements ActivityRepo 
 
     @Override
     public List<Activity> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedActivity));
     }
 

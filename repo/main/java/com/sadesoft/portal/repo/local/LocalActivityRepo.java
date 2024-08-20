@@ -35,7 +35,7 @@ public class LocalActivityRepo extends JdbcRepo<Activity> implements ActivityRep
 
     @Override
     public List<Activity> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedActivity));
     }
 

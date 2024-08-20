@@ -35,7 +35,7 @@ public class LocalReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implemen
 
     @Override
     public List<ReceiptCategory> listSummarized() {
-        String sql = createQuerySql("id, name", "", "", "name", "");
+        String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> queryFor(createStatement(sql), this::toSummarizedReceiptCategory));
     }
 
