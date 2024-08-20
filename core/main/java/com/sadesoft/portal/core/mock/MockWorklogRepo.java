@@ -29,8 +29,9 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter filter, WorklogOrder order) {
-        return records.stream().filter(w -> w.passes(filter)).sorted(getComparator(order)).toList();
+    public List<Worklog> listBy(WorklogFilter f, WorklogOrder o) {
+        List<Worklog> worklogs =  records.stream().filter(w -> w.passes(f)).sorted(getComparator(o)).toList();
+        return (f.offset == null)? worklogs : worklogs.subList(f.offset, worklogs.size());
     }
 
     @Override

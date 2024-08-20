@@ -184,16 +184,16 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
         return " order by " + content;
     }
 
-    protected String getOrderSql() {
-        return getOrderSql(getIdName());
-    }
-
     protected String getLimitSql(String content) {
         return " limit " + content;
     }
 
     protected String getLimitSql() {
         return getLimitSql("100");
+    }
+
+    protected String getOffsetSql(Integer offset) {
+        return (offset == null)? "" : (" offset " + offset);
     }
 
     protected String repeat(String template, List<JdbcColumn> columnList) {

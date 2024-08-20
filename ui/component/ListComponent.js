@@ -14,6 +14,7 @@ class ListComponent {
     }
 
     load = function (appendedUrl = "") {
+        this.query.offset = this.records.length;
         this.api.list(appendedUrl, this.getFilledQuery()).then(json => this.handleLoadResponse(json));
     }
 

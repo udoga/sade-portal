@@ -61,12 +61,13 @@ public class WorklogServiceTest {
         }
 
         @Test
-        public void listsAfterGivenId() {
+        public void listsByOffset() {
             worklogRepo.create(validWorklog.copy());
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy(new WorklogFilter().withAfterId("0"), WorklogOrder.ID).size());
-            assertEquals(1, service.listBy(new WorklogFilter().withAfterId("1"), WorklogOrder.ID).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withAfterId("2"), WorklogOrder.ID).size());
+            assertEquals(3, service.listBy(new WorklogFilter().withOffset(0), WorklogOrder.ID).size());
+            assertEquals(2, service.listBy(new WorklogFilter().withOffset(1), WorklogOrder.ID).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withOffset(2), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withOffset(3), WorklogOrder.ID).size());
         }
 
         @Test
@@ -104,16 +105,16 @@ public class WorklogServiceTest {
         }
 
         @Test
-        public void listsDetailedAfterGivenIdOrderedByNewest() {
+        public void listsDetailedOrderedByNewest() {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 2, 1)));
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 3, 1)));
-            var detailedWorklogs = service.listDetailedBy(new WorklogFilter().withAfterId("0"), WorklogOrder.NEWEST);
+            var detailedWorklogs = service.listDetailedBy(new WorklogFilter().withOffset(1), WorklogOrder.NEWEST);
             assertEquals(2, detailedWorklogs.size());
-            assertEquals("2", detailedWorklogs.get(0).id);
-            assertEquals("1", detailedWorklogs.get(1).id);
+            assertEquals("1", detailedWorklogs.get(0).id);
+            assertEquals("0", detailedWorklogs.get(1).id);
         }
 
         @Test

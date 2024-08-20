@@ -35,8 +35,8 @@ public class RestController {
     }
 
     protected String getQueryParameter(Context c, String key, String defaultValue) {
-        String param = c.queryParam(key);
-        return (param == null)? defaultValue : param;
+        String value = c.queryParam(key);
+        return (value == null)? defaultValue : value;
     }
 
     protected  <T extends Enum<T>> T getEnum(Class<T> enumType, String value) {

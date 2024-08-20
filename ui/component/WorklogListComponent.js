@@ -20,11 +20,6 @@ class WorklogListComponent extends ListComponent {
         return employee.firstName + " " + employee.lastName;
     }
 
-    loadMore = function () {
-        this.query.afterId = this.worklogs.slice(-1)[0].id;
-        this.load("detailed");
-    }
-
     hasMore = function () {
         return this.worklogs.length % 100 == 0;
     }

@@ -61,13 +61,13 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     @Override
     public List<Worklog> listBy(WorklogFilter f, WorklogOrder o) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql();
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedWorklog> listDetailedBy(WorklogFilter f, WorklogOrder o) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql();
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
@@ -96,7 +96,6 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     private String getWhereSql(WorklogFilter f) {
         List<String> conditions = new ArrayList<>();
-        if (f.afterId != null) conditions.add("w.id > " + f.afterId);
         if (f.projectId != null) conditions.add("w.project_id = " + f.projectId);
         if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
         return getWhereSql(String.join(" and ", conditions));

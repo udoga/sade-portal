@@ -136,7 +136,6 @@ public class Worklog implements Record {
     }
 
     public boolean passes(WorklogFilter f) {
-        if (f.afterId != null && id.compareTo(f.afterId) <= 0) return false;
         if (f.projectId != null && !projectId.equals(f.projectId)) return false;
         if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
         return true;
