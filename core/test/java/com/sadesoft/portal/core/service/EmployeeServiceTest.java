@@ -57,8 +57,8 @@ public class EmployeeServiceTest {
         @Test
         public void listsEmployees() {
             assertEquals(1, service.list().size());
-            assertEquals(validEmployee, service.list().get(0));
-            assertEquals(validEmployee, service.read("0"));
+            assertEquals(validEmployee.withId("0"), service.list().get(0));
+            assertEquals(validEmployee.withId("0"), service.read("0"));
         }
 
         @Test

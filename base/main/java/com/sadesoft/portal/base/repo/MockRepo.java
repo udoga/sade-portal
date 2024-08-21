@@ -1,5 +1,6 @@
 package com.sadesoft.portal.base.repo;
 
+import com.sadesoft.portal.base.error.InvalidIdError;
 import com.sadesoft.portal.base.error.RecordNotFoundError;
 
 import java.util.ArrayList;
@@ -19,39 +20,45 @@ public class MockRepo<T extends Record> implements Repo<T> {
     @Override
     public List<T> list() {
         ArrayList<T> list = new ArrayList<>();
-        for (T t: records) list.add((T) t.copy());
+        for (T t: records) list.add(copy(t));
         return list;
     }
 
     @Override
     public T create(T record) {
-        record.setId(String.valueOf(nextId++));
-        records.add(record);
-        return record;
+        if (record.getId() != null) throw new InvalidIdError(record.getId());
+        T copy = copy(record);
+        copy.setId(String.valueOf(nextId++));
+        records.add(copy);
+        return copy;
     }
 
     @Override
     public T read(String id) {
-        int index = findIndex(id);
-        return list().get(index);
+        return copy(records.get(findIndex(id)));
     }
 
     @Override
     public T update(String id, T record) {
-        int index = findIndex(id);
-        record.setId(id);
-        records.set(index, record);
-        return list().get(index);
+        if (record.getId() != null && !record.getId().equals(id)) throw new InvalidIdError(record.getId());
+        T copy = copy(record);
+        copy.setId(id);
+        records.set(findIndex(id), copy);
+        return copy;
     }
 
     @Override
     public T delete(String id) {
-        int index = findIndex(id);
-        return records.remove(index);
+        return records.remove(findIndex(id));
     }
 
     protected List<T> applyOffset(List<T> list, Integer offset) {
         return (offset == null)? list : list.subList(offset, list.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    private T copy(T record) {
+        return (T) record.copy();
     }
 
     private int findIndex(String id) {

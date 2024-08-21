@@ -75,8 +75,8 @@ public class ExpenseServiceTest {
         @Test
         public void listsExpenses() {
             assertEquals(1, service.listBy(new ExpenseFilter()).size());
-            assertEquals(validExpense, service.listBy(new ExpenseFilter()).get(0));
-            assertEquals(validExpense, service.read("0"));
+            assertEquals(validExpense.withId("0"), service.listBy(new ExpenseFilter()).get(0));
+            assertEquals(validExpense.withId("0"), service.read("0"));
         }
 
         @Test

@@ -2,6 +2,7 @@ package com.sadesoft.portal.base.repo;
 
 import java.util.Objects;
 
+import com.sadesoft.portal.base.error.InvalidIdError;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +32,13 @@ public class MockRepoTest {
         repo.create(new MockRecord("name"));
         assertEquals(1, repo.list().size());
         assertEquals(new MockRecord("0", "name"), repo.list().get(0));
+    }
+
+    @Test
+    public void whenCreatesWithId_throwsException() {
+        assertThrows(InvalidIdError.class, () -> repo.create(new MockRecord("0", "name")));
+        assertThrows(InvalidIdError.class, () -> repo.create(new MockRecord("1", "name")));
+        assertEquals(0, repo.list().size());
     }
 
     @Test
@@ -114,6 +122,11 @@ public class MockRepoTest {
         }
 
         @Test
+        public void whenUpdatesWithConflictingIds_throwsException() {
+            assertThrows(InvalidIdError.class, () -> repo.update("0", new MockRecord("1", "new_name")));
+        }
+
+        @Test
         public void whenUpdates_changesNameById() {
             repo.delete("0");
             MockRecord record = repo.update("1", new MockRecord("new_name"));
@@ -147,7 +160,16 @@ public class MockRepoTest {
 
         @Override
         public boolean equals(Object o) {
-            return o instanceof MockRecord && this.equals((MockRecord) o);
+            if (!(o instanceof MockRecord r)) return false;
+            return Objects.equals(id, r.id) && Objects.equals(name, r.name);
+        }
+
+        @Override
+        public String toString() {
+            return "MockRecord[" +
+                    "id=" + id +
+                    " name=" + name +
+                    ']';
         }
 
         public boolean equals(MockRecord record) {
