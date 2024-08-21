@@ -30,12 +30,12 @@ class RolePageComponent extends PageComponent {
     removeAssignment = function (id) {
         if (confirm("Are you sure?"))
             this.assignmentApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.assignments, json) : this.notifyError(json));
+                .then(json => json.data ? this.removeFromTable(this.assignments, id) : this.notifyError(json));
     }
 
     removeGrant = function (id) {
         if (confirm("Are you sure?"))
             this.grantApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.grants, json) : this.notifyError(json));
+                .then(json => json.data ? this.removeFromTable(this.grants, id) : this.notifyError(json));
     }
 }

@@ -36,19 +36,19 @@ class EmployeePageComponent extends PageComponent {
     removeVacation = function (id) {
         if (confirm("Are you sure?"))
             this.vacationApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.vacations, json) : this.notifyError(json));
+                .then(json => json.data ? this.removeFromTable(this.vacations, id) : this.notifyError(json));
     }
 
     removeExpense = function (id) {
         if (confirm("Are you sure?"))
             this.expenseApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.expenses, json) : this.notifyError(json));
+                .then(json => json.data ? this.removeFromTable(this.expenses, id) : this.notifyError(json));
     }
 
     removeWorklog = function (id) {
         if (confirm("Are you sure?"))
             this.worklogApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.worklogs, json) : this.notifyError(json));
+                .then(json => json.data ? this.removeFromTable(this.worklogs, id) : this.notifyError(json));
     }
 
     getUser = function () {
