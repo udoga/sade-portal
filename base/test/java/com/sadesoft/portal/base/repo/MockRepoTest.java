@@ -172,10 +172,6 @@ public class MockRepoTest {
                     ']';
         }
 
-        public boolean equals(MockRecord record) {
-            return Objects.equals(id, record.id) && name.equals(record.name);
-        }
-
         @Override
         public String getId() {
             return id;

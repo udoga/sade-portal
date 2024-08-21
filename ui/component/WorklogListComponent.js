@@ -12,7 +12,7 @@ class WorklogListComponent extends ListComponent {
     }
 
     loadEmployees = function (employeeApi) {
-        employeeApi.list()
+        employeeApi.listSummarized()
             .then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json.error));
     }
 

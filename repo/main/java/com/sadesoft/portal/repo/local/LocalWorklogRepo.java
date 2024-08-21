@@ -103,7 +103,6 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
 
     private String getOrderSql(WorklogOrder o) {
         return getOrderSql(switch (o) {
-            case ID -> "id";
             case NEWEST -> "work_date desc";
             case OLDEST -> "work_date";
         });

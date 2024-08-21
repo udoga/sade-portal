@@ -32,6 +32,6 @@ public class WorklogController extends RestController {
     }
 
     private WorklogOrder getOrder(Context c) {
-        return getEnum(WorklogOrder.class, getQueryParameter(c, "order", "id"));
+        return getEnum(WorklogOrder.class, getQueryParameter(c, "order", "newest"));
     }
 }
