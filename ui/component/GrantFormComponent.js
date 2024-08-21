@@ -9,18 +9,8 @@ class GrantFormComponent extends FormComponent {
 
     loadAll = function (roleApi, permissionApi) {
         this.load();
-        this.loadRoles(roleApi);
-        this.loadPermissions(permissionApi);
-    }
-
-    loadRoles = function (roleApi) {
-        roleApi.listSummarized()
-            .then(json => json.data? Object.assign(this.roles, json.data) : this.notifyError(json));
-    }
-
-    loadPermissions = function (permissionApi) {
-        permissionApi.listSummarized()
-            .then(json => json.data? Object.assign(this.permissions, json.data) : this.notifyError(json));
+        this.loadSummarized(roleApi, this.roles);
+        this.loadSummarized(permissionApi, this.permissions);
     }
 
     routeOnSuccess = function () {

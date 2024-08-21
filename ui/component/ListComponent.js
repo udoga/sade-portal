@@ -29,7 +29,7 @@ class ListComponent {
     }
 
     loadSummarized = function (api, array) {
-        api.listSummarized().then(json => json.data? Object.assign(array, json.data) : this.notifyError(json.error));
+        api.list("summarized").then(json => json.data? Object.assign(array, json.data) : this.notifyError(json.error));
     }
 
     handleLoadResponse = function (json) {

@@ -8,11 +8,6 @@ class EmployeeFormComponent extends FormComponent {
 
     loadAll = function (userApi) {
         this.load();
-        this.loadUsers(userApi);
-    }
-
-    loadUsers = function (userApi) {
-        userApi.listSummarized()
-            .then(json => json.data? Object.assign(this.users, json.data) : this.notifyError(json.error));
+        this.loadSummarized(userApi, this.users);
     }
 }

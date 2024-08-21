@@ -23,6 +23,10 @@ class FormComponent {
         else this.create();
     }
 
+    loadSummarized = function (api, array) {
+        api.list("summarized").then(json => json.data? Object.assign(array, json.data) : this.notifyError(json.error));
+    }
+
     handleLoadResponse = function (json) {
         json.data ? Object.assign(this.record, json.data) : this.notifyError(json);
     }
