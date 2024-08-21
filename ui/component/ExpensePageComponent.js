@@ -14,14 +14,11 @@ class ExpensePageComponent extends PageComponent {
     }
 
     loadReceipts = function () {
-        this.receiptApi.list("", { expenseId: this.router.getId() })
-            .then(json => json.data ? Object.assign(this.receipts, json.data) : this.notifyError(json));
+        this.loadRelations(this.receiptApi, this.receipts);
     }
 
     removeReceipt = function (id) {
-        if (confirm("Are you sure?"))
-            this.receiptApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.receipts, id) : this.notifyError(json));
+        this.removeRelation(this.receiptApi, this.receipts, id);
     }
 
     getEmployee = function () {

@@ -19,36 +19,27 @@ class EmployeePageComponent extends PageComponent {
     }
 
     loadVacations = function () {
-        this.vacationApi.list("detailed", { employeeId: this.employee.id })
-            .then(json => json.data ? Object.assign(this.vacations, json.data) : this.notifyError(json));
+        this.loadRelations(this.vacationApi, this.vacations, "detailed");
     }
 
     loadExpenses = function () {
-        this.expenseApi.list("detailed", { employeeId: this.employee.id })
-            .then(json => json.data ? Object.assign(this.expenses, json.data) : this.notifyError(json));
+        this.loadRelations(this.expenseApi, this.expenses, "detailed");
     }
 
     loadWorklogs = function () {
-        this.worklogApi.list("detailed", { employeeId: this.employee.id, offset: this.worklogs.length })
-            .then(json => json.data ? this.worklogs.push(...json.data) : this.notifyError(json));
+        this.loadRelations(this.worklogApi, this.worklogs, "detailed");
     }
 
     removeVacation = function (id) {
-        if (confirm("Are you sure?"))
-            this.vacationApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.vacations, id) : this.notifyError(json));
+        this.removeRelation(this.vacationApi, this.vacations, id);
     }
 
     removeExpense = function (id) {
-        if (confirm("Are you sure?"))
-            this.expenseApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.expenses, id) : this.notifyError(json));
+        this.removeRelation(this.expenseApi, this.expenses, id);
     }
 
     removeWorklog = function (id) {
-        if (confirm("Are you sure?"))
-            this.worklogApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.worklogs, id) : this.notifyError(json));
+        this.removeRelation(this.worklogApi, this.worklogs, id);
     }
 
     getUser = function () {

@@ -18,18 +18,14 @@ class UserPageComponent extends PageComponent {
     }
 
     loadAssignments = function () {
-        this.assignmentApi.list("detailed", { userId: this.router.getId() })
-            .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
+        this.loadRelations(this.assignmentApi, this.assignments, "detailed");
     }
 
     loadEmployee = function () {
-        this.employeeApi.list("", { userId: this.router.getId() })
-            .then(json => json.data ? Object.assign(this.employee, json.data[0]) : this.notifyError(json));
+        this.loadRelation(this.employeeApi, this.employee);
     }
 
     removeAssignment = function (id) {
-        if (confirm("Are you sure?"))
-            this.assignmentApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.assignments, id) : this.notifyError(json));
+        this.removeRelation(this.assignmentApi, this.assignments, id);
     }
 }

@@ -18,24 +18,18 @@ class RolePageComponent extends PageComponent {
     }
 
     loadAssignments = function () {
-        this.assignmentApi.list("detailed", { roleId: this.role.id })
-            .then(json => json.data ? Object.assign(this.assignments, json.data) : this.notifyError(json));
+        this.loadRelations(this.assignmentApi, this.assignments, "detailed");
     }
 
     loadGrants = function () {
-        this.grantApi.list("detailed", { roleId: this.role.id, offset: this.grants.length })
-            .then(json => json.data ? this.grants.push(...json.data) : this.notifyError(json));
+        this.loadRelations(this.grantApi, this.grants, "detailed");
     }
 
     removeAssignment = function (id) {
-        if (confirm("Are you sure?"))
-            this.assignmentApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.assignments, id) : this.notifyError(json));
+        this.removeRelation(this.assignmentApi, this.assignments, id);
     }
 
     removeGrant = function (id) {
-        if (confirm("Are you sure?"))
-            this.grantApi.delete(id)
-                .then(json => json.data ? this.removeFromTable(this.grants, id) : this.notifyError(json));
+        this.removeRelation(this.grantApi, this.grants, id);
     }
 }

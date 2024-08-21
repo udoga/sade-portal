@@ -56,6 +56,23 @@ class PageComponent {
         return (this.selectedTab === tab)? "selected" : "";
     }
 
+    loadRelations = function (api, array, appendedUrl = "") {
+        var query = { offset: array.length };
+        query[this.name + "Id"] = this.router.getId();
+        api.list(appendedUrl, query).then(json => json.data? Object.assign(array, json.data) : this.notifyError(json));
+    }
+
+    loadRelation = function (api, obj, appendedUrl = "") {
+        var query = {};
+        query[this.name + "Id"] = this.router.getId();
+        api.list(appendedUrl, query).then(json => json.data? Object.assign(obj, json.data[0]) : this.notifyError(json));
+    }
+
+    removeRelation = function (api, array, id) {
+        if (confirm("Are you sure?"))
+            api.delete(id).then(json => json.data ? this.removeFromTable(array, id) : this.notifyError(json));
+    }
+
     removeFromTable = function (records, id) {
         records.splice(this.getIndex(records, id), 1);
         this.notifier.notify(new Notification("success", "Deleted successfully."));
