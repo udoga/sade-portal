@@ -19,8 +19,4 @@ class WorklogListComponent extends ListComponent {
     getFullName = function (employee) {
         return employee.firstName + " " + employee.lastName;
     }
-
-    hasMore = function () {
-        return this.worklogs.length % 100 == 0;
-    }
 }

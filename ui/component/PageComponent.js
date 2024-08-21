@@ -69,4 +69,8 @@ class PageComponent {
     hasData = function (record) {
         return Object.keys(record).length !== 0;
     }
+
+    hasMore = function (records) {
+        return records.length != 0 && records.length % 100 == 0;
+    }
 }

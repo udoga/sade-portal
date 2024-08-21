@@ -54,8 +54,4 @@ class EmployeePageComponent extends PageComponent {
     getUser = function () {
         return this.employee.user ? this.employee.user : {};
     }
-
-    hasMoreWorklogs = function () {
-        return this.worklogs.length % 100 == 0;
-    }
 }

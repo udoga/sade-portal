@@ -53,4 +53,8 @@ class ListComponent {
     getFilledQuery = function() {
       return Object.fromEntries(Object.entries(this.query).filter(([_, v]) => v != null && v != ""));
     }
+
+    hasMore = function (records) {
+        return records.length != 0 && records.length % 100 == 0;
+    }
 }

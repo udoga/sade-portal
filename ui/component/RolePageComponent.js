@@ -38,8 +38,4 @@ class RolePageComponent extends PageComponent {
             this.grantApi.delete(id)
                 .then(json => json.data ? this.removeFromTable(this.grants, json) : this.notifyError(json));
     }
-
-    hasMoreGrants = function () {
-        return this.grants.length % 100 == 0;
-    }
 }
