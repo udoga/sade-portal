@@ -8,11 +8,6 @@ class ProjectListComponent extends ListComponent {
 
     loadAll = function (clientApi) {
         this.load("detailed");
-        this.loadClients(clientApi);
-    }
-
-    loadClients = function (clientApi) {
-        clientApi.listSummarized()
-            .then(json => json.data? Object.assign(this.clients, json.data) : this.notifyError(json.error));
+        this.loadSummarized(clientApi, this.clients);
     }
 }

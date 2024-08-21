@@ -1,10 +1,16 @@
-<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="loadAll(employeeApi)">
+<div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="loadAll(employeeApi, projectApi)">
   <h2>Worklogs</h2>
   <div class="query">
-    <select class="padded" x-model="query.employeeId" @change="reload('detailed')">
-      <option value="" selected>All Employees</option>
+    <select class="padded left" x-model="query.employeeId" @change="reload('detailed')">
+      <option value="">All Employees</option>
       <template x-for="e in employees">
         <option :value="e.id" x-text="getFullName(e)" :selected="query.employeeId === e.id"></option>
+      </template>
+    </select>
+    <select class="padded left" x-model="query.projectId" @change="reload('detailed')">
+      <option value="">All Projects</option>
+      <template x-for="p in projects">
+        <option :value="p.id" x-text="p.name" :selected="query.projectId === p.id"></option>
       </template>
     </select>
     <select class="padded right" x-model="query.order" @change="reload('detailed')">

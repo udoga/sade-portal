@@ -28,6 +28,10 @@ class ListComponent {
             this.api.delete(id).then(json => this.handleRemoveResponse(json));
     }
 
+    loadSummarized = function (api, array) {
+        api.listSummarized().then(json => json.data? Object.assign(array, json.data) : this.notifyError(json.error));
+    }
+
     handleLoadResponse = function (json) {
         json.data ? this.records.push(...json.data) : this.notifyError(json);
     }

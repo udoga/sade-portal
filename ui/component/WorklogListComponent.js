@@ -1,19 +1,16 @@
 class WorklogListComponent extends ListComponent {
     worklogs = this.records;
     employees = [];
+    projects = [];
 
     constructor(router, api, notifier) {
         super(router, api, notifier);
     }
 
-    loadAll = function (employeeApi) {
+    loadAll = function (employeeApi, projectApi) {
         this.load("detailed");
-        this.loadEmployees(employeeApi);
-    }
-
-    loadEmployees = function (employeeApi) {
-        employeeApi.listSummarized()
-            .then(json => json.data? Object.assign(this.employees, json.data) : this.notifyError(json.error));
+        this.loadSummarized(employeeApi, this.employees);
+        this.loadSummarized(projectApi, this.projects);
     }
 
     getFullName = function (employee) {
