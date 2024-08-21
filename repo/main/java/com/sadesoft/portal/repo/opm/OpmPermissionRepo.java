@@ -33,4 +33,10 @@ public class OpmPermissionRepo extends JdbcRepo<Permission> implements Permissio
         if (o.id != null) setId(s, i, o.id);
         return s;
     }
+
+    @Override
+    public List<Permission> listSummarized() {
+        String sql = getQuerySql("id, code") + getOrderSql("code");
+        return call(() -> query(createStatement(sql)));
+    }
 }

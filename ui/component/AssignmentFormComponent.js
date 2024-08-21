@@ -17,7 +17,7 @@ class AssignmentFormComponent extends FormComponent {
         userApi.listSummarized()
             .then(json => json.data? Object.assign(this.users, json.data) : this.notifyError(json));
     }
-    
+
     loadRoles = function (roleApi) {
         roleApi.listSummarized()
             .then(json => json.data? Object.assign(this.roles, json.data) : this.notifyError(json));

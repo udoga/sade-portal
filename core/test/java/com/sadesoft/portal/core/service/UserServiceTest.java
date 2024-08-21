@@ -69,7 +69,7 @@ public class UserServiceTest {
         @Test
         public void listSummarizedUsers() {
             assertEquals(1, service.listSummarized().size());
-            assertEquals(null, service.listSummarized().get(0).password);
+            assertNull(service.listSummarized().get(0).password);
         }
 
         @Test

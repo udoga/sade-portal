@@ -4,6 +4,7 @@ import com.sadesoft.portal.core.model.Permission;
 import com.sadesoft.portal.core.repo.PermissionRepo;
 
 import java.util.List;
+import java.util.Map;
 
 public class PermissionService {
     private PermissionRepo repo;
@@ -12,11 +13,15 @@ public class PermissionService {
         this.repo = repo;
     }
 
-    public Permission read(String id) {
-        return repo.read(id);
-    }
-
     public List<Permission> list() {
         return repo.list();
+    }
+
+    public List<Permission> listSummarized() {
+        return repo.listSummarized();
+    }
+
+    public Permission read(String id) {
+        return repo.read(id);
     }
 }

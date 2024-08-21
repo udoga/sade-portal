@@ -18,6 +18,11 @@ public class MockClientRepo extends MockRepo<Client> implements ClientRepo {
     }
 
     @Override
+    public List<Client> listSummarized() {
+        return list().stream().map(c -> new Client().withId(c.id).withName(c.name)).toList();
+    }
+
+    @Override
     public List<DetailedClient> listDetailed() {
         return records.stream().map(e -> new DetailedClient(e, getSector(e.sectorId))).toList();
     }
@@ -30,10 +35,5 @@ public class MockClientRepo extends MockRepo<Client> implements ClientRepo {
 
     private Sector getSector(String sectorId) {
         return (sectorRepo == null)? null : sectorRepo.read(sectorId);
-    }
-
-    @Override
-    public List<Client> listSummarized() {
-        return list().stream().map(c -> new Client().withId(c.id).withName(c.name)).toList();
     }
 }

@@ -34,4 +34,10 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
         if (o.id != null) setId(s, i, o.id);
         return s;
     }
+
+    @Override
+    public List<Permission> listSummarized() {
+        String sql = getQuerySql("id, name") + getOrderSql("name");
+        return call(() -> query(createStatement(sql)));
+    }
 }
