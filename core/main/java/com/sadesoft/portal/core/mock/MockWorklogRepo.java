@@ -60,6 +60,7 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
 
     private static Comparator<Worklog> getComparator(WorklogOrder order) {
         return switch (order) {
+            case ID -> Comparator.comparing((Worklog worklog) -> worklog.id);
             case NEWEST -> Comparator.comparing((Worklog worklog) -> worklog.workDate).reversed();
             case OLDEST -> Comparator.comparing((Worklog worklog) -> worklog.workDate);
         };

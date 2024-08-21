@@ -5,6 +5,7 @@ class WorklogListComponent extends ListComponent {
 
     constructor(router, api, notifier) {
         super(router, api, notifier);
+        this.query.order = "newest";
     }
 
     loadAll = function (employeeApi, projectApi) {

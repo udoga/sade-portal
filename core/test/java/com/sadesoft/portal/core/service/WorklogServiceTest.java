@@ -56,22 +56,22 @@ public class WorklogServiceTest {
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.listBy(new WorklogFilter(), WorklogOrder.OLDEST).size());
-            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogFilter(), WorklogOrder.OLDEST).get(0));
+            assertEquals(1, service.listBy(new WorklogFilter(), WorklogOrder.ID).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogFilter(), WorklogOrder.ID).get(0));
         }
 
         @Test
         public void listsByOffset() {
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy(new WorklogFilter().withOffset(0), WorklogOrder.OLDEST).size());
-            assertEquals(1, service.listBy(new WorklogFilter().withOffset(1), WorklogOrder.OLDEST).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withOffset(2), WorklogOrder.OLDEST).size());
+            assertEquals(2, service.listBy(new WorklogFilter().withOffset(0), WorklogOrder.ID).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withOffset(1), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withOffset(2), WorklogOrder.ID).size());
         }
 
         @Test
         public void listsByEmployeeId() {
-            assertEquals(1, service.listBy(new WorklogFilter().withEmployeeId("0"), WorklogOrder.OLDEST).size());
-            assertEquals(0, service.listBy(new WorklogFilter().withEmployeeId("1"), WorklogOrder.OLDEST).size());
+            assertEquals(1, service.listBy(new WorklogFilter().withEmployeeId("0"), WorklogOrder.ID).size());
+            assertEquals(0, service.listBy(new WorklogFilter().withEmployeeId("1"), WorklogOrder.ID).size());
         }
 
         @Test
@@ -97,7 +97,7 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogFilter(), WorklogOrder.OLDEST);
+            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogFilter(), WorklogOrder.ID);
             assertEquals(1, detailedWorklogs.size());
             assertEquals(projectRepo.read("0"), detailedWorklogs.get(0).project);
         }
