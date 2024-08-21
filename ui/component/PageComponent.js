@@ -59,7 +59,7 @@ class PageComponent {
     loadRelations = function (api, array, appendedUrl = "") {
         var query = { offset: array.length };
         query[this.name + "Id"] = this.router.getId();
-        api.list(appendedUrl, query).then(json => json.data? Object.assign(array, json.data) : this.notifyError(json));
+        api.list(appendedUrl, query).then(json => json.data? array.push(...json.data) : this.notifyError(json));
     }
 
     loadRelation = function (api, obj, appendedUrl = "") {
