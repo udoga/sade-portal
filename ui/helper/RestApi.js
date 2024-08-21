@@ -6,9 +6,9 @@ class RestApi extends HttpClient {
         this.url = "/api" + url;
     }
 
-    list = function (appendedUrl = "", params = {}) {
-        if (this.hasData(params)) appendedUrl += "?";
-        return this.getJson(this.get(this.url + appendedUrl + new URLSearchParams(params),
+    list = function (appendedUrl = "", query = {}) {
+        if (this.hasData(query)) appendedUrl += "?";
+        return this.getJson(this.get(this.url + appendedUrl + new URLSearchParams(query),
                 { headers: this.getHeaders() }));
     }
 
@@ -17,6 +17,7 @@ class RestApi extends HttpClient {
     }
 
     read = function (id, appendedUrl = "") {
+        if (appendedUrl) appendedUrl += "/";
         return this.getJson(this.get(this.url + appendedUrl + id, { headers: this.getHeaders() }));
     }
 
@@ -26,10 +27,6 @@ class RestApi extends HttpClient {
 
     delete = function (id) {
         return this.getJson(this.delete_(this.url + id, { headers: this.getHeaders() }));
-    }
-
-    readDetailed = function (id) {
-        return this.read(id, "detailed/");
     }
 
     getJson = function (request) {
