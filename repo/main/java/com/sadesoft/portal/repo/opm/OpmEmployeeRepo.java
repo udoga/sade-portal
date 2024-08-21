@@ -180,13 +180,13 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
 
     @Override
     public List<Employee> listBy(EmployeeFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedEmployee> listDetailedBy(EmployeeFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);;
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 

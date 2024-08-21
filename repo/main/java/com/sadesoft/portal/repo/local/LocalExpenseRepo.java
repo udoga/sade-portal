@@ -47,13 +47,13 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
 
     @Override
     public List<Expense> listBy(ExpenseFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedExpense> listDetailedBy(ExpenseFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 

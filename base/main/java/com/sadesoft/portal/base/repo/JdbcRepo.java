@@ -24,7 +24,7 @@ public abstract class JdbcRepo<T extends Record> implements Repo<T> {
 
     @Override
     public List<T> list() {
-        String sql = getQuerySql();
+        String sql = getQuerySql() + getOrderSql(getIdName()) + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 

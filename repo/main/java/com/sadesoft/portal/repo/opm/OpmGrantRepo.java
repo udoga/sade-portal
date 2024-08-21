@@ -54,13 +54,13 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
 
     @Override
     public List<Grant> listBy(GrantFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedGrant> listDetailedBy(GrantFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql() + getOffsetSql(f.offset);
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedGrant));
     }
 

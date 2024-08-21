@@ -40,13 +40,13 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
 
     @Override
     public List<Assignment> listBy(AssignmentFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedAssignment> listDetailedBy(AssignmentFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 

@@ -75,13 +75,13 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
 
     @Override
     public List<Vacation> listBy(VacationFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedVacation> listDetailedBy(VacationFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getLimitSql();
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 

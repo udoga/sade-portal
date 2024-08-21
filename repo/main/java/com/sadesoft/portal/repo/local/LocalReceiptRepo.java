@@ -54,7 +54,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
 
     @Override
     public List<Receipt> listBy(String expenseId) {
-        String sql = getQuerySql() + createWhereSql(expenseId);
+        String sql = getQuerySql() + createWhereSql(expenseId) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 

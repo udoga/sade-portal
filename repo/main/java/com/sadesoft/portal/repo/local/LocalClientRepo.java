@@ -46,7 +46,7 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     @Override
     public List<DetailedClient> listDetailed() {
-        String sql = getDetailedQuerySql();
+        String sql = getDetailedQuerySql() + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
     }
 
