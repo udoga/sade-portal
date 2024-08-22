@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.filter.ReceiptFilter;
 import com.sadesoft.portal.core.model.Receipt;
 import com.sadesoft.portal.core.repo.ReceiptRepo;
 
@@ -74,12 +76,14 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    public List<Receipt> listBy(String expenseId) {
-        String sql = getQuerySql() + createWhereSql(expenseId) + getOrderSql("id") + getLimitSql();
+    public List<Receipt> listBy(ReceiptFilter filter) {
+        String sql = getQuerySql() + createWhereSql(filter) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
-    private String createWhereSql(String expenseId) {
-        return (expenseId == null)? "" : getWhereSql("r.expense_id = " + expenseId);
+    private String createWhereSql(ReceiptFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.expenseId != null) conditions.add("expense_id = " + f.expenseId);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

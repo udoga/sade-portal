@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.core.filter.ReceiptFilter;
 import com.sadesoft.portal.core.mock.MockReceiptRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -93,16 +94,16 @@ public class ReceiptServiceTest {
 
         @Test
         public void listsReceipts() {
-            assertEquals(1, service.listBy(null).size());
-            assertEquals(validReceipt.withId("0"), service.listBy(null).get(0));
+            assertEquals(1, service.listBy(new ReceiptFilter()).size());
+            assertEquals(validReceipt.withId("0"), service.listBy(new ReceiptFilter()).get(0));
             assertEquals(validReceipt.withId("0"), service.read("0"));
         }
 
         @Test
         public void listsByExpenseId() {
-            assertEquals(0, service.listBy("0").size());
-            assertEquals(1, service.listBy("1").size());
-            assertEquals(1, service.listBy(null).size());
+            assertEquals(0, service.listBy(new ReceiptFilter().withExpenseId("0")).size());
+            assertEquals(1, service.listBy(new ReceiptFilter().withExpenseId("1")).size());
+            assertEquals(1, service.listBy(new ReceiptFilter()).size());
         }
 
         @Test

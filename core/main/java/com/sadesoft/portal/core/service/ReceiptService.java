@@ -2,6 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.filter.ReceiptFilter;
 import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.repo.ReceiptRepo;
 
@@ -15,8 +16,8 @@ public class ReceiptService {
         this.repo = repo;
     }
 
-    public List<Receipt> listBy(String expenseId) {
-        return repo.listBy(expenseId);
+    public List<Receipt> listBy(ReceiptFilter filter) {
+        return repo.listBy(filter);
     }
 
     public Receipt read(String id) {
