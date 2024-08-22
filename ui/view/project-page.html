@@ -1,4 +1,4 @@
-<div x-data="new ProjectPageComponent(router, projectApi, notifier)" x-init="loadDetailed()">
+<div x-data="new ProjectPageComponent(router, projectApi, notifier, worklogApi)" x-init="loadDetailed()">
   <h2>Project</h2>
   <div>
     <div class="field">
@@ -20,6 +20,7 @@
     <div class="panel">
       <div class="panel-header">
         <span class="panel-item" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
+        <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('client')">
@@ -32,12 +33,47 @@
             <span x-text="getClient().name"></span>
           </div>
         </div>
+        <div x-show="isSelectedTab('worklogs')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Worklog Id</th>
+              <th>Work Date</th>
+              <th>Project</th>
+              <th>Activity</th>
+              <th>Duration</th>
+              <th>Status</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/worklog-form?projectId=' + project.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="w in worklogs">
+              <tr>
+                <td x-text="w.id" class="narrow"></td>
+                <td x-text="w.workDate"></td>
+                <td x-text="w.project.name"></td>
+                <td x-text="w.activity.name"></td>
+                <td x-text="w.duration"></td>
+                <td x-text="w.status"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeWorklog(w.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(worklogs)" @click="loadWorklogs()">Load More</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="options">
-      <a class="white form button" href="javascript:history.back()">Back</a>
-      <a class="yellow form button" :href="'#/project-form/' + project.id">Edit</a>
-      <a class="red form button" @click="remove()">Delete</a>
-    </div>
+  </div>
+  <div class="options">
+    <a class="white form button" href="javascript:history.back()">Back</a>
+    <a class="yellow form button" :href="'#/project-form/' + project.id">Edit</a>
+    <a class="red form button" @click="remove()">Delete</a>
   </div>
 </div>
