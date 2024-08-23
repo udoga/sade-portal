@@ -8,6 +8,8 @@ import com.sadesoft.portal.core.service.WorklogService;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
+import java.time.LocalDate;
+
 public class WorklogController extends RestController {
     public WorklogController(WorklogService service) {
         super("/worklogs");
@@ -28,7 +30,9 @@ public class WorklogController extends RestController {
         return new WorklogFilter()
                 .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0))
                 .withProjectId(c.queryParam("projectId"))
-                .withEmployeeId(c.queryParam("employeeId"));
+                .withEmployeeId(c.queryParam("employeeId"))
+                .withMinDate(c.queryParamAsClass("minDate", LocalDate.class).getOrDefault(null))
+                .withMaxDate(c.queryParamAsClass("maxDate", LocalDate.class).getOrDefault(null));
     }
 
     private WorklogOrder getOrder(Context c) {

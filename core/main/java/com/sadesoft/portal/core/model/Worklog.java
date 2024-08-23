@@ -138,6 +138,8 @@ public class Worklog implements Record {
     public boolean passes(WorklogFilter f) {
         if (f.projectId != null && !projectId.equals(f.projectId)) return false;
         if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
+        if (f.minDate != null && workDate.isBefore(f.minDate)) return false;
+        if (f.maxDate != null && workDate.isAfter(f.maxDate)) return false;
         return true;
     }
 }

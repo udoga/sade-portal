@@ -98,6 +98,8 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         List<String> conditions = new ArrayList<>();
         if (f.projectId != null) conditions.add("w.project_id = " + f.projectId);
         if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
+        if (f.minDate != null) conditions.add("w.work_date >= '" + f.minDate + "'");
+        if (f.maxDate != null) conditions.add("w.work_date <= '" + f.maxDate + "'");
         return getWhereSql(String.join(" and ", conditions));
     }
 

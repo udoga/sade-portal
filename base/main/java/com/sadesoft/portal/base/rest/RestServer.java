@@ -18,6 +18,9 @@ import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class RestServer {
     private final RestConfig config;
     private final Javalin server;
@@ -52,6 +55,7 @@ public class RestServer {
     private void configureServer() {
         JavalinConfig c = server.unsafeConfig();
         c.bundledPlugins.enableCors(cors -> cors.addRule(CorsPluginConfig.CorsRule::anyHost));
+        c.validation.register(LocalDate.class, v -> LocalDate.parse(v, DateTimeFormatter.ISO_LOCAL_DATE));
         if (!config.uiFolder.isEmpty())
             c.staticFiles.add(config.uiFolder, config.uiExternal? Location.EXTERNAL : Location.CLASSPATH);
     }
