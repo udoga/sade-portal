@@ -59,6 +59,9 @@
               </tr>
             </template>
           </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(receipts)" @click="loadReceipts()">Load More</a>
+          </div>
         </div>
         <div x-show="isSelectedTab('employee')">
           <div class="field">

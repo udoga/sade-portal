@@ -30,4 +30,7 @@
       </tr>
     </template>
   </table>
+  <div class="options">
+    <a class="white form button" x-show="hasMore(expenses)" @click="load('detailed')">Load More</a>
+  </div>
 </div>

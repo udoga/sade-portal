@@ -67,6 +67,9 @@
               </tr>
             </template>
           </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(vacations)" @click="loadVacations()">Load More</a>
+          </div>
         </div>
         <div x-show="isSelectedTab('expenses')">
           <table class="relations">
@@ -95,6 +98,9 @@
               </tr>
             </template>
           </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(expenses)" @click="loadExpenses()">Load More</a>
+          </div>
         </div>
         <div x-show="isSelectedTab('worklogs')">
           <table class="relations">

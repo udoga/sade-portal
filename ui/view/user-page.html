@@ -38,6 +38,9 @@
               </tr>
             </template>
           </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(assignments)" @click="loadAssignments()">Load More</a>
+          </div>
         </div>
         <div x-show="isSelectedTab('employee')">
           <div x-show="!hasData(employee)">
