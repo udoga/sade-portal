@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.detailed.DetailedClient;
+import com.sadesoft.portal.core.filter.ClientFilter;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.repo.ClientRepo;
 
@@ -12,17 +13,17 @@ public class ClientService {
     public ClientService(ClientRepo repo) {
         this.repo = repo;
     }
-
-    public List<Client> list() {
-        return repo.list();
-    }
-
+    
     public List<Client> listSummarized() {
         return repo.listSummarized();
     }
 
-    public List<DetailedClient> listDetailed() {
-        return repo.listDetailed();
+    public List<Client> listBy(ClientFilter filter) {
+        return repo.listBy(filter);
+    }
+
+    public List<DetailedClient> listDetailedBy(ClientFilter filter) {
+        return repo.listDetailedBy(filter);
     }
 
     public Client read(String id) {

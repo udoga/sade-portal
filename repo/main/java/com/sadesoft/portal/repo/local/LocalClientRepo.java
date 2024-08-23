@@ -3,6 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedClient;
+import com.sadesoft.portal.core.filter.ClientFilter;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.model.Sector;
 import com.sadesoft.portal.core.repo.ClientRepo;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
@@ -45,8 +47,14 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
     }
 
     @Override
-    public List<DetailedClient> listDetailed() {
-        String sql = getDetailedQuerySql() + getOrderSql("id") + getLimitSql();
+    public List<Client> listBy(ClientFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+        return call(() -> query(createStatement(sql)));
+    }
+
+    @Override
+    public List<DetailedClient> listDetailedBy(ClientFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
     }
 
@@ -71,5 +79,10 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
             "c.*, s.name sector_name",
             tableName + " " + tableAlias +
                 " join sectors s on c.sector_id = s.id");
+    }
+
+    private String getWhereSql(ClientFilter f) {
+        List<String> conditions = new ArrayList<>();
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

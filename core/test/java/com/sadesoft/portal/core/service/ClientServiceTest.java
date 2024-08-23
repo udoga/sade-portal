@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.filter.ClientFilter;
 import com.sadesoft.portal.core.mock.MockClientRepo;
 import com.sadesoft.portal.core.mock.MockSectorRepo;
 import com.sadesoft.portal.core.model.Client;
@@ -42,14 +43,22 @@ public class ClientServiceTest {
 
         @Test
         public void listsClients() {
-            assertEquals(1, service.list().size());
-            assertEquals(validClient.withId("0"), service.list().get(0));
+            assertEquals(1, service.listBy(new ClientFilter()).size());
+            assertEquals(validClient.withId("0"), service.listBy(new ClientFilter()).get(0));
+        }
+
+        @Test
+        public void listsByOffset() {
+            clientRepo.create(validClient.copy());
+            assertEquals(2, service.listBy(new ClientFilter().withOffset(0)).size());
+            assertEquals(1, service.listBy(new ClientFilter().withOffset(1)).size());
+            assertEquals(0, service.listBy(new ClientFilter().withOffset(2)).size());
         }
 
         @Test
         public void listsDetailedClients() {
             sectorRepo.create(new Sector(null, "Sample"));
-            assertEquals(clientRepo.listDetailed(), service.listDetailed());
+            assertEquals(clientRepo.listDetailedBy(new ClientFilter()), service.listDetailedBy(new ClientFilter()));
         }
 
         @Test
@@ -80,7 +89,7 @@ public class ClientServiceTest {
         public void deletesClientById() {
             Client client = service.delete("0");
             assertEquals(validClient.withId("0"), client);
-            assertEquals(0, service.list().size());
+            assertEquals(0, service.listBy(new ClientFilter()).size());
         }
     }
 }

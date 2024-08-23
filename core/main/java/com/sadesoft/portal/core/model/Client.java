@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.ClientFilter;
 
 import java.util.Objects;
 
@@ -73,5 +74,9 @@ public class Client implements Record {
         Client client = copy();
         client.name = name;
         return client;
+    }
+
+    public boolean passes(ClientFilter f) {
+        return true;
     }
 }
