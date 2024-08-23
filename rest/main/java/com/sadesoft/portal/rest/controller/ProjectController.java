@@ -26,6 +26,7 @@ public class ProjectController extends RestController {
 
     private ProjectFilter getProjectFilter(Context c) {
         return new ProjectFilter()
-                .withClientId(c.queryParam("clientId"));
+                .withClientId(c.queryParam("clientId"))
+                .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0));
     }
 }

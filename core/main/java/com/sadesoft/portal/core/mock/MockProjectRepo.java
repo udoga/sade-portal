@@ -20,7 +20,7 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
 
     @Override
     public List<Project> listBy(ProjectFilter filter) {
-        return records.stream().filter(p -> p.passes(filter)).toList();
+        return applyOffset(records.stream().filter(e -> e.passes(filter)).toList(), filter.offset);
     }
 
     @Override

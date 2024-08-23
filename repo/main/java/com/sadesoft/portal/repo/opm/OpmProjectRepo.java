@@ -185,13 +185,14 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
 
     @Override
     public List<Project> listBy(ProjectFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
     public List<DetailedProject> listDetailedBy(ProjectFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql()
+                + getOffsetSql(f.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
