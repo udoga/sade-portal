@@ -63,9 +63,9 @@ public class SessionServiceTest {
     }
 
     @Test
-    public void whenAuthenticationIsDisabled_doesNotAuthenticate() {
+    public void whenAuthenticationIsDisabled_doesNotThrowError() {
         config.authenticationEnabled = false;
-        assertDoesNotThrow(() -> service.authenticate("sample-token"));
+        assertEquals(new Session(), service.authenticate("sample-token"));
     }
 
     @Test
@@ -171,7 +171,7 @@ public class SessionServiceTest {
 
             @Test
             public void checksEqualityWhileAuthentication() {
-                assertDoesNotThrow(() -> service.authenticate(session.token));
+                assertEquals(sessionRepo.read("0"), service.authenticate(session.token));
                 var e = assertThrows(SessionError.class, () -> service.authenticate("another-token"));
                 assertEquals("Session not found, invalid token.", e.getMessage());
             }
@@ -179,8 +179,8 @@ public class SessionServiceTest {
             @Test
             public void whenThereAreTwoSessions_authenticatesIfTokenExists() {
                 Session secondSession = service.login(secondUser);
-                assertDoesNotThrow(() -> service.authenticate(session.token));
-                assertDoesNotThrow(() -> service.authenticate(secondSession.token));
+                assertEquals(sessionRepo.read("0"), service.authenticate(session.token));
+                assertEquals(sessionRepo.read("1"), service.authenticate(secondSession.token));
                 assertThrows(SessionError.class, () -> service.authenticate("missing-token"));
             }
 

@@ -30,12 +30,12 @@ public class RestServer {
         configure();
     }
 
-    public void enrol(RestController controller) {
-        for (RestMethod method: controller.methods) enrol(method);
-    }
-
     public void run() {
         server.start(config.port);
+    }
+
+    public void enrol(RestController controller) {
+        for (RestMethod method: controller.methods) enrol(method);
     }
 
     private void enrol(RestMethod method) {

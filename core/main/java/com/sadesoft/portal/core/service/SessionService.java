@@ -42,15 +42,16 @@ public class SessionService {
         return sessionRepo.update(session.id, session.withEndTime(LocalDateTime.now()));
     }
 
-    public void authenticate(String token) {
-        authenticate(token, LocalDateTime.now());
+    public Session authenticate(String token) {
+        return authenticate(token, LocalDateTime.now());
     }
 
-    public void authenticate(String token, LocalDateTime time) {
-        if (!config.authenticationEnabled) return;
+    public Session authenticate(String token, LocalDateTime time) {
+        if (!config.authenticationEnabled) return new Session();
         Session session = find(token);
         if (time.isAfter(session.endTime)) throw new SessionError("Session expired, please login.");
         if (time.isBefore(session.beginTime)) throw new SessionError("Session is not started yet.");
+        return session;
     }
 
     private Session create(String userId, LocalDateTime beginTime) {

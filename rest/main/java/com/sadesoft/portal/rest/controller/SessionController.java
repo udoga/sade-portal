@@ -7,16 +7,13 @@ import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
 public class SessionController extends RestController {
-    private final SessionService service;
-
     public SessionController(SessionService service) {
         super("/sessions");
-        this.service = service;
         add(HandlerType.GET, "", c -> send(c, service.list()));
         add(HandlerType.POST, "", c -> send(c, service.login(getUser(c))));
         add(HandlerType.POST, "/logout", c -> send(c, service.logout(getToken(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
-        addSeparate(HandlerType.BEFORE, "/*", c -> authenticate(c, getToken(c)));
+        addSeparate(HandlerType.BEFORE, "/*", c -> authenticate(c, service, getToken(c)));
     }
 
     private User getUser(Context c) {
@@ -27,8 +24,8 @@ public class SessionController extends RestController {
         return removePrefix(c.header("Authorization"), "Bearer ");
     }
 
-    private void authenticate(Context c, String token) {
-        if (!isLoginRequest(c)) service.authenticate(token);
+    private void authenticate(Context c, SessionService service, String token) {
+        if (!isLoginRequest(c)) c.attribute("session", service.authenticate(token));
     }
 
     private boolean isLoginRequest(Context c) {
