@@ -46,6 +46,11 @@ CREATE TABLE employees(
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
+CREATE TABLE positions(
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE sectors(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
@@ -181,6 +186,11 @@ INSERT INTO employees VALUES
 --   id,      user_id,  first_name, last_name
     (default,       2, 'Uğur Doğa',  'Sezgin'),
     (default,       3, 'Eylül',      'Erdinç');
+
+INSERT INTO positions VALUES
+--   id,      name
+    (default, 'Manager'),
+    (default, 'Assistant' );
 
 INSERT INTO worklogs VALUES
 --   id,      project_id, employee_id, activity_id, work_date,    duration, status, description
