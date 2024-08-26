@@ -1,5 +1,13 @@
-<div x-data="new ExpenseListComponent(router, expenseApi, notifier)" x-init="load('detailed')">
+<div x-data="new ExpenseListComponent(router, expenseApi, notifier)" x-init="loadAll(employeeApi)">
   <h2>Expenses</h2>
+  <div class="query">
+    <select class="padded" x-model="query.employeeId" @change="reload('detailed')">
+      <option value="">All Employees</option>
+      <template x-for="e in employees">
+        <option :value="e.id" x-text="e.firstName + ' ' + e.lastName" :selected="query.employeeId === e.id"></option>
+      </template>
+    </select>
+  </div>
   <table class="records">
     <tr>
       <th class="narrow">Id</th>
