@@ -3,18 +3,21 @@ class EmployeePageComponent extends PageComponent {
     vacations = [];
     expenses = [];
     worklogs = [];
+    engagements = [];
 
-    constructor(router, api, notifier, vacationApi, expenseApi, worklogApi) {
+    constructor(router, api, notifier, vacationApi, expenseApi, worklogApi, engagementApi) {
         super(router, api, notifier, "employee");
         this.vacationApi = vacationApi;
         this.expenseApi = expenseApi;
         this.worklogApi = worklogApi;
+        this.engagementApi = engagementApi;
     }
 
     afterLoad = function () {
         this.loadVacations();
         this.loadExpenses();
         this.loadWorklogs();
+        this.loadEngagements();
         this.selectTab("user");
     }
 
@@ -30,6 +33,10 @@ class EmployeePageComponent extends PageComponent {
         this.loadRelations(this.worklogApi, this.worklogs, "detailed");
     }
 
+    loadEngagements = function () {
+        this.loadRelations(this.engagementApi, this.engagements, "detailed");
+    }
+
     removeVacation = function (id) {
         this.removeRelation(this.vacationApi, this.vacations, id);
     }
@@ -40,6 +47,10 @@ class EmployeePageComponent extends PageComponent {
 
     removeWorklog = function (id) {
         this.removeRelation(this.worklogApi, this.worklogs, id);
+    }
+
+    removeEngagement = function (id) {
+        this.removeRelation(this.engagementApi, this.engagements, id);
     }
 
     getUser = function () {

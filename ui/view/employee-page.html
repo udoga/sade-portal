@@ -1,5 +1,5 @@
-<div x-data="new EmployeePageComponent(router, employeeApi, notifier, vacationApi, expenseApi, worklogApi)"
-    x-init="loadDetailed()">
+<div x-data="new EmployeePageComponent(router, employeeApi, notifier, vacationApi, expenseApi, worklogApi,
+    engagementApi)" x-init="loadDetailed()">
   <h2>Employee</h2>
   <div>
     <div class="field">
@@ -24,6 +24,7 @@
         <span class="panel-item" @click="selectTab('vacations')" :class="getTabClass('vacations')">Vacations</span>
         <span class="panel-item" @click="selectTab('expenses')" :class="getTabClass('expenses')">Expenses</span>
         <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
+        <span class="panel-item" @click="selectTab('engagements')" :class="getTabClass('engagements')">Projects</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('user')">
@@ -135,6 +136,43 @@
           </table>
           <div class="options">
             <a class="white form button" x-show="hasMore(worklogs)" @click="loadWorklogs()">Load More</a>
+          </div>
+        </div>
+        <div x-show="isSelectedTab('engagements')">
+          <table class="relations">
+            <tr>
+              <th class="narrow">Project Id</th>
+              <th>Project Name</th>
+              <th>Position</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="last narrow">
+                <a class="green header icon button" :href="'#/engagement-form?employeeId=' + employee.id">
+                  <i class="fas fa-plus"></i> New
+                </a>
+              </th>
+            </tr>
+            <template x-for="e in engagements">
+              <tr>
+                <td x-text="e.projectId" class="narrow"></td>
+                <td x-text="e.project.name"></td>
+                <td x-text="e.position.name"></td>
+                <td x-text="e.startDate"></td>
+                <td x-text="e.endDate"></td>
+                <td x-text="e.description"></td>
+                <td x-text="e.status"></td>
+                <td class="last narrow">
+                  <a title="Delete" class="red row button" @click="removeEngagement(g.id)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </template>
+          </table>
+          <div class="options">
+            <a class="white form button" x-show="hasMore(engagements)" @click="loadEngagements()">Load More</a>
           </div>
         </div>
       </div>
