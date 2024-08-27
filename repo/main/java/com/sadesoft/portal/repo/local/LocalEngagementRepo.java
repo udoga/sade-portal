@@ -2,13 +2,19 @@ package com.sadesoft.portal.repo.local;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
+import com.sadesoft.portal.core.detailed.DetailedEngagement;
+import com.sadesoft.portal.core.filter.EngagementFilter;
+import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Engagement;
+import com.sadesoft.portal.core.model.Position;
+import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.repo.EngagementRepo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocalEngagementRepo extends JdbcRepo<Engagement> implements EngagementRepo {
@@ -49,5 +55,41 @@ public class LocalEngagementRepo extends JdbcRepo<Engagement> implements Engagem
         s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
         return s;
+    }
+
+    @Override
+    public List<Engagement> listBy(EngagementFilter f) {
+        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+        return call(() -> query(createStatement(sql)));
+    }
+
+    @Override
+    public List<DetailedEngagement> listDetailedBy(EngagementFilter f) {
+        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+        return call(() -> queryFor(createStatement(sql), this::toDetailedEngagement));
+    }
+
+    public DetailedEngagement toDetailedEngagement(ResultSet s) throws SQLException {
+        return new DetailedEngagement(
+                toObject(s),
+                new Project(getId(s, "project_id"), null, s.getString("project_name"), s.getString("project_desc")),
+                new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")),
+                new Position(getId(s, "position_id"), s.getString("position_name")));
+    }
+
+    private String getDetailedQuerySql() {
+        return getQuerySql(
+            "e.*, p.name project_name, p.description project_desc, m.first_name, m.last_name, o.name position_name",
+            tableName + " " + tableAlias +
+                " join projects p on e.project_id = p.id " +
+                " join employees m on e.employee_id = m.id " +
+                " join positions o on e.position_id = o.id");
+    }
+
+    private String getWhereSql(EngagementFilter f) {
+        List<String> conditions = new ArrayList<>();
+        if (f.projectId != null) conditions.add("e.project_id = " + f.projectId);
+        if (f.employeeId != null) conditions.add("e.employee_id = " + f.employeeId);
+        return getWhereSql(String.join(" and ", conditions));
     }
 }

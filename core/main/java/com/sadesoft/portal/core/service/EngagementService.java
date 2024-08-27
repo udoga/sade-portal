@@ -1,5 +1,7 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.core.detailed.DetailedEngagement;
+import com.sadesoft.portal.core.filter.EngagementFilter;
 import com.sadesoft.portal.core.model.Engagement;
 import com.sadesoft.portal.core.repo.EngagementRepo;
 
@@ -14,6 +16,14 @@ public class EngagementService {
 
     public List<Engagement> list() {
         return repo.list();
+    }
+
+    public List<Engagement> listBy(EngagementFilter filter) {
+        return repo.listBy(filter);
+    }
+
+    public List<DetailedEngagement> listDetailedBy(EngagementFilter filter) {
+        return repo.listDetailedBy(filter);
     }
 
     public Engagement read(String id) {

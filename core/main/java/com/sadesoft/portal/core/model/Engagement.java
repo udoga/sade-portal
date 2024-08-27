@@ -1,6 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
+import com.sadesoft.portal.core.filter.EngagementFilter;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -134,5 +135,11 @@ public class Engagement implements Record {
         Engagement copy = copy();
         copy.status = status;
         return copy;
+    }
+
+    public boolean passes(EngagementFilter f) {
+        if (f.projectId != null && !projectId.equals(f.projectId)) return false;
+        if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
+        return true;
     }
 }
