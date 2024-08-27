@@ -38,19 +38,6 @@ CREATE TABLE grants(
     FOREIGN KEY (permission_id) REFERENCES permissions(id)
 );
 
-CREATE TABLE employees(
-    id IDENTITY PRIMARY KEY NOT NULL,
-    user_id INT NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
-);
-
-CREATE TABLE positions(
-    id IDENTITY PRIMARY KEY NOT NULL,
-    name VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE sectors(
     id IDENTITY PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
@@ -73,6 +60,33 @@ CREATE TABLE projects(
 CREATE TABLE activities(
     id IDENTITY PRIMARY KEY NOT NULL,
     name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE employees(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    user_id INT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE positions(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE engagements(
+    id IDENTITY PRIMARY KEY NOT NULL,
+    project_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    position_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    description TEXT NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT,
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
+    FOREIGN KEY (position_id) REFERENCES positions(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE worklogs(
@@ -192,6 +206,11 @@ INSERT INTO positions VALUES
 --   id,      name
     (default, 'Manager'),
     (default, 'Assistant' );
+
+INSERT INTO engagements VALUES
+--   id,      project_id, employee_id, position_id,   start_date,    end_date,        description,   status
+    (default,           1,           1,          1, '2022-01-01', '2022-05-05', 'Description one.', 'Active'),
+    (default,           2,           2,          2, '2022-02-02', '2022-06-06', 'Description two.', 'Inactive');
 
 INSERT INTO worklogs VALUES
 --   id,       project_id, employee_id, activity_id, work_date,    duration, status, description
