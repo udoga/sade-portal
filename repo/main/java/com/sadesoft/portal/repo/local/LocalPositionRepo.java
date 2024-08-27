@@ -32,4 +32,14 @@ public class LocalPositionRepo extends JdbcRepo<Position> implements PositionRep
         if (o.id != null) setId(s, i, o.id);
         return s;
     }
+
+    @Override
+    public List<Position> listSummarized() {
+        String sql = getQuerySql("id, name") + getOrderSql("name");
+        return call(() -> queryFor(createStatement(sql), this::toSummarizedPosition));
+    }
+
+    private Position toSummarizedPosition(ResultSet s) throws SQLException {
+        return new Position().withId(getId(s, "id")).withName(s.getString("name"));
+    }
 }

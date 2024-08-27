@@ -28,9 +28,14 @@ public class PositionServiceTest {
         }
 
         @Test
-        public void listsActivities() {
+        public void listsPositions() {
             assertEquals(1, service.list().size());
             assertEquals(validPosition.withId("0"), service.list().get(0));
+        }
+
+        @Test
+        public void listSummarizedPositions() {
+            assertEquals(repo.listSummarized(), service.listSummarized());
         }
 
         @Test

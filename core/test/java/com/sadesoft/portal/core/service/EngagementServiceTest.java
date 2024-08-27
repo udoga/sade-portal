@@ -28,7 +28,7 @@ public class EngagementServiceTest {
         }
 
         @Test
-        public void listsActivities() {
+        public void listsEngagements() {
             assertEquals(1, service.list().size());
             assertEquals(validEngagement.withId("0"), service.list().get(0));
         }

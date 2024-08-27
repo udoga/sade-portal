@@ -16,6 +16,10 @@ public class PositionService {
         return repo.list();
     }
 
+    public List<Position> listSummarized() {
+        return repo.listSummarized();
+    }
+
     public Position read(String id) {
         return repo.read(id);
     }
