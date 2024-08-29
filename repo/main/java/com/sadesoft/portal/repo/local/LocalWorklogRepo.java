@@ -60,14 +60,14 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogQuery q, WorklogOrder o) {
-        String sql = getQuerySql() + getWhereSql(q) + getOrderSql(o) + getLimitSql() + getOffsetSql(q.offset);
+    public List<Worklog> listBy(WorklogQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql(q.order) + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogQuery q, WorklogOrder o) {
-        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql(o) + getLimitSql() + getOffsetSql(q.offset);
+    public List<DetailedWorklog> listDetailedBy(WorklogQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql(q.order) + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 

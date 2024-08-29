@@ -56,28 +56,28 @@ public class WorklogServiceTest {
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.listBy(new WorklogQuery(), WorklogOrder.ID).size());
-            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogQuery(), WorklogOrder.ID).get(0));
+            assertEquals(1, service.listBy(new WorklogQuery()).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogQuery()).get(0));
         }
 
         @Test
         public void listsByOffset() {
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy(new WorklogQuery().withOffset(0), WorklogOrder.ID).size());
-            assertEquals(1, service.listBy(new WorklogQuery().withOffset(1), WorklogOrder.ID).size());
-            assertEquals(0, service.listBy(new WorklogQuery().withOffset(2), WorklogOrder.ID).size());
+            assertEquals(2, service.listBy(new WorklogQuery().withOffset(0)).size());
+            assertEquals(1, service.listBy(new WorklogQuery().withOffset(1)).size());
+            assertEquals(0, service.listBy(new WorklogQuery().withOffset(2)).size());
         }
 
         @Test
         public void listsByEmployeeId() {
-            assertEquals(1, service.listBy(new WorklogQuery().withEmployeeId("0"), WorklogOrder.ID).size());
-            assertEquals(0, service.listBy(new WorklogQuery().withEmployeeId("1"), WorklogOrder.ID).size());
+            assertEquals(1, service.listBy(new WorklogQuery().withEmployeeId("0")).size());
+            assertEquals(0, service.listBy(new WorklogQuery().withEmployeeId("1")).size());
         }
 
         @Test
         public void listsOrderedByNewest() {
             worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
-            List<Worklog> worklogs = service.listBy(new WorklogQuery(), WorklogOrder.NEWEST);
+            List<Worklog> worklogs = service.listBy(new WorklogQuery().withOrder(WorklogOrder.NEWEST));
             assertEquals(2, worklogs.size());
             assertEquals("1", worklogs.get(0).id);
             assertEquals("0", worklogs.get(1).id);
@@ -86,7 +86,7 @@ public class WorklogServiceTest {
         @Test
         public void listsOrderedByOldest() {
             worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
-            List<Worklog> worklogs = service.listBy(new WorklogQuery(), WorklogOrder.OLDEST);
+            List<Worklog> worklogs = service.listBy(new WorklogQuery().withOrder(WorklogOrder.OLDEST));
             assertEquals(2, worklogs.size());
             assertEquals("0", worklogs.get(0).id);
             assertEquals("1", worklogs.get(1).id);
@@ -97,7 +97,7 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogQuery(), WorklogOrder.ID);
+            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogQuery());
             assertEquals(1, detailedWorklogs.size());
             assertEquals(projectRepo.read("0"), detailedWorklogs.get(0).project);
         }
@@ -109,10 +109,10 @@ public class WorklogServiceTest {
             activityRepo.create(new Activity());
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 2, 1)));
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 3, 1)));
-            var detailedWorklogs = service.listDetailedBy(new WorklogQuery().withOffset(1), WorklogOrder.NEWEST);
-            assertEquals(2, detailedWorklogs.size());
-            assertEquals("1", detailedWorklogs.get(0).id);
-            assertEquals("0", detailedWorklogs.get(1).id);
+            var worklogs = service.listDetailedBy(new WorklogQuery().withOffset(1).withOrder(WorklogOrder.NEWEST));
+            assertEquals(2, worklogs.size());
+            assertEquals("1", worklogs.get(0).id);
+            assertEquals("0", worklogs.get(1).id);
         }
 
         @Test

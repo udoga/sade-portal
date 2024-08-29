@@ -29,13 +29,15 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogQuery q, WorklogOrder o) {
-        return applyOffset(records.stream().filter(w -> w.matches(q)).sorted(getComparator(o)).toList(), q.offset);
+    public List<Worklog> listBy(WorklogQuery q) {
+        return applyOffset(
+                records.stream().filter(w -> w.matches(q)).sorted(getComparator(q.order)).toList(),
+                q.offset);
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogQuery query, WorklogOrder order) {
-        return listBy(query, order).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
+    public List<DetailedWorklog> listDetailedBy(WorklogQuery query) {
+        return listBy(query).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
                 getEmployee(w.employeeId), getActivity(w.activityId))).toList();
     }
 
@@ -59,6 +61,7 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     private static Comparator<Worklog> getComparator(WorklogOrder order) {
+        if (order == null) order = WorklogOrder.ID;
         return switch (order) {
             case ID -> Comparator.comparing((Worklog worklog) -> worklog.id);
             case NEWEST -> Comparator.comparing((Worklog worklog) -> worklog.workDate).reversed();

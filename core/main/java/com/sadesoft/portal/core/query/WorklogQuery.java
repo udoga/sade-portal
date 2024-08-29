@@ -1,5 +1,7 @@
 package com.sadesoft.portal.core.query;
 
+import com.sadesoft.portal.core.order.WorklogOrder;
+
 import java.time.LocalDate;
 
 public class WorklogQuery implements Cloneable {
@@ -8,6 +10,7 @@ public class WorklogQuery implements Cloneable {
     public String employeeId;
     public LocalDate minDate;
     public LocalDate maxDate;
+    public WorklogOrder order;
 
     public WorklogQuery() {
     }
@@ -47,6 +50,12 @@ public class WorklogQuery implements Cloneable {
     public WorklogQuery withMaxDate(LocalDate maxDate) {
         WorklogQuery copy = copy();
         copy.maxDate = maxDate;
+        return copy;
+    }
+
+    public WorklogQuery withOrder(WorklogOrder order) {
+        WorklogQuery copy = copy();
+        copy.order = order;
         return copy;
     }
 }

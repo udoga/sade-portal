@@ -4,7 +4,6 @@ import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.query.WorklogQuery;
 import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.repo.WorklogRepo;
-import com.sadesoft.portal.core.order.WorklogOrder;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ public class WorklogService {
         this.repo = repo;
     }
 
-    public List<Worklog> listBy(WorklogQuery query, WorklogOrder order) {
-        return repo.listBy(query, order);
+    public List<Worklog> listBy(WorklogQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedWorklog> listDetailedBy(WorklogQuery query, WorklogOrder order) {
-        return repo.listDetailedBy(query, order);
+    public List<DetailedWorklog> listDetailedBy(WorklogQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public Worklog read(String id) {

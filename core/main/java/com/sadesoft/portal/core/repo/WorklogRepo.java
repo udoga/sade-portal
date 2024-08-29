@@ -9,7 +9,7 @@ import com.sadesoft.portal.core.model.Worklog;
 import com.sadesoft.portal.core.order.WorklogOrder;
 
 public interface WorklogRepo extends Repo<Worklog> {
-      List<Worklog> listBy(WorklogQuery query, WorklogOrder order);
-      List<DetailedWorklog> listDetailedBy(WorklogQuery query, WorklogOrder order);
+      List<Worklog> listBy(WorklogQuery query);
+      List<DetailedWorklog> listDetailedBy(WorklogQuery query);
       DetailedWorklog readDetailed(String id);
 }
