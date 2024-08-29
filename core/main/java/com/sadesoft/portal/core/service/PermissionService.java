@@ -6,7 +6,7 @@ import com.sadesoft.portal.core.repo.PermissionRepo;
 import java.util.List;
 
 public class PermissionService {
-    private PermissionRepo repo;
+    private final PermissionRepo repo;
 
     public PermissionService(PermissionRepo repo) {
         this.repo = repo;

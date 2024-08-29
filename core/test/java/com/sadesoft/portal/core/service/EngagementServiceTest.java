@@ -14,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EngagementServiceTest {
@@ -43,8 +45,9 @@ public class EngagementServiceTest {
 
         @Test
         public void listsEngagements() {
-            assertEquals(1, service.listBy(new EngagementFilter()).size());
-            assertEquals(validEngagement.withId("0"), service.list().get(0));
+            List<Engagement> engagements = service.listBy(new EngagementFilter());
+            assertEquals(1, engagements.size());
+            assertEquals(validEngagement.withId("0"), engagements.get(0));
         }
 
         @Test
@@ -78,7 +81,7 @@ public class EngagementServiceTest {
         public void deletesEngagementById() {
             Engagement engagement = service.delete("0");
             assertEquals(validEngagement.withId("0"), engagement);
-            assertEquals(0, service.list().size());
+            assertEquals(0, engagementRepo.list().size());
         }
     }
 }

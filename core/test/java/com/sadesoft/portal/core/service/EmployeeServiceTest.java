@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -56,8 +58,9 @@ public class EmployeeServiceTest {
 
         @Test
         public void listsEmployees() {
-            assertEquals(1, service.list().size());
-            assertEquals(validEmployee.withId("0"), service.list().get(0));
+            List<Employee> employees = service.listBy(new EmployeeFilter());
+            assertEquals(1, employees.size());
+            assertEquals(validEmployee.withId("0"), employees.get(0));
             assertEquals(validEmployee.withId("0"), service.read("0"));
         }
 
@@ -113,7 +116,7 @@ public class EmployeeServiceTest {
         public void deletesEmployeeById() {
             Employee employee = service.delete("0");
             assertEquals(validEmployee.withId("0"), employee);
-            assertEquals(0, service.list().size());
+            assertEquals(0, employeeRepo.list().size());
         }
 
         @Test

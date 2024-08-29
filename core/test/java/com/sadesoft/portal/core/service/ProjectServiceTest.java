@@ -10,7 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProjectServiceTest {
     private MockClientRepo clientRepo;
@@ -39,14 +42,15 @@ public class ProjectServiceTest {
 
         @Test
         public void listsProjects() {
-            assertEquals(1, service.list().size());
-            assertEquals(validProject.withId("0"), service.list().get(0));
+            List<Project> projects = service.listBy(new ProjectFilter());
+            assertEquals(1, projects.size());
+            assertEquals(validProject.withId("0"), projects.get(0));
         }
 
         @Test
         public void listSummarizedProjects() {
             assertEquals(1, service.listSummarized().size());
-            assertEquals(null, service.listSummarized().get(0).clientId);
+            assertNull(service.listSummarized().get(0).clientId);
         }
 
         @Test
@@ -94,7 +98,7 @@ public class ProjectServiceTest {
         public void deletesProjectById() {
             Project client = service.delete("0");
             assertEquals(validProject.withId("0"), client);
-            assertEquals(0, service.list().size());
+            assertEquals(0, projectRepo.list().size());
         }
     }
 }

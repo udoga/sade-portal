@@ -14,10 +14,6 @@ public class GrantService {
         this.repo = repo;
     }
 
-    public List<Grant> list() {
-        return repo.list();
-    }
-
     public List<Grant> listBy(GrantFilter filter) {
         return repo.listBy(filter);
     }

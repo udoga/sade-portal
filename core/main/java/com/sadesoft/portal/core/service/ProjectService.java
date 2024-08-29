@@ -14,20 +14,16 @@ public class ProjectService {
         this.repo = repo;
     }
 
-    public List<Project> list() {
-        return repo.list();
-    }
-
-    public List<Project> listSummarized() {
-        return repo.listSummarized();
-    }
-
     public List<Project> listBy(ProjectFilter filter) {
         return repo.listBy(filter);
     }
 
     public List<DetailedProject> listDetailedBy(ProjectFilter filter) {
         return repo.listDetailedBy(filter);
+    }
+
+    public List<Project> listSummarized() {
+        return repo.listSummarized();
     }
 
     public Project read(String id) {

@@ -14,10 +14,6 @@ public class EngagementService {
         this.repo = repo;
     }
 
-    public List<Engagement> list() {
-        return repo.list();
-    }
-
     public List<Engagement> listBy(EngagementFilter filter) {
         return repo.listBy(filter);
     }

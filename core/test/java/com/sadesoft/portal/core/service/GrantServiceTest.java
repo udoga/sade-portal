@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GrantServiceTest {
@@ -39,8 +41,9 @@ public class GrantServiceTest {
 
         @Test
         public void listsGrants() {
-            assertEquals(1, service.list().size());
-            assertEquals(validGrant.withId("0"), service.list().get(0));
+            List<Grant> grants = service.listBy(new GrantFilter());
+            assertEquals(1, grants.size());
+            assertEquals(validGrant.withId("0"), grants.get(0));
         }
 
         @Test
@@ -81,7 +84,7 @@ public class GrantServiceTest {
         public void deletesGrantById() {
             Grant grant = service.delete("0");
             assertEquals(validGrant.withId("0"), grant);
-            assertEquals(0, service.list().size());
+            assertEquals(0, grantRepo.list().size());
         }
     }
 }

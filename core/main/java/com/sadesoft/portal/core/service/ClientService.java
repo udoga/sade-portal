@@ -13,10 +13,6 @@ public class ClientService {
     public ClientService(ClientRepo repo) {
         this.repo = repo;
     }
-    
-    public List<Client> listSummarized() {
-        return repo.listSummarized();
-    }
 
     public List<Client> listBy(ClientFilter filter) {
         return repo.listBy(filter);
@@ -24,6 +20,10 @@ public class ClientService {
 
     public List<DetailedClient> listDetailedBy(ClientFilter filter) {
         return repo.listDetailedBy(filter);
+    }
+
+    public List<Client> listSummarized() {
+        return repo.listSummarized();
     }
 
     public Client read(String id) {

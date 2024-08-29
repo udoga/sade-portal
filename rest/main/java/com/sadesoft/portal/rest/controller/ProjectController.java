@@ -11,8 +11,8 @@ public class ProjectController extends RestController {
     public ProjectController(ProjectService service) {
         super("/projects");
         add(HandlerType.GET, "", c -> send(c, service.listBy(getProjectFilter(c))));
-        add(HandlerType.GET, "/summarized", c -> send(c, service.listSummarized()));
         add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getProjectFilter(c))));
+        add(HandlerType.GET, "/summarized", c -> send(c, service.listSummarized()));
         add(HandlerType.POST, "", c -> send(c, service.create(getProject(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));

@@ -15,20 +15,16 @@ public class EmployeeService {
         this.repo = repo;
     }
 
-    public List<Employee> list() {
-        return repo.list();
-    }
-
-    public List<Employee> listSummarized() {
-        return repo.listSummarized();
-    }
-
     public List<Employee> listBy(EmployeeFilter filter) {
         return repo.listBy(filter);
     }
 
     public List<DetailedEmployee> listDetailedBy(EmployeeFilter filter) {
         return repo.listDetailedBy(filter);
+    }
+
+    public List<Employee> listSummarized() {
+        return repo.listSummarized();
     }
 
     public Employee read(String id) {
