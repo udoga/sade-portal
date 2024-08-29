@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedEmployee;
-import com.sadesoft.portal.core.filter.EmployeeFilter;
+import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
@@ -44,14 +44,14 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    public List<Employee> listBy(EmployeeFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<Employee> listBy(EmployeeQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedEmployee> listDetailedBy(EmployeeFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<DetailedEmployee> listDetailedBy(EmployeeQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedEmployee));
     }
 
@@ -86,9 +86,9 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
                 " join users u on e.user_id = u.id");
     }
 
-    private String getWhereSql(EmployeeFilter f) {
+    private String getWhereSql(EmployeeQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.userId != null) conditions.add("e.user_id = " + f.userId);
+        if (q.userId != null) conditions.add("e.user_id = " + q.userId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

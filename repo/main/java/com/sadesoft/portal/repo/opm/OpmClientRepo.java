@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedClient;
-import com.sadesoft.portal.core.filter.ClientFilter;
+import com.sadesoft.portal.core.query.ClientQuery;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.model.Sector;
 import com.sadesoft.portal.core.repo.ClientRepo;
@@ -64,14 +64,14 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
     }
 
     @Override
-    public List<Client> listBy(ClientFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<Client> listBy(ClientQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedClient> listDetailedBy(ClientFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<DetailedClient> listDetailedBy(ClientQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedClient));
     }
 
@@ -98,7 +98,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
                 " join opm_ps_client_sector s on c.sector = s.id");
     }
 
-    private String getWhereSql(ClientFilter f) {
+    private String getWhereSql(ClientQuery q) {
         List<String> conditions = new ArrayList<>();
         return getWhereSql(String.join(" and ", conditions));
     }

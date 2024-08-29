@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.detailed.DetailedEmployee;
-import com.sadesoft.portal.core.filter.EmployeeFilter;
+import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
 
@@ -15,12 +15,12 @@ public class EmployeeService {
         this.repo = repo;
     }
 
-    public List<Employee> listBy(EmployeeFilter filter) {
-        return repo.listBy(filter);
+    public List<Employee> listBy(EmployeeQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedEmployee> listDetailedBy(EmployeeFilter filter) {
-        return repo.listDetailedBy(filter);
+    public List<DetailedEmployee> listDetailedBy(EmployeeQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public List<Employee> listSummarized() {

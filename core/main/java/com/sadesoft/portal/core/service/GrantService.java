@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.detailed.DetailedGrant;
-import com.sadesoft.portal.core.filter.GrantFilter;
+import com.sadesoft.portal.core.query.GrantQuery;
 import com.sadesoft.portal.core.model.Grant;
 import com.sadesoft.portal.core.repo.GrantRepo;
 
@@ -14,12 +14,12 @@ public class GrantService {
         this.repo = repo;
     }
 
-    public List<Grant> listBy(GrantFilter filter) {
-        return repo.listBy(filter);
+    public List<Grant> listBy(GrantQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedGrant> listDetailedBy(GrantFilter filter) {
-        return repo.listDetailedBy(filter);
+    public List<DetailedGrant> listDetailedBy(GrantQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public Grant create(Grant grant) {

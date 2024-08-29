@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedExpense;
-import com.sadesoft.portal.core.filter.ExpenseFilter;
+import com.sadesoft.portal.core.query.ExpenseQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
@@ -68,14 +68,14 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
     }
 
     @Override
-    public List<Expense> listBy(ExpenseFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<Expense> listBy(ExpenseQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedExpense> listDetailedBy(ExpenseFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<DetailedExpense> listDetailedBy(ExpenseQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense));
     }
 
@@ -98,9 +98,9 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
                 " join opm_hrm_employee m on e.employee_id = m.id");
     }
 
-    private String getWhereSql(ExpenseFilter f) {
+    private String getWhereSql(ExpenseQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.employeeId != null) conditions.add("e.employee_id = " + f.employeeId);
+        if (q.employeeId != null) conditions.add("e.employee_id = " + q.employeeId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

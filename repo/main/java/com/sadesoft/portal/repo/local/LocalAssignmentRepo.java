@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedAssignment;
-import com.sadesoft.portal.core.filter.AssignmentFilter;
+import com.sadesoft.portal.core.query.AssignmentQuery;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.model.User;
@@ -39,14 +39,14 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
     }
 
     @Override
-    public List<Assignment> listBy(AssignmentFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<Assignment> listBy(AssignmentQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedBy(AssignmentFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<DetailedAssignment> listDetailedBy(AssignmentQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedAssignment));
     }
 
@@ -65,10 +65,10 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
                 " join roles r on a.role_id = r.id");
     }
 
-    private String getWhereSql(AssignmentFilter f) {
+    private String getWhereSql(AssignmentQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.userId != null) conditions.add("a.user_id = " + f.userId);
-        if (f.roleId != null) conditions.add("a.role_id = " + f.roleId);
+        if (q.userId != null) conditions.add("a.user_id = " + q.userId);
+        if (q.roleId != null) conditions.add("a.role_id = " + q.roleId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

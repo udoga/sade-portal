@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedGrant;
-import com.sadesoft.portal.core.filter.GrantFilter;
+import com.sadesoft.portal.core.query.GrantQuery;
 import com.sadesoft.portal.core.model.Grant;
 import com.sadesoft.portal.core.model.Permission;
 import com.sadesoft.portal.core.model.Role;
@@ -42,14 +42,14 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
     }
 
     @Override
-    public List<Grant> listBy(GrantFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<Grant> listBy(GrantQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedGrant> listDetailedBy(GrantFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<DetailedGrant> listDetailedBy(GrantQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedGrant));
     }
 
@@ -68,10 +68,10 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
                     " join permissions p on g.permission_id = p.id");
     }
 
-    private String getWhereSql(GrantFilter f) {
+    private String getWhereSql(GrantQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.roleId != null) conditions.add("g.role_id = " + f.roleId);
-        if (f.permissionId != null) conditions.add("g.permission_id = " + f.permissionId);
+        if (q.roleId != null) conditions.add("g.role_id = " + q.roleId);
+        if (q.permissionId != null) conditions.add("g.permission_id = " + q.permissionId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

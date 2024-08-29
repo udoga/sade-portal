@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedAssignment;
-import com.sadesoft.portal.core.filter.AssignmentFilter;
+import com.sadesoft.portal.core.query.AssignmentQuery;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.model.Role;
 import com.sadesoft.portal.core.model.User;
@@ -23,13 +23,13 @@ public class MockAssignmentRepo extends MockRepo<Assignment> implements Assignme
     }
 
     @Override
-    public List<Assignment> listBy(AssignmentFilter filter) {
-        return records.stream().filter(e -> e.passes(filter)).toList();
+    public List<Assignment> listBy(AssignmentQuery query) {
+        return records.stream().filter(e -> e.matches(query)).toList();
     }
 
     @Override
-    public List<DetailedAssignment> listDetailedBy(AssignmentFilter filter) {
-        return listBy(filter).stream().map(a -> new DetailedAssignment(a, getUser(a.userId),
+    public List<DetailedAssignment> listDetailedBy(AssignmentQuery query) {
+        return listBy(query).stream().map(a -> new DetailedAssignment(a, getUser(a.userId),
                 getRole(a.roleId))).toList();
     }
 

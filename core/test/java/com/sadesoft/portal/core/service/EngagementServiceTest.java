@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.filter.EngagementFilter;
+import com.sadesoft.portal.core.query.EngagementQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockEngagementRepo;
 import com.sadesoft.portal.core.mock.MockPositionRepo;
@@ -45,16 +45,16 @@ public class EngagementServiceTest {
 
         @Test
         public void listsEngagements() {
-            List<Engagement> engagements = service.listBy(new EngagementFilter());
+            List<Engagement> engagements = service.listBy(new EngagementQuery());
             assertEquals(1, engagements.size());
             assertEquals(validEngagement.withId("0"), engagements.get(0));
         }
 
         @Test
         public void listsByProjectId() {
-            assertEquals(1, service.listBy(new EngagementFilter()).size());
-            assertEquals(1, service.listBy(new EngagementFilter().withProjectId("0")).size());
-            assertEquals(0, service.listBy(new EngagementFilter().withProjectId("1")).size());
+            assertEquals(1, service.listBy(new EngagementQuery()).size());
+            assertEquals(1, service.listBy(new EngagementQuery().withProjectId("0")).size());
+            assertEquals(0, service.listBy(new EngagementQuery().withProjectId("1")).size());
         }
 
         @Test
@@ -62,7 +62,7 @@ public class EngagementServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             positionRepo.create(new Position());
-            assertEquals(engagementRepo.listDetailedBy(new EngagementFilter()), service.listDetailedBy(new EngagementFilter()));
+            assertEquals(engagementRepo.listDetailedBy(new EngagementQuery()), service.listDetailedBy(new EngagementQuery()));
         }
 
         @Test

@@ -3,7 +3,7 @@ package com.sadesoft.portal.core.mock;
 import java.util.List;
 
 import com.sadesoft.portal.base.repo.MockRepo;
-import com.sadesoft.portal.core.filter.GrantFilter;
+import com.sadesoft.portal.core.query.GrantQuery;
 import com.sadesoft.portal.core.detailed.DetailedGrant;
 import com.sadesoft.portal.core.model.Grant;
 import com.sadesoft.portal.core.model.Role;
@@ -23,13 +23,13 @@ public class MockGrantRepo extends MockRepo<Grant> implements GrantRepo {
     }
 
     @Override
-    public List<Grant> listBy(GrantFilter f) {
-        return applyOffset(records.stream().filter(e -> e.passes(f)).toList(), f.offset);
+    public List<Grant> listBy(GrantQuery q) {
+        return applyOffset(records.stream().filter(e -> e.matches(q)).toList(), q.offset);
     }
 
     @Override
-    public List<DetailedGrant> listDetailedBy(GrantFilter filter) {
-        return listBy(filter).stream().map(g -> new DetailedGrant(g, getRole(g.roleId),
+    public List<DetailedGrant> listDetailedBy(GrantQuery query) {
+        return listBy(query).stream().map(g -> new DetailedGrant(g, getRole(g.roleId),
                 getPermission(g.permissionId))).toList();
     }
 

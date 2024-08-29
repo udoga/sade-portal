@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
-import com.sadesoft.portal.core.filter.EmployeeFilter;
+import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
 import com.sadesoft.portal.core.model.Employee;
@@ -58,7 +58,7 @@ public class EmployeeServiceTest {
 
         @Test
         public void listsEmployees() {
-            List<Employee> employees = service.listBy(new EmployeeFilter());
+            List<Employee> employees = service.listBy(new EmployeeQuery());
             assertEquals(1, employees.size());
             assertEquals(validEmployee.withId("0"), employees.get(0));
             assertEquals(validEmployee.withId("0"), service.read("0"));
@@ -73,30 +73,30 @@ public class EmployeeServiceTest {
         @Test
         public void listsByOffset() {
             employeeRepo.create(validEmployee.copy());
-            assertEquals(2, service.listBy(new EmployeeFilter().withOffset(0)).size());
-            assertEquals(1, service.listBy(new EmployeeFilter().withOffset(1)).size());
-            assertEquals(0, service.listBy(new EmployeeFilter().withOffset(2)).size());
+            assertEquals(2, service.listBy(new EmployeeQuery().withOffset(0)).size());
+            assertEquals(1, service.listBy(new EmployeeQuery().withOffset(1)).size());
+            assertEquals(0, service.listBy(new EmployeeQuery().withOffset(2)).size());
         }
 
         @Test
         public void listsByUserId() {
-            assertEquals(1, service.listBy(new EmployeeFilter().withUserId("0")).size());
-            assertEquals(0, service.listBy(new EmployeeFilter().withUserId("1")).size());
+            assertEquals(1, service.listBy(new EmployeeQuery().withUserId("0")).size());
+            assertEquals(0, service.listBy(new EmployeeQuery().withUserId("1")).size());
         }
 
         @Test
         public void listsDetailedEmployees() {
             userRepo.create(new User());
-            assertEquals(employeeRepo.listDetailedBy(new EmployeeFilter()), service.listDetailedBy(new EmployeeFilter()));
+            assertEquals(employeeRepo.listDetailedBy(new EmployeeQuery()), service.listDetailedBy(new EmployeeQuery()));
         }
 
         @Test
         public void listsDetailedByOffset() {
             userRepo.create(new User());
             employeeRepo.create(validEmployee.copy());
-            assertEquals(2, service.listDetailedBy(new EmployeeFilter().withOffset(0)).size());
-            assertEquals(1, service.listDetailedBy(new EmployeeFilter().withOffset(1)).size());
-            assertEquals(0, service.listDetailedBy(new EmployeeFilter().withOffset(2)).size());
+            assertEquals(2, service.listDetailedBy(new EmployeeQuery().withOffset(0)).size());
+            assertEquals(1, service.listDetailedBy(new EmployeeQuery().withOffset(1)).size());
+            assertEquals(0, service.listDetailedBy(new EmployeeQuery().withOffset(2)).size());
         }
 
         @Test

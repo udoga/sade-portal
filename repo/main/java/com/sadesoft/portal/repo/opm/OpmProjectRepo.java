@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedProject;
-import com.sadesoft.portal.core.filter.ProjectFilter;
+import com.sadesoft.portal.core.query.ProjectQuery;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.repo.ProjectRepo;
@@ -184,15 +184,15 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listBy(ProjectFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql() + getOffsetSql(f.offset);
+    public List<Project> listBy(ProjectQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedProject> listDetailedBy(ProjectFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql()
-                + getOffsetSql(f.offset);
+    public List<DetailedProject> listDetailedBy(ProjectQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql()
+                + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject));
     }
 
@@ -225,9 +225,9 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
                 " join opm_ps_client c on p.client_id = c.id");
     }
 
-    private String getWhereSql(ProjectFilter f) {
+    private String getWhereSql(ProjectQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.clientId != null) conditions.add("p.client_id = " + f.clientId);
+        if (q.clientId != null) conditions.add("p.client_id = " + q.clientId);
         return getWhereSql(String.join(" and ", conditions));
     }
 

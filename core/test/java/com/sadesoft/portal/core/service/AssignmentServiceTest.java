@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.filter.AssignmentFilter;
+import com.sadesoft.portal.core.query.AssignmentQuery;
 import com.sadesoft.portal.core.mock.MockAssignmentRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -38,7 +38,7 @@ public class AssignmentServiceTest {
     @Test
     public void listsAssignments() {
         service.create(validAssignment);
-        assertEquals(assignmentRepo.list(), service.listBy(new AssignmentFilter()));
+        assertEquals(assignmentRepo.list(), service.listBy(new AssignmentQuery()));
     }
 
     @Test
@@ -46,8 +46,8 @@ public class AssignmentServiceTest {
         roleRepo.create(new Role());
         userRepo.create(new User());
         assignmentRepo.create(validAssignment);
-        assertEquals(1, service.listDetailedBy(new AssignmentFilter().withUserId("0")).size());
-        assertEquals(0, service.listDetailedBy(new AssignmentFilter().withUserId("1")).size());
+        assertEquals(1, service.listDetailedBy(new AssignmentQuery().withUserId("0")).size());
+        assertEquals(0, service.listDetailedBy(new AssignmentQuery().withUserId("1")).size());
     }
 
     @Test
@@ -55,8 +55,8 @@ public class AssignmentServiceTest {
         userRepo.create(new User());
         roleRepo.create(new Role());
         assignmentRepo.create(validAssignment);
-        assertEquals(1, service.listDetailedBy(new AssignmentFilter().withRoleId("0")).size());
-        assertEquals(0, service.listDetailedBy(new AssignmentFilter().withRoleId("1")).size());
+        assertEquals(1, service.listDetailedBy(new AssignmentQuery().withRoleId("0")).size());
+        assertEquals(0, service.listDetailedBy(new AssignmentQuery().withRoleId("1")).size());
     }
 
     @Test

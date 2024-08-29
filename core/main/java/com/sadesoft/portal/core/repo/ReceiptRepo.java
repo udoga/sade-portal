@@ -3,9 +3,9 @@ package com.sadesoft.portal.core.repo;
 import java.util.List;
 
 import com.sadesoft.portal.base.repo.Repo;
-import com.sadesoft.portal.core.filter.ReceiptFilter;
+import com.sadesoft.portal.core.query.ReceiptQuery;
 import com.sadesoft.portal.core.model.Receipt;
 
 public interface ReceiptRepo extends Repo<Receipt> {
-    List<Receipt> listBy(ReceiptFilter receiptFilter);
+    List<Receipt> listBy(ReceiptQuery query);
 }

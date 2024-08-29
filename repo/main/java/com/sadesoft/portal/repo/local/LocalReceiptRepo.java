@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
-import com.sadesoft.portal.core.filter.ReceiptFilter;
+import com.sadesoft.portal.core.query.ReceiptQuery;
 import com.sadesoft.portal.core.model.Receipt;
 import com.sadesoft.portal.core.repo.ReceiptRepo;
 
@@ -55,14 +55,14 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
     }
 
     @Override
-    public List<Receipt> listBy(ReceiptFilter filter) {
-        String sql = getQuerySql() + createWhereSql(filter) + getOrderSql("id") + getLimitSql();
+    public List<Receipt> listBy(ReceiptQuery query) {
+        String sql = getQuerySql() + createWhereSql(query) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
-    private String createWhereSql(ReceiptFilter f) {
+    private String createWhereSql(ReceiptQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.expenseId != null) conditions.add("expense_id = " + f.expenseId);
+        if (q.expenseId != null) conditions.add("expense_id = " + q.expenseId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
-import com.sadesoft.portal.core.filter.WorklogFilter;
+import com.sadesoft.portal.core.query.WorklogQuery;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -135,11 +135,11 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public boolean passes(WorklogFilter f) {
-        if (f.projectId != null && !projectId.equals(f.projectId)) return false;
-        if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
-        if (f.minDate != null && workDate.isBefore(f.minDate)) return false;
-        if (f.maxDate != null && workDate.isAfter(f.maxDate)) return false;
+    public boolean matches(WorklogQuery q) {
+        if (q.projectId != null && !projectId.equals(q.projectId)) return false;
+        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
+        if (q.minDate != null && workDate.isBefore(q.minDate)) return false;
+        if (q.maxDate != null && workDate.isAfter(q.maxDate)) return false;
         return true;
     }
 }

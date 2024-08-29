@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
-import com.sadesoft.portal.core.filter.WorklogFilter;
+import com.sadesoft.portal.core.query.WorklogQuery;
 import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Worklog;
@@ -29,13 +29,13 @@ public class MockWorklogRepo extends MockRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter f, WorklogOrder o) {
-        return applyOffset(records.stream().filter(w -> w.passes(f)).sorted(getComparator(o)).toList(), f.offset);
+    public List<Worklog> listBy(WorklogQuery q, WorklogOrder o) {
+        return applyOffset(records.stream().filter(w -> w.matches(q)).sorted(getComparator(o)).toList(), q.offset);
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogFilter filter, WorklogOrder order) {
-        return listBy(filter, order).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
+    public List<DetailedWorklog> listDetailedBy(WorklogQuery query, WorklogOrder order) {
+        return listBy(query, order).stream().map(w -> new DetailedWorklog(w, getProject(w.projectId),
                 getEmployee(w.employeeId), getActivity(w.activityId))).toList();
     }
 

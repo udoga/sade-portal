@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.detailed.DetailedAssignment;
-import com.sadesoft.portal.core.filter.AssignmentFilter;
+import com.sadesoft.portal.core.query.AssignmentQuery;
 import com.sadesoft.portal.core.model.Assignment;
 import com.sadesoft.portal.core.repo.AssignmentRepo;
 
@@ -14,12 +14,12 @@ public class AssignmentService {
         this.repo = repo;
     }
 
-    public List<Assignment> listBy(AssignmentFilter filter) {
-        return repo.listBy(filter);
+    public List<Assignment> listBy(AssignmentQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedAssignment> listDetailedBy(AssignmentFilter filter) {
-        return repo.listDetailedBy(filter);
+    public List<DetailedAssignment> listDetailedBy(AssignmentQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public Assignment create(Assignment assignment) {

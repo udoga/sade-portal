@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
-import com.sadesoft.portal.core.filter.ExpenseFilter;
+import com.sadesoft.portal.core.query.ExpenseQuery;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -106,8 +106,8 @@ public class Expense implements Record {
         return expense;
     }
 
-    public boolean passes(ExpenseFilter f) {
-        if (f.employeeId != null && !employeeId.equals(f.employeeId)) return false;
+    public boolean matches(ExpenseQuery q) {
+        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
         return true;
     }
 }

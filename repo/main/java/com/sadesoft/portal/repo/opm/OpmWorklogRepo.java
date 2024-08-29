@@ -12,7 +12,7 @@ import java.util.UUID;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
-import com.sadesoft.portal.core.filter.WorklogFilter;
+import com.sadesoft.portal.core.query.WorklogQuery;
 import com.sadesoft.portal.core.model.Activity;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Project;
@@ -79,14 +79,14 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
     }
 
     @Override
-    public List<Worklog> listBy(WorklogFilter f, WorklogOrder o) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql() + getOffsetSql(f.offset);
+    public List<Worklog> listBy(WorklogQuery q, WorklogOrder o) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql(o) + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedWorklog> listDetailedBy(WorklogFilter f, WorklogOrder o) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql(o) + getLimitSql() + getOffsetSql(f.offset);
+    public List<DetailedWorklog> listDetailedBy(WorklogQuery q, WorklogOrder o) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql(o) + getLimitSql() + getOffsetSql(q.offset);
         return call(() -> queryFor(createStatement(sql), this::toDetailedWorklog));
     }
 
@@ -116,12 +116,12 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 " join opm_ps_activity a on w.activity_id = a.id");
     }
 
-    private String getWhereSql(WorklogFilter f) {
+    private String getWhereSql(WorklogQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.projectId != null) conditions.add("w.project_id = " + f.projectId);
-        if (f.employeeId != null) conditions.add("w.employee_id = " + f.employeeId);
-        if (f.minDate != null) conditions.add("w.work_date >= '" + f.minDate + "'");
-        if (f.maxDate != null) conditions.add("w.work_date <= '" + f.maxDate + "'");
+        if (q.projectId != null) conditions.add("w.project_id = " + q.projectId);
+        if (q.employeeId != null) conditions.add("w.employee_id = " + q.employeeId);
+        if (q.minDate != null) conditions.add("w.work_date >= '" + q.minDate + "'");
+        if (q.maxDate != null) conditions.add("w.work_date <= '" + q.maxDate + "'");
         return getWhereSql(String.join(" and ", conditions));
     }
 

@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.local;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedEngagement;
-import com.sadesoft.portal.core.filter.EngagementFilter;
+import com.sadesoft.portal.core.query.EngagementQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Engagement;
 import com.sadesoft.portal.core.model.Position;
@@ -58,14 +58,14 @@ public class LocalEngagementRepo extends JdbcRepo<Engagement> implements Engagem
     }
 
     @Override
-    public List<Engagement> listBy(EngagementFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<Engagement> listBy(EngagementQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedEngagement> listDetailedBy(EngagementFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<DetailedEngagement> listDetailedBy(EngagementQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedEngagement));
     }
 
@@ -86,10 +86,10 @@ public class LocalEngagementRepo extends JdbcRepo<Engagement> implements Engagem
                 " join positions o on e.position_id = o.id");
     }
 
-    private String getWhereSql(EngagementFilter f) {
+    private String getWhereSql(EngagementQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.projectId != null) conditions.add("e.project_id = " + f.projectId);
-        if (f.employeeId != null) conditions.add("e.employee_id = " + f.employeeId);
+        if (q.projectId != null) conditions.add("e.project_id = " + q.projectId);
+        if (q.employeeId != null) conditions.add("e.employee_id = " + q.employeeId);
         return getWhereSql(String.join(" and ", conditions));
     }
 }

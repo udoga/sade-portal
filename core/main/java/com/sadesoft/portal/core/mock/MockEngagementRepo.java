@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedEngagement;
-import com.sadesoft.portal.core.filter.EngagementFilter;
+import com.sadesoft.portal.core.query.EngagementQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.Position;
@@ -27,13 +27,13 @@ public class MockEngagementRepo extends MockRepo<Engagement> implements Engageme
     }
 
     @Override
-    public List<Engagement> listBy(EngagementFilter filter) {
-        return records.stream().filter(e -> e.passes(filter)).toList();
+    public List<Engagement> listBy(EngagementQuery query) {
+        return records.stream().filter(e -> e.matches(query)).toList();
     }
 
     @Override
-    public List<DetailedEngagement> listDetailedBy(EngagementFilter filter) {
-        return listBy(filter).stream().map(e -> new DetailedEngagement(e, getProject(e.projectId),
+    public List<DetailedEngagement> listDetailedBy(EngagementQuery query) {
+        return listBy(query).stream().map(e -> new DetailedEngagement(e, getProject(e.projectId),
                 getEmployee(e.employeeId), getPosition(e.positionId))).toList();
     }
 

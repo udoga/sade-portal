@@ -3,7 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
-import com.sadesoft.portal.core.filter.ExpenseFilter;
+import com.sadesoft.portal.core.query.ExpenseQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Expense;
@@ -74,28 +74,28 @@ public class ExpenseServiceTest {
 
         @Test
         public void listsExpenses() {
-            assertEquals(1, service.listBy(new ExpenseFilter()).size());
-            assertEquals(validExpense.withId("0"), service.listBy(new ExpenseFilter()).get(0));
+            assertEquals(1, service.listBy(new ExpenseQuery()).size());
+            assertEquals(validExpense.withId("0"), service.listBy(new ExpenseQuery()).get(0));
             assertEquals(validExpense.withId("0"), service.read("0"));
         }
 
         @Test
         public void listsByEmployeeId() {
-            assertEquals(1, service.listBy(new ExpenseFilter().withEmployeeId("0")).size());
-            assertEquals(0, service.listBy(new ExpenseFilter().withEmployeeId("1")).size());
+            assertEquals(1, service.listBy(new ExpenseQuery().withEmployeeId("0")).size());
+            assertEquals(0, service.listBy(new ExpenseQuery().withEmployeeId("1")).size());
         }
 
         @Test
         public void listsDetailedExpenses() {
             employeeRepo.create(new Employee());
-            assertEquals(expenseRepo.listDetailedBy(new ExpenseFilter()), service.listDetailedBy(new ExpenseFilter()));
+            assertEquals(expenseRepo.listDetailedBy(new ExpenseQuery()), service.listDetailedBy(new ExpenseQuery()));
         }
 
         @Test
         public void listsDetailedByEmployeeId() {
             employeeRepo.create(new Employee());
-            assertEquals(1, service.listDetailedBy(new ExpenseFilter().withEmployeeId("0")).size());
-            assertEquals(0, service.listDetailedBy(new ExpenseFilter().withEmployeeId("1")).size());
+            assertEquals(1, service.listDetailedBy(new ExpenseQuery().withEmployeeId("0")).size());
+            assertEquals(0, service.listDetailedBy(new ExpenseQuery().withEmployeeId("1")).size());
         }
 
         @Test
@@ -115,7 +115,7 @@ public class ExpenseServiceTest {
         public void deletesExpenseById() {
             Expense expense = service.delete("0");
             assertEquals(validExpense.withId("0"), expense);
-            assertEquals(0, service.listBy(new ExpenseFilter()).size());
+            assertEquals(0, service.listBy(new ExpenseQuery()).size());
         }
 
         @Test

@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.model;
 
 import java.util.Objects;
 import com.sadesoft.portal.base.repo.Record;
-import com.sadesoft.portal.core.filter.ReceiptFilter;
+import com.sadesoft.portal.core.query.ReceiptQuery;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -132,8 +132,8 @@ public class Receipt implements Record {
         return receipt;
     }
 
-    public boolean passes(ReceiptFilter f) {
-        if (f.expenseId != null && !expenseId.equals(f.expenseId)) return false;
+    public boolean matches(ReceiptQuery q) {
+        if (q.expenseId != null && !expenseId.equals(q.expenseId)) return false;
         return true;
     }
 }

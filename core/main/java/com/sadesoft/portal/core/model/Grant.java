@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
-import com.sadesoft.portal.core.filter.GrantFilter;
+import com.sadesoft.portal.core.query.GrantQuery;
 
 import java.util.Objects;
 
@@ -68,9 +68,9 @@ public class Grant implements Record {
         return copy;
     }
 
-    public boolean passes(GrantFilter f) {
-        if (f.roleId != null && !roleId.equals(f.roleId)) return false;
-        if (f.permissionId != null && !permissionId.equals(f.permissionId)) return false;
+    public boolean matches(GrantQuery q) {
+        if (q.roleId != null && !roleId.equals(q.roleId)) return false;
+        if (q.permissionId != null && !permissionId.equals(q.permissionId)) return false;
         return true;
     }
 }

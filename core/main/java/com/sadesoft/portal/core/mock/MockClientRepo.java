@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedClient;
-import com.sadesoft.portal.core.filter.ClientFilter;
+import com.sadesoft.portal.core.query.ClientQuery;
 import com.sadesoft.portal.core.model.Client;
 import com.sadesoft.portal.core.model.Sector;
 import com.sadesoft.portal.core.repo.ClientRepo;
@@ -24,13 +24,13 @@ public class MockClientRepo extends MockRepo<Client> implements ClientRepo {
     }
 
     @Override
-    public List<Client> listBy(ClientFilter filter) {
-        return applyOffset(records.stream().filter(e -> e.passes(filter)).toList(), filter.offset);
+    public List<Client> listBy(ClientQuery query) {
+        return applyOffset(records.stream().filter(e -> e.matches(query)).toList(), query.offset);
     }
 
     @Override
-    public List<DetailedClient> listDetailedBy(ClientFilter filter) {
-        return listBy(filter).stream().map(e -> new DetailedClient(e, getSector(e.sectorId))).toList();
+    public List<DetailedClient> listDetailedBy(ClientQuery query) {
+        return listBy(query).stream().map(e -> new DetailedClient(e, getSector(e.sectorId))).toList();
     }
 
     @Override

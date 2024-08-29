@@ -4,7 +4,7 @@ import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.detailed.DetailedVacation;
-import com.sadesoft.portal.core.filter.VacationFilter;
+import com.sadesoft.portal.core.query.VacationQuery;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
@@ -17,12 +17,12 @@ public class VacationService {
         this.repo = repo;
     }
 
-    public List<Vacation> listBy(VacationFilter filter) {
-        return repo.listBy(filter);
+    public List<Vacation> listBy(VacationQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedVacation> listDetailedBy(VacationFilter filter) {
-        return repo.listDetailedBy(filter);
+    public List<DetailedVacation> listDetailedBy(VacationQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public Vacation read(String id) {

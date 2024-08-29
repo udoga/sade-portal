@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.filter.GrantFilter;
+import com.sadesoft.portal.core.query.GrantQuery;
 import com.sadesoft.portal.core.mock.MockGrantRepo;
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
@@ -41,7 +41,7 @@ public class GrantServiceTest {
 
         @Test
         public void listsGrants() {
-            List<Grant> grants = service.listBy(new GrantFilter());
+            List<Grant> grants = service.listBy(new GrantQuery());
             assertEquals(1, grants.size());
             assertEquals(validGrant.withId("0"), grants.get(0));
         }
@@ -49,25 +49,25 @@ public class GrantServiceTest {
         @Test
         public void listsAfterGivenId() {
             grantRepo.create(validGrant.copy());
-            assertEquals(2, service.listBy(new GrantFilter().withOffset(0)).size());
-            assertEquals(1, service.listBy(new GrantFilter().withOffset(1)).size());
-            assertEquals(0, service.listBy(new GrantFilter().withOffset(2)).size());
+            assertEquals(2, service.listBy(new GrantQuery().withOffset(0)).size());
+            assertEquals(1, service.listBy(new GrantQuery().withOffset(1)).size());
+            assertEquals(0, service.listBy(new GrantQuery().withOffset(2)).size());
         }
 
         @Test
         public void listsDetailedGrantsByRoleId() {
             roleRepo.create(new Role());
             permissionRepo.create(new Permission());
-            assertEquals(1, service.listDetailedBy(new GrantFilter().withRoleId("0")).size());
-            assertEquals(0, service.listDetailedBy(new GrantFilter().withRoleId("1")).size());
+            assertEquals(1, service.listDetailedBy(new GrantQuery().withRoleId("0")).size());
+            assertEquals(0, service.listDetailedBy(new GrantQuery().withRoleId("1")).size());
         }
 
         @Test
         public void listsDetailedGrantsByUserId() {
             roleRepo.create(new Role());
             permissionRepo.create(new Permission());
-            assertEquals(1, service.listDetailedBy(new GrantFilter().withPermissionId("0")).size());
-            assertEquals(0, service.listDetailedBy(new GrantFilter().withPermissionId("1")).size());
+            assertEquals(1, service.listDetailedBy(new GrantQuery().withPermissionId("0")).size());
+            assertEquals(0, service.listDetailedBy(new GrantQuery().withPermissionId("1")).size());
         }
 
         @Test
@@ -75,9 +75,9 @@ public class GrantServiceTest {
             roleRepo.create(new Role());
             permissionRepo.create(new Permission());
             grantRepo.create(validGrant.copy());
-            assertEquals(2, service.listDetailedBy(new GrantFilter().withOffset(0)).size());
-            assertEquals(1, service.listDetailedBy(new GrantFilter().withOffset(1)).size());
-            assertEquals(0, service.listDetailedBy(new GrantFilter().withOffset(2)).size());
+            assertEquals(2, service.listDetailedBy(new GrantQuery().withOffset(0)).size());
+            assertEquals(1, service.listDetailedBy(new GrantQuery().withOffset(1)).size());
+            assertEquals(0, service.listDetailedBy(new GrantQuery().withOffset(2)).size());
         }
 
         @Test

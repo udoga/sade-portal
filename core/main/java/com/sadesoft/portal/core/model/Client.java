@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.model;
 
 import com.sadesoft.portal.base.repo.Record;
-import com.sadesoft.portal.core.filter.ClientFilter;
+import com.sadesoft.portal.core.query.ClientQuery;
 
 import java.util.Objects;
 
@@ -76,7 +76,7 @@ public class Client implements Record {
         return client;
     }
 
-    public boolean passes(ClientFilter f) {
+    public boolean matches(ClientQuery q) {
         return true;
     }
 }

@@ -3,7 +3,7 @@ package com.sadesoft.portal.repo.opm;
 import com.sadesoft.portal.base.repo.JdbcColumn;
 import com.sadesoft.portal.base.repo.JdbcRepo;
 import com.sadesoft.portal.core.detailed.DetailedVacation;
-import com.sadesoft.portal.core.filter.VacationFilter;
+import com.sadesoft.portal.core.query.VacationQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.model.VacationCategory;
@@ -74,14 +74,14 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     }
 
     @Override
-    public List<Vacation> listBy(VacationFilter f) {
-        String sql = getQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<Vacation> listBy(VacationQuery q) {
+        String sql = getQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> query(createStatement(sql)));
     }
 
     @Override
-    public List<DetailedVacation> listDetailedBy(VacationFilter f) {
-        String sql = getDetailedQuerySql() + getWhereSql(f) + getOrderSql("id") + getLimitSql();
+    public List<DetailedVacation> listDetailedBy(VacationQuery q) {
+        String sql = getDetailedQuerySql() + getWhereSql(q) + getOrderSql("id") + getLimitSql();
         return call(() -> queryFor(createStatement(sql), this::toDetailedVacation));
     }
 
@@ -107,10 +107,10 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
                 " join opm_hrm_employee e on v.employee_id = e.id");
     }
 
-    private String getWhereSql(VacationFilter f) {
+    private String getWhereSql(VacationQuery q) {
         List<String> conditions = new ArrayList<>();
-        if (f.employeeId != null) conditions.add("v.employee_id = " + f.employeeId);
-        if (f.status != null) conditions.add("v.vacation_status = '" + f.status + "'");
+        if (q.employeeId != null) conditions.add("v.employee_id = " + q.employeeId);
+        if (q.status != null) conditions.add("v.vacation_status = '" + q.status + "'");
         return getWhereSql(String.join(" and ", conditions));
     }
 }

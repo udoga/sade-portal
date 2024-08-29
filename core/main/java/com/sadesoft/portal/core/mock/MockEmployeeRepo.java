@@ -2,7 +2,7 @@ package com.sadesoft.portal.core.mock;
 
 import com.sadesoft.portal.base.repo.MockRepo;
 import com.sadesoft.portal.core.detailed.DetailedEmployee;
-import com.sadesoft.portal.core.filter.EmployeeFilter;
+import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.User;
 import com.sadesoft.portal.core.repo.EmployeeRepo;
@@ -19,13 +19,13 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
     }
 
     @Override
-    public List<Employee> listBy(EmployeeFilter filter) {
-        return applyOffset(records.stream().filter(e -> e.passes(filter)).toList(), filter.offset);
+    public List<Employee> listBy(EmployeeQuery query) {
+        return applyOffset(records.stream().filter(e -> e.matches(query)).toList(), query.offset);
     }
 
     @Override
-    public List<DetailedEmployee> listDetailedBy(EmployeeFilter filter) {
-        return listBy(filter).stream().map(e -> new DetailedEmployee(e, getUser(e.userId))).toList();
+    public List<DetailedEmployee> listDetailedBy(EmployeeQuery query) {
+        return listBy(query).stream().map(e -> new DetailedEmployee(e, getUser(e.userId))).toList();
     }
 
     @Override

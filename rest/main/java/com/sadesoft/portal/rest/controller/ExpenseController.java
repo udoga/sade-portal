@@ -1,7 +1,7 @@
 package com.sadesoft.portal.rest.controller;
 
 import com.sadesoft.portal.base.rest.RestController;
-import com.sadesoft.portal.core.filter.ExpenseFilter;
+import com.sadesoft.portal.core.query.ExpenseQuery;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.service.ExpenseService;
 import io.javalin.http.Context;
@@ -10,8 +10,8 @@ import io.javalin.http.HandlerType;
 public class ExpenseController extends RestController {
     public ExpenseController(ExpenseService service) {
         super("/expenses");
-        add(HandlerType.GET, "", c -> send(c, service.listBy(getExpenseFilter(c))));
-        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getExpenseFilter(c))));
+        add(HandlerType.GET, "", c -> send(c, service.listBy(getQuery(c))));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getQuery(c))));
         add(HandlerType.POST, "", c -> send(c, service.create(getExpense(c))));
         add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
         add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
@@ -23,8 +23,8 @@ public class ExpenseController extends RestController {
         return c.bodyAsClass(Expense.class);
     }
 
-    private ExpenseFilter getExpenseFilter(Context c) {
-        return new ExpenseFilter()
+    private ExpenseQuery getQuery(Context c) {
+        return new ExpenseQuery()
                 .withEmployeeId(c.queryParam("employeeId"));
     }
 }

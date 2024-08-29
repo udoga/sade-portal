@@ -3,7 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.EmptyFieldError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.detailed.DetailedExpense;
-import com.sadesoft.portal.core.filter.ExpenseFilter;
+import com.sadesoft.portal.core.query.ExpenseQuery;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
@@ -16,12 +16,12 @@ public class ExpenseService {
         this.repo = repo;
     }
 
-    public List<Expense> listBy(ExpenseFilter filter) {
-        return repo.listBy(filter);
+    public List<Expense> listBy(ExpenseQuery query) {
+        return repo.listBy(query);
     }
 
-    public List<DetailedExpense> listDetailedBy(ExpenseFilter filter) {
-        return repo.listDetailedBy(filter);
+    public List<DetailedExpense> listDetailedBy(ExpenseQuery query) {
+        return repo.listDetailedBy(query);
     }
 
     public Expense read(String id) {
