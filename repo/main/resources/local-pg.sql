@@ -147,6 +147,17 @@ CREATE TABLE receipts(
     FOREIGN KEY (category_id) REFERENCES receipt_categories(id) ON DELETE RESTRICT
 );
 
+ALTER TABLE activities ADD CONSTRAINT unique_activity_name UNIQUE (name);
+ALTER TABLE assignments ADD CONSTRAINT unique_user_role UNIQUE (role_id, user_id);
+ALTER TABLE clients ADD CONSTRAINT unique_client_name UNIQUE (name);
+ALTER TABLE employees ADD CONSTRAINT unique_employee_user_id UNIQUE (user_id);
+ALTER TABLE grants ADD CONSTRAINT unique_permission_role UNIQUE (permission_id, role_id);
+ALTER TABLE receipt_categories ADD CONSTRAINT unique_receipt_category_name UNIQUE (name);
+ALTER TABLE roles ADD CONSTRAINT unique_role_name UNIQUE (name);
+ALTER TABLE sectors ADD CONSTRAINT unique_sector_name UNIQUE (name);
+ALTER TABLE users ADD CONSTRAINT unique_username UNIQUE (username);
+ALTER TABLE vacation_categories ADD CONSTRAINT unique_vacation_category_name UNIQUE (name);
+
 INSERT INTO users VALUES
 --   id,      username,       password
     (default, 'admin',        'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),

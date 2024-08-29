@@ -14,10 +14,10 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -75,8 +75,13 @@ public class RestServer {
     }
 
     private void handle(Context c, Exception e) {
-        if (e.getCause() instanceof JdbcSQLIntegrityConstraintViolationException)
-            throw new ClientError("This record is used in another table.");
+        if (e.getCause() instanceof SQLException) handleSqlException(c, (SQLException) e.getCause());
+        else handle(c, e, 500);
+    }
+
+    private void handleSqlException(Context c, SQLException e) {
+        if (e.getSQLState().equals("23505")) throw new ClientError("Duplicate value for a unique field.");
+        else if (e.getSQLState().equals("23503")) throw new ClientError("This record is used in another table.");
         else handle(c, e, 500);
     }
 
