@@ -77,5 +77,4 @@ public class VacationService {
     private void checkEmptyField(String value, String field) {
         if (value.isEmpty()) throw new EmptyFieldError(field);
     }
-
 }

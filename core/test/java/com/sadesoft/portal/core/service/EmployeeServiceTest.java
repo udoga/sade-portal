@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class EmployeeServiceTest {
     private MockUserRepo userRepo;
@@ -45,8 +45,19 @@ public class EmployeeServiceTest {
         assertMissingFieldOnCreate(validEmployee.withLastName(null));
     }
 
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validEmployee.withUserId("A"));
+        assertInvalidInputOnCreate(validEmployee.withFirstName("1"));
+        assertInvalidInputOnCreate(validEmployee.withLastName("1"));
+    }
+
     private void assertMissingFieldOnCreate(Employee employee) {
         assertThrows(MissingFieldError.class, () -> service.create(employee));
+    }
+
+    private void assertInvalidInputOnCreate(Employee employee) {
+        assertThrows(InvalidInputError.class, () -> service.create(employee));
     }
 
     @Nested
@@ -128,6 +139,17 @@ public class EmployeeServiceTest {
 
         private void assertMissingFieldOnUpdate(Employee employee) {
             assertThrows(MissingFieldError.class, () -> service.update("0", employee));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnUpdate_throwsError() {
+            assertInvalidInputOnUpdate(validEmployee.withUserId("A"));
+            assertInvalidInputOnUpdate(validEmployee.withFirstName("1"));
+            assertInvalidInputOnUpdate(validEmployee.withLastName("1"));
+        }
+
+        private void assertInvalidInputOnUpdate(Employee employee) {
+            assertThrows(InvalidInputError.class, () -> service.update("0", employee));
         }
     }
 }
