@@ -137,15 +137,15 @@ public class EmployeeServiceTest {
             assertMissingFieldOnUpdate(validEmployee.withLastName(null));
         }
 
-        private void assertMissingFieldOnUpdate(Employee employee) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", employee));
-        }
-
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validEmployee.withUserId("A"));
             assertInvalidInputOnUpdate(validEmployee.withFirstName("1"));
             assertInvalidInputOnUpdate(validEmployee.withLastName("1"));
+        }
+
+        private void assertMissingFieldOnUpdate(Employee employee) {
+            assertThrows(MissingFieldError.class, () -> service.update("0", employee));
         }
 
         private void assertInvalidInputOnUpdate(Employee employee) {
