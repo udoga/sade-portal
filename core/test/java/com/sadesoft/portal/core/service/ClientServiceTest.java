@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -47,6 +48,8 @@ public class ClientServiceTest {
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validClient.withSectorId("A"));
         assertInvalidInputOnCreate(validClient.withName("1"));
+        assertInvalidInputOnCreate(validClient.withName(""));
+        assertDoesNotThrow(() -> service.create(validClient.withName("A B")));
     }
 
     private void assertMissingFieldOnCreate(Client client) {
@@ -125,6 +128,8 @@ public class ClientServiceTest {
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validClient.withSectorId("A"));
             assertInvalidInputOnUpdate(validClient.withName("1"));
+            assertInvalidInputOnUpdate(validClient.withName(""));
+            assertDoesNotThrow(() -> service.update("0", validClient.withName("A B")));
         }
 
         private void assertMissingFieldOnUpdate(Client client) {

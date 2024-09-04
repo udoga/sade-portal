@@ -48,8 +48,13 @@ public class EmployeeServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validEmployee.withUserId("A"));
+        assertInvalidInputOnCreate(validEmployee.withUserId(""));
         assertInvalidInputOnCreate(validEmployee.withFirstName("1"));
+        assertInvalidInputOnCreate(validEmployee.withFirstName(""));
         assertInvalidInputOnCreate(validEmployee.withLastName("1"));
+        assertInvalidInputOnCreate(validEmployee.withLastName(""));
+        assertDoesNotThrow(() -> service.create(validEmployee.withFirstName("A B")));
+        assertDoesNotThrow(() -> service.create(validEmployee.withLastName("A B")));
     }
 
     private void assertMissingFieldOnCreate(Employee employee) {
@@ -140,8 +145,13 @@ public class EmployeeServiceTest {
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validEmployee.withUserId("A"));
+            assertInvalidInputOnUpdate(validEmployee.withUserId(""));
             assertInvalidInputOnUpdate(validEmployee.withFirstName("1"));
+            assertInvalidInputOnUpdate(validEmployee.withFirstName(""));
             assertInvalidInputOnUpdate(validEmployee.withLastName("1"));
+            assertInvalidInputOnUpdate(validEmployee.withLastName(""));
+            assertDoesNotThrow(() -> service.update("0", validEmployee.withFirstName("A B")));
+            assertDoesNotThrow(() -> service.update("0", validEmployee.withLastName("A B")));
         }
 
         private void assertMissingFieldOnUpdate(Employee employee) {

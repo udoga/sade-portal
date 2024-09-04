@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,6 +26,14 @@ public class ActivityServiceTest {
     }
 
     @Test
+    public void createsActivity() {
+        Activity activity = service.create(validActivity);
+        assertEquals(validActivity.withId("0"), activity);
+        assertEquals(1, repo.list().size());
+        assertEquals(activity.name, repo.read("0").name);
+    }
+
+    @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
         assertMissingFieldOnCreate(validActivity.withName(null));
     }
@@ -32,6 +41,9 @@ public class ActivityServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validActivity.withName("1"));
+        assertInvalidInputOnCreate(validActivity.withName(""));
+        assertDoesNotThrow(() -> service.create(validActivity.withName("A B")));
+
     }
 
     private void assertMissingFieldOnCreate(Activity activity) {
@@ -87,6 +99,8 @@ public class ActivityServiceTest {
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validActivity.withName("1"));
+            assertInvalidInputOnUpdate(validActivity.withName(""));
+            assertDoesNotThrow(() -> service.update("0", validActivity.withName("A B")));
         }
 
         private void assertMissingFieldOnUpdate(Activity activity) {
