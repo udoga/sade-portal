@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.query.EngagementQuery;
+import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockEngagementRepo;
 import com.sadesoft.portal.core.mock.MockPositionRepo;
@@ -14,9 +16,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class EngagementServiceTest {
     private MockProjectRepo projectRepo;
@@ -33,7 +38,48 @@ public class EngagementServiceTest {
         positionRepo = new MockPositionRepo();
         engagementRepo = new MockEngagementRepo(projectRepo, employeeRepo, positionRepo);
         service = new EngagementService(engagementRepo);
-        validEngagement = new Engagement(null, "0", "0", "0", null, null, "description", "status");
+        validEngagement = new Engagement(null, "0", "0", "0", LocalDate.of(2010, 1, 10), LocalDate.of(2010, 1, 11),
+        "description", "A");
+    }
+
+    @Test
+    public void createsEngagement() {
+        Engagement engagement = service.create(validEngagement);
+        assertEquals(validEngagement.withId("0"), engagement);
+        assertEquals(1, engagementRepo.list().size());
+        assertEquals(engagement, engagementRepo.read("0"));
+    }
+
+    @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validEngagement.withProjectId(null));
+        assertMissingFieldOnCreate(validEngagement.withEmployeeId(null));
+        assertMissingFieldOnCreate(validEngagement.withPositionId(null));
+        assertMissingFieldOnCreate(validEngagement.withStartDate(null));
+        assertMissingFieldOnCreate(validEngagement.withEndDate(null));
+        assertMissingFieldOnCreate(validEngagement.withDescription(null));
+        assertMissingFieldOnCreate(validEngagement.withStatus(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validEngagement.withProjectId("A"));
+        assertInvalidInputOnCreate(validEngagement.withEmployeeId("A"));
+        assertInvalidInputOnCreate(validEngagement.withPositionId("A"));
+        assertInvalidInputOnCreate(validEngagement.withDescription("1"));
+        assertInvalidInputOnCreate(validEngagement.withDescription(""));
+        assertInvalidInputOnCreate(validEngagement.withStatus("1"));
+        assertInvalidInputOnCreate(validEngagement.withStatus(""));
+        assertInvalidInputOnCreate(validEngagement.withStatus("C"));
+        assertDoesNotThrow(() -> service.create(validEngagement.withDescription("A B")));
+    }
+
+    private void assertMissingFieldOnCreate(Engagement engagement) {
+        assertThrows(MissingFieldError.class, () -> service.create(engagement));
+    }
+
+    private void assertInvalidInputOnCreate(Engagement engagement) {
+        assertThrows(InvalidInputError.class, () -> service.create(engagement));
     }
 
     @Nested
@@ -82,6 +128,38 @@ public class EngagementServiceTest {
             Engagement engagement = service.delete("0");
             assertEquals(validEngagement.withId("0"), engagement);
             assertEquals(0, engagementRepo.list().size());
+        }
+
+        @Test
+        public void whenHasMissingFieldOnUpdate_throwsError() {
+            assertMissingFieldOnUpdate(validEngagement.withProjectId(null));
+            assertMissingFieldOnUpdate(validEngagement.withEmployeeId(null));
+            assertMissingFieldOnUpdate(validEngagement.withPositionId(null));
+            assertMissingFieldOnUpdate(validEngagement.withStartDate(null));
+            assertMissingFieldOnUpdate(validEngagement.withEndDate(null));
+            assertMissingFieldOnUpdate(validEngagement.withDescription(null));
+            assertMissingFieldOnUpdate(validEngagement.withStatus(null));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnUpdate_throwsError() {
+            assertInvalidInputOnUpdate(validEngagement.withProjectId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withEmployeeId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withPositionId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withDescription("1"));
+            assertInvalidInputOnUpdate(validEngagement.withDescription(""));
+            assertInvalidInputOnUpdate(validEngagement.withStatus("1"));
+            assertInvalidInputOnUpdate(validEngagement.withStatus(""));
+            assertInvalidInputOnUpdate(validEngagement.withStatus("C"));
+            assertDoesNotThrow(() -> service.update("0", validEngagement.withDescription("A B")));
+        }
+
+        private void assertMissingFieldOnUpdate(Engagement engagement) {
+            assertThrows(MissingFieldError.class, () -> service.update("0", engagement));
+        }
+
+        private void assertInvalidInputOnUpdate(Engagement engagement) {
+            assertThrows(InvalidInputError.class, () -> service.update("0", engagement));
         }
     }
 }
