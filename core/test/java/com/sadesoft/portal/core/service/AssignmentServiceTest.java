@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.query.AssignmentQuery;
+import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockAssignmentRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AssignmentServiceTest {
     private MockRoleRepo roleRepo;
@@ -26,6 +29,26 @@ public class AssignmentServiceTest {
         assignmentRepo = new MockAssignmentRepo(roleRepo, userRepo);
         service = new AssignmentService(assignmentRepo);
         validAssignment = new Assignment(null, "0", "0");
+    }
+
+    @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validAssignment.withUserId(null));
+        assertMissingFieldOnCreate(validAssignment.withRoleId(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validAssignment.withUserId("A"));
+        assertInvalidInputOnCreate(validAssignment.withRoleId("A"));
+    }
+
+    private void assertMissingFieldOnCreate(Assignment assignment) {
+        assertThrows(MissingFieldError.class, () -> service.create(assignment));
+    }
+
+    private void assertInvalidInputOnCreate(Assignment assignment) {
+        assertThrows(InvalidInputError.class, () -> service.create(assignment));
     }
 
     @Test
