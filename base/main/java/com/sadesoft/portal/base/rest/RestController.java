@@ -34,6 +34,10 @@ public class RestController {
         c.json(Map.of("data", data));
     }
 
+    protected String getCallerId(Context c) {
+        return c.attribute("callerId");
+    }
+
     protected String getQueryParameter(Context c, String key, String defaultValue) {
         String value = c.queryParam(key);
         return (value == null)? defaultValue : value;

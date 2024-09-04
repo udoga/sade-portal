@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PermissionRepo extends Repo<Permission> {
     List<Permission> listSummarized();
+    List<Permission> listByUserId(String userId);
 }

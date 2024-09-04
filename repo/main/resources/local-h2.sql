@@ -167,18 +167,22 @@ INSERT INTO users VALUES
 
 INSERT INTO roles VALUES
 --   id,      name
-    (default, 'ROLE_ADMIN'),
-    (default, 'ROLE_USER' );
+    (default, 'Admin'),
+    (default, 'Employee'),
+    (default, 'Project Manager');
 
 INSERT INTO permissions  VALUES
 --   id,      name
-    (default, 'user_read'  ),
-    (default, 'user_update');
+    (default, 'list_users'),
+    (default, 'list_users_summarized'),
+    (default, 'read_user'),
+    (default, 'create_user'),
+    (default, 'update_user'),
+    (default, 'delete_user');
 
 INSERT INTO assignments VALUES
 --   id,      user_id, role_id
     (default,       1,       1),
-    (default,       1,       2),
     (default,       2,       2),
     (default,       3,       2);
 
@@ -186,7 +190,13 @@ INSERT INTO grants VALUES
 --   id,      role_id, permission_id
     (default,       1,             1),
     (default,       1,             2),
-    (default,       2,             1);
+    (default,       1,             3),
+    (default,       1,             4),
+    (default,       1,             5),
+    (default,       1,             6),
+    (default,       2,             1),
+    (default,       2,             2),
+    (default,       2,             3);
 
 INSERT INTO sectors VALUES
 --   id,      name

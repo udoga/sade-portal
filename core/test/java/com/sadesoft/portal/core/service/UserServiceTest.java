@@ -1,6 +1,9 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.AuthorizationError;
+import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
+import com.sadesoft.portal.core.model.Permission;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,37 +11,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
+import org.junit.jupiter.api.function.Executable;
 
 public class UserServiceTest {
-    private MockUserRepo repo;
+    private String callerId;
+    private MockUserRepo userRepo;
+    private MockPermissionRepo permissionRepo;
     private UserService service;
     private User validUser;
 
     @BeforeEach
     public void setup() {
-        repo = new MockUserRepo();
-        service = new UserService(repo, "");
+        callerId = "0";
+        userRepo = new MockUserRepo();
+        permissionRepo = new MockPermissionRepo(callerId);
+        permissionRepo.create(new Permission(null, "list_users"));
+        permissionRepo.create(new Permission(null, "list_users_summarized"));
+        permissionRepo.create(new Permission(null, "create_user"));
+        permissionRepo.create(new Permission(null, "read_user"));
+        permissionRepo.create(new Permission(null, "update_user"));
+        permissionRepo.create(new Permission(null, "delete_user"));
+        service = new UserService(userRepo, permissionRepo, "");
         validUser = new User(null, "sample-username", "sample-password");
     }
 
     @Test
     public void createsUser() {
-        User user = service.create(validUser);
+        User user = service.create(callerId, validUser);
         assertEquals(validUser.withId("0").withPassword(null), user);
-        assertEquals(1, repo.list().size());
-        assertEquals(user.username, repo.read("0").username);
+        assertEquals(1, userRepo.list().size());
+        assertEquals(user.username, userRepo.read("0").username);
     }
 
     @Test
     public void whenCreatesUser_encryptsPassword() {
-        service.create(validUser);
-        assertEquals(validUser.findEncryptedPassword(""), repo.read("0").password);
+        service.create(callerId, validUser);
+        assertEquals(validUser.findEncryptedPassword(""), userRepo.read("0").password);
     }
 
     @Test
     public void whenCreatesUser_encryptsPasswordWithSalt() {
-        new UserService(repo, "salt").create(validUser);
-        assertEquals(validUser.findEncryptedPassword("salt"), repo.read("0").password);
+        new UserService(userRepo, permissionRepo, "salt").create(callerId, validUser);
+        assertEquals(validUser.findEncryptedPassword("salt"), userRepo.read("0").password);
     }
 
     @Test
@@ -48,56 +62,59 @@ public class UserServiceTest {
     }
 
     private void assertMissingFieldOnCreate(User user) {
-        assertThrows(MissingFieldError.class, () -> service.create(user));
+        assertThrows(MissingFieldError.class, () -> service.create(callerId, user));
     }
 
     @Nested
     public class GivenServiceWithOneUser {
         @BeforeEach
         public void setup() {
-            service.create(validUser);
+            service.create(callerId, validUser);
         }
 
         @Test
         public void listsUsers() {
             User expectedUser = validUser.withId("0").withPassword(null);
-            assertEquals(1, service.list().size());
-            assertEquals(expectedUser, service.list().get(0));
-            assertEquals(expectedUser, service.read("0"));
+            assertEquals(1, service.list(callerId).size());
+            assertEquals(expectedUser, service.list(callerId).get(0));
         }
 
         @Test
         public void listSummarizedUsers() {
-            assertEquals(1, service.listSummarized().size());
-            assertNull(service.listSummarized().get(0).password);
+            assertEquals(1, service.listSummarized(callerId).size());
+            assertNull(service.listSummarized(callerId).get(0).password);
+        }
+
+        @Test
+        public void readsUser() {
+            assertEquals(validUser.withId("0").withPassword(null), service.read(callerId, "0"));
         }
 
         @Test
         public void updatesUserById() {
-            User user = service.update("0", validUser.withUsername("updated"));
+            User user = service.update(callerId, "0", validUser.withUsername("updated"));
             assertEquals(validUser.withId("0").withUsername("updated").withPassword(null), user);
-            assertEquals(user, service.read("0"));
         }
 
         @Test
         public void whenUpdatesUser_encryptsPassword() {
             User updatedUser = validUser.withPassword("updated");
-            service.update("0", updatedUser);
-            assertEquals(updatedUser.findEncryptedPassword(""), repo.read("0").password);
+            service.update(callerId, "0", updatedUser);
+            assertEquals(updatedUser.findEncryptedPassword(""), userRepo.read("0").password);
         }
 
         @Test
         public void whenUpdatesUser_encryptsPasswordWithSalt() {
             User updatedUser = validUser.withPassword("updated");
-            new UserService(repo, "salt").update("0", updatedUser);
-            assertEquals(updatedUser.findEncryptedPassword("salt"), repo.read("0").password);
+            new UserService(userRepo, permissionRepo, "salt").update(callerId, "0", updatedUser);
+            assertEquals(updatedUser.findEncryptedPassword("salt"), userRepo.read("0").password);
         }
 
         @Test
         public void deletesUserById() {
-            User user = service.delete("0");
+            User user = service.delete(callerId, "0");
             assertEquals(validUser.withId("0").withPassword(null), user);
-            assertEquals(0, service.list().size());
+            assertEquals(0, service.list(callerId).size());
         }
 
         @Test
@@ -106,8 +123,24 @@ public class UserServiceTest {
             assertMissingFieldOnUpdate(validUser.withPassword(null));
         }
 
+        @Test
+        public void whenCallerIsUnauthorized_throwsError() {
+            permissionRepo.authorizedUserId = "";
+            assertUnauthorized("list_users", () -> service.list(callerId));
+            assertUnauthorized("list_users_summarized", () -> service.listSummarized(callerId));
+            assertUnauthorized("create_user", () -> service.create(callerId, validUser));
+            assertUnauthorized("read_user", () -> service.read(callerId, "0"));
+            assertUnauthorized("update_user", () -> service.update(callerId, "0", validUser));
+            assertUnauthorized("delete_user", () -> service.delete(callerId, "0"));
+        }
+
+        private void assertUnauthorized(String operation, Executable executable) {
+            AuthorizationError e = assertThrows(AuthorizationError.class, executable);
+            assertEquals("Permission denied for '" + operation + "' operation.", e.getMessage());
+        }
+
         private void assertMissingFieldOnUpdate(User user) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", user));
+            assertThrows(MissingFieldError.class, () -> service.update(callerId, "0", user));
         }
     }
 }

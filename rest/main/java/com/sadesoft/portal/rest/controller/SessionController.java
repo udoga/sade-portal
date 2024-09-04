@@ -25,7 +25,7 @@ public class SessionController extends RestController {
     }
 
     private void authenticate(Context c, SessionService service, String token) {
-        if (!isLoginRequest(c)) c.attribute("session", service.authenticate(token));
+        if (!isLoginRequest(c)) c.attribute("callerId", service.authenticate(token).userId);
     }
 
     private boolean isLoginRequest(Context c) {

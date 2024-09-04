@@ -2,43 +2,54 @@ package com.sadesoft.portal.core.service;
 
 import java.util.List;
 
+import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.base.error.MissingFieldError;
+import com.sadesoft.portal.core.model.Permission;
 import com.sadesoft.portal.core.model.User;
+import com.sadesoft.portal.core.repo.PermissionRepo;
 import com.sadesoft.portal.core.repo.UserRepo;
 
 public class UserService {
-    private final UserRepo repo;
+    private final UserRepo userRepo;
+    private final PermissionRepo permissionRepo;
     private final String salt;
 
-    public UserService(UserRepo repo, String salt) {
-        this.repo = repo;
+    public UserService(UserRepo userRepo, PermissionRepo permissionRepo, String salt) {
+        this.userRepo = userRepo;
+        this.permissionRepo = permissionRepo;
         this.salt = salt;
     }
 
-    public List<User> list() {
-        return repo.list().stream().map(s -> s.withPassword(null)).toList();
+    public List<User> list(String callerId) {
+        authorize(callerId, "list_users");
+        return userRepo.list().stream().map(s -> s.withPassword(null)).toList();
     }
 
-    public List<User> listSummarized() {
-        return repo.listSummarized();
+    public List<User> listSummarized(String callerId) {
+        authorize(callerId, "list_users_summarized");
+        return userRepo.listSummarized();
     }
 
-    public User read(String id) {
-        return repo.read(id).withPassword(null);
+    public User read(String callerId, String id) {
+        authorize(callerId, "read_user");
+        return userRepo.read(id).withPassword(null);
     }
 
-    public User create(User user) {
+    public User create(String callerId, User user) {
+        authorize(callerId, "create_user");
         check(user);
-        return repo.create(user.withEncryptedPassword(salt)).withPassword(null);
+        return userRepo.create(user.withEncryptedPassword(salt)).withPassword(null);
     }
 
-    public User update(String id, User user) {
+    public User update(String callerId, String id, User user) {
+        authorize(callerId, "update_user");
         check(user);
-        return repo.update(id, user.withEncryptedPassword(salt)).withPassword(null);
+        return userRepo.update(id, user.withEncryptedPassword(salt)).withPassword(null);
     }
 
-    public User delete(String id) {
-        return repo.delete(id).withPassword(null);
+    public User delete(String callerId, String id) {
+        authorize(callerId, "delete_user");
+        return userRepo.delete(id).withPassword(null);
     }
 
     private void check(User user) {
@@ -48,5 +59,11 @@ public class UserService {
 
     private void checkMissingField(String value, String field) {
         if (value == null) throw new MissingFieldError(field);
+    }
+
+    private void authorize(String callerId, String operation) {
+        List<Permission> permissions = permissionRepo.listByUserId(callerId);
+        for (Permission p: permissions) if (p.name.equals(operation)) return;
+        throw new AuthorizationError("Permission denied for '" + operation + "' operation.");
     }
 }

@@ -68,6 +68,7 @@ public class RestServer {
     }
 
     private void configureErrors() {
+        server.exception(AuthorizationError.class, (e, c) -> handle(c, e, 401));
         server.exception(RecordNotFoundError.class, (e, c) -> handle(c, e, 404));
         server.exception(InvalidFormatException.class, (e, c) -> handle(c, convertFormatException(e), 400));
         server.exception(ClientError.class, (e, c) -> handle(c, e, 400));

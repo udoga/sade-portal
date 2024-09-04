@@ -39,4 +39,15 @@ public class OpmPermissionRepo extends JdbcRepo<Permission> implements Permissio
         String sql = getQuerySql("id, code") + getOrderSql("code");
         return call(() -> query(createStatement(sql)));
     }
+
+    @Override
+    public List<Permission> listByUserId(String userId) {
+        String sql = getQuerySql("p.id, p.name",
+                tableName + " " + tableAlias +
+                        " join opm_sys_role_permission g ON p.id = g.permission_id" +
+                        " join opm_sys_role r ON g.role_id = r.id" +
+                        " join opm_sys_user_role a ON r.id = a.role_id") +
+                getWhereSql("a.user_id = " + userId);
+        return call(() -> query(createStatement(sql)));
+    }
 }
