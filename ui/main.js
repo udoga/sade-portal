@@ -22,3 +22,10 @@ var vacationApi = new VacationApi();
 var expenseApi = new ExpenseApi();
 var receiptCategoryApi = new ReceiptCategoryApi();
 var receiptApi = new ReceiptApi();
+
+initDatePicker = function (el) {
+    flatpickr(el, {
+        dateFormat: 'Y-m-d',
+        onChange: () => el.dispatchEvent(new Event('input'))
+    });
+}

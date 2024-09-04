@@ -13,10 +13,10 @@
         <option :value="p.id" x-text="p.name" :selected="query.projectId === p.id"></option>
       </template>
     </select>
-    <label for="minDate" class="padded left">Start Date:</label>
-    <input type="date" id="minDate" x-model="query.minDate" @change="reload('detailed')" class="padded left"/>
-    <label for="maxDate" class="padded left">End Date:</label>
-    <input type="date" id="minDate" x-model="query.maxDate" @change="reload('detailed')" class="padded left"/>
+    <input type="text" id="minDate" x-model="query.minDate" placeholder="Start Date" class="sp"
+      x-init="initDatePicker($el)" @change="reload('detailed')" />
+    <input type="text" id="maxDate" x-model="query.maxDate" placeholder="End Date" class="sp"
+      x-init="initDatePicker($el)" @change="reload('detailed')" />
     <select class="padded right" x-model="query.order" @change="reload('detailed')">
       <option value="" disabled>Sort</option>
       <option value="newest">Newest</option>
