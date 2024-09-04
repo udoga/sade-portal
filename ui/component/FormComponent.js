@@ -41,7 +41,8 @@ class FormComponent {
     }
 
     notifyError = function (json) {
-        this.notifier.notify(new Notification("error", json.error.message));
+        var e = json.error;
+        this.notifier.notify(new Notification("error", e.type + " (" + e.status + "): " + e.message));
     }
 
     routeOnSuccess = function () {

@@ -46,7 +46,8 @@ class ListComponent {
     }
 
     notifyError = function (json) {
-        this.notifier.notify(new Notification("error", json.error.message));
+        var e = json.error;
+        this.notifier.notify(new Notification("error", e.type + " (" + e.code + "): " + e.message));
     }
 
     getIndex = function (id) {
