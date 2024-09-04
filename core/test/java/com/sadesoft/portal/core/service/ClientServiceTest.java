@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.query.ClientQuery;
+import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockClientRepo;
 import com.sadesoft.portal.core.mock.MockSectorRepo;
 import com.sadesoft.portal.core.model.Client;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ClientServiceTest {
     private MockClientRepo clientRepo;
@@ -32,6 +35,26 @@ public class ClientServiceTest {
         assertEquals(validClient.withId("0"), client);
         assertEquals(1, clientRepo.list().size());
         assertEquals(client, clientRepo.read("0"));
+    }
+
+    @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validClient.withSectorId(null));
+        assertMissingFieldOnCreate(validClient.withName(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validClient.withSectorId("A"));
+        assertInvalidInputOnCreate(validClient.withName("1"));
+    }
+
+    private void assertMissingFieldOnCreate(Client client) {
+        assertThrows(MissingFieldError.class, () -> service.create(client));
+    }
+
+    private void assertInvalidInputOnCreate(Client client) {
+        assertThrows(InvalidInputError.class, () -> service.create(client));
     }
 
     @Nested
@@ -90,6 +113,26 @@ public class ClientServiceTest {
             Client client = service.delete("0");
             assertEquals(validClient.withId("0"), client);
             assertEquals(0, service.listBy(new ClientQuery()).size());
+        }
+
+        @Test
+        public void whenHasMissingFieldOnUpdate_throwsError() {
+            assertMissingFieldOnUpdate(validClient.withSectorId(null));
+            assertMissingFieldOnUpdate(validClient.withName(null));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnUpdate_throwsError() {
+            assertInvalidInputOnUpdate(validClient.withSectorId("A"));
+            assertInvalidInputOnUpdate(validClient.withName("1"));
+        }
+
+        private void assertMissingFieldOnUpdate(Client client) {
+            assertThrows(MissingFieldError.class, () -> service.update("0", client));
+        }
+
+        private void assertInvalidInputOnUpdate(Client client) {
+            assertThrows(InvalidInputError.class, () -> service.update("0", client));
         }
     }
 }
