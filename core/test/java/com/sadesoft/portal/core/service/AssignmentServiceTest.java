@@ -12,6 +12,7 @@ import com.sadesoft.portal.core.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -40,7 +41,11 @@ public class AssignmentServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validAssignment.withUserId("A"));
+        assertInvalidInputOnCreate(validAssignment.withUserId(""));
         assertInvalidInputOnCreate(validAssignment.withRoleId("A"));
+        assertInvalidInputOnCreate(validAssignment.withRoleId(""));
+        assertDoesNotThrow(() -> service.create(validAssignment.withUserId("11")));
+        assertDoesNotThrow(() -> service.create(validAssignment.withRoleId("11")));
     }
 
     private void assertMissingFieldOnCreate(Assignment assignment) {

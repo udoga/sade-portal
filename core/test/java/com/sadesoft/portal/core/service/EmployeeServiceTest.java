@@ -53,6 +53,7 @@ public class EmployeeServiceTest {
         assertInvalidInputOnCreate(validEmployee.withFirstName(""));
         assertInvalidInputOnCreate(validEmployee.withLastName("1"));
         assertInvalidInputOnCreate(validEmployee.withLastName(""));
+        assertDoesNotThrow(() -> service.create(validEmployee.withUserId("11")));
         assertDoesNotThrow(() -> service.create(validEmployee.withFirstName("A B")));
         assertDoesNotThrow(() -> service.create(validEmployee.withLastName("A B")));
     }
@@ -150,6 +151,7 @@ public class EmployeeServiceTest {
             assertInvalidInputOnUpdate(validEmployee.withFirstName(""));
             assertInvalidInputOnUpdate(validEmployee.withLastName("1"));
             assertInvalidInputOnUpdate(validEmployee.withLastName(""));
+            assertDoesNotThrow(() -> service.update("0", validEmployee.withUserId("11")));
             assertDoesNotThrow(() -> service.update("0", validEmployee.withFirstName("A B")));
             assertDoesNotThrow(() -> service.update("0", validEmployee.withLastName("A B")));
         }

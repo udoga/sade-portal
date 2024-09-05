@@ -54,10 +54,12 @@ public class ExpenseServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validExpense.withEmployeeId("A"));
+        assertInvalidInputOnCreate(validExpense.withEmployeeId(""));
         assertInvalidInputOnCreate(validExpense.withDescription("1"));
         assertInvalidInputOnCreate(validExpense.withDescription(""));
         assertInvalidInputOnCreate(validExpense.withStatus("1"));
         assertInvalidInputOnCreate(validExpense.withStatus(""));
+        assertDoesNotThrow(() -> service.create(validExpense.withEmployeeId("11")));
         assertDoesNotThrow(() -> service.create(validExpense.withDescription("A B")));
     }
 
@@ -133,10 +135,12 @@ public class ExpenseServiceTest {
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validExpense.withEmployeeId("A"));
+            assertInvalidInputOnUpdate(validExpense.withEmployeeId(""));
             assertInvalidInputOnUpdate(validExpense.withDescription("1"));
             assertInvalidInputOnUpdate(validExpense.withDescription(""));
             assertInvalidInputOnUpdate(validExpense.withStatus("1"));
             assertInvalidInputOnUpdate(validExpense.withStatus(""));
+            assertDoesNotThrow(() -> service.update("0", validExpense.withEmployeeId("11")));
             assertDoesNotThrow(() -> service.update("0", validExpense.withDescription("A B")));
         }
 

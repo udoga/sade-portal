@@ -47,8 +47,10 @@ public class ClientServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validClient.withSectorId("A"));
+        assertInvalidInputOnCreate(validClient.withSectorId(""));
         assertInvalidInputOnCreate(validClient.withName("1"));
         assertInvalidInputOnCreate(validClient.withName(""));
+        assertDoesNotThrow(() -> service.create(validClient.withSectorId("11")));
         assertDoesNotThrow(() -> service.create(validClient.withName("A B")));
     }
 
@@ -127,8 +129,10 @@ public class ClientServiceTest {
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validClient.withSectorId("A"));
+            assertInvalidInputOnUpdate(validClient.withSectorId(""));
             assertInvalidInputOnUpdate(validClient.withName("1"));
             assertInvalidInputOnUpdate(validClient.withName(""));
+            assertDoesNotThrow(() -> service.update("0", validClient.withSectorId("11")));
             assertDoesNotThrow(() -> service.update("0", validClient.withName("A B")));
         }
 

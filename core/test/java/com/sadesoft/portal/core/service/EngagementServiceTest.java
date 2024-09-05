@@ -64,13 +64,19 @@ public class EngagementServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() {
         assertInvalidInputOnCreate(validEngagement.withProjectId("A"));
+        assertInvalidInputOnCreate(validEngagement.withProjectId(""));
         assertInvalidInputOnCreate(validEngagement.withEmployeeId("A"));
+        assertInvalidInputOnCreate(validEngagement.withEmployeeId(""));
         assertInvalidInputOnCreate(validEngagement.withPositionId("A"));
+        assertInvalidInputOnCreate(validEngagement.withPositionId(""));
         assertInvalidInputOnCreate(validEngagement.withDescription("1"));
         assertInvalidInputOnCreate(validEngagement.withDescription(""));
         assertInvalidInputOnCreate(validEngagement.withStatus("1"));
         assertInvalidInputOnCreate(validEngagement.withStatus(""));
         assertInvalidInputOnCreate(validEngagement.withStatus("C"));
+        assertDoesNotThrow(() -> service.create(validEngagement.withProjectId("11")));
+        assertDoesNotThrow(() -> service.create(validEngagement.withEmployeeId("11")));
+        assertDoesNotThrow(() -> service.create(validEngagement.withPositionId("11")));
         assertDoesNotThrow(() -> service.create(validEngagement.withDescription("A B")));
     }
 
@@ -144,13 +150,19 @@ public class EngagementServiceTest {
         @Test
         public void whenHasInvalidInputOnUpdate_throwsError() {
             assertInvalidInputOnUpdate(validEngagement.withProjectId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withProjectId(""));
             assertInvalidInputOnUpdate(validEngagement.withEmployeeId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withEmployeeId(""));
             assertInvalidInputOnUpdate(validEngagement.withPositionId("A"));
+            assertInvalidInputOnUpdate(validEngagement.withPositionId(""));
             assertInvalidInputOnUpdate(validEngagement.withDescription("1"));
             assertInvalidInputOnUpdate(validEngagement.withDescription(""));
             assertInvalidInputOnUpdate(validEngagement.withStatus("1"));
             assertInvalidInputOnUpdate(validEngagement.withStatus(""));
             assertInvalidInputOnUpdate(validEngagement.withStatus("C"));
+            assertDoesNotThrow(() -> service.update("0", validEngagement.withProjectId("11")));
+            assertDoesNotThrow(() -> service.update("0", validEngagement.withEmployeeId("11")));
+            assertDoesNotThrow(() -> service.update("0", validEngagement.withPositionId("11")));
             assertDoesNotThrow(() -> service.update("0", validEngagement.withDescription("A B")));
         }
 
