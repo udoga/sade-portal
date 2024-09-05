@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockExpenseRepo;
 import com.sadesoft.portal.core.query.ExpenseQuery;
@@ -21,15 +21,6 @@ public class ExpenseServiceTest {
     private MockEmployeeRepo employeeRepo;
     private ExpenseService service;
     private Expense validExpense;
-
-    private void assertMissingField(Expense expense) {
-        assertThrows(MissingFieldError.class, () -> service.create(expense));
-    }
-
-    private void assertEmptyField(Expense expense, String field) {
-        EmptyFieldError e = assertThrows(EmptyFieldError.class, () -> service.create(expense));
-        assertEquals("Field '" + field + "' should not be empty.", e.getMessage());
-    }
 
     @BeforeEach
     public void setup() {
@@ -54,15 +45,28 @@ public class ExpenseServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingField(validExpense.withEmployeeId(null));
-        assertMissingField(validExpense.withFormDate(null));
-        assertMissingField(validExpense.withDescription(null));
-        assertMissingField(validExpense.withStatus(null));
+        assertMissingFieldOnCreate(validExpense.withEmployeeId(null));
+        assertMissingFieldOnCreate(validExpense.withFormDate(null));
+        assertMissingFieldOnCreate(validExpense.withDescription(null));
+        assertMissingFieldOnCreate(validExpense.withStatus(null));
     }
 
     @Test
-    public void whenDescriptionIsEmpty_throwsError() {
-        assertEmptyField(validExpense.withDescription(""), "description");
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validExpense.withEmployeeId("A"));
+        assertInvalidInputOnCreate(validExpense.withDescription("1"));
+        assertInvalidInputOnCreate(validExpense.withDescription(""));
+        assertInvalidInputOnCreate(validExpense.withStatus("1"));
+        assertInvalidInputOnCreate(validExpense.withStatus(""));
+        assertDoesNotThrow(() -> service.create(validExpense.withDescription("A B")));
+    }
+
+    private void assertMissingFieldOnCreate(Expense expense) {
+        assertThrows(MissingFieldError.class, () -> service.create(expense));
+    }
+
+    private void assertInvalidInputOnCreate(Expense expense) {
+        assertThrows(InvalidInputError.class, () -> service.create(expense));
     }
 
     @Nested
@@ -119,9 +123,29 @@ public class ExpenseServiceTest {
         }
 
         @Test
-        public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withEmployeeId(null)));
-            assertThrows(MissingFieldError.class, () -> service.update("0", validExpense.withFormDate(null)));
+        public void whenHasMissingFieldOnUpdate_throwsError() {
+            assertMissingFieldOnUpdate(validExpense.withEmployeeId(null));
+            assertMissingFieldOnUpdate(validExpense.withFormDate(null));
+            assertMissingFieldOnUpdate(validExpense.withDescription(null));
+            assertMissingFieldOnUpdate(validExpense.withStatus(null));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnUpdate_throwsError() {
+            assertInvalidInputOnUpdate(validExpense.withEmployeeId("A"));
+            assertInvalidInputOnUpdate(validExpense.withDescription("1"));
+            assertInvalidInputOnUpdate(validExpense.withDescription(""));
+            assertInvalidInputOnUpdate(validExpense.withStatus("1"));
+            assertInvalidInputOnUpdate(validExpense.withStatus(""));
+            assertDoesNotThrow(() -> service.update("0", validExpense.withDescription("A B")));
+        }
+
+        private void assertMissingFieldOnUpdate(Expense expense) {
+            assertThrows(MissingFieldError.class, () -> service.update("0", expense));
+        }
+
+        private void assertInvalidInputOnUpdate(Expense expense) {
+            assertThrows(InvalidInputError.class, () -> service.update("0", expense));
         }
     }
 }

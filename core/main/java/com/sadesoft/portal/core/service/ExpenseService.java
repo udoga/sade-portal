@@ -1,13 +1,15 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.detailed.DetailedExpense;
 import com.sadesoft.portal.core.query.ExpenseQuery;
 import com.sadesoft.portal.core.model.Expense;
 import com.sadesoft.portal.core.repo.ExpenseRepo;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ExpenseService {
     private final ExpenseRepo repo;
@@ -48,25 +50,31 @@ public class ExpenseService {
 
     private void check(Expense expense) {
         checkMissingFields(expense);
-        checkEmptyFields(expense);
+        checkFieldFormats(expense);
     }
 
     private void checkMissingFields(Expense expense) {
-        checkMissingField(expense.employeeId, "userId");
+        checkMissingField(expense.employeeId, "employeeId");
         checkMissingField(expense.formDate, "formDate");
         checkMissingField(expense.description, "description");
         checkMissingField(expense.status, "status");
     }
 
-    private void checkEmptyFields(Expense expense) {
-        checkEmptyField(expense.description, "description");
+    private void checkFieldFormats(Expense expense) {
+        checkFieldFormat(expense.employeeId, "employeeId", "^[0-9]+$");
+        checkFieldFormat(expense.description, "description", "^[a-zA-Z ]+$");
+        checkFieldFormat(expense.status, "status", "^[a-zA-Z]+$");
     }
 
-    private void checkMissingField(Object value, String field) {
+    private void checkMissingField(String value, String field) {
         if (value == null) throw new MissingFieldError(field);
     }
 
-    private void checkEmptyField(String value, String field) {
-        if (value.isEmpty()) throw new EmptyFieldError(field);
+    private void checkMissingField(LocalDate date, String field) {
+        if (date == null) throw new MissingFieldError(field);
+    }
+
+    private void checkFieldFormat(String value, String field, String regex) {
+        if (!Pattern.matches(regex, value)) throw new InvalidInputError("Format of field '" + field + "' is invalid.");
     }
 }
