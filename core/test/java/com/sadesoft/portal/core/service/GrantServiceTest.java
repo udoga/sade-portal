@@ -1,6 +1,8 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.core.query.GrantQuery;
+import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockGrantRepo;
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
@@ -14,7 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GrantServiceTest {
     private MockGrantRepo grantRepo;
@@ -30,6 +34,30 @@ public class GrantServiceTest {
         grantRepo = new MockGrantRepo(roleRepo, permissionRepo);
         service = new GrantService(grantRepo);
         validGrant = new Grant(null, "0", "0");
+    }
+
+    @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validGrant.withRoleId(null));
+        assertMissingFieldOnCreate(validGrant.withPermissionId(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validGrant.withRoleId("A"));
+        assertInvalidInputOnCreate(validGrant.withRoleId(""));
+        assertInvalidInputOnCreate(validGrant.withPermissionId("A"));
+        assertInvalidInputOnCreate(validGrant.withPermissionId(""));
+        assertDoesNotThrow(() -> service.create(validGrant.withRoleId("11")));
+        assertDoesNotThrow(() -> service.create(validGrant.withPermissionId("11")));
+    }
+
+    private void assertMissingFieldOnCreate(Grant grant) {
+        assertThrows(MissingFieldError.class, () -> service.create(grant));
+    }
+
+    private void assertInvalidInputOnCreate(Grant grant) {
+        assertThrows(InvalidInputError.class, () -> service.create(grant));
     }
 
     @Nested

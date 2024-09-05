@@ -68,6 +68,18 @@ public class Grant implements Record {
         return copy;
     }
 
+    public Grant withRoleId(String roleId) {
+        Grant copy = copy();
+        copy.roleId = roleId;
+        return copy;
+    }
+
+    public Grant withPermissionId(String permissionId) {
+        Grant copy = copy();
+        copy.permissionId = permissionId;
+        return copy;
+    }
+
     public boolean matches(GrantQuery q) {
         if (q.roleId != null && !roleId.equals(q.roleId)) return false;
         if (q.permissionId != null && !permissionId.equals(q.permissionId)) return false;
