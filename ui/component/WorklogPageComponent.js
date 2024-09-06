@@ -20,8 +20,4 @@ class WorklogPageComponent extends PageComponent {
     getActivity = function () {
         return this.worklog.activity ? this.worklog.activity : {};
     }
-
-    getEmployeeName = function () {
-        return this.getEmployee().firstName + " " + this.getEmployee().lastName;
-    }
 }

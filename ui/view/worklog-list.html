@@ -4,7 +4,7 @@
     <select class="padded left" x-model="query.employeeId" @change="reload('detailed')">
       <option value="">All Employees</option>
       <template x-for="e in employees">
-        <option :value="e.id" x-text="getFullName(e)" :selected="query.employeeId === e.id"></option>
+        <option :value="e.id" x-text="e.fullName" :selected="query.employeeId === e.id"></option>
       </template>
     </select>
     <select class="padded left" x-model="query.projectId" @change="reload('detailed')">
@@ -39,7 +39,7 @@
         <td x-text="worklog.id" class="narrow"></td>
         <td x-text="worklog.workDate"></td>
         <td x-text="worklog.project.name"></td>
-        <td x-text="worklog.employee.firstName + ' ' + worklog.employee.lastName"></td>
+        <td x-text="worklog.employee.fullName"></td>
         <td x-text="worklog.activity.name"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/worklog-page/' + worklog.id">

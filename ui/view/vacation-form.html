@@ -7,7 +7,7 @@
       <select class="padded" x-model="vacation.employeeId">
         <option value="" disabled selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
-          <option :value="e.id" x-text="getFullName(e)" :selected="vacation.employeeId === e.id"></option>
+          <option :value="e.id" x-text="e.fullName" :selected="vacation.employeeId === e.id"></option>
         </template>
       </select>
     </div>

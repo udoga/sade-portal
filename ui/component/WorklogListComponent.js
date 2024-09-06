@@ -13,8 +13,4 @@ class WorklogListComponent extends ListComponent {
         this.loadOptions(employeeApi, this.employees);
         this.loadOptions(projectApi, this.projects);
     }
-
-    getFullName = function (employee) {
-        return employee.firstName + " " + employee.lastName;
-    }
 }

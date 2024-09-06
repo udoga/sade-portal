@@ -14,8 +14,4 @@ class WorklogFormComponent extends FormComponent {
         this.loadOptions(employeeApi, this.employees);
         this.loadOptions(activityApi, this.activities);
     }
-
-    getFullName = function (employee) {
-        return employee.firstName + " " + employee.lastName;
-    }
 }

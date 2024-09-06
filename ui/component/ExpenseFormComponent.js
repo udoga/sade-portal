@@ -10,8 +10,4 @@ class ExpenseFormComponent extends FormComponent {
         this.load();
         this.loadOptions(employeeApi, this.employees);
     }
-
-    getFullName = function (employee) {
-        return employee.firstName + " " + employee.lastName;
-    }
 }

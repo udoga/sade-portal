@@ -17,8 +17,4 @@ class VacationFormComponent extends FormComponent {
         this.loadOptions(employeeApi, this.employees);
         this.loadOptions(categoryApi, this.categories);
     }
-
-    getFullName = function (employee) {
-        return employee.firstName + " " + employee.lastName;
-    }
 }

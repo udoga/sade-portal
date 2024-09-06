@@ -15,7 +15,7 @@
     <template x-for="vacation in vacations">
       <tr>
         <td x-text="vacation.id" class="narrow"></td>
-        <td x-text="vacation.employee.firstName + ' ' + vacation.employee.lastName"></td>
+        <td x-text="vacation.employee.fullName"></td>
         <td x-text="vacation.category.name"></td>
         <td x-text="formatter.formatTime(vacation.startTime)"></td>
         <td x-text="formatter.formatTime(vacation.endTime)"></td>

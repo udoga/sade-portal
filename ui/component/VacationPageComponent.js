@@ -18,8 +18,4 @@ class VacationPageComponent extends PageComponent {
     getCategory = function () {
         return this.vacation.category ? this.vacation.category : {};
     }
-
-    getEmployeeName = function () {
-        return this.getEmployee().firstName + " " + this.getEmployee().lastName;
-    }
 }

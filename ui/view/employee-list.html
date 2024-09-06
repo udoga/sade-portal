@@ -12,7 +12,7 @@
     <template x-for="employee in employees">
       <tr>
         <td x-text="employee.id" class="narrow"></td>
-        <td x-text="employee.firstName + ' ' + employee.lastName"></td>
+        <td x-text="employee.fullName"></td>
         <td x-text="employee.user.username"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/employee-page/' + employee.id">

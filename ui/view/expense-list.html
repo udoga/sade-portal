@@ -4,7 +4,7 @@
     <select class="padded" x-model="query.employeeId" @change="reload('detailed')">
       <option value="">All Employees</option>
       <template x-for="e in employees">
-        <option :value="e.id" x-text="e.firstName + ' ' + e.lastName" :selected="query.employeeId === e.id"></option>
+        <option :value="e.id" x-text="e.fullName" :selected="query.employeeId === e.id"></option>
       </template>
     </select>
   </div>
@@ -22,7 +22,7 @@
       <tr>
         <td x-text="expense.id" class="narrow"></td>
         <td x-text="expense.formDate"></td>
-        <td x-text="expense.employee.firstName + ' ' + expense.employee.lastName"></td>
+        <td x-text="expense.employee.fullName"></td>
         <td x-text="expense.status"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/expense-page/' + expense.id">

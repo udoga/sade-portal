@@ -88,7 +88,7 @@
             <template x-for="e in engagements">
               <tr>
                 <td x-text="e.employeeId" class="narrow"></td>
-                <td x-text="e.employee.firstName + ' ' + e.employee.lastName"></td>
+                <td x-text="e.employee.fullName"></td>
                 <td x-text="e.position.name"></td>
                 <td x-text="e.startDate"></td>
                 <td x-text="e.endDate"></td>

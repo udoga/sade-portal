@@ -55,6 +55,10 @@ public class Employee implements Record {
         this.id = id;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public Employee copy() {
         try {
             return (Employee) clone();

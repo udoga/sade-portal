@@ -16,9 +16,7 @@
         <select class="padded" x-model="engagement.employeeId">
           <option value="" disabled selected>Select Employee</option>
           <template x-for="e in employees" :key="e.id">
-            <option :value="e.id" x-text="e.firstName + ' ' + e.lastName"
-                    :selected="engagement.employeeId === e.id">
-            </option>
+            <option :value="e.id" x-text="e.fullName" :selected="engagement.employeeId === e.id"></option>
           </template>
         </select>
       </div>
