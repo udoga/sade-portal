@@ -5,7 +5,7 @@
       <div class="field">
         <label>Project</label>
         <select class="padded" x-model="engagement.projectId">
-          <option value="" disabled selected>Select Project</option>
+          <option value="" selected>Select Project</option>
           <template x-for="p in projects" :key="p.id">
             <option :value="p.id" x-text="p.name" :selected="engagement.projectId === p.id"></option>
           </template>
@@ -14,7 +14,7 @@
       <div class="field">
         <label>Employee</label>
         <select class="padded" x-model="engagement.employeeId">
-          <option value="" disabled selected>Select Employee</option>
+          <option value="" selected>Select Employee</option>
           <template x-for="e in employees" :key="e.id">
             <option :value="e.id" x-text="e.fullName" :selected="engagement.employeeId === e.id"></option>
           </template>
@@ -23,7 +23,7 @@
       <div class="field">
         <label>Position</label>
         <select class="padded" x-model="engagement.positionId">
-          <option value="" disabled selected>Select Position</option>
+          <option value="" selected>Select Position</option>
           <template x-for="p in positions" :key="p.id">
             <option :value="p.id" x-text="p.name" :selected="engagement.positionId === p.id"></option>
           </template>

@@ -4,7 +4,7 @@
     <div class="field">
       <label>Client</label>
       <select class="padded" x-model="project.clientId">
-        <option value="" disabled selected>Select Client</option>
+        <option value="" selected>Select Client</option>
         <template x-for="c in clients" :key="c.id">
           <option :value="c.id" x-text="c.name" :selected="project.clientId === c.id"></option>
         </template>

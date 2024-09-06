@@ -3,7 +3,7 @@
   <form>
     <div class="field">
       <label>Expense Id</label>
-      <input type="text" disabled placeholder="Expense Id" x-model="receipt.expenseId" />
+      <input type="text" placeholder="Expense Id" x-model="receipt.expenseId" />
     </div>
     <div class="field">
       <label>Receipt Date</label>
@@ -12,7 +12,7 @@
     <div class="field">
       <label>Category</label>
       <select class="padded" x-model="receipt.categoryId">
-        <option value="" disabled selected>Select Category</option>
+        <option value="" selected>Select Category</option>
         <template x-for="c in categories" :key="c.id">
           <option :value="c.id" x-text="c.name" :selected="receipt.categoryId === c.id"></option>
         </template>

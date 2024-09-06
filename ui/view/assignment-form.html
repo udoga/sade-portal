@@ -4,7 +4,7 @@
     <div class="field">
       <label>User</label>
       <select class="padded" x-model="assignment.userId">
-        <option value="" disabled selected>Select User</option>
+        <option value="" selected>Select User</option>
         <template x-for="u in users" :key="u.id">
           <option :value="u.id" x-text="u.username" :selected="assignment.userId === u.id"></option>
         </template>
@@ -13,7 +13,7 @@
     <div class="field">
       <label>Role</label>
       <select class="padded" x-model="assignment.roleId">
-        <option value="" disabled selected>Select Role</option>
+        <option value="" selected>Select Role</option>
         <template x-for="r in roles" :key="r.id">
           <option :value="r.id" x-text="r.name" :selected="assignment.roleId === r.id"></option>
         </template>

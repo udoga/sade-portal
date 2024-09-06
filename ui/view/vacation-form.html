@@ -5,7 +5,7 @@
     <div class="field">
       <label>Employee</label>
       <select class="padded" x-model="vacation.employeeId">
-        <option value="" disabled selected>Select Employee</option>
+        <option value="" selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
           <option :value="e.id" x-text="e.fullName" :selected="vacation.employeeId === e.id"></option>
         </template>
@@ -14,7 +14,7 @@
     <div class="field">
       <label>Category</label>
       <select class="padded" x-model="vacation.categoryId">
-        <option value="" disabled selected>Select Category</option>
+        <option value="" selected>Select Category</option>
         <template x-for="category in categories" :key="category.id">
           <option :value="category.id" x-text="category.name" :selected="vacation.categoryId === category.id"></option>
         </template>
