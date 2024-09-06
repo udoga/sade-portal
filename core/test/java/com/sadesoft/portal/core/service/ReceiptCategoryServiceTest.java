@@ -1,11 +1,15 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.InvalidInputError;
+import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockReceiptCategoryRepo;
 import com.sadesoft.portal.core.model.ReceiptCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReceiptCategoryServiceTest {
     private MockReceiptCategoryRepo receiptCategoryRepo;
@@ -24,6 +28,27 @@ public class ReceiptCategoryServiceTest {
         ReceiptCategory receiptCategory = service.create(validReceiptCategory);
         assertEquals(1, receiptCategoryRepo.list().size());
         assertEquals(receiptCategory, receiptCategoryRepo.read("0"));
+    }
+
+    @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingFieldOnCreate(validReceiptCategory.withName(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validReceiptCategory.withName("1"));
+        assertInvalidInputOnCreate(validReceiptCategory.withName(""));
+        assertDoesNotThrow(() -> service.create(validReceiptCategory.withName("A B")));
+
+    }
+
+    private void assertMissingFieldOnCreate(ReceiptCategory receiptCategory) {
+        assertThrows(MissingFieldError.class, () -> service.create(receiptCategory));
+    }
+
+    private void assertInvalidInputOnCreate(ReceiptCategory receiptCategory) {
+        assertThrows(InvalidInputError.class, () -> service.create(receiptCategory));
     }
 
     @Test
