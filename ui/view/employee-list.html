@@ -9,19 +9,19 @@
         <a class="green header icon button" href="#/employee-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="employee in employees">
+    <template x-for="e in employees">
       <tr>
-        <td x-text="employee.id" class="narrow"></td>
-        <td x-text="employee.fullName"></td>
-        <td x-text="employee.user.username"></td>
+        <td x-text="e.id" class="narrow"></td>
+        <td x-text="e.fullName"></td>
+        <td><a class="blue" x-text="e.user.username" :href="'#/user-page/' + e.user.id"></a></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/employee-page/' + employee.id">
+          <a title="Show" class="light-blue row button" :href="'#/employee-page/' + e.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/employee-form/' + employee.id">
+          <a title="Edit" class="yellow row button" :href="'#/employee-form/' + e.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(employee.id)">
+          <a title="Delete" class="red row button" @click="remove(e.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

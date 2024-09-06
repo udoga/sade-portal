@@ -1,34 +1,34 @@
 class ProjectPageComponent extends PageComponent {
     project = this.record;
-    worklogs = [];
     engagements = [];
+    worklogs = [];
 
-    constructor(router, api, notifier, worklogApi, engagementApi) {
+    constructor(router, api, notifier, engagementApi, worklogApi) {
         super(router, api, notifier, "project");
-        this.worklogApi = worklogApi;
         this.engagementApi = engagementApi;
+        this.worklogApi = worklogApi;
     }
 
     afterLoad = function () {
-        this.loadWorklogs();
         this.loadEngagements();
+        this.loadWorklogs();
         this.selectTab("client");
-    }
-
-    loadWorklogs = function () {
-        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
     }
 
     loadEngagements = function () {
         this.loadRelations(this.engagementApi, this.engagements, "detailed");
     }
 
-    removeWorklog = function (id) {
-        this.removeRelation(this.worklogApi, this.worklogs, id);
+    loadWorklogs = function () {
+        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
     }
 
     removeEngagement = function (id) {
         this.removeRelation(this.engagementApi, this.engagements, id);
+    }
+
+    removeWorklog = function (id) {
+        this.removeRelation(this.worklogApi, this.worklogs, id);
     }
 
     getClient = function () {

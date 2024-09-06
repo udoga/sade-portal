@@ -45,7 +45,7 @@
           </div>
           <div class="field last">
             <label>Name:</label>
-            <span x-text="getEmployee().fullName"></span>
+            <a class="blue" x-text="getEmployee().fullName" :href="'#/employee-page/' + getEmployee().id"></a>
           </div>
         </div>
       </div>

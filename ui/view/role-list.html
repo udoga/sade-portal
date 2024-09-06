@@ -8,18 +8,18 @@
         <a class="green header icon button" href="#/role-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="role in roles">
+    <template x-for="r in roles">
       <tr>
-        <td x-text="role.id" class="narrow"></td>
-        <td x-text="role.name"></td>
+        <td x-text="r.id" class="narrow"></td>
+        <td x-text="r.name"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/role-page/' + role.id">
+          <a title="Show" class="light-blue row button" :href="'#/role-page/' + r.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/role-form/' + role.id">
+          <a title="Edit" class="yellow row button" :href="'#/role-form/' + r.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(role.id)">
+          <a title="Delete" class="red row button" @click="remove(r.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

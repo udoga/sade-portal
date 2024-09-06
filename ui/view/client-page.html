@@ -32,7 +32,7 @@
             <template x-for="p in projects">
               <tr>
                 <td x-text="p.id" class="narrow"></td>
-                <td x-text="p.name"></td>
+                <td><a class="blue" x-text="p.name" :href="'#/project-page/' + p.id"></a></td>
                 <td class="last narrow">
                   <a title="Show" class="light-blue row button" :href="'#/project-page/' + p.id">
                     <i class="fas fa-eye"></i>

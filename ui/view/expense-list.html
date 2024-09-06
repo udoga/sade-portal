@@ -18,20 +18,20 @@
         <a class="green header icon button" href="#/expense-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="expense in expenses">
+    <template x-for="e in expenses">
       <tr>
-        <td x-text="expense.id" class="narrow"></td>
-        <td x-text="expense.formDate"></td>
-        <td x-text="expense.employee.fullName"></td>
-        <td x-text="expense.status"></td>
+        <td x-text="e.id" class="narrow"></td>
+        <td x-text="e.formDate"></td>
+        <td><a class="blue" x-text="e.employee.fullName" :href="'#/employee-page/' + e.employee.id"></a></td>
+        <td x-text="e.status"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/expense-page/' + expense.id">
+          <a title="Show" class="light-blue row button" :href="'#/expense-page/' + e.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/expense-form/' + expense.id">
+          <a title="Edit" class="yellow row button" :href="'#/expense-form/' + e.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(expense.id)">
+          <a title="Delete" class="red row button" @click="remove(e.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

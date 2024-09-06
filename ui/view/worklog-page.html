@@ -46,7 +46,7 @@
           </div>
           <div class="field">
             <label>Name:</label>
-            <span x-text="getProject().name"></span>
+            <a class="blue" x-text="getProject().name" :href="'#/project-page/' + getProject().id"></a>
           </div>
           <div class="field last">
             <label>Description:</label>
@@ -60,7 +60,7 @@
           </div>
           <div class="field last">
             <label>Name:</label>
-            <span x-text="getEmployee().fullName"></span>
+            <a class="blue" x-text="getEmployee().fullName" :href="'#/employee-page/' + getEmployee().id"></a>
           </div>
         </div>
       </div>

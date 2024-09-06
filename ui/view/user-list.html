@@ -8,18 +8,18 @@
         <a class="green header icon button" href="#/user-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="user in users">
+    <template x-for="u in users">
       <tr>
-        <td x-text="user.id" class="narrow"></td>
-        <td x-text="user.username"></td>
+        <td x-text="u.id" class="narrow"></td>
+        <td x-text="u.username"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/user-page/' + user.id">
+          <a title="Show" class="light-blue row button" :href="'#/user-page/' + u.id">
             <i class="fas fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/user-form/' + user.id">
+          <a title="Edit" class="yellow row button" :href="'#/user-form/' + u.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(user.id)">
+          <a title="Delete" class="red row button" @click="remove(u.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

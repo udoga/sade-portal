@@ -31,7 +31,7 @@
             <template x-for="a in assignments">
               <tr>
                 <td x-text="a.id" class="narrow"></td>
-                <td x-text="a.role.name"></td>
+                <td><a class="blue" x-text="a.role.name" :href="'#/role-page/' + a.role.id"></a></td>
                 <td class="last narrow">
                   <a title="Edit" class="yellow row button" :href="'#/assignment-form/' + a.id">
                     <i class="fas fa-pencil"></i>
@@ -58,7 +58,7 @@
             </div>
             <div class="field last">
               <label>Name:</label>
-              <span x-text="employee.fullName"></span>
+              <a class="blue" x-text="employee.fullName" :href="'#/employee-page/' + employee.id"></a>
             </div>
           </div>
         </div>

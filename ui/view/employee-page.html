@@ -34,7 +34,7 @@
           </div>
           <div class="field last">
             <label>Username:</label>
-            <span x-text="getUser().username"></span>
+            <a class="blue" x-text="getUser().username" :href="'#/user-page/' + getUser().id"></a>
           </div>
         </div>
         <div x-show="isSelectedTab('engagements')">
@@ -55,7 +55,7 @@
             <template x-for="e in engagements">
               <tr>
                 <td x-text="e.projectId" class="narrow"></td>
-                <td x-text="e.project.name"></td>
+                <td><a class="blue" x-text="e.project.name" :href="'#/project-page/' + e.project.id"></a></td>
                 <td x-text="e.position.name"></td>
                 <td x-text="e.startDate"></td>
                 <td x-text="e.endDate"></td>
@@ -93,7 +93,7 @@
               <tr>
                 <td x-text="w.id" class="narrow"></td>
                 <td x-text="w.workDate"></td>
-                <td x-text="w.project.name"></td>
+                <td><a class="blue" x-text="w.project.name" :href="'#/project-page/' + w.project.id"></a></td>
                 <td x-text="w.activity.name"></td>
                 <td x-text="w.duration + ' minutes'"></td>
                 <td class="last narrow">

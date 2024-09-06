@@ -9,19 +9,19 @@
         <a class="green header icon button" href="#/client-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="client in clients">
+    <template x-for="c in clients">
       <tr>
-        <td x-text="client.id" class="narrow"></td>
-        <td x-text="client.name"></td>
-        <td x-text="client.sector.name"></td>
+        <td x-text="c.id" class="narrow"></td>
+        <td x-text="c.name"></td>
+        <td x-text="c.sector.name"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/client-page/' + client.id">
+          <a title="Show" class="light-blue row button" :href="'#/client-page/' + c.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/client-form/' + client.id">
+          <a title="Edit" class="yellow row button" :href="'#/client-form/' + c.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(client.id)">
+          <a title="Delete" class="red row button" @click="remove(c.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

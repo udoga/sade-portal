@@ -12,22 +12,22 @@
         <a class="green header icon button" href="#/vacation-form"><i class="fas fa-plus"></i> New</a>
       </th>
     </tr>
-    <template x-for="vacation in vacations">
+    <template x-for="v in vacations">
       <tr>
-        <td x-text="vacation.id" class="narrow"></td>
-        <td x-text="vacation.employee.fullName"></td>
-        <td x-text="vacation.category.name"></td>
-        <td x-text="formatter.formatTime(vacation.startTime)"></td>
-        <td x-text="formatter.formatTime(vacation.endTime)"></td>
-        <td x-text="vacation.status"></td>
+        <td x-text="v.id" class="narrow"></td>
+        <td><a class="blue" x-text="v.employee.fullName" :href="'#/employee-page/' + v.employee.id"></a></td>
+        <td x-text="v.category.name"></td>
+        <td x-text="formatter.formatTime(v.startTime)"></td>
+        <td x-text="formatter.formatTime(v.endTime)"></td>
+        <td x-text="v.status"></td>
         <td class="narrow last">
-          <a title="Show" class="light-blue row button" :href="'#/vacation-page/' + vacation.id">
+          <a title="Show" class="light-blue row button" :href="'#/vacation-page/' + v.id">
             <i class="far fa-eye"></i>
           </a>
-          <a title="Edit" class="yellow row button" :href="'#/vacation-form/' + vacation.id">
+          <a title="Edit" class="yellow row button" :href="'#/vacation-form/' + v.id">
             <i class="fas fa-pencil-alt"></i>
           </a>
-          <a title="Delete" class="red row button" @click="remove(vacation.id)">
+          <a title="Delete" class="red row button" @click="remove(v.id)">
             <i class="fas fa-trash"></i>
           </a>
         </td>

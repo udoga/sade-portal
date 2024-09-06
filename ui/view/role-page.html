@@ -21,7 +21,7 @@
           <table class="relations">
             <tr>
               <th class="narrow">Id</th>
-              <th>Username</th>
+              <th>User</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/assignment-form?roleId=' + role.id">
                   <i class="fas fa-plus"></i> New
@@ -31,7 +31,7 @@
             <template x-for="a in assignments">
               <tr>
                 <td x-text="a.id" class="narrow"></td>
-                <td x-text="a.user.username"></td>
+                <td><a class="blue" x-text="a.user.username" :href="'#/user-page/' + a.user.id"></a></td>
                 <td class="last narrow">
                   <a title="Edit" class="yellow row button" :href="'#/assignment-form/' + a.id">
                     <i class="fas fa-pencil"></i>
