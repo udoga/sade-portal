@@ -21,34 +21,34 @@ public class UserService {
     }
 
     public List<User> list(String callerId) {
-        authorize(callerId, "list_users");
+        authorize(callerId, "user_list");
         return userRepo.list().stream().map(s -> s.withPassword(null)).toList();
     }
 
     public List<User> listOptions(String callerId) {
-        authorize(callerId, "list_user_options");
+        authorize(callerId, "user_list_options");
         return userRepo.listOptions();
     }
 
     public User read(String callerId, String id) {
-        authorize(callerId, "read_user");
+        authorize(callerId, "user_read");
         return userRepo.read(id).withPassword(null);
     }
 
     public User create(String callerId, User user) {
-        authorize(callerId, "create_user");
+        authorize(callerId, "user_create");
         check(user);
         return userRepo.create(user.withEncryptedPassword(salt)).withPassword(null);
     }
 
     public User update(String callerId, String id, User user) {
-        authorize(callerId, "update_user");
+        authorize(callerId, "user_update");
         check(user);
         return userRepo.update(id, user.withEncryptedPassword(salt)).withPassword(null);
     }
 
     public User delete(String callerId, String id) {
-        authorize(callerId, "delete_user");
+        authorize(callerId, "user_delete");
         return userRepo.delete(id).withPassword(null);
     }
 

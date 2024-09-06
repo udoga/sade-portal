@@ -176,12 +176,12 @@ INSERT INTO roles VALUES
 
 INSERT INTO permissions  VALUES
 --   id,      name
-    (default, 'sp-list_users'),
-    (default, 'sp-list_user_options'),
-    (default, 'sp-read_user'),
-    (default, 'sp-create_user'),
-    (default, 'sp-update_user'),
-    (default, 'sp-delete_user');
+    (default, 'sp-user_list'),
+    (default, 'sp-user_list_options'),
+    (default, 'sp-user_read'),
+    (default, 'sp-user_create'),
+    (default, 'sp-user_update'),
+    (default, 'sp-user_delete');
 
 INSERT INTO assignments VALUES
 --   id,      user_id, role_id
