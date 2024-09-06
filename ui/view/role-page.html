@@ -33,6 +33,9 @@
                 <td x-text="a.id" class="narrow"></td>
                 <td x-text="a.user.username"></td>
                 <td class="last narrow">
+                  <a title="Edit" class="yellow row button" :href="'#/assignment-form/' + a.id">
+                    <i class="fas fa-pencil"></i>
+                  </a>
                   <a title="Delete" class="red row button" @click="removeAssignment(a.id)">
                     <i class="fas fa-trash"></i>
                   </a>

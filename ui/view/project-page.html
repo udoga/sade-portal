@@ -56,6 +56,12 @@
                 <td x-text="w.activity.name"></td>
                 <td x-text="w.duration + ' minutes'"></td>
                 <td class="last narrow">
+                  <a title="Show" class="light-blue row button" :href="'#/worklog-page/' + w.id">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <a title="Edit" class="yellow row button" :href="'#/worklog-form/' + w.id">
+                    <i class="fas fa-pencil"></i>
+                  </a>
                   <a title="Delete" class="red row button" @click="removeWorklog(w.id)">
                     <i class="fas fa-trash"></i>
                   </a>
@@ -91,6 +97,9 @@
                 <td x-text="e.endDate"></td>
                 <td x-text="e.status"></td>
                 <td class="last narrow">
+                  <a title="Edit" class="yellow row button" :href="'#/engagement-form/' + e.id">
+                    <i class="fas fa-pencil"></i>
+                  </a>
                   <a title="Delete" class="red row button" @click="removeEngagement(e.id)">
                     <i class="fas fa-trash"></i>
                   </a>

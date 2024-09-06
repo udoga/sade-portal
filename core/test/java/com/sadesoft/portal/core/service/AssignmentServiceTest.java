@@ -88,6 +88,20 @@ public class AssignmentServiceTest {
     }
 
     @Test
+    public void readsAssignment() {
+        assignmentRepo.create(validAssignment);
+        assertEquals(validAssignment.withId("0"), service.read("0"));
+    }
+
+    @Test
+    public void updatesAssignment() {
+        assignmentRepo.create(validAssignment);
+        Assignment assignment = service.update("0", validAssignment.withRoleId("1"));
+        assertEquals(validAssignment.withId("0").withRoleId("1"), assignment);
+        assertEquals(assignment, assignmentRepo.read("0"));
+    }
+
+    @Test
     public void deletesAssignmentById() {
         service.create(validAssignment);
         Assignment assignment = service.delete("0");

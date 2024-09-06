@@ -25,9 +25,17 @@ public class AssignmentService {
         return repo.listDetailedBy(query);
     }
 
+    public Assignment read(String id) {
+        return repo.read(id);
+    }
+
     public Assignment create(Assignment assignment) {
         check(assignment);
         return repo.create(assignment);
+    }
+
+    public Assignment update(String id, Assignment assignment) {
+        return repo.update(id, assignment);
     }
 
     public Assignment delete(String id) {
