@@ -5,20 +5,28 @@ class EmployeePageComponent extends PageComponent {
     worklogs = [];
     engagements = [];
 
-    constructor(router, api, notifier, vacationApi, expenseApi, worklogApi, engagementApi) {
+    constructor(router, api, notifier, engagementApi, worklogApi, vacationApi, expenseApi) {
         super(router, api, notifier, "employee");
+        this.engagementApi = engagementApi;
+        this.worklogApi = worklogApi;
         this.vacationApi = vacationApi;
         this.expenseApi = expenseApi;
-        this.worklogApi = worklogApi;
-        this.engagementApi = engagementApi;
     }
 
     afterLoad = function () {
+        this.loadEngagements();
+        this.loadWorklogs();
         this.loadVacations();
         this.loadExpenses();
-        this.loadWorklogs();
-        this.loadEngagements();
         this.selectTab("user");
+    }
+
+    loadEngagements = function () {
+        this.loadRelations(this.engagementApi, this.engagements, "detailed");
+    }
+
+    loadWorklogs = function () {
+        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
     }
 
     loadVacations = function () {
@@ -29,12 +37,12 @@ class EmployeePageComponent extends PageComponent {
         this.loadRelations(this.expenseApi, this.expenses, "detailed");
     }
 
-    loadWorklogs = function () {
-        this.loadRelations(this.worklogApi, this.worklogs, "detailed");
+    removeEngagement = function (id) {
+        this.removeRelation(this.engagementApi, this.engagements, id);
     }
 
-    loadEngagements = function () {
-        this.loadRelations(this.engagementApi, this.engagements, "detailed");
+    removeWorklog = function (id) {
+        this.removeRelation(this.worklogApi, this.worklogs, id);
     }
 
     removeVacation = function (id) {
@@ -43,14 +51,6 @@ class EmployeePageComponent extends PageComponent {
 
     removeExpense = function (id) {
         this.removeRelation(this.expenseApi, this.expenses, id);
-    }
-
-    removeWorklog = function (id) {
-        this.removeRelation(this.worklogApi, this.worklogs, id);
-    }
-
-    removeEngagement = function (id) {
-        this.removeRelation(this.engagementApi, this.engagements, id);
     }
 
     getUser = function () {

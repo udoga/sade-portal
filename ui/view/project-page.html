@@ -19,30 +19,29 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
+        <span class="panel-item first" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
         <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
-        <span class="panel-item" @click="selectTab('engagements')" :class="getTabClass('engagements')">Employees</span>
+        <span class="panel-item" @click="selectTab('engagements')" :class="getTabClass('engagements')">Engagements</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('client')">
           <div class="field">
-            <label>Client Id:</label>
+            <label>Id:</label>
             <span x-text="getClient().id"></span>
           </div>
-          <div class="last field">
-            <label>Client Name:</label>
+          <div class="field last">
+            <label>Name:</label>
             <span x-text="getClient().name"></span>
           </div>
         </div>
         <div x-show="isSelectedTab('worklogs')">
           <table class="relations">
             <tr>
-              <th class="narrow">Worklog Id</th>
+              <th class="narrow">Id</th>
               <th>Work Date</th>
-              <th>Project</th>
+              <th>Employee</th>
               <th>Activity</th>
               <th>Duration</th>
-              <th>Status</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/worklog-form?projectId=' + project.id">
                   <i class="fas fa-plus"></i> New
@@ -53,10 +52,9 @@
               <tr>
                 <td x-text="w.id" class="narrow"></td>
                 <td x-text="w.workDate"></td>
-                <td x-text="w.project.name"></td>
+                <td x-text="w.employee.fullName"></td>
                 <td x-text="w.activity.name"></td>
-                <td x-text="w.duration"></td>
-                <td x-text="w.status"></td>
+                <td x-text="w.duration + ' minutes'"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeWorklog(w.id)">
                     <i class="fas fa-trash"></i>
@@ -72,12 +70,11 @@
         <div x-show="isSelectedTab('engagements')">
           <table class="relations">
             <tr>
-              <th class="narrow">Employee Id</th>
-              <th>Employee Name</th>
+              <th class="narrow">Id</th>
+              <th>Employee</th>
               <th>Position</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th>Description</th>
               <th>Status</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/engagement-form?projectId=' + project.id">
@@ -87,12 +84,11 @@
             </tr>
             <template x-for="e in engagements">
               <tr>
-                <td x-text="e.employeeId" class="narrow"></td>
+                <td x-text="e.id" class="narrow"></td>
                 <td x-text="e.employee.fullName"></td>
                 <td x-text="e.position.name"></td>
                 <td x-text="e.startDate"></td>
                 <td x-text="e.endDate"></td>
-                <td x-text="e.description"></td>
                 <td x-text="e.status"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeEngagement(e.id)">

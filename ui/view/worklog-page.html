@@ -35,31 +35,31 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('project')" :class="getTabClass('project')">Project</span>
+        <span class="panel-item first" @click="selectTab('project')" :class="getTabClass('project')">Project</span>
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('project')">
           <div class="field">
-            <label>Project Id:</label>
+            <label>Id:</label>
             <span x-text="getProject().id"></span>
           </div>
           <div class="field">
-            <label>Project Name:</label>
+            <label>Name:</label>
             <span x-text="getProject().name"></span>
           </div>
-          <div class="last field">
-            <label>Project Description:</label>
+          <div class="field last">
+            <label>Description:</label>
             <span x-text="getProject().description"></span>
           </div>
         </div>
         <div x-show="isSelectedTab('employee')">
           <div class="field">
-            <label>Employee Id:</label>
+            <label>Id:</label>
             <span x-text="getEmployee().id"></span>
           </div>
-          <div class="last field">
-            <label>Employee Name:</label>
+          <div class="field last">
+            <label>Name:</label>
             <span x-text="getEmployee().fullName"></span>
           </div>
         </div>

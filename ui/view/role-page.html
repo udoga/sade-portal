@@ -11,14 +11,16 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('assignments')" :class="getTabClass('assignments')">Users</span>
-        <span class="panel-item" @click="selectTab('grants')" :class="getTabClass('grants')">Permissions</span>
+        <span class="panel-item first" @click="selectTab('assignments')" :class="getTabClass('assignments')">
+          Assignments
+        </span>
+        <span class="panel-item" @click="selectTab('grants')" :class="getTabClass('grants')">Grants</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('assignments')">
           <table class="relations">
             <tr>
-              <th class="narrow">User Id</th>
+              <th class="narrow">Id</th>
               <th>Username</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/assignment-form?roleId=' + role.id">
@@ -28,7 +30,7 @@
             </tr>
             <template x-for="a in assignments">
               <tr>
-                <td x-text="a.user.id" class="narrow"></td>
+                <td x-text="a.id" class="narrow"></td>
                 <td x-text="a.user.username"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeAssignment(a.id)">
@@ -45,8 +47,8 @@
         <div x-show="isSelectedTab('grants')">
           <table class="relations">
             <tr>
-              <th class="narrow">Permission Id</th>
-              <th>Permission Name</th>
+              <th class="narrow">Id</th>
+              <th>Permission</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/grant-form?roleId=' + role.id">
                   <i class="fas fa-plus"></i> New
@@ -55,7 +57,7 @@
             </tr>
             <template x-for="g in grants">
               <tr>
-                <td x-text="g.permission.id" class="narrow"></td>
+                <td x-text="g.id" class="narrow"></td>
                 <td x-text="g.permission.name"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeGrant(g.id)">

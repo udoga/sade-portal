@@ -420,11 +420,14 @@ a.button.light-blue:active {
 
 .panel {
   border: 1px solid var(--navigation-border-color);
+  border-radius: 5px;
   margin-top: 20px;
 }
 
 .panel-header {
   display: flex;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   border-bottom: 1px solid var(--navigation-border-color);
   background-color: var(--navigation-background-color);
 }
@@ -435,12 +438,17 @@ a.button.light-blue:active {
   cursor: pointer;
 }
 
+.panel-item.first {
+  border-top-left-radius: 5px;
+}
+
 .panel-item:hover {
   background-color: var(--navigation-hover-color);
 }
 
 .panel-item.selected {
-  background-color: white;
+  background-color: #386fa8;
+  color: white;
 }
 
 .panel-content {

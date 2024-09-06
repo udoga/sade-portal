@@ -16,7 +16,7 @@ class ProjectPageComponent extends PageComponent {
     }
 
     loadWorklogs = function () {
-        this.loadRelations(this.worklogApi, this.worklogs, "detailed");
+        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
     }
 
     loadEngagements = function () {

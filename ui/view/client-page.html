@@ -15,15 +15,14 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('projects')" :class="getTabClass('projects')">Projects</span>
+        <span class="panel-item first" @click="selectTab('projects')" :class="getTabClass('projects')">Projects</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('projects')">
           <table class="relations">
             <tr>
-              <th class="narrow">Project Id</th>
+              <th class="narrow">Id</th>
               <th>Name</th>
-              <th>Description</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/project-form?clientId=' + client.id">
                   <i class="fas fa-plus"></i> New
@@ -34,7 +33,6 @@
               <tr>
                 <td x-text="p.id" class="narrow"></td>
                 <td x-text="p.name"></td>
-                <td x-text="p.description"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeProject(p.id)">
                     <i class="fas fa-trash"></i>

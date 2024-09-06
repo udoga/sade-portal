@@ -11,15 +11,17 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('assignments')" :class="getTabClass('assignments')">Roles</span>
+        <span class="panel-item first" @click="selectTab('assignments')" :class="getTabClass('assignments')">
+          Assignments
+        </span>
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('assignments')">
           <table class="relations">
             <tr>
-              <th class="narrow">Role Id</th>
-              <th>Role Name</th>
+              <th class="narrow">Id</th>
+              <th>Role</th>
               <th class="last narrow">
                 <a class="green header icon button" :href="'#/assignment-form?userId=' + user.id">
                   <i class="fas fa-plus"></i> New
@@ -28,7 +30,7 @@
             </tr>
             <template x-for="a in assignments">
               <tr>
-                <td x-text="a.role.id" class="narrow"></td>
+                <td x-text="a.id" class="narrow"></td>
                 <td x-text="a.role.name"></td>
                 <td class="last narrow">
                   <a title="Delete" class="red row button" @click="removeAssignment(a.id)">
@@ -48,16 +50,12 @@
           </div>
           <div x-show="hasData(employee)">
             <div class="field">
-              <label>Employee Id:</label>
+              <label>Id:</label>
               <span x-text="employee.id"></span>
             </div>
-            <div class="field">
-              <label>First Name:</label>
-              <span x-text="employee.firstName"></span>
-            </div>
-            <div class="last field">
-              <label>Last Name:</label>
-              <span x-text="employee.lastName"></span>
+            <div class="field last">
+              <label>Name:</label>
+              <span x-text="employee.fullName"></span>
             </div>
           </div>
         </div>

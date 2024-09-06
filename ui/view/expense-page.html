@@ -23,14 +23,14 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item" @click="selectTab('receipts')" :class="getTabClass('receipts')">Receipts</span>
+        <span class="panel-item first" @click="selectTab('receipts')" :class="getTabClass('receipts')">Receipts</span>
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('receipts')">
           <table class="relations">
             <tr>
-              <th class="narrow">Receipt Id</th>
+              <th class="narrow">Id</th>
               <th>Receipt Date</th>
               <th>Category Id</th>
               <th>Amount</th>
@@ -65,11 +65,11 @@
         </div>
         <div x-show="isSelectedTab('employee')">
           <div class="field">
-            <label>Employee Id:</label>
+            <label>Id:</label>
             <span x-text="getEmployee().id"></span>
           </div>
-          <div class="last field">
-            <label>Employee Name:</label>
+          <div class="field last">
+            <label>Name:</label>
             <span x-text="getEmployee().fullName"></span>
           </div>
         </div>
