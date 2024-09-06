@@ -47,6 +47,7 @@
               </tr>
             </template>
           </table>
+          <div class="panel-message below-table" x-show="!projects.length">No records.</div>
           <div class="options">
             <a class="white form button" x-show="hasMore(projects)" @click="loadProjects()">Load More</a>
           </div>

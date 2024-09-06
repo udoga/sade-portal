@@ -43,6 +43,7 @@
               </tr>
             </template>
           </table>
+          <div class="panel-message below-table" x-show="!assignments.length">No records.</div>
           <div class="options">
             <a class="white form button" x-show="hasMore(assignments)" @click="loadAssignments()">Load More</a>
           </div>
@@ -70,6 +71,7 @@
               </tr>
             </template>
           </table>
+          <div class="panel-message below-table" x-show="!grants.length">No records.</div>
           <div class="options">
             <a class="white form button" x-show="hasMore(grants)" @click="loadGrants()">Load More</a>
           </div>

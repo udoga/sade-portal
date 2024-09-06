@@ -462,6 +462,11 @@ a.button.light-blue:active {
   color: gray;
 }
 
+.panel-message.below-table {
+  border-top: 1px solid var(--main-border-color);
+  padding-top: 10px;
+}
+
 .query {
   padding-bottom: 10px;
 }
