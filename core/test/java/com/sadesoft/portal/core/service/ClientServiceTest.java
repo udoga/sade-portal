@@ -12,9 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientServiceTest {
     private MockClientRepo clientRepo;
@@ -90,9 +88,9 @@ public class ClientServiceTest {
         }
 
         @Test
-        public void listSummarizedClients() {
-            assertEquals(1, service.listSummarized().size());
-            assertEquals(null, service.listSummarized().get(0).sectorId);
+        public void listsClientOptions() {
+            assertEquals(1, service.listOptions().size());
+            assertNull(service.listOptions().get(0).sectorId);
         }
 
         @Test

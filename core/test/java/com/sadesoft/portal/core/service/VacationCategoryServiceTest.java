@@ -33,15 +33,15 @@ public class VacationCategoryServiceTest {
     }
 
     @Test
-    public void listsVacationCategorys() {
+    public void listsVacationCategories() {
         service.create(validVacationCategory);
         assertEquals(vacationCategoryRepo.list(), service.list());
     }
 
     @Test
-    public void listSummarizedSectors() {
+    public void listsVacationCategoryOptions() {
         service.create(validVacationCategory);
-        assertEquals(vacationCategoryRepo.listSummarized(), service.listSummarized());
+        assertEquals(vacationCategoryRepo.listOptions(), service.listOptions());
     }
 
     @Test

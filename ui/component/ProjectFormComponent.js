@@ -8,6 +8,6 @@ class ProjectFormComponent extends FormComponent {
 
     loadAll = function (clientApi) {
         this.load();
-        this.loadSummarized(clientApi, this.clients);
+        this.loadOptions(clientApi, this.clients);
     }
 }

@@ -19,8 +19,8 @@ public class ActivityService {
         return repo.list();
     }
 
-    public List<Activity> listSummarized() {
-        return repo.listSummarized();
+    public List<Activity> listOptions() {
+        return repo.listOptions();
     }
 
     public Activity read(String id) {

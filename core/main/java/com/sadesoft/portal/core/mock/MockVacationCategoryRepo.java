@@ -12,7 +12,7 @@ public class MockVacationCategoryRepo extends MockRepo<VacationCategory> impleme
     }
 
     @Override
-    public List<VacationCategory> listSummarized() {
+    public List<VacationCategory> listOptions() {
         return list().stream().map(s -> new VacationCategory().withId(s.id).withName(s.name)).toList();
     }
 }

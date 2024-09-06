@@ -16,8 +16,8 @@ public class SectorService {
         return repo.list();
     }
 
-    public List<Sector> listSummarized() {
-        return repo.listSummarized();
+    public List<Sector> listOptions() {
+        return repo.listOptions();
     }
 
     public Sector read(String id) {

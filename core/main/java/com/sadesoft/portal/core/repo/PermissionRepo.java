@@ -6,6 +6,6 @@ import com.sadesoft.portal.core.model.Permission;
 import java.util.List;
 
 public interface PermissionRepo extends Repo<Permission> {
-    List<Permission> listSummarized();
+    List<Permission> listOptions();
     List<Permission> listByUserId(String userId);
 }

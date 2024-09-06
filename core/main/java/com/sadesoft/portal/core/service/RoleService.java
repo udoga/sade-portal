@@ -16,8 +16,8 @@ public class RoleService {
         return repo.list();
     }
 
-    public List<Role> listSummarized() {
-        return repo.listSummarized();
+    public List<Role> listOptions() {
+        return repo.listOptions();
     }
 
     public Role read(String id) {

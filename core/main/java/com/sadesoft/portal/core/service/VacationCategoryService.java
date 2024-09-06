@@ -16,8 +16,8 @@ public class VacationCategoryService {
         return repo.list();
     }
 
-    public List<VacationCategory> listSummarized() {
-        return repo.listSummarized();
+    public List<VacationCategory> listOptions() {
+        return repo.listOptions();
     }
 
     public VacationCategory read(String id) {

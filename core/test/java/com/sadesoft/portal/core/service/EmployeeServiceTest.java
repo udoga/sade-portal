@@ -82,9 +82,9 @@ public class EmployeeServiceTest {
         }
 
         @Test
-        public void listSummarizedEmployees() {
-            assertEquals(1, service.listSummarized().size());
-            assertNull(service.listSummarized().get(0).userId);
+        public void listsEmployeeOptions() {
+            assertEquals(1, service.listOptions().size());
+            assertNull(service.listOptions().get(0).userId);
         }
 
         @Test

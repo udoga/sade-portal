@@ -25,9 +25,9 @@ public class UserService {
         return userRepo.list().stream().map(s -> s.withPassword(null)).toList();
     }
 
-    public List<User> listSummarized(String callerId) {
-        authorize(callerId, "list_users_summarized");
-        return userRepo.listSummarized();
+    public List<User> listOptions(String callerId) {
+        authorize(callerId, "list_user_options");
+        return userRepo.listOptions();
     }
 
     public User read(String callerId, String id) {

@@ -21,7 +21,7 @@ public class MockPermissionRepo extends MockRepo<Permission> implements Permissi
     }
 
     @Override
-    public List<Permission> listSummarized() {
+    public List<Permission> listOptions() {
         return list().stream().sorted(getComparator()).toList();
     }
 

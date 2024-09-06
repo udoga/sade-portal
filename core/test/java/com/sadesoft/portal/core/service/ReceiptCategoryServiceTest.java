@@ -33,15 +33,15 @@ public class ReceiptCategoryServiceTest {
     }
 
     @Test
-    public void listsReceiptCategorys() {
+    public void listsReceiptCategories() {
         service.create(validReceiptCategory);
         assertEquals(receiptCategoryRepo.list(), service.list());
     }
 
     @Test
-    public void listSummarizedSectors() {
+    public void listsReceiptCategoryOptions() {
         service.create(validReceiptCategory);
-        assertEquals(receiptCategoryRepo.listSummarized(), service.listSummarized());
+        assertEquals(receiptCategoryRepo.listOptions(), service.listOptions());
     }
 
     @Test

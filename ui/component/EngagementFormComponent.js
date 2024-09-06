@@ -10,9 +10,9 @@ class EngagementFormComponent extends FormComponent {
 
     loadAll = function (projectApi, employeeApi, positionApi) {
         this.load();
-        this.loadSummarized(projectApi, this.projects);
-        this.loadSummarized(employeeApi, this.employees);
-        this.loadSummarized(positionApi, this.positions);
+        this.loadOptions(projectApi, this.projects);
+        this.loadOptions(employeeApi, this.employees);
+        this.loadOptions(positionApi, this.positions);
     }
 
     routeOnSuccess = function () {

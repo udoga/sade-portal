@@ -12,7 +12,7 @@ public class MockActivityRepo extends MockRepo<Activity> implements ActivityRepo
     }
 
     @Override
-    public List<Activity> listSummarized() {
+    public List<Activity> listOptions() {
         return list().stream().map(a -> new Activity().withId(a.id).withName(a.name)).toList();
     }
 }

@@ -25,8 +25,8 @@ public class ClientService {
         return repo.listDetailedBy(query);
     }
 
-    public List<Client> listSummarized() {
-        return repo.listSummarized();
+    public List<Client> listOptions() {
+        return repo.listOptions();
     }
 
     public Client read(String id) {

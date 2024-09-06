@@ -12,7 +12,7 @@ public class MockReceiptCategoryRepo extends MockRepo<ReceiptCategory> implement
     }
 
     @Override
-    public List<ReceiptCategory> listSummarized() {
+    public List<ReceiptCategory> listOptions() {
         return list().stream().map(s -> new ReceiptCategory().withId(s.id).withName(s.name)).toList();
     }
 }

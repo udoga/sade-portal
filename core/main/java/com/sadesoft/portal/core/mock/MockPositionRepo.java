@@ -12,7 +12,7 @@ public class MockPositionRepo extends MockRepo<Position> implements PositionRepo
     }
 
     @Override
-    public List<Position> listSummarized() {
+    public List<Position> listOptions() {
         return list().stream().map(a -> new Position().withId(a.id).withName(a.name)).toList();
     }
 }

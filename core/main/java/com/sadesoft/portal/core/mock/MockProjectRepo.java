@@ -34,7 +34,7 @@ public class MockProjectRepo extends MockRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listSummarized() {
+    public List<Project> listOptions() {
         return list().stream().map(c -> new Project().withId(c.id).withName(c.name)).toList();
     }
 

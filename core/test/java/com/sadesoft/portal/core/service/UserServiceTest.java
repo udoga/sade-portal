@@ -26,7 +26,7 @@ public class UserServiceTest {
         callerId = "0";
         userRepo = new MockUserRepo();
         permissionRepo = new MockPermissionRepo(callerId, List.of(
-                "list_users", "list_users_summarized", "create_user", "read_user", "update_user", "delete_user"));
+                "list_users", "list_user_options", "create_user", "read_user", "update_user", "delete_user"));
         service = new UserService(userRepo, permissionRepo, "");
         validUser = new User(null, "sample-username", "sample-password");
     }
@@ -76,9 +76,9 @@ public class UserServiceTest {
         }
 
         @Test
-        public void listSummarizedUsers() {
-            assertEquals(1, service.listSummarized(callerId).size());
-            assertNull(service.listSummarized(callerId).get(0).password);
+        public void listsUserOptions() {
+            assertEquals(1, service.listOptions(callerId).size());
+            assertNull(service.listOptions(callerId).get(0).password);
         }
 
         @Test
@@ -123,7 +123,7 @@ public class UserServiceTest {
         public void whenCallerIsUnauthorized_throwsError() {
             permissionRepo.authorizedUserId = "";
             assertUnauthorized("list_users", () -> service.list(callerId));
-            assertUnauthorized("list_users_summarized", () -> service.listSummarized(callerId));
+            assertUnauthorized("list_user_options", () -> service.listOptions(callerId));
             assertUnauthorized("create_user", () -> service.create(callerId, validUser));
             assertUnauthorized("read_user", () -> service.read(callerId, "0"));
             assertUnauthorized("update_user", () -> service.update(callerId, "0", validUser));

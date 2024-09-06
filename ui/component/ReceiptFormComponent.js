@@ -8,7 +8,7 @@ class ReceiptFormComponent extends FormComponent {
 
     loadAll = function (categoryApi) {
         this.load();
-        this.loadSummarized(categoryApi, this.categories);
+        this.loadOptions(categoryApi, this.categories);
     }
 
     routeOnSuccess = function () {

@@ -34,12 +34,12 @@ public class LocalReceiptCategoryRepo extends JdbcRepo<ReceiptCategory> implemen
     }
 
     @Override
-    public List<ReceiptCategory> listSummarized() {
+    public List<ReceiptCategory> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedReceiptCategory));
+        return call(() -> queryFor(createStatement(sql), this::toReceiptCategoryOption));
     }
 
-    private ReceiptCategory toSummarizedReceiptCategory(ResultSet s) throws SQLException {
+    private ReceiptCategory toReceiptCategoryOption(ResultSet s) throws SQLException {
         return new ReceiptCategory().withId(getId(s, "id")).withName(s.getString("name"));
     }
 }

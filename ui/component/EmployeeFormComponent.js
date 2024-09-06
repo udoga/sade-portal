@@ -8,6 +8,6 @@ class EmployeeFormComponent extends FormComponent {
 
     loadAll = function (userApi) {
         this.load();
-        this.loadSummarized(userApi, this.users);
+        this.loadOptions(userApi, this.users);
     }
 }

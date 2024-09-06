@@ -14,8 +14,8 @@ class VacationFormComponent extends FormComponent {
 
     loadAll = function (employeeApi, categoryApi) {
         this.load();
-        this.loadSummarized(employeeApi, this.employees);
-        this.loadSummarized(categoryApi, this.categories);
+        this.loadOptions(employeeApi, this.employees);
+        this.loadOptions(categoryApi, this.categories);
     }
 
     getFullName = function (employee) {

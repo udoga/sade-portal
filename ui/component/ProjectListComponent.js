@@ -8,6 +8,6 @@ class ProjectListComponent extends ListComponent {
 
     loadAll = function (clientApi) {
         this.load("detailed");
-        this.loadSummarized(clientApi, this.clients);
+        this.loadOptions(clientApi, this.clients);
     }
 }

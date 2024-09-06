@@ -22,8 +22,8 @@ public class ProjectService {
         return repo.listDetailedBy(query);
     }
 
-    public List<Project> listSummarized() {
-        return repo.listSummarized();
+    public List<Project> listOptions() {
+        return repo.listOptions();
     }
 
     public Project read(String id) {

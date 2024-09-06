@@ -8,8 +8,8 @@ import com.sadesoft.portal.core.query.ClientQuery;
 import com.sadesoft.portal.core.model.Client;
 
 public interface ClientRepo extends Repo<Client> {
-      List<Client> listSummarized();
       List<Client> listBy(ClientQuery query);
       List<DetailedClient> listDetailedBy(ClientQuery query);
+      List<Client> listOptions();
       DetailedClient readDetailed(String id);
 }

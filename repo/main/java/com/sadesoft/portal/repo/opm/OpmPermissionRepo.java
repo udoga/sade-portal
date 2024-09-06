@@ -35,7 +35,7 @@ public class OpmPermissionRepo extends JdbcRepo<Permission> implements Permissio
     }
 
     @Override
-    public List<Permission> listSummarized() {
+    public List<Permission> listOptions() {
         String sql = getQuerySql("id, code") + getOrderSql("code");
         return call(() -> query(createStatement(sql)));
     }

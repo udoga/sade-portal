@@ -9,8 +9,8 @@ class AssignmentFormComponent extends FormComponent {
 
     loadAll = function (userApi, roleApi) {
         this.load();
-        this.loadSummarized(userApi, this.users);
-        this.loadSummarized(roleApi, this.roles);
+        this.loadOptions(userApi, this.users);
+        this.loadOptions(roleApi, this.roles);
     }
 
     routeOnSuccess = function () {

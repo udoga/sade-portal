@@ -8,6 +8,6 @@ class ClientFormComponent extends FormComponent {
 
     loadAll = function (sectorApi) {
         this.load();
-        this.loadSummarized(sectorApi, this.sectors);
+        this.loadOptions(sectorApi, this.sectors);
     }
 }

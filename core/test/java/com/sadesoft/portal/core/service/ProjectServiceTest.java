@@ -48,9 +48,9 @@ public class ProjectServiceTest {
         }
 
         @Test
-        public void listSummarizedProjects() {
-            assertEquals(1, service.listSummarized().size());
-            assertNull(service.listSummarized().get(0).clientId);
+        public void listsProjectOptions() {
+            assertEquals(1, service.listOptions().size());
+            assertNull(service.listOptions().get(0).clientId);
         }
 
         @Test

@@ -8,7 +8,7 @@ class ExpenseFormComponent extends FormComponent {
 
     loadAll = function (employeeApi) {
         this.load();
-        this.loadSummarized(employeeApi, this.employees);
+        this.loadOptions(employeeApi, this.employees);
     }
 
     getFullName = function (employee) {

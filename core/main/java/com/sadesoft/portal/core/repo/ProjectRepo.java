@@ -10,6 +10,6 @@ import java.util.List;
 public interface ProjectRepo extends Repo<Project> {
     List<Project> listBy(ProjectQuery query);
     List<DetailedProject> listDetailedBy(ProjectQuery query);
+    List<Project> listOptions();
     DetailedProject readDetailed(String id);
-    List<Project> listSummarized();
 }

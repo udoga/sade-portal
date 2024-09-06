@@ -34,7 +34,7 @@ public class MockEmployeeRepo extends MockRepo<Employee> implements EmployeeRepo
     }
 
     @Override
-    public List<Employee> listSummarized() {
+    public List<Employee> listOptions() {
         return list().stream()
                 .map(e -> new Employee().withId(e.id).withFirstName(e.firstName).withLastName(e.lastName)).toList();
     }

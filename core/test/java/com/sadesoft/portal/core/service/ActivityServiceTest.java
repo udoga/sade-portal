@@ -68,8 +68,8 @@ public class ActivityServiceTest {
         }
 
         @Test
-        public void listSummarizedActivities() {
-            assertEquals(repo.listSummarized(), service.listSummarized());
+        public void listsActivityOptions() {
+            assertEquals(repo.listOptions(), service.listOptions());
         }
 
         @Test

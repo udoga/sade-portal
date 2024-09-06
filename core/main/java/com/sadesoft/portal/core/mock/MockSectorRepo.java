@@ -12,7 +12,7 @@ public class MockSectorRepo extends MockRepo<Sector> implements SectorRepo {
     }
 
     @Override
-    public List<Sector> listSummarized() {
+    public List<Sector> listOptions() {
         return list().stream().map(s -> new Sector().withId(s.id).withName(s.name)).toList();
     }
 }

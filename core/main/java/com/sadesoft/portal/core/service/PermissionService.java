@@ -16,8 +16,8 @@ public class PermissionService {
         return repo.list();
     }
 
-    public List<Permission> listSummarized() {
-        return repo.listSummarized();
+    public List<Permission> listOptions() {
+        return repo.listOptions();
     }
 
     public Permission read(String id) {

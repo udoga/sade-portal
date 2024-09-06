@@ -12,7 +12,7 @@ public class MockRoleRepo extends MockRepo<Role> implements RoleRepo {
     }
 
     @Override
-    public List<Role> listSummarized() {
+    public List<Role> listOptions() {
         return list().stream().map(s -> new Role().withId(s.id).withName(s.name)).toList();
     }
 }

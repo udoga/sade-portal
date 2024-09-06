@@ -36,7 +36,7 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
     }
 
     @Override
-    public List<Permission> listSummarized() {
+    public List<Permission> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
         return call(() -> query(createStatement(sql)));
     }

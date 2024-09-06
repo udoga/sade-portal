@@ -58,9 +58,9 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
     }
 
     @Override
-    public List<Project> listSummarized() {
+    public List<Project> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedProject));
+        return call(() -> queryFor(createStatement(sql), this::toProjectOption));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedProject)).get(0);
     }
 
-    private Project toSummarizedProject(ResultSet s) throws SQLException {
+    private Project toProjectOption(ResultSet s) throws SQLException {
         return new Project().withId(getId(s, "id")).withName(s.getString("name"));
     }
 

@@ -10,6 +10,6 @@ import java.util.List;
 public interface EmployeeRepo extends Repo<Employee> {
     List<Employee> listBy(EmployeeQuery query);
     List<DetailedEmployee> listDetailedBy(EmployeeQuery query);
+    List<Employee> listOptions();
     DetailedEmployee readDetailed(String id);
-    List<Employee> listSummarized();
 }

@@ -10,9 +10,9 @@ class WorklogFormComponent extends FormComponent {
 
     loadAll = function (projectApi, employeeApi, activityApi) {
         this.load();
-        this.loadSummarized(projectApi, this.projects);
-        this.loadSummarized(employeeApi, this.employees);
-        this.loadSummarized(activityApi, this.activities);
+        this.loadOptions(projectApi, this.projects);
+        this.loadOptions(employeeApi, this.employees);
+        this.loadOptions(activityApi, this.activities);
     }
 
     getFullName = function (employee) {

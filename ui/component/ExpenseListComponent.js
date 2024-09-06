@@ -8,6 +8,6 @@ class ExpenseListComponent extends ListComponent {
 
     loadAll = function (employeeApi) {
         this.load("detailed");
-        this.loadSummarized(employeeApi, this.employees);
+        this.loadOptions(employeeApi, this.employees);
     }
 }

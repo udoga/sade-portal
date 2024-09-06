@@ -12,7 +12,7 @@ public class MockUserRepo extends MockRepo<User> implements UserRepo {
     }
 
     @Override
-    public List<User> listSummarized() {
+    public List<User> listOptions() {
         return list().stream().map(u -> new User().withId(u.id).withUsername(u.username)).toList();
     }
 }

@@ -62,12 +62,12 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
     }
 
     @Override
-    public List<Employee> listSummarized() {
+    public List<Employee> listOptions() {
         String sql = getQuerySql("id, first_name, last_name") + getOrderSql("first_name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedEmployee));
+        return call(() -> queryFor(createStatement(sql), this::toEmployeeOption));
     }
 
-    private Employee toSummarizedEmployee(ResultSet s) throws SQLException {
+    private Employee toEmployeeOption(ResultSet s) throws SQLException {
         return new Employee().withId(getId(s, "id"))
                 .withFirstName(s.getString("first_name"))
                 .withLastName(s.getString("last_name"));

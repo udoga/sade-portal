@@ -19,7 +19,7 @@ public class MockClientRepo extends MockRepo<Client> implements ClientRepo {
     }
 
     @Override
-    public List<Client> listSummarized() {
+    public List<Client> listOptions() {
         return list().stream().map(c -> new Client().withId(c.id).withName(c.name)).toList();
     }
 

@@ -59,8 +59,8 @@ public class PositionServiceTest {
         }
 
         @Test
-        public void listSummarizedPositions() {
-            assertEquals(repo.listSummarized(), service.listSummarized());
+        public void listsPositionOptions() {
+            assertEquals(repo.listOptions(), service.listOptions());
         }
 
         @Test

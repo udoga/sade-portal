@@ -25,8 +25,8 @@ public class EmployeeService {
         return repo.listDetailedBy(query);
     }
 
-    public List<Employee> listSummarized() {
-        return repo.listSummarized();
+    public List<Employee> listOptions() {
+        return repo.listOptions();
     }
 
     public Employee read(String id) {

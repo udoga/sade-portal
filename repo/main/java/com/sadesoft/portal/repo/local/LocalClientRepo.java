@@ -41,9 +41,9 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
     }
 
     @Override
-    public List<Client> listSummarized() {
+    public List<Client> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedClient));
+        return call(() -> queryFor(createStatement(sql), this::toClientOption));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
                 new Sector(getId(s, "sector_id"), s.getString("sector_name")));
     }
 
-    private Client toSummarizedClient(ResultSet s) throws SQLException {
+    private Client toClientOption(ResultSet s) throws SQLException {
         return new Client().withId(getId(s, "id")).withName(s.getString("name"));
     }
 

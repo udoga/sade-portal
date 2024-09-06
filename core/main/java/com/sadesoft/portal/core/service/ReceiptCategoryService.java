@@ -16,8 +16,8 @@ public class ReceiptCategoryService {
         return repo.list();
     }
 
-    public List<ReceiptCategory> listSummarized() {
-        return repo.listSummarized();
+    public List<ReceiptCategory> listOptions() {
+        return repo.listOptions();
     }
 
     public ReceiptCategory read(String id) {

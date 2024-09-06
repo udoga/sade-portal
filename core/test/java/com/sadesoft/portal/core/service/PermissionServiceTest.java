@@ -34,11 +34,11 @@ public class PermissionServiceTest {
         }
 
         @Test
-        public void listsSummarized() {
+        public void listsPermissionOptions() {
             repo.create(validPermission.withName("employee_create"));
-            assertEquals(2, service.listSummarized().size());
-            assertEquals("employee_create", service.listSummarized().get(0).name);
-            assertEquals("user_create", service.listSummarized().get(1).name);
+            assertEquals(2, service.listOptions().size());
+            assertEquals("employee_create", service.listOptions().get(0).name);
+            assertEquals("user_create", service.listOptions().get(1).name);
         }
 
         @Test

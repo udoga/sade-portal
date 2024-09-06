@@ -174,7 +174,7 @@ INSERT INTO roles VALUES
 INSERT INTO permissions  VALUES
 --   id,      name
     (default, 'sp-list_users'),
-    (default, 'sp-list_users_summarized'),
+    (default, 'sp-list_user_options'),
     (default, 'sp-read_user'),
     (default, 'sp-create_user'),
     (default, 'sp-update_user'),

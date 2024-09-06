@@ -39,9 +39,9 @@ public class SectorServiceTest {
     }
 
     @Test
-    public void listSummarizedSectors() {
+    public void listsSectorOptions() {
         service.create(validSector);
-        assertEquals(sectorRepo.listSummarized(), service.listSummarized());
+        assertEquals(sectorRepo.listOptions(), service.listOptions());
     }
 
     @Test

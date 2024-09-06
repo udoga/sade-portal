@@ -69,7 +69,7 @@ public class LocalEngagementRepo extends JdbcRepo<Engagement> implements Engagem
         return call(() -> queryFor(createStatement(sql), this::toDetailedEngagement));
     }
 
-    public DetailedEngagement toDetailedEngagement(ResultSet s) throws SQLException {
+    private DetailedEngagement toDetailedEngagement(ResultSet s) throws SQLException {
         return new DetailedEngagement(
                 toObject(s),
                 new Project(getId(s, "project_id"), null, s.getString("project_name"), s.getString("project_desc")),

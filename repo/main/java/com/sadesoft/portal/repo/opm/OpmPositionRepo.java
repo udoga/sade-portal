@@ -53,12 +53,12 @@ public class OpmPositionRepo extends JdbcRepo<Position> implements PositionRepo 
     }
 
     @Override
-    public List<Position> listSummarized() {
+    public List<Position> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedPosition));
+        return call(() -> queryFor(createStatement(sql), this::toPositionOption));
     }
 
-    private Position toSummarizedPosition(ResultSet s) throws SQLException {
+    private Position toPositionOption(ResultSet s) throws SQLException {
         return new Position().withId(getId(s, "id")).withName(s.getString("name"));
     }
 }

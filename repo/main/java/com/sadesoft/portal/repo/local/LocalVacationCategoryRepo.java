@@ -34,12 +34,12 @@ public class LocalVacationCategoryRepo extends JdbcRepo<VacationCategory> implem
     }
 
     @Override
-    public List<VacationCategory> listSummarized() {
+    public List<VacationCategory> listOptions() {
         String sql = getQuerySql("id, name") + getOrderSql("name");
-        return call(() -> queryFor(createStatement(sql), this::toSummarizedVacationCategory));
+        return call(() -> queryFor(createStatement(sql), this::toVacationCategoryOption));
     }
 
-    private VacationCategory toSummarizedVacationCategory(ResultSet s) throws SQLException {
+    private VacationCategory toVacationCategoryOption(ResultSet s) throws SQLException {
         return new VacationCategory().withId(getId(s, "id")).withName(s.getString("name"));
     }
 }

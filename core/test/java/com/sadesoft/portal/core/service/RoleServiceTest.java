@@ -42,8 +42,8 @@ public class RoleServiceTest {
         }
 
         @Test
-        public void listSummarizedSectors() {
-            assertEquals(repo.listSummarized(), service.listSummarized());
+        public void listsRoleOptions() {
+            assertEquals(repo.listOptions(), service.listOptions());
         }
 
         @Test

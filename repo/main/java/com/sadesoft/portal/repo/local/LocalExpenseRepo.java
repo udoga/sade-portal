@@ -63,7 +63,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         return call(() -> queryFor(createStatement(sql), this::toDetailedExpense)).get(0);
     }
 
-    public DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
+    private DetailedExpense toDetailedExpense(ResultSet s) throws SQLException {
         return new DetailedExpense(
             toObject(s),
             new Employee(getId(s, "employee_id"), null, s.getString("first_name"), s.getString("last_name")));
