@@ -18,7 +18,7 @@ class EmployeePageComponent extends PageComponent {
         this.loadWorklogs();
         this.loadVacations();
         this.loadExpenses();
-        this.selectTab("user");
+        this.selectTab("engagements");
     }
 
     loadEngagements = function () {

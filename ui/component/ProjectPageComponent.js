@@ -12,7 +12,7 @@ class ProjectPageComponent extends PageComponent {
     afterLoad = function () {
         this.loadEngagements();
         this.loadWorklogs();
-        this.selectTab("client");
+        this.selectTab("engagements");
     }
 
     loadEngagements = function () {

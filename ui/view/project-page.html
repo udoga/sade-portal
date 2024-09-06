@@ -19,21 +19,11 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item first" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
-        <span class="panel-item" @click="selectTab('engagements')" :class="getTabClass('engagements')">Engagements</span>
+        <span class="panel-item first" @click="selectTab('engagements')" :class="getTabClass('engagements')">Engagements</span>
         <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
+        <span class="panel-item" @click="selectTab('client')" :class="getTabClass('client')">Client</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelectedTab('client')">
-          <div class="field">
-            <label>Id:</label>
-            <span x-text="getClient().id"></span>
-          </div>
-          <div class="field last">
-            <label>Name:</label>
-            <a class="blue" x-text="getClient().name" :href="'#/client-page/' + getClient().id"></a>
-          </div>
-        </div>
         <div x-show="isSelectedTab('engagements')">
           <table class="relations">
             <tr>
@@ -109,6 +99,16 @@
           </table>
           <div class="options">
             <a class="white form button" x-show="hasMore(worklogs)" @click="loadWorklogs()">Load More</a>
+          </div>
+        </div>
+        <div x-show="isSelectedTab('client')">
+          <div class="field">
+            <label>Id:</label>
+            <span x-text="getClient().id"></span>
+          </div>
+          <div class="field last">
+            <label>Name:</label>
+            <a class="blue" x-text="getClient().name" :href="'#/client-page/' + getClient().id"></a>
           </div>
         </div>
       </div>

@@ -20,23 +20,13 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item first" @click="selectTab('user')" :class="getTabClass('user')">User</span>
-        <span class="panel-item" @click="selectTab('engagements')" :class="getTabClass('engagements')">Engagements</span>
+        <span class="panel-item first" @click="selectTab('engagements')" :class="getTabClass('engagements')">Engagements</span>
         <span class="panel-item" @click="selectTab('worklogs')" :class="getTabClass('worklogs')">Worklogs</span>
         <span class="panel-item" @click="selectTab('vacations')" :class="getTabClass('vacations')">Vacations</span>
         <span class="panel-item" @click="selectTab('expenses')" :class="getTabClass('expenses')">Expenses</span>
+        <span class="panel-item" @click="selectTab('user')" :class="getTabClass('user')">User</span>
       </div>
       <div class="panel-content">
-        <div x-show="isSelectedTab('user')">
-          <div class="field">
-            <label>Id:</label>
-            <span x-text="getUser().id"></span>
-          </div>
-          <div class="field last">
-            <label>Username:</label>
-            <a class="blue" x-text="getUser().username" :href="'#/user-page/' + getUser().id"></a>
-          </div>
-        </div>
         <div x-show="isSelectedTab('engagements')">
           <table class="relations">
             <tr>
@@ -188,6 +178,16 @@
           </table>
           <div class="options">
             <a class="white form button" x-show="hasMore(expenses)" @click="loadExpenses()">Load More</a>
+          </div>
+        </div>
+        <div x-show="isSelectedTab('user')">
+          <div class="field">
+            <label>Id:</label>
+            <span x-text="getUser().id"></span>
+          </div>
+          <div class="field last">
+            <label>Username:</label>
+            <a class="blue" x-text="getUser().username" :href="'#/user-page/' + getUser().id"></a>
           </div>
         </div>
       </div>
