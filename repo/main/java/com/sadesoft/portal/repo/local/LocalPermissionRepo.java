@@ -45,9 +45,9 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
     public List<Permission> listByUserId(String userId) {
         String sql = getQuerySql("distinct p.id, p.name",
                 tableName + " " + tableAlias +
-                        " join grants g ON p.id = g.permission_id" +
-                        " join roles r ON g.role_id = r.id" +
-                        " join assignments a ON r.id = a.role_id") +
+                        " left join grants g ON p.id = g.permission_id" +
+                        " left join roles r ON g.role_id = r.id" +
+                        " left join assignments a ON r.id = a.role_id") +
                 getWhereSql("a.user_id = " + userId);
         return call(() -> query(createStatement(sql)));
     }

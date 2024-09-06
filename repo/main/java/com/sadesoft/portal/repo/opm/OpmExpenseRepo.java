@@ -95,7 +95,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         return getQuerySql(
             "e.*, m.name first_name, m.surname last_name",
             tableName + " " + tableAlias +
-                " join opm_hrm_employee m on e.employee_id = m.id");
+                " left join opm_hrm_employee m on e.employee_id = m.id");
     }
 
     private String getWhereSql(ExpenseQuery q) {

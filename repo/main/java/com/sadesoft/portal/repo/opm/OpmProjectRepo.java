@@ -222,7 +222,7 @@ public class OpmProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return getQuerySql(
             "p.*, c.name client_name",
             tableName + " " + tableAlias +
-                " join opm_ps_client c on p.client_id = c.id");
+                " left join opm_ps_client c on p.client_id = c.id");
     }
 
     private String getWhereSql(ProjectQuery q) {

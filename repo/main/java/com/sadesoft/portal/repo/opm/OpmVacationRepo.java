@@ -103,8 +103,8 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
             "v.*, c.type_name category_name, v.vacation_type_id category_id," +
                 "e.name first_name, e.surname last_name",
             tableName + " " + tableAlias +
-                " join opm_hrm_vacation_type c on v.vacation_type_id = c.id " +
-                " join opm_hrm_employee e on v.employee_id = e.id");
+                " left join opm_hrm_vacation_type c on v.vacation_type_id = c.id " +
+                " left join opm_hrm_employee e on v.employee_id = e.id");
     }
 
     private String getWhereSql(VacationQuery q) {

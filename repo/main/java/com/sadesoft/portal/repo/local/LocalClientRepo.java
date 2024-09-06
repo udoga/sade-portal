@@ -78,7 +78,7 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
         return getQuerySql(
             "c.*, s.name sector_name",
             tableName + " " + tableAlias +
-                " join sectors s on c.sector_id = s.id");
+                " left join sectors s on c.sector_id = s.id");
     }
 
     private String getWhereSql(ClientQuery q) {

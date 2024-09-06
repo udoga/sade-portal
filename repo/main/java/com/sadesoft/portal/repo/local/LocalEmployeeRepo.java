@@ -83,7 +83,7 @@ public class LocalEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRep
         return getQuerySql(
             "e.*, u.username username",
             tableName + " " + tableAlias +
-                " join users u on e.user_id = u.id");
+                " left join users u on e.user_id = u.id");
     }
 
     private String getWhereSql(EmployeeQuery q) {

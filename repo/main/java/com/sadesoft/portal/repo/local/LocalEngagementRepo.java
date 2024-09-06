@@ -81,9 +81,9 @@ public class LocalEngagementRepo extends JdbcRepo<Engagement> implements Engagem
         return getQuerySql(
             "e.*, p.name project_name, p.description project_desc, m.first_name, m.last_name, o.name position_name",
             tableName + " " + tableAlias +
-                " join projects p on e.project_id = p.id " +
-                " join employees m on e.employee_id = m.id " +
-                " join positions o on e.position_id = o.id");
+                " left join projects p on e.project_id = p.id " +
+                " left join employees m on e.employee_id = m.id " +
+                " left join positions o on e.position_id = o.id");
     }
 
     private String getWhereSql(EngagementQuery q) {

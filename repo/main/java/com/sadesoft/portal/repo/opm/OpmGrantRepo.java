@@ -75,8 +75,8 @@ public class OpmGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
         return getQuerySql(
                 "g.*, r.name role_name, p.code permission_name ",
                 tableName + " " + tableAlias +
-                    " join opm_sys_role r on g.role_id = r.id" +
-                    " join opm_sys_permission p on g.permission_id = p.id");
+                    " left join opm_sys_role r on g.role_id = r.id" +
+                    " left join opm_sys_permission p on g.permission_id = p.id");
     }
 
     private String getWhereSql(GrantQuery q) {

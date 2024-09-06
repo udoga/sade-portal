@@ -83,7 +83,7 @@ public class LocalProjectRepo extends JdbcRepo<Project> implements ProjectRepo {
         return getQuerySql(
             "p.*, c.name client_name",
             tableName + " " + tableAlias +
-                " join clients c on p.client_id = c.id");
+                " left join clients c on p.client_id = c.id");
     }
 
     private String getWhereSql(ProjectQuery q) {

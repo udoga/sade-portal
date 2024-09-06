@@ -95,7 +95,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
         return getQuerySql(
             "c.*, s.name sector_name",
             tableName + " " + tableAlias +
-                " join opm_ps_client_sector s on c.sector = s.id");
+                " left join opm_ps_client_sector s on c.sector = s.id");
     }
 
     private String getWhereSql(ClientQuery q) {

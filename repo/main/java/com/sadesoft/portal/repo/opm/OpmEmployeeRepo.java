@@ -218,7 +218,7 @@ public class OpmEmployeeRepo extends JdbcRepo<Employee> implements EmployeeRepo 
         return getQuerySql(
             "e.*, u.user_name username",
             tableName + " " + tableAlias +
-                " join opm_sys_user u on e.user_id = u.id");
+                " left join opm_sys_user u on e.user_id = u.id");
     }
 
     private String getWhereSql(EmployeeQuery q) {

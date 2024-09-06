@@ -75,8 +75,8 @@ public class OpmAssignmentRepo extends JdbcRepo<Assignment> implements Assignmen
         return getQuerySql(
             "a.*, r.name role_name, u.user_name ",
             tableName + " " + tableAlias +
-                " join opm_sys_user u on a.user_id = u.id" +
-                " join opm_sys_role r on a.role_id = r.id");
+                " left join opm_sys_user u on a.user_id = u.id" +
+                " left join opm_sys_role r on a.role_id = r.id");
     }
 
     private String getWhereSql(AssignmentQuery q) {

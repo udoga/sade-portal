@@ -64,8 +64,8 @@ public class LocalGrantRepo extends JdbcRepo<Grant> implements GrantRepo {
         return getQuerySql(
                 "g.*, r.name role_name, p.name permission_name ",
                 tableName + " " + tableAlias +
-                    " join roles r on g.role_id = r.id" +
-                    " join permissions p on g.permission_id = p.id");
+                    " left join roles r on g.role_id = r.id" +
+                    " left join permissions p on g.permission_id = p.id");
     }
 
     private String getWhereSql(GrantQuery q) {

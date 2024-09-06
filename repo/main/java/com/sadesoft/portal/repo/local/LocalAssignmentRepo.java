@@ -61,8 +61,8 @@ public class LocalAssignmentRepo extends JdbcRepo<Assignment> implements Assignm
         return getQuerySql(
             "a.*, r.name role_name, u.username ",
             tableName + " " + tableAlias +
-                " join users u on a.user_id = u.id" +
-                " join roles r on a.role_id = r.id");
+                " left join users u on a.user_id = u.id" +
+                " left join roles r on a.role_id = r.id");
     }
 
     private String getWhereSql(AssignmentQuery q) {

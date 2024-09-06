@@ -73,7 +73,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         return getQuerySql(
             "e.*, m.first_name, m.last_name",
             "expenses e" +
-                " join employees m on e.employee_id = m.id");
+                " left join employees m on e.employee_id = m.id");
     }
 
     private String getWhereSql(ExpenseQuery q) {

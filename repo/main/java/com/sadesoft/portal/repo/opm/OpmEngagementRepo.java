@@ -92,9 +92,9 @@ public class OpmEngagementRepo extends JdbcRepo<Engagement> implements Engagemen
         return getQuerySql(
             "e.*, p.name project_name, p.description project_desc, m.name, m.surname, o.name position_name",
             tableName + " " + tableAlias +
-                " join opm_ps_project p on e.project_id = p.id " +
-                " join opm_hrm_employee m on e.employee_id = m.id " +
-                " join opm_hrm_employee_position o on e.position_id = o.id");
+                " left join opm_ps_project p on e.project_id = p.id " +
+                " left join opm_hrm_employee m on e.employee_id = m.id " +
+                " left join opm_hrm_employee_position o on e.position_id = o.id");
     }
 
     private String getWhereSql(EngagementQuery q) {

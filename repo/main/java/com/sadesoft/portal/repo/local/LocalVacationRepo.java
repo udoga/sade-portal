@@ -83,8 +83,8 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         return getQuerySql(
             "v.*, c.name category_name, e.first_name, e.last_name",
             tableName + " " + tableAlias +
-                " join vacation_categories c on v.category_id = c.id " +
-                " join employees e on v.employee_id = e.id");
+                " left join vacation_categories c on v.category_id = c.id " +
+                " left join employees e on v.employee_id = e.id");
     }
 
     private String getWhereSql(VacationQuery q) {
