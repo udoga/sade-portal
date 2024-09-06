@@ -61,9 +61,9 @@ public class UserService {
         if (value == null) throw new MissingFieldError(field);
     }
 
-    private void authorize(String callerId, String operation) {
+    private void authorize(String callerId, String requestName) {
         List<Permission> permissions = permissionRepo.listByUserId(callerId);
-        for (Permission p: permissions) if (p.name.equals(operation)) return;
-        throw new AuthorizationError("Permission denied for '" + operation + "' operation.");
+        for (Permission p: permissions) if (p.name.equals("sp-" + requestName)) return;
+        throw new AuthorizationError("Permission denied for '" + requestName + "' request.");
     }
 }

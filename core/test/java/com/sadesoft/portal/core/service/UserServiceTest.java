@@ -3,7 +3,6 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
-import com.sadesoft.portal.core.model.Permission;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
 import org.junit.jupiter.api.function.Executable;
+
+import java.util.List;
 
 public class UserServiceTest {
     private String callerId;
@@ -24,13 +25,8 @@ public class UserServiceTest {
     public void setup() {
         callerId = "0";
         userRepo = new MockUserRepo();
-        permissionRepo = new MockPermissionRepo(callerId);
-        permissionRepo.create(new Permission(null, "list_users"));
-        permissionRepo.create(new Permission(null, "list_users_summarized"));
-        permissionRepo.create(new Permission(null, "create_user"));
-        permissionRepo.create(new Permission(null, "read_user"));
-        permissionRepo.create(new Permission(null, "update_user"));
-        permissionRepo.create(new Permission(null, "delete_user"));
+        permissionRepo = new MockPermissionRepo(callerId, List.of(
+                "list_users", "list_users_summarized", "create_user", "read_user", "update_user", "delete_user"));
         service = new UserService(userRepo, permissionRepo, "");
         validUser = new User(null, "sample-username", "sample-password");
     }
@@ -134,9 +130,9 @@ public class UserServiceTest {
             assertUnauthorized("delete_user", () -> service.delete(callerId, "0"));
         }
 
-        private void assertUnauthorized(String operation, Executable executable) {
+        private void assertUnauthorized(String requestName, Executable executable) {
             AuthorizationError e = assertThrows(AuthorizationError.class, executable);
-            assertEquals("Permission denied for '" + operation + "' operation.", e.getMessage());
+            assertEquals("Permission denied for '" + requestName + "' request.", e.getMessage());
         }
 
         private void assertMissingFieldOnUpdate(User user) {

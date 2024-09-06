@@ -43,7 +43,7 @@ public class LocalPermissionRepo extends JdbcRepo<Permission> implements Permiss
 
     @Override
     public List<Permission> listByUserId(String userId) {
-        String sql = getQuerySql("p.id, p.name",
+        String sql = getQuerySql("distinct p.id, p.name",
                 tableName + " " + tableAlias +
                         " join grants g ON p.id = g.permission_id" +
                         " join roles r ON g.role_id = r.id" +

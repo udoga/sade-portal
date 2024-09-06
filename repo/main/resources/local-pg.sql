@@ -170,18 +170,18 @@ INSERT INTO users VALUES
 
 INSERT INTO roles VALUES
 --   id,      name
-    (default, 'Admin'),
-    (default, 'Employee'),
-    (default, 'Project Manager');
+    (default, 'SP Admin'),
+    (default, 'SP Employee'),
+    (default, 'SP Project Manager');
 
 INSERT INTO permissions  VALUES
 --   id,      name
-    (default, 'list_users'),
-    (default, 'list_users_summarized'),
-    (default, 'read_user'),
-    (default, 'create_user'),
-    (default, 'update_user'),
-    (default, 'delete_user');
+    (default, 'sp-list_users'),
+    (default, 'sp-list_users_summarized'),
+    (default, 'sp-read_user'),
+    (default, 'sp-create_user'),
+    (default, 'sp-update_user'),
+    (default, 'sp-delete_user');
 
 INSERT INTO assignments VALUES
 --   id,      user_id, role_id

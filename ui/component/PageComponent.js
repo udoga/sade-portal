@@ -42,7 +42,7 @@ class PageComponent {
 
     notifyError = function (json) {
         var e = json.error;
-        this.notifier.notify(new Notification("error", e.type + " (" + e.code + "): " + e.message));
+        this.notifier.notify(new Notification("error", e.type + " (" + e.status + "): " + e.message));
     }
 
     selectTab = function (tab) {

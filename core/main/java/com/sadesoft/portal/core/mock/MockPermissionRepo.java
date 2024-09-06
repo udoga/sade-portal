@@ -11,12 +11,13 @@ public class MockPermissionRepo extends MockRepo<Permission> implements Permissi
     public String authorizedUserId;
 
     public MockPermissionRepo() {
-        this("");
+        this("", List.of());
     }
 
-    public MockPermissionRepo(String authorizedUserId) {
+    public MockPermissionRepo(String authorizedUserId, List<String> requestNames) {
         super("Permission");
         this.authorizedUserId = authorizedUserId;
+        for (String name: requestNames) create(new Permission(null, "sp-" + name));
     }
 
     @Override
