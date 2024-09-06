@@ -3,6 +3,7 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
+import com.sadesoft.portal.core.model.Permission;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -125,9 +126,17 @@ public class UserServiceTest {
             assertUnauthorized("user_list", () -> service.list(callerId));
             assertUnauthorized("user_list_options", () -> service.listOptions(callerId));
             assertUnauthorized("user_create", () -> service.create(callerId, validUser));
-            assertUnauthorized("user_read", () -> service.read(callerId, "0"));
+            assertUnauthorized("user_read:own", () -> service.read(callerId, "0"));
             assertUnauthorized("user_update", () -> service.update(callerId, "0", validUser));
             assertUnauthorized("user_delete", () -> service.delete(callerId, "0"));
+        }
+
+        @Test
+        public void whenCallerHasReadOwnPermission_canOnlyReadOwnUser() {
+            userRepo.create(new User(null, "new-username", "new-password"));
+            permissionRepo.update("3", new Permission(null, "sp-user_read:own"));
+            assertDoesNotThrow(() -> service.read(callerId, "0"));
+            assertUnauthorized("user_read", () -> service.read(callerId, "1"));
         }
 
         private void assertUnauthorized(String requestName, Executable executable) {

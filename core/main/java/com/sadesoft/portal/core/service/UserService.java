@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public User read(String callerId, String id) {
-        authorize(callerId, "user_read");
+        authorize(callerId, "user_read" + (callerId.equals(id)? ":own" : ""));
         return userRepo.read(id).withPassword(null);
     }
 
@@ -63,7 +63,11 @@ public class UserService {
 
     private void authorize(String callerId, String requestName) {
         List<Permission> permissions = permissionRepo.listByUserId(callerId);
-        for (Permission p: permissions) if (p.name.equals("sp-" + requestName)) return;
+        for (Permission p: permissions) if (involves(p.name, "sp-" + requestName)) return;
         throw new AuthorizationError("Permission denied for '" + requestName + "' request.");
+    }
+
+    private boolean involves(String permissionName, String requestPermissionName) {
+        return permissionName.equals(requestPermissionName) || requestPermissionName.startsWith(permissionName + ":");
     }
 }

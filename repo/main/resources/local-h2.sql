@@ -176,6 +176,7 @@ INSERT INTO permissions  VALUES
     (default, 'sp-user_list'),
     (default, 'sp-user_list_options'),
     (default, 'sp-user_read'),
+    (default, 'sp-user_read:own'),
     (default, 'sp-user_create'),
     (default, 'sp-user_update'),
     (default, 'sp-user_delete');
@@ -191,12 +192,12 @@ INSERT INTO grants VALUES
     (default,       1,             1),
     (default,       1,             2),
     (default,       1,             3),
-    (default,       1,             4),
     (default,       1,             5),
     (default,       1,             6),
+    (default,       1,             7),
     (default,       2,             1),
     (default,       2,             2),
-    (default,       2,             3);
+    (default,       2,             4);
 
 INSERT INTO sectors VALUES
 --   id,      name
