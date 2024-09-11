@@ -6,7 +6,7 @@ class EmployeePageComponent extends PageComponent {
     engagements = [];
 
     constructor(router, api, notifier, engagementApi, worklogApi, vacationApi, expenseApi) {
-        super(router, api, notifier, "employee");
+        super(router, api, notifier, "employee", "detailed");
         this.engagementApi = engagementApi;
         this.worklogApi = worklogApi;
         this.vacationApi = vacationApi;

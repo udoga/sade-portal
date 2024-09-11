@@ -4,12 +4,12 @@ class WorklogListComponent extends ListComponent {
     projects = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier);
+        super(router, api, notifier, "detailed");
         this.query.order = "newest";
     }
 
     loadAll = function (employeeApi, projectApi) {
-        this.load("detailed");
+        this.load();
         this.loadOptions(employeeApi, this.employees);
         this.loadOptions(projectApi, this.projects);
     }

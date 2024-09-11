@@ -3,11 +3,11 @@ class ExpenseListComponent extends ListComponent {
     employees = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier);
+        super(router, api, notifier, "detailed");
     }
 
     loadAll = function (employeeApi) {
-        this.load("detailed");
+        this.load();
         this.loadOptions(employeeApi, this.employees);
     }
 }

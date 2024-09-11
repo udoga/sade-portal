@@ -3,7 +3,7 @@ class ClientPageComponent extends PageComponent {
     projects = [];
 
     constructor(router, api, notifier, projectApi) {
-        super(router, api, notifier, "client");
+        super(router, api, notifier, "client", "detailed");
         this.projectApi = projectApi
     }
 

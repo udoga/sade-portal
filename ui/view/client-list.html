@@ -1,4 +1,4 @@
-<div x-data="new ClientListComponent(router, clientApi, notifier)" x-init="load('detailed')">
+<div x-data="new ClientListComponent(router, clientApi, notifier)" x-init="load()">
   <h2>Clients</h2>
   <table class="records">
     <tr>
@@ -29,6 +29,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" x-show="hasMore(clients)" @click="load('detailed')">Load More</a>
+    <a class="white form button" x-show="hasMore(clients)" @click="load()">Load More</a>
   </div>
 </div>

@@ -4,7 +4,7 @@ class ExpensePageComponent extends PageComponent {
     receipts = [];
 
     constructor(router, api, notifier, receiptApi) {
-        super(router, api, notifier, "expense");
+        super(router, api, notifier, "expense", "detailed");
         this.receiptApi = receiptApi;
     }
 

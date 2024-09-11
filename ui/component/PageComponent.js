@@ -1,24 +1,22 @@
 class PageComponent {
     router = null;
     api = null;
-    name = null;
     notifier = null;
+    name = null;
+    appendedUrl = null;
     record = {};
     selectedTab = "";
 
-    constructor(router, api, notifier, name) {
+    constructor(router, api, notifier, name, appendedUrl = "") {
         this.router = router;
         this.api = api;
         this.notifier = notifier;
         this.name = name;
+        this.appendedUrl = appendedUrl;
     }
 
     load = function () {
-        this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
-    }
-
-    loadDetailed = function () {
-        this.api.read(this.router.getId(), "detailed").then(json => this.handleLoadResponse(json));
+        this.api.read(this.router.getId(), this.appendedUrl).then(json => this.handleLoadResponse(json));
     }
 
     remove = function () {

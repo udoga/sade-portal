@@ -3,7 +3,7 @@ class VacationPageComponent extends PageComponent {
     formatter = null;
 
     constructor(router, api, notifier, formatter) {
-        super(router, api, notifier, "vacation");
+        super(router, api, notifier, "vacation", "detailed");
         this.formatter = formatter;
     }
 

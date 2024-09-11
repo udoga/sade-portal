@@ -1,7 +1,7 @@
 <div x-data="new ExpenseListComponent(router, expenseApi, notifier)" x-init="loadAll(employeeApi)">
   <h2>Expenses</h2>
   <div class="field">
-    <select class="sp" x-model="query.employeeId" @change="reload('detailed')">
+    <select class="sp" x-model="query.employeeId" @change="reload()">
       <option value="">All Employees</option>
       <template x-for="e in employees">
         <option :value="e.id" x-text="e.fullName" :selected="query.employeeId === e.id"></option>
@@ -39,6 +39,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" x-show="hasMore(expenses)" @click="load('detailed')">Load More</a>
+    <a class="white form button" x-show="hasMore(expenses)" @click="load()">Load More</a>
   </div>
 </div>

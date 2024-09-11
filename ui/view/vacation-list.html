@@ -1,4 +1,4 @@
-<div x-data="new VacationListComponent(router, vacationApi, notifier, formatter)" x-init="load('detailed')">
+<div x-data="new VacationListComponent(router, vacationApi, notifier, formatter)" x-init="load()">
   <h2>Vacations</h2>
   <table class="records">
     <tr>
@@ -35,6 +35,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" x-show="hasMore(vacations)" @click="load('detailed')">Load More</a>
+    <a class="white form button" x-show="hasMore(vacations)" @click="load()">Load More</a>
   </div>
 </div>

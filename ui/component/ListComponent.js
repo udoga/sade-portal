@@ -2,25 +2,27 @@ class ListComponent {
     router = null;
     api = null;
     notifier = null;
+    appendedUrl = "";
     query = {};
     records = [];
     error = {};
 
-    constructor(router, api, notifier) {
+    constructor(router, api, notifier, appendedUrl = "") {
         this.router = router;
         this.api = api;
         this.notifier = notifier;
+        this.appendedUrl = appendedUrl;
         this.query = this.router.getUrlParams();
     }
 
-    load = function (appendedUrl = "") {
+    load = function () {
         this.query.offset = this.records.length;
-        this.api.list(appendedUrl, this.getFilledQuery()).then(json => this.handleLoadResponse(json));
+        this.api.list(this.appendedUrl, this.getFilledQuery()).then(json => this.handleLoadResponse(json));
     }
 
-    reload = function (appendedUrl = "") {
+    reload = function () {
         this.records.length = 0;
-        this.load(appendedUrl);
+        this.load();
     }
 
     remove = function (id) {

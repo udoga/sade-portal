@@ -1,23 +1,23 @@
 <div x-data="new WorklogListComponent(router, worklogApi, notifier)" x-init="loadAll(employeeApi, projectApi)">
   <h2>Worklogs</h2>
   <div class="field">
-    <select class="sp" x-model="query.employeeId" @change="reload('detailed')">
+    <select class="sp" x-model="query.employeeId" @change="reload()">
       <option value="">All Employees</option>
       <template x-for="e in employees">
         <option :value="e.id" x-text="e.fullName" :selected="query.employeeId === e.id"></option>
       </template>
     </select>
-    <select class="sp next" x-model="query.projectId" @change="reload('detailed')">
+    <select class="sp next" x-model="query.projectId" @change="reload()">
       <option value="">All Projects</option>
       <template x-for="p in projects">
         <option :value="p.id" x-text="p.name" :selected="query.projectId === p.id"></option>
       </template>
     </select>
     <input type="text" class="sp next" placeholder="Start Date" x-model="query.minDate"
-           x-init="initDatePicker($el)" @change="reload('detailed')" />
+           x-init="initDatePicker($el)" @change="reload()" />
     <input type="text" class="sp next" placeholder="End Date" x-model="query.maxDate"
-           x-init="initDatePicker($el)" @change="reload('detailed')" />
-    <select class="sp next" x-model="query.order" @change="reload('detailed')">
+           x-init="initDatePicker($el)" @change="reload()" />
+    <select class="sp next" x-model="query.order" @change="reload()">
       <option value="" disabled>Sort</option>
       <option value="newest">Newest</option>
       <option value="oldest">Oldest</option>
@@ -56,6 +56,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" x-show="hasMore(worklogs)" @click="load('detailed')">Load More</a>
+    <a class="white form button" x-show="hasMore(worklogs)" @click="load()">Load More</a>
   </div>
 </div>

@@ -4,7 +4,7 @@ class ProjectPageComponent extends PageComponent {
     worklogs = [];
 
     constructor(router, api, notifier, engagementApi, worklogApi) {
-        super(router, api, notifier, "project");
+        super(router, api, notifier, "project", "detailed");
         this.engagementApi = engagementApi;
         this.worklogApi = worklogApi;
     }
