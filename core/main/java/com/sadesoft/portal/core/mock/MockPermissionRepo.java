@@ -8,15 +8,18 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MockPermissionRepo extends MockRepo<Permission> implements PermissionRepo {
-    public String authorizedUserId;
+    private List<String> authorizedCallerIds;
 
     public MockPermissionRepo() {
-        this("", List.of());
+        super("Permission");
+        this.authorizedCallerIds = List.of();
     }
 
-    public MockPermissionRepo(String authorizedUserId, List<String> requestNames) {
-        super("Permission");
-        this.authorizedUserId = authorizedUserId;
+    public void authorize(List<String> callerIds) {
+        this.authorizedCallerIds = callerIds;
+    }
+
+    public void create(List<String> requestNames) {
         for (String name: requestNames) create(new Permission(null, "sp-" + name));
     }
 
@@ -27,7 +30,7 @@ public class MockPermissionRepo extends MockRepo<Permission> implements Permissi
 
     @Override
     public List<Permission> listByUserId(String userId) {
-        return userId.equals(authorizedUserId)? list() : List.of();
+        return authorizedCallerIds.contains(userId)? list() : List.of();
     }
 
     private static Comparator<Permission> getComparator() {

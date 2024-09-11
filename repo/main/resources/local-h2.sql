@@ -179,7 +179,21 @@ INSERT INTO permissions  VALUES
     (default, 'sp-user_read:own'),
     (default, 'sp-user_create'),
     (default, 'sp-user_update'),
-    (default, 'sp-user_delete');
+    (default, 'sp-user_delete'),
+    (default, 'sp-worklog_list'),
+    (default, 'sp-worklog_list:own'),
+    (default, 'sp-worklog_list_detailed'),
+    (default, 'sp-worklog_list_detailed:own'),
+    (default, 'sp-worklog_read'),
+    (default, 'sp-worklog_read:own'),
+    (default, 'sp-worklog_read_detailed'),
+    (default, 'sp-worklog_read_detailed:own'),
+    (default, 'sp-worklog_create'),
+    (default, 'sp-worklog_create:own'),
+    (default, 'sp-worklog_update'),
+    (default, 'sp-worklog_update:own'),
+    (default, 'sp-worklog_delete'),
+    (default, 'sp-worklog_delete:own');
 
 INSERT INTO assignments VALUES
 --   id,      user_id, role_id
@@ -195,9 +209,23 @@ INSERT INTO grants VALUES
     (default,       1,             5),
     (default,       1,             6),
     (default,       1,             7),
+    (default,       1,             8),
+    (default,       1,            10),
+    (default,       1,            12),
+    (default,       1,            14),
+    (default,       1,            16),
+    (default,       1,            18),
+    (default,       1,            20),
     (default,       2,             1),
     (default,       2,             2),
-    (default,       2,             4);
+    (default,       2,             4),
+    (default,       2,             9),
+    (default,       2,            11),
+    (default,       2,            13),
+    (default,       2,            15),
+    (default,       2,            17),
+    (default,       2,            19),
+    (default,       2,            21);
 
 INSERT INTO sectors VALUES
 --   id,      name

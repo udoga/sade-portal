@@ -1,11 +1,9 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
+import com.sadesoft.portal.core.mock.*;
 import com.sadesoft.portal.core.query.WorklogQuery;
-import com.sadesoft.portal.core.mock.MockWorklogRepo;
-import com.sadesoft.portal.core.mock.MockProjectRepo;
-import com.sadesoft.portal.core.mock.MockEmployeeRepo;
-import com.sadesoft.portal.core.mock.MockActivityRepo;
 import com.sadesoft.portal.core.model.Project;
 import com.sadesoft.portal.core.model.Employee;
 import com.sadesoft.portal.core.model.Activity;
@@ -15,27 +13,32 @@ import com.sadesoft.portal.core.order.WorklogOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorklogServiceTest {
+    private String callerId;
     private MockProjectRepo projectRepo;
     private MockEmployeeRepo employeeRepo;
     private MockActivityRepo activityRepo;
+    private MockPermissionRepo permissionRepo;
     private MockWorklogRepo worklogRepo;
     private WorklogService service;
     private Worklog validWorklog;
 
     @BeforeEach
     public void setup() {
+        callerId = "0";
         projectRepo = new MockProjectRepo(null);
         employeeRepo = new MockEmployeeRepo(null);
         activityRepo = new MockActivityRepo();
+        permissionRepo = new MockPermissionRepo();
         worklogRepo = new MockWorklogRepo(projectRepo, employeeRepo, activityRepo);
-        service = new WorklogService(worklogRepo);
+        service = new WorklogService(worklogRepo, permissionRepo, employeeRepo);
         validWorklog = new Worklog(
                 null,
                 "0",
@@ -47,37 +50,52 @@ public class WorklogServiceTest {
                 "Sample Worklog");
     }
 
+    private void assertUnauthorized(String requestName, Executable executable) {
+        AuthorizationError e = assertThrows(AuthorizationError.class, executable);
+        assertEquals(requestName, e.requestName);
+    }
+
     @Nested
-    public class GivenServiceWithOneWorklog {
+    public class GivenServiceWithOneWorklogAndFullPermissions {
         @BeforeEach
         public void setup() {
+            permissionRepo.authorize(List.of(callerId));
+            permissionRepo.create(List.of(
+                    "worklog_list",
+                    "worklog_list_detailed",
+                    "worklog_read",
+                    "worklog_read_detailed",
+                    "worklog_create",
+                    "worklog_update",
+                    "worklog_delete"));
             worklogRepo.create(validWorklog);
+            employeeRepo.create(new Employee().withUserId(callerId));
         }
 
         @Test
         public void listsWorklogs() {
-            assertEquals(1, service.listBy(new WorklogQuery()).size());
-            assertEquals(validWorklog.withId("0"), service.listBy(new WorklogQuery()).get(0));
+            assertEquals(1, service.listBy(callerId, new WorklogQuery()).size());
+            assertEquals(validWorklog.withId("0"), service.listBy(callerId, new WorklogQuery()).get(0));
         }
 
         @Test
         public void listsByOffset() {
             worklogRepo.create(validWorklog.copy());
-            assertEquals(2, service.listBy(new WorklogQuery().withOffset(0)).size());
-            assertEquals(1, service.listBy(new WorklogQuery().withOffset(1)).size());
-            assertEquals(0, service.listBy(new WorklogQuery().withOffset(2)).size());
+            assertEquals(2, service.listBy(callerId, new WorklogQuery().withOffset(0)).size());
+            assertEquals(1, service.listBy(callerId, new WorklogQuery().withOffset(1)).size());
+            assertEquals(0, service.listBy(callerId, new WorklogQuery().withOffset(2)).size());
         }
 
         @Test
         public void listsByEmployeeId() {
-            assertEquals(1, service.listBy(new WorklogQuery().withEmployeeId("0")).size());
-            assertEquals(0, service.listBy(new WorklogQuery().withEmployeeId("1")).size());
+            assertEquals(1, service.listBy(callerId, new WorklogQuery().withEmployeeId("0")).size());
+            assertEquals(0, service.listBy(callerId, new WorklogQuery().withEmployeeId("1")).size());
         }
 
         @Test
         public void listsOrderedByNewest() {
             worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
-            List<Worklog> worklogs = service.listBy(new WorklogQuery().withOrder(WorklogOrder.NEWEST));
+            List<Worklog> worklogs = service.listBy(callerId, new WorklogQuery().withOrder(WorklogOrder.NEWEST));
             assertEquals(2, worklogs.size());
             assertEquals("1", worklogs.get(0).id);
             assertEquals("0", worklogs.get(1).id);
@@ -86,7 +104,7 @@ public class WorklogServiceTest {
         @Test
         public void listsOrderedByOldest() {
             worklogRepo.create(validWorklog.withWorkDate(LocalDate.of(2024, 2, 1)));
-            List<Worklog> worklogs = service.listBy(new WorklogQuery().withOrder(WorklogOrder.OLDEST));
+            List<Worklog> worklogs = service.listBy(callerId, new WorklogQuery().withOrder(WorklogOrder.OLDEST));
             assertEquals(2, worklogs.size());
             assertEquals("0", worklogs.get(0).id);
             assertEquals("1", worklogs.get(1).id);
@@ -97,7 +115,7 @@ public class WorklogServiceTest {
             projectRepo.create(new Project());
             employeeRepo.create(new Employee());
             activityRepo.create(new Activity());
-            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(new WorklogQuery());
+            List<DetailedWorklog> detailedWorklogs = service.listDetailedBy(callerId, new WorklogQuery());
             assertEquals(1, detailedWorklogs.size());
             assertEquals(projectRepo.read("0"), detailedWorklogs.get(0).project);
         }
@@ -109,7 +127,8 @@ public class WorklogServiceTest {
             activityRepo.create(new Activity());
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 2, 1)));
             worklogRepo.create(validWorklog.copy().withWorkDate(LocalDate.of(2024, 3, 1)));
-            var worklogs = service.listDetailedBy(new WorklogQuery().withOffset(1).withOrder(WorklogOrder.NEWEST));
+            WorklogQuery query = new WorklogQuery().withOffset(1).withOrder(WorklogOrder.NEWEST);
+            List<DetailedWorklog> worklogs = service.listDetailedBy(callerId, query);
             assertEquals(2, worklogs.size());
             assertEquals("1", worklogs.get(0).id);
             assertEquals("0", worklogs.get(1).id);
@@ -117,7 +136,7 @@ public class WorklogServiceTest {
 
         @Test
         public void readsWorklogs() {
-            assertEquals(validWorklog.withId("0"), service.read("0"));
+            assertEquals(validWorklog.withId("0"), service.read(callerId, "0"));
         }
 
         @Test
@@ -125,21 +144,92 @@ public class WorklogServiceTest {
             projectRepo.create(new Project(null, null, "Name", "Description"));
             employeeRepo.create(new Employee(null, null, "first", "last"));
             activityRepo.create(new Activity(null, "Sample Activity"));
-            assertEquals(worklogRepo.readDetailed("0"), service.readDetailed("0"));
+            assertEquals(worklogRepo.readDetailed("0"), service.readDetailed(callerId, "0"));
         }
 
         @Test
         public void updatesWorklogById() {
-            Worklog client = service.update("0", validWorklog.withDescription("updated"));
+            Worklog client = service.update(callerId, "0", validWorklog.withDescription("updated"));
             assertEquals(validWorklog.withId("0").withDescription("updated"), client);
-            assertEquals(client, service.read("0"));
+            assertEquals(client, service.read(callerId, "0"));
         }
 
         @Test
         public void deletesWorklogById() {
-            Worklog client = service.delete("0");
+            Worklog client = service.delete(callerId, "0");
             assertEquals(validWorklog.withId("0"), client);
             assertEquals(0, worklogRepo.list().size());
+        }
+    }
+
+    @Nested
+    public class GivenServiceWithTwoWorklogsAndEmployees {
+        private final String callerOne = "5";
+        private final String callerTwo = "6";
+
+        @BeforeEach
+        public void setup() {
+            permissionRepo.authorize(List.of(callerOne, callerTwo));
+            permissionRepo.create(List.of(
+                    "worklog_list:own",
+                    "worklog_list_detailed:own",
+                    "worklog_read:own",
+                    "worklog_read_detailed:own",
+                    "worklog_create:own",
+                    "worklog_update:own",
+                    "worklog_delete:own"));
+            employeeRepo.create(new Employee().withUserId(callerOne));
+            employeeRepo.create(new Employee().withUserId(callerTwo));
+            worklogRepo.create(validWorklog.withEmployeeId("0"));
+            worklogRepo.create(validWorklog.withEmployeeId("1"));
+            projectRepo.create(new Project());
+            activityRepo.create(new Activity());
+        }
+
+        @Test
+        public void whenListRequestIsUnauthorized_throwsError() {
+            WorklogQuery employeeOneQuery = new WorklogQuery().withEmployeeId("0");
+            WorklogQuery employeeTwoQuery = new WorklogQuery().withEmployeeId("1");
+            assertUnauthorized("worklog_list", () -> service.listBy(callerOne, employeeTwoQuery));
+            assertUnauthorized("worklog_list", () -> service.listBy(callerTwo, employeeOneQuery));
+            assertUnauthorized("worklog_list_detailed", () -> service.listDetailedBy(callerOne, employeeTwoQuery));
+            assertDoesNotThrow(() -> service.listBy(callerOne, employeeOneQuery));
+            assertDoesNotThrow(() -> service.listBy(callerTwo, employeeTwoQuery));
+            assertDoesNotThrow(() -> service.listDetailedBy(callerOne, employeeOneQuery));
+        }
+
+        @Test
+        public void whenReadRequestIsUnauthorized_throwsError() {
+            assertUnauthorized("worklog_read", () -> service.read(callerOne, "1"));
+            assertUnauthorized("worklog_read", () -> service.read(callerTwo, "0"));
+            assertUnauthorized("worklog_read_detailed", () -> service.readDetailed(callerOne, "1"));
+            assertDoesNotThrow(() -> service.read(callerOne, "0"));
+            assertDoesNotThrow(() -> service.read(callerTwo, "1"));
+            assertDoesNotThrow(() -> service.readDetailed(callerOne, "0"));
+        }
+
+        @Test
+        public void whenCreateRequestIsUnauthorized_throwsError() {
+            assertUnauthorized("worklog_create", () -> service.create(callerOne, validWorklog.withEmployeeId("1")));
+            assertUnauthorized("worklog_create", () -> service.create(callerTwo, validWorklog.withEmployeeId("0")));
+            assertDoesNotThrow(() -> service.create(callerOne, validWorklog.withEmployeeId("0")));
+            assertDoesNotThrow(() -> service.create(callerTwo, validWorklog.withEmployeeId("1")));
+        }
+
+        @Test
+        public void whenUpdateRequestIsUnauthorized_throwsError() {
+            assertUnauthorized("worklog_update", () -> service.update(callerOne, "1", validWorklog));
+            assertUnauthorized("worklog_update", () -> service.update(callerTwo, "0", validWorklog));
+            assertDoesNotThrow(() -> service.update(callerOne, "0", validWorklog));
+            assertDoesNotThrow(() -> service.update(callerTwo, "1", validWorklog));
+        }
+
+        @Test
+        public void whenDeleteRequestIsUnauthorized_throwsError() {
+            assertUnauthorized("worklog_delete", () -> service.delete(callerOne, "1"));
+            assertUnauthorized("worklog_delete", () -> service.delete(callerTwo, "0"));
+            assertDoesNotThrow(() -> service.delete(callerOne, "0"));
+            assertDoesNotThrow(() -> service.delete(callerTwo, "1"));
         }
     }
 }

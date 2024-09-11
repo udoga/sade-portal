@@ -13,13 +13,13 @@ import java.time.LocalDate;
 public class WorklogController extends RestController {
     public WorklogController(WorklogService service) {
         super("/worklogs");
-        add(HandlerType.GET, "", c -> send(c, service.listBy(getQuery(c))));
-        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getQuery(c))));
-        add(HandlerType.POST, "", c -> send(c, service.create(getWorklog(c))));
-        add(HandlerType.GET, "/{id}", c -> send(c, service.read(getId(c))));
-        add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getId(c))));
-        add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getId(c), getWorklog(c))));
-        add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getId(c))));
+        add(HandlerType.GET, "", c -> send(c, service.listBy(getCallerId(c), getQuery(c))));
+        add(HandlerType.GET, "/detailed", c -> send(c, service.listDetailedBy(getCallerId(c), getQuery(c))));
+        add(HandlerType.POST, "", c -> send(c, service.create(getCallerId(c), getWorklog(c))));
+        add(HandlerType.GET, "/{id}", c -> send(c, service.read(getCallerId(c), getId(c))));
+        add(HandlerType.GET, "/detailed/{id}", c -> send(c, service.readDetailed(getCallerId(c), getId(c))));
+        add(HandlerType.PUT, "/{id}", c -> send(c, service.update(getCallerId(c), getId(c), getWorklog(c))));
+        add(HandlerType.DELETE, "/{id}", c -> send(c, service.delete(getCallerId(c), getId(c))));
     }
 
     private Worklog getWorklog(Context c) {

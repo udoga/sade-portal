@@ -63,11 +63,7 @@ public class UserService {
 
     private void authorize(String callerId, String requestName) {
         List<Permission> permissions = permissionRepo.listByUserId(callerId);
-        for (Permission p: permissions) if (involves(p.name, "sp-" + requestName)) return;
-        throw new AuthorizationError("Permission denied for '" + requestName + "' request.");
-    }
-
-    private boolean involves(String permissionName, String requestPermissionName) {
-        return permissionName.equals(requestPermissionName) || requestPermissionName.startsWith(permissionName + ":");
+        for (Permission p: permissions) if (("sp-" + requestName).startsWith(p.name)) return;
+        throw new AuthorizationError(requestName);
     }
 }

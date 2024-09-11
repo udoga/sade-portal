@@ -1,7 +1,10 @@
 package com.sadesoft.portal.base.error;
 
 public class AuthorizationError extends ClientError {
-    public AuthorizationError(String message) {
-        super(message);
+    public final String requestName;
+
+    public AuthorizationError(String requestName) {
+        super("Permission denied for '" + requestName + "' request.");
+        this.requestName = requestName;
     }
 }
