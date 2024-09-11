@@ -2,8 +2,8 @@
   <h2>Expense Form</h2>
   <form>
     <div class="field">
-      <label>Employee</label>
-      <select class="padded" x-model="expense.employeeId">
+      <label class="sp">Employee</label>
+      <select class="sp" x-model="expense.employeeId">
         <option value="" selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
           <option :value="e.id" x-text="e.fullName" :selected="expense.employeeId === e.id"></option>
@@ -11,20 +11,16 @@
       </select>
     </div>
     <div class="field">
-      <label>Form Date</label>
-      <input type="date" placeholder="Form Date" x-model="expense.formDate" />
+      <label class="sp">Form Date</label>
+      <input type="date" class="sp" placeholder="Form Date" x-model="expense.formDate" />
     </div>
     <div class="field">
-      <label>Description</label>
-      <textarea placeholder="Description" x-model="expense.description"></textarea>
+      <label class="sp">Description</label>
+      <textarea class="sp" placeholder="Description" x-model="expense.description"></textarea>
     </div>
     <div class="field">
-      <label>Status</label>
-      <input list="status" placeholder="Status" x-model="expense.status" />
-      <datalist id="status">
-        <option value="Approved">
-        <option value="Rejected">
-      </datalist>
+      <label class="sp">Status</label>
+      <input type="text" class="sp" placeholder="Status" x-model="expense.status" />
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

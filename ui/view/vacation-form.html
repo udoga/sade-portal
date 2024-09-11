@@ -3,8 +3,8 @@
   <h2>Vacation Form</h2>
   <form>
     <div class="field">
-      <label>Employee</label>
-      <select class="padded" x-model="vacation.employeeId">
+      <label class="sp">Employee</label>
+      <select class="sp" x-model="vacation.employeeId">
         <option value="" selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
           <option :value="e.id" x-text="e.fullName" :selected="vacation.employeeId === e.id"></option>
@@ -12,8 +12,8 @@
       </select>
     </div>
     <div class="field">
-      <label>Category</label>
-      <select class="padded" x-model="vacation.categoryId">
+      <label class="sp">Category</label>
+      <select class="sp" x-model="vacation.categoryId">
         <option value="" selected>Select Category</option>
         <template x-for="category in categories" :key="category.id">
           <option :value="category.id" x-text="category.name" :selected="vacation.categoryId === category.id"></option>
@@ -21,20 +21,20 @@
       </select>
     </div>
     <div class="field">
-      <label>Start Time</label>
-      <input type="datetime-local" placeholder="Start Time" x-model="vacation.startTime"/>
+      <label class="sp">Start Time</label>
+      <input type="datetime-local" class="sp" placeholder="Start Time" x-model="vacation.startTime"/>
     </div>
     <div class="field">
-      <label>End Time</label>
-      <input type="datetime-local" placeholder="End Time" x-model="vacation.endTime"/>
+      <label class="sp">End Time</label>
+      <input type="datetime-local" class="sp" placeholder="End Time" x-model="vacation.endTime"/>
     </div>
     <div class="field">
-      <label>Day Count</label>
-      <input type="number" placeholder="Day Count" x-model="vacation.dayCount"/>
+      <label class="sp">Day Count</label>
+      <input type="number" class="sp" placeholder="Day Count" x-model="vacation.dayCount"/>
     </div>
     <div class="field">
-      <label>Description</label>
-      <textarea placeholder="Description" x-model="vacation.description"></textarea>
+      <label class="sp">Description</label>
+      <textarea class="sp" placeholder="Description" x-model="vacation.description"></textarea>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

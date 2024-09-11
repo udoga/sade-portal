@@ -3,8 +3,8 @@
     <h2>Engagement Form</h2>
     <form>
       <div class="field">
-        <label>Project</label>
-        <select class="padded" x-model="engagement.projectId">
+        <label class="sp">Project</label>
+        <select class="sp" x-model="engagement.projectId">
           <option value="" selected>Select Project</option>
           <template x-for="p in projects" :key="p.id">
             <option :value="p.id" x-text="p.name" :selected="engagement.projectId === p.id"></option>
@@ -12,8 +12,8 @@
         </select>
       </div>
       <div class="field">
-        <label>Employee</label>
-        <select class="padded" x-model="engagement.employeeId">
+        <label class="sp">Employee</label>
+        <select class="sp" x-model="engagement.employeeId">
           <option value="" selected>Select Employee</option>
           <template x-for="e in employees" :key="e.id">
             <option :value="e.id" x-text="e.fullName" :selected="engagement.employeeId === e.id"></option>
@@ -21,8 +21,8 @@
         </select>
       </div>
       <div class="field">
-        <label>Position</label>
-        <select class="padded" x-model="engagement.positionId">
+        <label class="sp">Position</label>
+        <select class="sp" x-model="engagement.positionId">
           <option value="" selected>Select Position</option>
           <template x-for="p in positions" :key="p.id">
             <option :value="p.id" x-text="p.name" :selected="engagement.positionId === p.id"></option>
@@ -30,24 +30,20 @@
         </select>
       </div>
       <div class="field">
-        <label>Start Date</label>
-        <input type="date" placeholder="Start Date" x-model="engagement.startDate" />
+        <label class="sp">Start Date</label>
+        <input type="date" class="sp" placeholder="Start Date" x-model="engagement.startDate" />
       </div>
       <div class="field">
-        <label>End Date</label>
-        <input type="date" placeholder="End Date" x-model="engagement.endDate" />
+        <label class="sp">End Date</label>
+        <input type="date" class="sp" placeholder="End Date" x-model="engagement.endDate" />
       </div>
       <div class="field">
-        <label>Description</label>
-        <input type="text" placeholder="Description" x-model="engagement.description"/>
+        <label class="sp">Description</label>
+        <textarea class="sp" placeholder="Description" x-model="engagement.description"></textarea>
       </div>
       <div class="field">
-        <label>Status</label>
-        <input list="status" placeholder="Status" x-model="engagement.status" />
-        <datalist id="status">
-          <option value="A">
-          <option value="I">
-        </datalist>
+        <label class="sp">Status</label>
+        <input type="text" class="sp" placeholder="Status" x-model="engagement.status" />
       </div>
     </form>
     <div class="options">

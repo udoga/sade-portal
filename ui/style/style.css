@@ -45,40 +45,63 @@ a {
 }
 
 a.blue {
-  text-decoration: underline;
   color: #2274c7;
+}
+
+a.blue:hover {
+  text-decoration: underline;
+}
+
+label {
+  font-weight: bold;
+}
+
+label.sp {
+  display: block;
+  margin-bottom: 6px;
 }
 
 input {
   outline: 0;
 }
 
-select.padded {
-  padding: 5px;
-  border: none;
+input:not([type=checkbox]).sp, textarea.sp {
+  box-sizing: border-box;
+  border: 1px solid var(--main-border-color);
   border-radius: 5px;
-  box-shadow: 0px 0px 30px 20px rgba(255,255,255,0.5) inset, 0px 0px 0px 1px #ccc;
 }
 
-select.padded.left {
-  margin-right: 5px;
+input:not([type=checkbox]).sp:focus, textarea.sp:focus {
+  border-color: #377bb5;
 }
 
-select.padded.right {
-  float: right;
-  margin-left: 5px;
-}
-
-input.sp {
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 0px 30px 20px rgba(255,255,255,0.5) inset, 0px 0px 0px 1px #ccc;
-  margin-right: 5px;
+input:not([type=checkbox]).sp {
+  height: 28px;
+  padding: 0 8px 0 8px;
 }
 
 textarea {
   outline: 0;
+}
+
+textarea.sp {
+  height: 56px;
+  padding: 6px 8px 6px 8px;
+}
+
+select.sp {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 30px 20px rgba(255,255,255,0.5) inset, 0px 0px 0px 1px #ccc;
+}
+
+.next {
+  margin-left: 5px;
+}
+
+.wide {
+  width: 100%;
 }
 
 header {
@@ -250,45 +273,7 @@ table.relations td.last {
   margin-bottom: 15px;
 }
 
-.field label {
-  font-weight: bold;
-}
-
-.field.last {
-  margin-bottom: 0px;
-}
-
-form .field label {
-  display: block;
-  margin-bottom: 6px;
-}
-
-.field input:not([type=checkbox]), .field textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid var(--main-border-color);
-  border-radius: 4px;
-}
-
-.field input:not([type=checkbox]):focus, .field textarea:focus {
-  border-color: #377bb5;
-}
-
-.field input:not([type=checkbox]) {
-  height: 28px;
-  padding: 0 8px 0 8px;
-}
-
-.field textarea {
-  height: 56px;
-  padding: 8px;
-}
-
 .options {
-  text-align: center;
-}
-
-.centered {
   text-align: center;
 }
 
@@ -465,10 +450,6 @@ a.button.light-blue:active {
 .panel-message.below-table {
   border-top: 1px solid var(--main-border-color);
   padding-top: 10px;
-}
-
-.query {
-  padding-bottom: 10px;
 }
 
 .flatpickr-calendar {

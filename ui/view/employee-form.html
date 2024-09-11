@@ -2,8 +2,8 @@
   <h2>Employee Form</h2>
   <form>
     <div class="field">
-      <label>User</label>
-      <select class="padded" x-model="employee.userId">
+      <label class="sp">User</label>
+      <select class="sp" x-model="employee.userId">
         <option value="" selected>Select User</option>
         <template x-for="u in users" :key="u.id">
           <option :value="u.id" x-text="u.username" :selected="employee.userId === u.id"></option>
@@ -11,12 +11,12 @@
       </select>
     </div>
     <div class="field">
-      <label>First Name</label>
-      <input type="text" placeholder="First Name" x-model="employee.firstName"/>
+      <label class="sp">First Name</label>
+      <input type="text" class="sp" placeholder="First Name" x-model="employee.firstName"/>
     </div>
     <div class="field">
-      <label>Last Name</label>
-      <input type="text" placeholder="Last Name" x-model="employee.lastName"/>
+      <label class="sp">Last Name</label>
+      <input type="text" class="sp" placeholder="Last Name" x-model="employee.lastName"/>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

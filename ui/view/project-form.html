@@ -2,8 +2,8 @@
   <h2>Project Form</h2>
   <form>
     <div class="field">
-      <label>Client</label>
-      <select class="padded" x-model="project.clientId">
+      <label class="sp">Client</label>
+      <select class="sp" x-model="project.clientId">
         <option value="" selected>Select Client</option>
         <template x-for="c in clients" :key="c.id">
           <option :value="c.id" x-text="c.name" :selected="project.clientId === c.id"></option>
@@ -11,12 +11,12 @@
       </select>
     </div>
     <div class="field">
-      <label>Name</label>
-      <input type="text" placeholder="Name" x-model="project.name" />
+      <label class="sp">Name</label>
+      <input type="text" class="sp" placeholder="Name" x-model="project.name" />
     </div>
     <div class="field">
-      <label>Description</label>
-      <input type="text" placeholder="Description" x-model="project.description" />
+      <label class="sp">Description</label>
+      <input type="text" class="sp" placeholder="Description" x-model="project.description" />
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

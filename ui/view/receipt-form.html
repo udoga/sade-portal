@@ -2,16 +2,16 @@
   <h2>Receipt Form</h2>
   <form>
     <div class="field">
-      <label>Expense Id</label>
-      <input type="text" placeholder="Expense Id" x-model="receipt.expenseId" />
+      <label class="sp">Expense Id</label>
+      <input type="text" class="sp" placeholder="Expense Id" x-model="receipt.expenseId" />
     </div>
     <div class="field">
-      <label>Receipt Date</label>
-      <input type="date" placeholder="Date" x-model="receipt.receiptDate" />
+      <label class="sp">Receipt Date</label>
+      <input type="date" class="sp" placeholder="Date" x-model="receipt.receiptDate" />
     </div>
     <div class="field">
-      <label>Category</label>
-      <select class="padded" x-model="receipt.categoryId">
+      <label class="sp">Category</label>
+      <select class="sp" x-model="receipt.categoryId">
         <option value="" selected>Select Category</option>
         <template x-for="c in categories" :key="c.id">
           <option :value="c.id" x-text="c.name" :selected="receipt.categoryId === c.id"></option>
@@ -19,20 +19,20 @@
       </select>
     </div>
     <div class="field">
-      <label>Amount</label>
-      <input type="number" min="0" value="0" step="0.01" placeholder="Amount" x-model="receipt.amount" />
+      <label class="sp">Amount</label>
+      <input type="number" class="sp" min="0" value="0" step="0.01" placeholder="Amount" x-model="receipt.amount" />
     </div>
     <div class="field">
-      <label>Currency</label>
-      <input type="text" placeholder="Currency" x-model="receipt.currency" />
+      <label class="sp">Currency</label>
+      <input type="text" class="sp" placeholder="Currency" x-model="receipt.currency" />
     </div>
     <div class="field">
-      <label>Vat Rate</label>
-      <input type="number" min="0" value="0" step="0.01" placeholder="Vat Rate" x-model="receipt.vatRate" />
+      <label class="sp">Vat Rate</label>
+      <input type="number" class="sp" min="0" value="0" step="0.01" placeholder="Vat Rate" x-model="receipt.vatRate" />
     </div>
     <div class="field">
-      <label>Description</label>
-      <textarea placeholder="Description" x-model="receipt.description"></textarea>
+      <label class="sp">Description</label>
+      <textarea class="sp" placeholder="Description" x-model="receipt.description"></textarea>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

@@ -3,8 +3,8 @@
   <h2>Worklog Form</h2>
   <form>
     <div class="field">
-      <label>Project</label>
-      <select class="padded" x-model="worklog.projectId">
+      <label class="sp">Project</label>
+      <select class="sp" x-model="worklog.projectId">
         <option value="" selected>Select Project</option>
         <template x-for="p in projects" :key="p.id">
           <option :value="p.id" x-text="p.name" :selected="worklog.projectId === p.id"></option>
@@ -12,8 +12,8 @@
       </select>
     </div>
     <div class="field">
-      <label>Employee</label>
-      <select class="padded" x-model="worklog.employeeId">
+      <label class="sp">Employee</label>
+      <select class="sp" x-model="worklog.employeeId">
         <option value="" selected>Select Employee</option>
         <template x-for="e in employees" :key="e.id">
           <option :value="e.id" x-text="e.fullName" :selected="worklog.employeeId === e.id"></option>
@@ -21,8 +21,8 @@
       </select>
     </div>
     <div class="field">
-      <label>Activity</label>
-      <select class="padded" x-model="worklog.activityId">
+      <label class="sp">Activity</label>
+      <select class="sp" x-model="worklog.activityId">
         <option value="" selected>Select Activity</option>
         <template x-for="a in activities" :key="a.id">
           <option :value="a.id" x-text="a.name" :selected="worklog.activityId === a.id"></option>
@@ -30,20 +30,20 @@
       </select>
     </div>
     <div class="field">
-      <label>Work Date</label>
-      <input type="date" placeholder="Work Date" x-model="worklog.workDate" />
+      <label class="sp">Work Date</label>
+      <input type="date" class="sp" placeholder="Work Date" x-model="worklog.workDate" />
     </div>
     <div class="field">
-      <label>Duration</label>
-      <input type="text" placeholder="Duration" x-model="worklog.duration" />
+      <label class="sp">Duration</label>
+      <input type="text" class="sp" placeholder="Duration" x-model="worklog.duration" />
     </div>
     <div class="field">
-      <label>Status</label>
-      <input type="text" placeholder="Status" x-model="worklog.status" />
+      <label class="sp">Status</label>
+      <input type="text" class="sp" placeholder="Status" x-model="worklog.status" />
     </div>
     <div class="field">
-      <label>Description</label>
-      <textarea placeholder="Description" x-model="worklog.description"></textarea>
+      <label class="sp">Description</label>
+      <textarea class="sp" placeholder="Description" x-model="worklog.description"></textarea>
     </div>
     <div class="options">
       <a class="white form button" href="javascript:history.back()">Back</a>

@@ -2,12 +2,12 @@
   <h2>Client Form</h2>
   <form>
     <div class="field">
-      <label>Name</label>
-      <input type="text" placeholder="Name" x-model="client.name" />
+      <label class="sp">Name</label>
+      <input type="text" class="sp" placeholder="Name" x-model="client.name" />
     </div>
     <div class="field">
-      <label>Sector</label>
-      <select class="padded" x-model="client.sectorId">
+      <label class="sp">Sector</label>
+      <select class="sp" x-model="client.sectorId">
         <option value="" selected>Select Sector</option>
         <template x-for="sector in sectors" :key="sector.id">
           <option :value="sector.id" x-text="sector.name" :selected="client.sectorId === sector.id"></option>
