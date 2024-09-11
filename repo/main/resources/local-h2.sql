@@ -161,7 +161,7 @@ ALTER TABLE vacation_categories ADD CONSTRAINT unique_vacation_category_name UNI
 
 INSERT INTO users VALUES
 --   id,      username,       password
-    (default, 'admin',        'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec'),
+    (default, 'admin',        '63524dd54916a96b6fbf052757e39bae1af467e82d3a392931edfa9580888ae55f49f3f68d014396e8a9f13851c89d0f0c1865661da5be18dc097ab9e13c8e9d'),
     (default, 'doga.sezgin',  'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
     (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26');
 

@@ -5,7 +5,7 @@
 1. Install JDK (>= 17) and Gradle (>= 7).
 2. Start application from command line: `gradle run`
 3. Open browser: http://localhost:7000
-4. Login: admin / admin
+4. Login: admin / admin-pwd
 
 ## IntelliJ IDEA Setup
 
