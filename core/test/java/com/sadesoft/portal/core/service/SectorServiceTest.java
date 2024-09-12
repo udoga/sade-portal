@@ -1,11 +1,15 @@
 package com.sadesoft.portal.core.service;
 
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.mock.MockSectorRepo;
 import com.sadesoft.portal.core.model.Sector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.lang.reflect.Field;
 
 public class SectorServiceTest {
     private MockSectorRepo sectorRepo;
@@ -24,6 +28,25 @@ public class SectorServiceTest {
         Sector sector = service.create(validSector);
         assertEquals(1, sectorRepo.list().size());
         assertEquals(sector, sectorRepo.read("0"));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
+        assertSpacedField("name");
+    }
+
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validSector, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validSector, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validSector, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validSector, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validSector, fieldName, "A B")));
+    }
+
+    private Sector withField(Sector sector, String fieldName, String value) throws Exception {
+        Field field = sector.getClass().getDeclaredField(fieldName);
+        field.set(sector, value);
+        return sector;
     }
 
     @Test
