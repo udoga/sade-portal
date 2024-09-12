@@ -22,13 +22,14 @@ class Router {
         else this.reloadNodes();
     }
 
-    login = function (token) {
-        localStorage.setItem("token", token);
+    login = function (session) {
+        localStorage.setItem("token", session.token);
+        localStorage.setItem("userId", session.userId);
         this.refresh();
     }
 
     logout = function () {
-        localStorage.removeItem("token");
+        localStorage.clear();
         this.refresh();
     }
 

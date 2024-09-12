@@ -1,8 +1,10 @@
-<div x-data="new LayoutComponent(sessionApi)" @resize.window="handleResize()" @hashchange.window="handleHashChange()">
+<div x-data="new LayoutComponent(sessionApi)" x-init="load(userApi)"
+     @resize.window="handleResize()" @hashchange.window="handleHashChange()">
   <header>
     <a class="left" @click="toggleNavigation()"><i class="fas fa-bars"></i></a>
     <h1>Sade Portal</h1>
     <a class="right" @click="logout()"><i class="fas fa-right-from-bracket"></i></a>
+    <span class="username" x-text="username"></span>
   </header>
   <nav :class="{ opened: hasNavigation }">
     <a href="#/home" @click="select('home')" :class="getClass('home')">

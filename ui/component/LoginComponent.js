@@ -14,7 +14,7 @@ class LoginComponent {
     }
 
     accept = function (session) {
-        window.dispatchEvent(new CustomEvent("login-event", { detail: session.token }));
+        window.dispatchEvent(new CustomEvent("login-event", { detail: session }));
     }
 
     reject = function (error) {

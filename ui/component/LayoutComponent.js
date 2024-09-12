@@ -5,10 +5,15 @@ class LayoutComponent {
     isShifted = true;
     hasOverlay = false;
     selectedTitle = "";
+    username = "";
 
     constructor(sessionApi) {
         this.sessionApi = sessionApi;
         this.handleResize();
+    }
+
+    load = function(userApi) {
+        userApi.read(localStorage.getItem("userId")).then(json => { this.username = json.data.username });
     }
 
     logout = function () {
