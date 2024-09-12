@@ -31,6 +31,11 @@ public class SectorServiceTest {
     }
 
     @Test
+    public void whenHasMissingFieldOnCreate_throwsError() {
+        assertMissingField(() -> service.create(validSector.withName(null)));
+    }
+
+    @Test
     public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
         assertSpacedField("name");
     }
