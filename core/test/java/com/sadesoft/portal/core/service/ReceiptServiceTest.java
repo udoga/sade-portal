@@ -18,24 +18,6 @@ public class ReceiptServiceTest {
     private ReceiptService service;
     private Receipt validReceipt;
 
-    private void assertValid(Receipt receipt) {
-        assertDoesNotThrow(() -> service.create(receipt));
-    }
-
-    private void assertMissingField(Receipt receipt) {
-        assertThrows(MissingFieldError.class, () -> service.create(receipt));
-    }
-
-    private void assertInvalidVatRate(Receipt receipt) {
-        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
-        assertEquals("Vat rate should be between 0-100.", e.getMessage());
-    }
-
-    private void assertInvalidAmount(Receipt receipt) {
-        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
-        assertEquals("Amount should be between 0-1000000.", e.getMessage());
-    }
-
     @BeforeEach
     public void setup() {
         repo = new MockReceiptRepo();
@@ -65,8 +47,25 @@ public class ReceiptServiceTest {
         assertMissingField(validReceipt.withReceiptDate(null));
         assertMissingField(validReceipt.withReceiptCategoryId(null));
         assertMissingField(validReceipt.withAmount(null));
+        assertMissingField(validReceipt.withCurrency(null));
         assertMissingField(validReceipt.withVatRate(null));
         assertMissingField(validReceipt.withDescription(null));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() {
+        assertInvalidInputOnCreate(validReceipt.withExpenseId("A"));
+        assertInvalidInputOnCreate(validReceipt.withExpenseId(""));
+        assertInvalidInputOnCreate(validReceipt.withReceiptCategoryId("A"));
+        assertInvalidInputOnCreate(validReceipt.withReceiptCategoryId(""));
+        assertInvalidInputOnCreate(validReceipt.withCurrency("1"));
+        assertInvalidInputOnCreate(validReceipt.withCurrency(""));
+        assertInvalidInputOnCreate(validReceipt.withDescription("1"));
+        assertInvalidInputOnCreate(validReceipt.withDescription(""));
+        assertDoesNotThrow(() -> service.create(validReceipt.withExpenseId("11")));
+        assertDoesNotThrow(() -> service.create(validReceipt.withReceiptCategoryId("11")));
+        assertDoesNotThrow(() -> service.create(validReceipt.withCurrency("A B")));
+        assertDoesNotThrow(() -> service.create(validReceipt.withDescription("A B")));
     }
 
     @Test
@@ -83,6 +82,28 @@ public class ReceiptServiceTest {
         assertInvalidAmount(validReceipt.withAmount(BigDecimal.valueOf(1000001)));
         assertValid(validReceipt.withAmount(BigDecimal.valueOf(0)));
         assertValid(validReceipt.withAmount(BigDecimal.valueOf(1000000)));
+    }
+
+    private void assertValid(Receipt receipt) {
+        assertDoesNotThrow(() -> service.create(receipt));
+    }
+
+    private void assertInvalidInputOnCreate(Receipt receipt) {
+        assertThrows(InvalidInputError.class, () -> service.create(receipt));
+    }
+
+    private void assertMissingField(Receipt receipt) {
+        assertThrows(MissingFieldError.class, () -> service.create(receipt));
+    }
+
+    private void assertInvalidVatRate(Receipt receipt) {
+        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
+        assertEquals("Vat rate should be between 0-100.", e.getMessage());
+    }
+
+    private void assertInvalidAmount(Receipt receipt) {
+        InvalidInputError e = assertThrows(InvalidInputError.class, () -> service.create(receipt));
+        assertEquals("Amount should be between 0-1000000.", e.getMessage());
     }
 
     @Nested
