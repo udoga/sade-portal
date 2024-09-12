@@ -8,16 +8,22 @@ import com.sadesoft.portal.core.repo.PermissionRepo;
 import java.util.List;
 
 public class AuthorizationService implements Authorizer {
+    private final boolean enabled;
     private final PermissionRepo permissionRepo;
 
-    public AuthorizationService(PermissionRepo permissionRepo) {
+    public AuthorizationService(boolean enabled, PermissionRepo permissionRepo) {
+        this.enabled = enabled;
         this.permissionRepo = permissionRepo;
     }
 
     @Override
     public void authorize(String callerId, String requestName) {
-        List<Permission> permissions = permissionRepo.listByUserId(callerId);
-        for (Permission p: permissions) if (("sp-" + requestName).startsWith(p.name)) return;
-        throw new AuthorizationError(requestName);
+        if (enabled && (callerId == null || !contains(permissionRepo.listByUserId(callerId), requestName)))
+            throw new AuthorizationError(requestName);
+    }
+
+    private boolean contains(List<Permission> permissions, String requestName) {
+        for (Permission p: permissions) if (("sp-" + requestName).startsWith(p.name)) return true;
+        return false;
     }
 }

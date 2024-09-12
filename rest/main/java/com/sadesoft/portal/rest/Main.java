@@ -6,7 +6,7 @@ import com.sadesoft.portal.base.model.Props;
 import com.sadesoft.portal.base.rest.RestConfig;
 import com.sadesoft.portal.core.service.AuthorizationService;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
-import com.sadesoft.portal.core.model.SessionConfig;
+import com.sadesoft.portal.base.auth.AuthConfig;
 import com.sadesoft.portal.base.util.PathUtil;
 import com.sadesoft.portal.base.rest.RestServer;
 import com.sadesoft.portal.core.repo.*;
@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Props props = new Props((args.length > 0) ? args[0] : PathUtil.findResourcePath("default.properties"));
         RestConfig restConfig = new RestConfig(props.getSection("rest"));
-        SessionConfig sessionConfig = new SessionConfig(props.getSection("session"));
+        AuthConfig authConfig = new AuthConfig(props.getSection("auth"));
         Connection c = new JdbcConnector(props.getSection(props.getString("repo"))).connect();
         boolean isLocalRepo = !props.getString("repo").equals("opm");
 
@@ -43,9 +43,9 @@ public class Main {
         ReceiptCategoryRepo receiptCategoryRepo = isLocalRepo? new LocalReceiptCategoryRepo(c) : new OpmReceiptCategoryRepo(c);
         ReceiptRepo receiptRepo = isLocalRepo? new LocalReceiptRepo(c) : new OpmReceiptRepo(c);
 
-        AuthorizationService authorizer = new AuthorizationService(permissionRepo);
-        UserService userService = new UserService(userRepo, authorizer, sessionConfig.salt);
-        SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
+        AuthorizationService authorizer = new AuthorizationService(authConfig.authorizationEnabled, permissionRepo);
+        UserService userService = new UserService(userRepo, authorizer, authConfig.salt);
+        SessionService sessionService = new SessionService(authConfig, sessionRepo, userRepo);
         RoleService roleService = new RoleService(roleRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
         AssignmentService assignmentService = new AssignmentService(assignmentRepo);

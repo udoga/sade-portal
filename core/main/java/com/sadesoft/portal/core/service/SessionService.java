@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.model.SessionConfig;
+import com.sadesoft.portal.base.auth.AuthConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.model.Session;
 import com.sadesoft.portal.core.model.User;
@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class SessionService {
-    public final SessionConfig config;
+    public final AuthConfig config;
     private final SessionRepo sessionRepo;
     private final UserRepo userRepo;
 
-    public SessionService(SessionConfig config, SessionRepo repo, UserRepo userRepo) {
+    public SessionService(AuthConfig config, SessionRepo repo, UserRepo userRepo) {
         this.config = config;
         this.sessionRepo = repo;
         this.userRepo = userRepo;

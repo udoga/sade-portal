@@ -1,6 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.core.model.SessionConfig;
+import com.sadesoft.portal.base.auth.AuthConfig;
 import com.sadesoft.portal.base.error.SessionError;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SessionServiceTest {
-    private SessionConfig config;
+    private AuthConfig config;
     private MockUserRepo userRepo;
     private MockSessionRepo sessionRepo;
     private SessionService service;
@@ -37,7 +37,7 @@ public class SessionServiceTest {
 
     @BeforeEach
     public void setup() {
-        config = new SessionConfig(3600, true, "salt");
+        config = new AuthConfig(true, true, 3600, "salt");
         userRepo = new MockUserRepo();
         sessionRepo = new MockSessionRepo();
         service = new SessionService(config, sessionRepo, userRepo);
