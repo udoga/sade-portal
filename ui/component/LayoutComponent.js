@@ -6,14 +6,17 @@ class LayoutComponent {
     hasOverlay = false;
     selectedTitle = "";
     username = "";
+    employee = null;
 
     constructor(sessionApi) {
         this.sessionApi = sessionApi;
         this.handleResize();
     }
 
-    load = function(userApi) {
-        userApi.read(localStorage.getItem("userId")).then(json => { this.username = json.data.username });
+    load = function(userApi, employeeApi) {
+        var userId = localStorage.getItem("userId");
+        userApi.read(userId).then(json => { this.username = json.data.username });
+        employeeApi.list("", {"userId": userId}).then(json => { this.employee = json.data[0] });
     }
 
     logout = function () {
@@ -50,5 +53,9 @@ class LayoutComponent {
 
     getClass = function (title) {
         return (this.selectedTitle === title)? "selected" : "";
+    }
+
+    getEmployeeQuery = function () {
+        return (this.employee && this.employee.id)? ("?employeeId=" + this.employee.id) : "";
     }
 }
