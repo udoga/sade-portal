@@ -11,16 +11,14 @@ class ProjectPageComponent extends PageComponent {
 
     afterLoad = function () {
         this.loadEngagements();
-        this.loadWorklogs();
-        this.selectTab("engagements");
     }
 
-    loadEngagements = function () {
-        this.loadRelations(this.engagementApi, this.engagements, "detailed");
+    loadEngagements = function (reload = false) {
+        this.loadRelations("engagements", this.engagementApi, this.engagements, reload, "detailed");
     }
 
-    loadWorklogs = function () {
-        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
+    loadWorklogs = function (reload = false) {
+        this.loadRelations("worklogs", this.worklogApi, this.worklogs, reload, "detailed", {order: "newest"});
     }
 
     removeEngagement = function (id) {

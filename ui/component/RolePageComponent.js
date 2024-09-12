@@ -13,16 +13,14 @@ class RolePageComponent extends PageComponent {
 
     afterLoad = function () {
         this.loadAssignments();
-        this.loadGrants();
-        this.selectTab("assignments");
     }
 
-    loadAssignments = function () {
-        this.loadRelations(this.assignmentApi, this.assignments, "detailed");
+    loadAssignments = function (reload = false) {
+        this.loadRelations("assignments", this.assignmentApi, this.assignments, reload, "detailed");
     }
 
-    loadGrants = function () {
-        this.loadRelations(this.grantApi, this.grants, "detailed");
+    loadGrants = function (reload = false) {
+        this.loadRelations("grants", this.grantApi, this.grants, reload, "detailed");
     }
 
     removeAssignment = function (id) {

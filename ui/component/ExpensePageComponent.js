@@ -10,11 +10,10 @@ class ExpensePageComponent extends PageComponent {
 
     afterLoad = function () {
         this.loadReceipts();
-        this.selectTab("receipts");
     }
 
-    loadReceipts = function () {
-        this.loadRelations(this.receiptApi, this.receipts);
+    loadReceipts = function (reload = false) {
+        this.loadRelations("receipts", this.receiptApi, this.receipts, reload);
     }
 
     removeReceipt = function (id) {

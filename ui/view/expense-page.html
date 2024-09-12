@@ -23,7 +23,7 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item first" @click="selectTab('receipts')" :class="getTabClass('receipts')">Receipts</span>
+        <span class="panel-item first" @click="loadReceipts(true)" :class="getTabClass('receipts')">Receipts</span>
         <span class="panel-item" @click="selectTab('employee')" :class="getTabClass('employee')">Employee</span>
       </div>
       <div class="panel-content">

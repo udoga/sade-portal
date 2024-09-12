@@ -55,13 +55,16 @@ class PageComponent {
         return (this.selectedTab === tab)? "selected" : "";
     }
 
-    loadRelations = function (api, array, appendedUrl = "", query = {}) {
+    loadRelations = function (tab, api, array, reload, appendedUrl = "", query = {}) {
+        this.selectedTab = tab;
+        if (reload) array.length = 0;
         query["offset"] = array.length;
         query[this.name + "Id"] = this.router.getId();
         api.list(appendedUrl, query).then(json => json.data? array.push(...json.data) : this.notifyError(json));
     }
 
-    loadRelation = function (api, obj, appendedUrl = "", query = {}) {
+    loadRelation = function (tab, api, obj, appendedUrl = "", query = {}) {
+        this.selectedTab = tab;
         query[this.name + "Id"] = this.router.getId();
         api.list(appendedUrl, query).then(json => json.data? Object.assign(obj, json.data[0]) : this.notifyError(json));
     }

@@ -11,10 +11,10 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item first" @click="selectTab('assignments')" :class="getTabClass('assignments')">
+        <span class="panel-item first" @click="loadAssignments(true)" :class="getTabClass('assignments')">
           Assignments
         </span>
-        <span class="panel-item" @click="selectTab('grants')" :class="getTabClass('grants')">Grants</span>
+        <span class="panel-item" @click="loadGrants(true)" :class="getTabClass('grants')">Grants</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('assignments')">

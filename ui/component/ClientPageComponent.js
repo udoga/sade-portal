@@ -4,16 +4,15 @@ class ClientPageComponent extends PageComponent {
 
     constructor(router, api, notifier, projectApi) {
         super(router, api, notifier, "client", "detailed");
-        this.projectApi = projectApi
+        this.projectApi = projectApi;
     }
 
     afterLoad = function () {
         this.loadProjects();
-        this.selectTab("projects");
     }
 
-    loadProjects = function () {
-        this.loadRelations(this.projectApi, this.projects, "detailed");
+    loadProjects = function (reload = false) {
+        this.loadRelations("projects", this.projectApi, this.projects, reload, "detailed");
     }
 
     removeProject = function (id) {

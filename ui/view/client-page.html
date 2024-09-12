@@ -15,7 +15,7 @@
     </div>
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-item first" @click="selectTab('projects')" :class="getTabClass('projects')">Projects</span>
+        <span class="panel-item first" @click="loadProjects(true)" :class="getTabClass('projects')">Projects</span>
       </div>
       <div class="panel-content">
         <div x-show="isSelectedTab('projects')">

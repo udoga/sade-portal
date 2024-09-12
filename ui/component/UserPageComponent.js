@@ -13,16 +13,14 @@ class UserPageComponent extends PageComponent {
 
     afterLoad = function () {
         this.loadAssignments();
-        this.loadEmployee();
-        this.selectTab("assignments");
     }
 
-    loadAssignments = function () {
-        this.loadRelations(this.assignmentApi, this.assignments, "detailed");
+    loadAssignments = function (reload = false) {
+        this.loadRelations("assignments", this.assignmentApi, this.assignments, reload, "detailed");
     }
 
     loadEmployee = function () {
-        this.loadRelation(this.employeeApi, this.employee);
+        this.loadRelation("employee", this.employeeApi, this.employee);
     }
 
     removeAssignment = function (id) {

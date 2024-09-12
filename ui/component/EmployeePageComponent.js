@@ -15,26 +15,22 @@ class EmployeePageComponent extends PageComponent {
 
     afterLoad = function () {
         this.loadEngagements();
-        this.loadWorklogs();
-        this.loadVacations();
-        this.loadExpenses();
-        this.selectTab("engagements");
     }
 
-    loadEngagements = function () {
-        this.loadRelations(this.engagementApi, this.engagements, "detailed");
+    loadEngagements = function (reload = false) {
+        this.loadRelations("engagements", this.engagementApi, this.engagements, reload, "detailed");
     }
 
-    loadWorklogs = function () {
-        this.loadRelations(this.worklogApi, this.worklogs, "detailed", {order: "newest"});
+    loadWorklogs = function (reload = false) {
+        this.loadRelations("worklogs", this.worklogApi, this.worklogs, reload, "detailed", {order: "newest"});
     }
 
-    loadVacations = function () {
-        this.loadRelations(this.vacationApi, this.vacations, "detailed");
+    loadVacations = function (reload = false) {
+        this.loadRelations("vacations", this.vacationApi, this.vacations, reload, "detailed");
     }
 
-    loadExpenses = function () {
-        this.loadRelations(this.expenseApi, this.expenses, "detailed");
+    loadExpenses = function (reload = false) {
+        this.loadRelations("expenses", this.expenseApi, this.expenses, reload, "detailed");
     }
 
     removeEngagement = function (id) {
