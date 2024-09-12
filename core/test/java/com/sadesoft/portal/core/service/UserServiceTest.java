@@ -1,9 +1,8 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.AuthorizationError;
-import com.sadesoft.portal.core.mock.MockPermissionRepo;
+import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.core.mock.MockUserRepo;
-import com.sadesoft.portal.core.model.Permission;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import java.util.List;
 public class UserServiceTest {
     private String callerId;
     private MockUserRepo userRepo;
-    private MockPermissionRepo permissionRepo;
+    private MockAuthorizer authorizer;
     private UserService service;
     private User validUser;
 
@@ -26,11 +25,11 @@ public class UserServiceTest {
     public void setup() {
         callerId = "0";
         userRepo = new MockUserRepo();
-        permissionRepo = new MockPermissionRepo();
-        permissionRepo.authorize(List.of(callerId));
-        permissionRepo.create(List.of(
+        authorizer = new MockAuthorizer();
+        authorizer.callerIds.add(callerId);
+        authorizer.permissionNames.addAll(List.of(
                 "user_list", "user_list_options", "user_create", "user_read", "user_update", "user_delete"));
-        service = new UserService(userRepo, permissionRepo, "");
+        service = new UserService(userRepo, authorizer, "");
         validUser = new User(null, "sample-username", "sample-password");
     }
 
@@ -50,7 +49,7 @@ public class UserServiceTest {
 
     @Test
     public void whenCreatesUser_encryptsPasswordWithSalt() {
-        new UserService(userRepo, permissionRepo, "salt").create(callerId, validUser);
+        new UserService(userRepo, authorizer, "salt").create(callerId, validUser);
         assertEquals(validUser.findEncryptedPassword("salt"), userRepo.read("0").password);
     }
 
@@ -105,7 +104,7 @@ public class UserServiceTest {
         @Test
         public void whenUpdatesUser_encryptsPasswordWithSalt() {
             User updatedUser = validUser.withPassword("updated");
-            new UserService(userRepo, permissionRepo, "salt").update(callerId, "0", updatedUser);
+            new UserService(userRepo, authorizer, "salt").update(callerId, "0", updatedUser);
             assertEquals(updatedUser.findEncryptedPassword("salt"), userRepo.read("0").password);
         }
 
@@ -124,7 +123,7 @@ public class UserServiceTest {
 
         @Test
         public void whenCallerIsUnauthorized_throwsError() {
-            permissionRepo.authorize(List.of());
+            authorizer.callerIds.clear();
             assertUnauthorized("user_list", () -> service.list(callerId));
             assertUnauthorized("user_list_options", () -> service.listOptions(callerId));
             assertUnauthorized("user_create", () -> service.create(callerId, validUser));
@@ -136,7 +135,7 @@ public class UserServiceTest {
         @Test
         public void whenCallerHasReadOwnPermission_canOnlyReadOwnUser() {
             userRepo.create(new User(null, "new-username", "new-password"));
-            permissionRepo.update("3", new Permission(null, "sp-user_read:own"));
+            authorizer.permissionNames.set(3, "user_read:own");
             assertDoesNotThrow(() -> service.read(callerId, "0"));
             assertUnauthorized("user_read", () -> service.read(callerId, "1"));
         }

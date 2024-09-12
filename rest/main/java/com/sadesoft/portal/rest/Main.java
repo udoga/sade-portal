@@ -4,6 +4,7 @@ import java.sql.Connection;
 import com.sadesoft.portal.base.repo.JdbcConnector;
 import com.sadesoft.portal.base.model.Props;
 import com.sadesoft.portal.base.rest.RestConfig;
+import com.sadesoft.portal.core.service.AuthorizationService;
 import com.sadesoft.portal.core.mock.MockSessionRepo;
 import com.sadesoft.portal.core.model.SessionConfig;
 import com.sadesoft.portal.base.util.PathUtil;
@@ -42,7 +43,8 @@ public class Main {
         ReceiptCategoryRepo receiptCategoryRepo = isLocalRepo? new LocalReceiptCategoryRepo(c) : new OpmReceiptCategoryRepo(c);
         ReceiptRepo receiptRepo = isLocalRepo? new LocalReceiptRepo(c) : new OpmReceiptRepo(c);
 
-        UserService userService = new UserService(userRepo, permissionRepo, sessionConfig.salt);
+        AuthorizationService authorizer = new AuthorizationService(permissionRepo);
+        UserService userService = new UserService(userRepo, authorizer, sessionConfig.salt);
         SessionService sessionService = new SessionService(sessionConfig, sessionRepo, userRepo);
         RoleService roleService = new RoleService(roleRepo);
         PermissionService permissionService = new PermissionService(permissionRepo);
@@ -55,7 +57,7 @@ public class Main {
         EmployeeService employeeService = new EmployeeService(employeeRepo);
         PositionService positionService = new PositionService(positionRepo);
         EngagementService engagementService = new EngagementService(engagementRepo);
-        WorklogService worklogService = new WorklogService(worklogRepo, permissionRepo, employeeRepo);
+        WorklogService worklogService = new WorklogService(worklogRepo, employeeRepo, authorizer);
         VacationCategoryService vacationCategoryService = new VacationCategoryService(vacationCategoryRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);

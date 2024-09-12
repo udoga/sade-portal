@@ -1,5 +1,6 @@
 package com.sadesoft.portal.core.service;
 
+import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.mock.*;
@@ -25,8 +26,8 @@ public class WorklogServiceTest {
     private MockProjectRepo projectRepo;
     private MockEmployeeRepo employeeRepo;
     private MockActivityRepo activityRepo;
-    private MockPermissionRepo permissionRepo;
     private MockWorklogRepo worklogRepo;
+    private MockAuthorizer authorizer;
     private WorklogService service;
     private Worklog validWorklog;
 
@@ -36,9 +37,9 @@ public class WorklogServiceTest {
         projectRepo = new MockProjectRepo(null);
         employeeRepo = new MockEmployeeRepo(null);
         activityRepo = new MockActivityRepo();
-        permissionRepo = new MockPermissionRepo();
         worklogRepo = new MockWorklogRepo(projectRepo, employeeRepo, activityRepo);
-        service = new WorklogService(worklogRepo, permissionRepo, employeeRepo);
+        authorizer = new MockAuthorizer();
+        service = new WorklogService(worklogRepo, employeeRepo, authorizer);
         validWorklog = new Worklog(
                 null,
                 "0",
@@ -59,8 +60,8 @@ public class WorklogServiceTest {
     public class GivenServiceWithOneWorklogAndFullPermissions {
         @BeforeEach
         public void setup() {
-            permissionRepo.authorize(List.of(callerId));
-            permissionRepo.create(List.of(
+            authorizer.callerIds.add(callerId);
+            authorizer.permissionNames.addAll(List.of(
                     "worklog_list",
                     "worklog_list_detailed",
                     "worklog_read",
@@ -169,8 +170,8 @@ public class WorklogServiceTest {
 
         @BeforeEach
         public void setup() {
-            permissionRepo.authorize(List.of(callerOne, callerTwo));
-            permissionRepo.create(List.of(
+            authorizer.callerIds.addAll(List.of(callerOne, callerTwo));
+            authorizer.permissionNames.addAll(List.of(
                     "worklog_list:own",
                     "worklog_list_detailed:own",
                     "worklog_read:own",

@@ -1,0 +1,23 @@
+package com.sadesoft.portal.core.service;
+
+import com.sadesoft.portal.base.auth.Authorizer;
+import com.sadesoft.portal.base.error.AuthorizationError;
+import com.sadesoft.portal.core.model.Permission;
+import com.sadesoft.portal.core.repo.PermissionRepo;
+
+import java.util.List;
+
+public class AuthorizationService implements Authorizer {
+    private final PermissionRepo permissionRepo;
+
+    public AuthorizationService(PermissionRepo permissionRepo) {
+        this.permissionRepo = permissionRepo;
+    }
+
+    @Override
+    public void authorize(String callerId, String requestName) {
+        List<Permission> permissions = permissionRepo.listByUserId(callerId);
+        for (Permission p: permissions) if (("sp-" + requestName).startsWith(p.name)) return;
+        throw new AuthorizationError(requestName);
+    }
+}
