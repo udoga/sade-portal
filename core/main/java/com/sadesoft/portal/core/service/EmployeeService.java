@@ -64,8 +64,8 @@ public class EmployeeService {
 
     private void checkFieldFormats(Employee employee) {
         checkFieldFormat(employee.userId, "userId", "^[0-9]+$");
-        checkFieldFormat(employee.firstName, "firstName", "^[a-zA-Z ]+$");
-        checkFieldFormat(employee.lastName, "lastName", "^[a-zA-Z ]+$");
+        checkFieldFormat(employee.firstName, "firstName", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(employee.lastName, "lastName", "^[a-zA-Z]+( [a-zA-Z]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

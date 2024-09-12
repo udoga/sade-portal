@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.mock.MockReceiptCategoryRepo;
 import com.sadesoft.portal.core.model.ReceiptCategory;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.lang.reflect.Field;
 
 public class ReceiptCategoryServiceTest {
     private MockReceiptCategoryRepo receiptCategoryRepo;
@@ -32,23 +32,27 @@ public class ReceiptCategoryServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validReceiptCategory.withName(null));
+        assertMissingField(() -> service.create(validReceiptCategory.withName(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validReceiptCategory.withName("1"));
-        assertInvalidInputOnCreate(validReceiptCategory.withName(""));
-        assertDoesNotThrow(() -> service.create(validReceiptCategory.withName("A B")));
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
+        assertSpacedField("name");
 
     }
 
-    private void assertMissingFieldOnCreate(ReceiptCategory receiptCategory) {
-        assertThrows(MissingFieldError.class, () -> service.create(receiptCategory));
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validReceiptCategory, fieldName, "A B")));
     }
 
-    private void assertInvalidInputOnCreate(ReceiptCategory receiptCategory) {
-        assertThrows(InvalidInputError.class, () -> service.create(receiptCategory));
+    private ReceiptCategory withField(ReceiptCategory receiptCategory, String fieldName, String value) throws Exception {
+        Field field = receiptCategory.getClass().getDeclaredField(fieldName);
+        field.set(receiptCategory, value);
+        return receiptCategory;
     }
 
     @Test

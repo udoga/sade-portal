@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.mock.MockPositionRepo;
 import com.sadesoft.portal.core.model.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.lang.reflect.Field;
 
 public class PositionServiceTest {
     private MockPositionRepo repo;
@@ -24,25 +24,28 @@ public class PositionServiceTest {
         validPosition = new Position(null, "Manager");
     }
 
-        @Test
+    @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validPosition.withName(null));
+        assertMissingField(() -> service.create(validPosition.withName(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validPosition.withName("1"));
-        assertInvalidInputOnCreate(validPosition.withName(""));
-        assertDoesNotThrow(() -> service.create(validPosition.withName("A B")));
-
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
+        assertSpacedField("name");
     }
 
-    private void assertMissingFieldOnCreate(Position position) {
-        assertThrows(MissingFieldError.class, () -> service.create(position));
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validPosition, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validPosition, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validPosition, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validPosition, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validPosition, fieldName, "A B")));
     }
 
-    private void assertInvalidInputOnCreate(Position position) {
-        assertThrows(InvalidInputError.class, () -> service.create(position));
+    private Position withField(Position position, String fieldName, String value) throws Exception {
+        Field field = position.getClass().getDeclaredField(fieldName);
+        field.set(position, value);
+        return position;
     }
 
     @Nested
@@ -84,22 +87,7 @@ public class PositionServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
-            assertMissingFieldOnUpdate(validPosition.withName(null));
-        }
-
-        @Test
-        public void whenHasInvalidInputOnUpdate_throwsError() {
-            assertInvalidInputOnUpdate(validPosition.withName("1"));
-            assertInvalidInputOnUpdate(validPosition.withName(""));
-            assertDoesNotThrow(() -> service.update("0", validPosition.withName("A B")));
-        }
-
-        private void assertMissingFieldOnUpdate(Position position) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", position));
-        }
-
-        private void assertInvalidInputOnUpdate(Position position) {
-            assertThrows(InvalidInputError.class, () -> service.update("0", position));
+            assertMissingField(() -> service.update("0", validPosition.withName(null)));
         }
     }
 }

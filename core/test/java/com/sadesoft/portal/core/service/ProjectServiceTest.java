@@ -1,8 +1,7 @@
 package com.sadesoft.portal.core.service;
 
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.query.ProjectQuery;
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockClientRepo;
 import com.sadesoft.portal.core.mock.MockProjectRepo;
 import com.sadesoft.portal.core.model.Project;
@@ -12,12 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProjectServiceTest {
     private MockClientRepo clientRepo;
@@ -47,30 +46,36 @@ public class ProjectServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validProject.withClientId(null));
-        assertMissingFieldOnCreate(validProject.withName(null));
-        assertMissingFieldOnCreate(validProject.withDescription(null));
+        assertMissingField(() -> service.create(validProject.withClientId(null)));
+        assertMissingField(() -> service.create(validProject.withName(null)));
+        assertMissingField(() -> service.create(validProject.withDescription(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validProject.withClientId("A"));
-        assertInvalidInputOnCreate(validProject.withClientId(""));
-        assertInvalidInputOnCreate(validProject.withName("1"));
-        assertInvalidInputOnCreate(validProject.withName(""));
-        assertInvalidInputOnCreate(validProject.withDescription("1"));
-        assertInvalidInputOnCreate(validProject.withDescription(""));
-        assertDoesNotThrow(() -> service.create(validProject.withClientId("11")));
-        assertDoesNotThrow(() -> service.create(validProject.withName("A B")));
-        assertDoesNotThrow(() -> service.create(validProject.withDescription("A B")));
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
+        assertIdField("clientId");
+        assertSpacedField("name");
+        assertSpacedField("description");
     }
 
-    private void assertMissingFieldOnCreate(Project project) {
-        assertThrows(MissingFieldError.class, () -> service.create(project));
+    private void assertIdField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, "A")));
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, "")));
+        assertDoesNotThrow(() -> service.create(withField(validProject, fieldName, "11")));
     }
 
-    private void assertInvalidInputOnCreate(Project project) {
-        assertThrows(InvalidInputError.class, () -> service.create(project));
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validProject, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validProject, fieldName, "A B")));
+    }
+
+    private Project withField(Project project, String fieldName, String value) throws Exception {
+        Field field = project.getClass().getDeclaredField(fieldName);
+        field.set(project, value);
+        return project;
     }
 
     @Nested
@@ -143,30 +148,9 @@ public class ProjectServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
-            assertMissingFieldOnUpdate(validProject.withClientId(null));
-            assertMissingFieldOnUpdate(validProject.withName(null));
-            assertMissingFieldOnUpdate(validProject.withDescription(null));
-        }
-
-        @Test
-        public void whenHasInvalidInputOnUpdate_throwsError() {
-            assertInvalidInputOnUpdate(validProject.withClientId("A"));
-            assertInvalidInputOnUpdate(validProject.withClientId(""));
-            assertInvalidInputOnUpdate(validProject.withName("1"));
-            assertInvalidInputOnUpdate(validProject.withName(""));
-            assertInvalidInputOnUpdate(validProject.withDescription("1"));
-            assertInvalidInputOnUpdate(validProject.withDescription(""));
-            assertDoesNotThrow(() -> service.update("0", validProject.withClientId("11")));
-            assertDoesNotThrow(() -> service.update("0", validProject.withName("A B")));
-            assertDoesNotThrow(() -> service.update("0", validProject.withDescription("A B")));
-        }
-
-        private void assertMissingFieldOnUpdate(Project project) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", project));
-        }
-
-        private void assertInvalidInputOnUpdate(Project project) {
-            assertThrows(InvalidInputError.class, () -> service.update("0", project));
+            assertMissingField(() -> service.update("0", validProject.withClientId(null)));
+            assertMissingField(() -> service.update("0", validProject.withName(null)));
+            assertMissingField(() -> service.update("0", validProject.withDescription(null)));
         }
     }
 }

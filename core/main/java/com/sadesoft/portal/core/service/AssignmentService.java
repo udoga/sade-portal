@@ -35,6 +35,7 @@ public class AssignmentService {
     }
 
     public Assignment update(String id, Assignment assignment) {
+        check(assignment);
         return repo.update(id, assignment);
     }
 

@@ -1,17 +1,16 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.mock.MockActivityRepo;
 import com.sadesoft.portal.core.model.Activity;
 
+import java.lang.reflect.Field;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ActivityServiceTest {
     private MockActivityRepo repo;
@@ -35,23 +34,27 @@ public class ActivityServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validActivity.withName(null));
+        assertMissingField(() -> service.create(validActivity.withName(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validActivity.withName("1"));
-        assertInvalidInputOnCreate(validActivity.withName(""));
-        assertDoesNotThrow(() -> service.create(validActivity.withName("A B")));
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
+        assertSpacedField("name");
 
     }
 
-    private void assertMissingFieldOnCreate(Activity activity) {
-        assertThrows(MissingFieldError.class, () -> service.create(activity));
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validActivity, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validActivity, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validActivity, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validActivity, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validActivity, fieldName, "A B")));
     }
 
-    private void assertInvalidInputOnCreate(Activity activity) {
-        assertThrows(InvalidInputError.class, () -> service.create(activity));
+    private Activity withField(Activity activity, String fieldName, String value) throws Exception {
+        Field field = activity.getClass().getDeclaredField(fieldName);
+        field.set(activity, value);
+        return activity;
     }
 
     @Nested
@@ -93,22 +96,7 @@ public class ActivityServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
-            assertMissingFieldOnUpdate(validActivity.withName(null));
-        }
-
-        @Test
-        public void whenHasInvalidInputOnUpdate_throwsError() {
-            assertInvalidInputOnUpdate(validActivity.withName("1"));
-            assertInvalidInputOnUpdate(validActivity.withName(""));
-            assertDoesNotThrow(() -> service.update("0", validActivity.withName("A B")));
-        }
-
-        private void assertMissingFieldOnUpdate(Activity activity) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", activity));
-        }
-
-        private void assertInvalidInputOnUpdate(Activity activity) {
-            assertThrows(InvalidInputError.class, () -> service.update("0", activity));
+            assertMissingField(() -> service.update("0", validActivity.withName(null)));
         }
     }
 }

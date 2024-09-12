@@ -1,7 +1,6 @@
 package com.sadesoft.portal.core.service;
 
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.query.EmployeeQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockUserRepo;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,30 +40,36 @@ public class EmployeeServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validEmployee.withUserId(null));
-        assertMissingFieldOnCreate(validEmployee.withFirstName(null));
-        assertMissingFieldOnCreate(validEmployee.withLastName(null));
+        assertMissingField(() -> service.create(validEmployee.withUserId(null)));
+        assertMissingField(() -> service.create(validEmployee.withFirstName(null)));
+        assertMissingField(() -> service.create(validEmployee.withLastName(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validEmployee.withUserId("A"));
-        assertInvalidInputOnCreate(validEmployee.withUserId(""));
-        assertInvalidInputOnCreate(validEmployee.withFirstName("1"));
-        assertInvalidInputOnCreate(validEmployee.withFirstName(""));
-        assertInvalidInputOnCreate(validEmployee.withLastName("1"));
-        assertInvalidInputOnCreate(validEmployee.withLastName(""));
-        assertDoesNotThrow(() -> service.create(validEmployee.withUserId("11")));
-        assertDoesNotThrow(() -> service.create(validEmployee.withFirstName("A B")));
-        assertDoesNotThrow(() -> service.create(validEmployee.withLastName("A B")));
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
+        assertIdField("userId");
+        assertSpacedField("firstName");
+        assertSpacedField("lastName");
     }
 
-    private void assertMissingFieldOnCreate(Employee employee) {
-        assertThrows(MissingFieldError.class, () -> service.create(employee));
+    private void assertIdField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "A")));
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "")));
+        assertDoesNotThrow(() -> service.create(withField(validEmployee, fieldName, "11")));
     }
 
-    private void assertInvalidInputOnCreate(Employee employee) {
-        assertThrows(InvalidInputError.class, () -> service.create(employee));
+    private void assertSpacedField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "1")));
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "")));
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, " ")));
+        assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "a ")));
+        assertDoesNotThrow(() -> service.create(withField(validEmployee, fieldName, "A B")));
+    }
+
+    private Employee withField(Employee employee, String fieldName, String value) throws Exception {
+        Field field = employee.getClass().getDeclaredField(fieldName);
+        field.set(employee, value);
+        return employee;
     }
 
     @Nested
@@ -138,30 +144,9 @@ public class EmployeeServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
-            assertMissingFieldOnUpdate(validEmployee.withUserId(null));
-            assertMissingFieldOnUpdate(validEmployee.withFirstName(null));
-            assertMissingFieldOnUpdate(validEmployee.withLastName(null));
-        }
-
-        @Test
-        public void whenHasInvalidInputOnUpdate_throwsError() {
-            assertInvalidInputOnUpdate(validEmployee.withUserId("A"));
-            assertInvalidInputOnUpdate(validEmployee.withUserId(""));
-            assertInvalidInputOnUpdate(validEmployee.withFirstName("1"));
-            assertInvalidInputOnUpdate(validEmployee.withFirstName(""));
-            assertInvalidInputOnUpdate(validEmployee.withLastName("1"));
-            assertInvalidInputOnUpdate(validEmployee.withLastName(""));
-            assertDoesNotThrow(() -> service.update("0", validEmployee.withUserId("11")));
-            assertDoesNotThrow(() -> service.update("0", validEmployee.withFirstName("A B")));
-            assertDoesNotThrow(() -> service.update("0", validEmployee.withLastName("A B")));
-        }
-
-        private void assertMissingFieldOnUpdate(Employee employee) {
-            assertThrows(MissingFieldError.class, () -> service.update("0", employee));
-        }
-
-        private void assertInvalidInputOnUpdate(Employee employee) {
-            assertThrows(InvalidInputError.class, () -> service.update("0", employee));
+            assertMissingField(() -> service.update("0", validEmployee.withUserId(null)));
+            assertMissingField(() -> service.update("0", validEmployee.withFirstName(null)));
+            assertMissingField(() -> service.update("0", validEmployee.withLastName(null)));
         }
     }
 }

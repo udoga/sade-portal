@@ -1,8 +1,7 @@
 package com.sadesoft.portal.core.service;
 
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.core.query.GrantQuery;
-import com.sadesoft.portal.base.error.InvalidInputError;
-import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.mock.MockGrantRepo;
 import com.sadesoft.portal.core.mock.MockPermissionRepo;
 import com.sadesoft.portal.core.mock.MockRoleRepo;
@@ -14,11 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GrantServiceTest {
     private MockGrantRepo grantRepo;
@@ -38,26 +36,26 @@ public class GrantServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingFieldOnCreate(validGrant.withRoleId(null));
-        assertMissingFieldOnCreate(validGrant.withPermissionId(null));
+        assertMissingField(() -> service.create(validGrant.withRoleId(null)));
+        assertMissingField(() -> service.create(validGrant.withPermissionId(null)));
     }
 
     @Test
-    public void whenHasInvalidInputOnCreate_throwsError() {
-        assertInvalidInputOnCreate(validGrant.withRoleId("A"));
-        assertInvalidInputOnCreate(validGrant.withRoleId(""));
-        assertInvalidInputOnCreate(validGrant.withPermissionId("A"));
-        assertInvalidInputOnCreate(validGrant.withPermissionId(""));
-        assertDoesNotThrow(() -> service.create(validGrant.withRoleId("11")));
-        assertDoesNotThrow(() -> service.create(validGrant.withPermissionId("11")));
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
+        assertIdField("roleId");
+        assertIdField("permissionId");
     }
 
-    private void assertMissingFieldOnCreate(Grant grant) {
-        assertThrows(MissingFieldError.class, () -> service.create(grant));
+    private void assertIdField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validGrant, fieldName, "A")));
+        assertInvalidInput(() -> service.create(withField(validGrant, fieldName, "")));
+        assertDoesNotThrow(() -> service.create(withField(validGrant, fieldName, "11")));
     }
 
-    private void assertInvalidInputOnCreate(Grant grant) {
-        assertThrows(InvalidInputError.class, () -> service.create(grant));
+    private Grant withField(Grant grant, String fieldName, String value) throws Exception {
+        Field field = grant.getClass().getDeclaredField(fieldName);
+        field.set(grant, value);
+        return grant;
     }
 
     @Nested
