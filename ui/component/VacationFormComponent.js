@@ -4,7 +4,7 @@ class VacationFormComponent extends FormComponent {
     categories = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "vacation");
+        super(router, api, notifier);
     }
 
     saveVacation = function () {

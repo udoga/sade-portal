@@ -3,7 +3,7 @@ class EmployeeFormComponent extends FormComponent {
     users = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "employee");
+        super(router, api, notifier);
     }
 
     loadAll = function (userApi) {

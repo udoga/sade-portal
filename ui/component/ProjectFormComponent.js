@@ -3,7 +3,7 @@ class ProjectFormComponent extends FormComponent {
     clients = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "project");
+        super(router, api, notifier);
     }
 
     loadAll = function (clientApi) {

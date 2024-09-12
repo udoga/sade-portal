@@ -3,7 +3,7 @@ class ClientFormComponent extends FormComponent {
     sectors = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "client");
+        super(router, api, notifier);
     }
 
     loadAll = function (sectorApi) {

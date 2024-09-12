@@ -3,15 +3,11 @@ class ReceiptFormComponent extends FormComponent {
     categories = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "receipt");
+        super(router, api, notifier);
     }
 
     loadAll = function (categoryApi) {
         this.load();
         this.loadOptions(categoryApi, this.categories);
-    }
-
-    routeOnSuccess = function () {
-        this.router.route("#/expense-page/" + this.receipt.expenseId);
     }
 }

@@ -2,14 +2,12 @@ class FormComponent {
     router = null;
     api = null;
     notifier = null;
-    name = null;
     record = {};
 
-    constructor(router, api, notifier, name) {
+    constructor(router, api, notifier) {
         this.router = router;
         this.api = api;
         this.notifier = notifier;
-        this.name = name;
     }
 
     load = function () {
@@ -36,17 +34,13 @@ class FormComponent {
     }
 
     notifySuccess = function () {
-        this.routeOnSuccess();
+        history.back();
         this.notifier.notifyLater(new Notification("success", "Successfully saved."));
     }
 
     notifyError = function (json) {
         var e = json.error;
         this.notifier.notify(new Notification("error", e.type + " (" + e.status + "): " + e.message));
-    }
-
-    routeOnSuccess = function () {
-        this.router.route("#/" + this.name + "-list");
     }
 
     create = function () {

@@ -5,7 +5,7 @@ class WorklogFormComponent extends FormComponent {
     activities = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "worklog");
+        super(router, api, notifier);
     }
 
     loadAll = function (projectApi, employeeApi, activityApi) {

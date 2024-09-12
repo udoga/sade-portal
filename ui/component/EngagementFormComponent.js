@@ -5,7 +5,7 @@ class EngagementFormComponent extends FormComponent {
     positions = [];
 
     constructor(router, api, notifier) {
-        super(router, api, notifier, "engagement");
+        super(router, api, notifier);
     }
 
     loadAll = function (projectApi, employeeApi, positionApi) {
@@ -13,9 +13,5 @@ class EngagementFormComponent extends FormComponent {
         this.loadOptions(projectApi, this.projects);
         this.loadOptions(employeeApi, this.employees);
         this.loadOptions(positionApi, this.positions);
-    }
-
-    routeOnSuccess = function () {
-        this.router.route("#/project-page/" + this.engagement.projectId);
     }
 }
