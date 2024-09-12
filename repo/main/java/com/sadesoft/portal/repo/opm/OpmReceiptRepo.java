@@ -46,7 +46,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 getId(s, "expense_item_type_id"),
                 s.getBigDecimal("amount"),
                 s.getString("currency"),
-                s.getShort("vat"),
+                s.getBigDecimal("vat"),
                 s.getString("description")
         );
     }
@@ -69,7 +69,7 @@ public class OpmReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         if (inserting) s.setInt(i++, 0);
         if (inserting) s.setObject(i++, UUID.randomUUID());
-        s.setShort(i++, o.vatRate);
+        s.setBigDecimal(i++, o.vatRate);
         if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         if (!inserting) setId(s, i, o.id);
         return s;

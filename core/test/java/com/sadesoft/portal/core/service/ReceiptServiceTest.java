@@ -29,7 +29,7 @@ public class ReceiptServiceTest {
                 "1",
                 new BigDecimal("10.20"),
                 "TRY",
-                (short) 18,
+                new BigDecimal("18"),
                 "TaxiCoast");
     }
 
@@ -48,7 +48,6 @@ public class ReceiptServiceTest {
         assertMissingField(validReceipt.withReceiptCategoryId(null));
         assertMissingField(validReceipt.withAmount(null));
         assertMissingField(validReceipt.withCurrency(null));
-        assertMissingField(validReceipt.withVatRate(null));
         assertMissingField(validReceipt.withDescription(null));
     }
 
@@ -70,10 +69,10 @@ public class ReceiptServiceTest {
 
     @Test
     public void whenVatRateIsInvalid_throwsError() {
-        assertInvalidVatRate(validReceipt.withVatRate((short) 101));
-        assertInvalidVatRate(validReceipt.withVatRate((short) -1));
-        assertValid(validReceipt.withVatRate((short) 0));
-        assertValid(validReceipt.withVatRate((short) 100));
+        assertInvalidVatRate(validReceipt.withVatRate(BigDecimal.valueOf(101)));
+        assertInvalidVatRate(validReceipt.withVatRate(BigDecimal.valueOf(-1)));
+        assertValid(validReceipt.withVatRate(BigDecimal.valueOf(0)));
+        assertValid(validReceipt.withVatRate(BigDecimal.valueOf(100)));
     }
 
     @Test

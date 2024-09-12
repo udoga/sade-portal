@@ -35,7 +35,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
                 getId(s, "category_id"),
                 s.getBigDecimal("amount"),
                 s.getString("currency"),
-                s.getShort("vat_rate"),
+                s.getBigDecimal("vat_rate"),
                 s.getString("description")
         );
     }
@@ -48,7 +48,7 @@ public class LocalReceiptRepo extends JdbcRepo<Receipt> implements ReceiptRepo {
         setId(s, i++, o.categoryId);
         s.setBigDecimal(i++, o.amount);
         s.setString(i++, o.currency);
-        s.setShort(i++, o.vatRate);
+        s.setBigDecimal(i++, o.vatRate);
         s.setString(i++, o.description);
         if (o.id != null) setId(s, i, o.id);
         return s;

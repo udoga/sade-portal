@@ -50,7 +50,6 @@ public class ReceiptService {
         checkMissingField(receipt.categoryId, "categoryId");
         checkMissingField(receipt.amount, "amount");
         checkMissingField(receipt.currency, "currency");
-        checkMissingField(receipt.vatRate, "vatRate");
         checkMissingField(receipt.description, "description");
     }
 
@@ -71,8 +70,9 @@ public class ReceiptService {
         if (value == null) throw new MissingFieldError(field);
     }
 
-    private void checkVatRate(short vatRate) {
-        if (vatRate < 0 || vatRate > 100) throw new InvalidInputError("Vat rate should be between 0-100.");
+    private void checkVatRate(BigDecimal vatRate) {
+        if (vatRate.compareTo(BigDecimal.ZERO) < 0 || vatRate.compareTo(new BigDecimal("100")) > 0)
+            throw new InvalidInputError("Vat rate should be between 0-100.");
     }
 
     private void checkAmount(BigDecimal amount) {

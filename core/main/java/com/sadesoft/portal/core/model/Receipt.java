@@ -14,7 +14,7 @@ public class Receipt implements Record {
     public String categoryId;
     public BigDecimal amount;
     public String currency;
-    public Short vatRate;
+    public BigDecimal vatRate;
     public String description;
 
     public Receipt() {
@@ -26,7 +26,7 @@ public class Receipt implements Record {
                    String categoryId,
                    BigDecimal amount,
                    String currency,
-                   Short vatRate,
+                   BigDecimal vatRate,
                    String description) {
         this.id = id;
         this.expenseId = expenseId;
@@ -120,7 +120,7 @@ public class Receipt implements Record {
         return receipt;
     }
 
-    public Receipt withVatRate(Short vatRate) {
+    public Receipt withVatRate(BigDecimal vatRate) {
         Receipt receipt = copy();
         receipt.vatRate = vatRate;
         return receipt;
