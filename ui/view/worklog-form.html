@@ -1,5 +1,5 @@
 <div x-data="new WorklogFormComponent(router, worklogApi, notifier)"
-     x-init="loadAll(projectApi, employeeApi, activityApi)">
+  x-init="loadAll(projectApi, employeeApi, activityApi)">
   <h2>Worklog Form</h2>
   <form>
     <div class="field">
@@ -37,9 +37,13 @@
       <label class="sp">Duration</label>
       <input type="text" class="sp" placeholder="Duration" x-model="worklog.duration" />
     </div>
-    <div class="field">
+    <div x-show="router.getId()" class="field">
       <label class="sp">Status</label>
-      <input type="text" class="sp" placeholder="Status" x-model="worklog.status" />
+      <select class="sp" x-model="worklog.status" x-effect="worklog.status ||= null">
+        <option value=''>Pending</option>
+        <option value="A">Approved</option>
+        <option value="D">Denied</option>
+      </select>
     </div>
     <div class="field">
       <label class="sp">Description</label>

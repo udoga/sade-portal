@@ -117,7 +117,7 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withDuration(int duration) {
+    public Worklog withDuration(Integer duration) {
         Worklog worklog = copy();
         worklog.duration = duration;
         return worklog;

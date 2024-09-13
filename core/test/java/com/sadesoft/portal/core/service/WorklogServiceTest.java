@@ -1,7 +1,9 @@
 package com.sadesoft.portal.core.service;
 
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.base.error.AuthorizationError;
+import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.mock.*;
 import com.sadesoft.portal.core.query.WorklogQuery;
@@ -18,7 +20,10 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.lang.reflect.Field;
 
+import static com.sadesoft.portal.base.util.TestUtil.assertInvalidInput;
+import static com.sadesoft.portal.base.util.TestUtil.assertMissingField;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorklogServiceTest {
@@ -47,7 +52,7 @@ public class WorklogServiceTest {
                 "0",
                 LocalDate.of(2024, 1, 1),
                 2,
-                "Approved",
+                null,
                 "Sample Worklog");
     }
 
@@ -71,6 +76,36 @@ public class WorklogServiceTest {
                     "worklog_delete"));
             worklogRepo.create(validWorklog);
             employeeRepo.create(new Employee().withUserId(callerId));
+        }
+
+        @Test
+        public void whenHasMissingFieldOnCreate_throwsError() {
+            assertMissingField(() -> service.create(callerId, validWorklog.withProjectId(null)));
+            assertMissingField(() -> service.create(callerId, validWorklog.withEmployeeId(null)));
+            assertMissingField(() -> service.create(callerId, validWorklog.withActivityId(null)));
+            assertMissingField(() -> service.create(callerId, validWorklog.withWorkDate(null)));
+            assertMissingField(() -> service.create(callerId, validWorklog.withDuration(null)));
+            assertMissingField(() -> service.create(callerId, validWorklog.withDescription(null)));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
+            assertIdField("projectId");
+            assertIdField("employeeId");
+            assertIdField("activityId");
+            assertThrows(ClientError.class, () -> service.create(callerId, validWorklog.withStatus("A")));
+        }
+
+        private void assertIdField(String fieldName) throws Exception {
+            assertInvalidInput(() -> service.create(callerId, withField(validWorklog, fieldName, "A")));
+            assertInvalidInput(() -> service.create(callerId, withField(validWorklog, fieldName, "")));
+            assertDoesNotThrow(() -> service.create(callerId, withField(validWorklog, fieldName, "11")));
+        }
+
+        private Worklog withField(Worklog worklog, String fieldName, String value) throws Exception {
+            Field field = worklog.getClass().getDeclaredField(fieldName);
+            field.set(worklog, value);
+            return worklog;
         }
 
         @Test
@@ -160,6 +195,27 @@ public class WorklogServiceTest {
             Worklog client = service.delete(callerId, "0");
             assertEquals(validWorklog.withId("0"), client);
             assertEquals(0, worklogRepo.list().size());
+        }
+
+        @Test
+        public void whenHasMissingFieldOnUpdate_throwsError(){
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withProjectId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withEmployeeId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withActivityId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withWorkDate(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDuration(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDescription(null)));
+        }
+
+        @Test
+        public void whenHasInvalidInputOnUpdate_throwsError() throws Exception{
+            assertIdField("projectId");
+            assertIdField("employeeId");
+            assertIdField("activityId");
+            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "1")));
+            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "")));
+            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "I")));
+            assertDoesNotThrow(() -> service.update(callerId, "0", withField(validWorklog, "status", null)));
         }
     }
 
