@@ -10,4 +10,8 @@ class EmployeeFormComponent extends FormComponent {
         this.load();
         this.loadOptions(userApi, this.users);
     }
+
+    afterLoad = function () {
+        delete this.employee.fullName;
+    }
 }
