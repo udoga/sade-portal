@@ -15,8 +15,8 @@ class LayoutComponent {
 
     load = function(userApi, employeeApi) {
         var userId = localStorage.getItem("userId");
-        userApi.read(userId).then(json => { this.username = json.data.username });
-        employeeApi.list("", {"userId": userId}).then(json => { this.employee = json.data[0] });
+        userApi.read(userId).then(json => { if (json.data) this.username = json.data.username });
+        employeeApi.list("", {"userId": userId}).then(json => { if (json.data) this.employee = json.data[0] });
     }
 
     logout = function () {

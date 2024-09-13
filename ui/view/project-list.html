@@ -1,7 +1,7 @@
-<div x-data="new ProjectListComponent(router, projectApi, notifier)" x-init="loadAll(clientApi)">
+<div x-data="new ProjectListComponent(router, projectApi, notifier, clientApi)" x-init="load()">
   <h2>Projects</h2>
   <div class="field">
-    <select class="sp" x-model="query.clientId" @change="reload()">
+    <select class="sp" x-model="query.clientId" @change="refresh()">
       <option value="">All Clients</option>
       <template x-for="c in clients">
         <option :value="c.id" x-text="c.name" :selected="query.clientId === c.id"></option>
@@ -37,6 +37,6 @@
     </template>
   </table>
   <div class="options">
-    <a class="white form button" x-show="hasMore(projects)" @click="load()">Load More</a>
+    <a class="white form button" x-show="hasMore(projects)" @click="loadMore()">Load More</a>
   </div>
 </div>

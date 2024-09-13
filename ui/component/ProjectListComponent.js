@@ -1,13 +1,14 @@
 class ProjectListComponent extends ListComponent {
     projects = this.records;
     clients = [];
+    clientApi = null;
 
-    constructor(router, api, notifier) {
+    constructor(router, api, notifier, clientApi) {
         super(router, api, notifier, "detailed");
+        this.clientApi = clientApi;
     }
 
-    loadAll = function (clientApi) {
-        this.load();
-        this.loadOptions(clientApi, this.clients);
+    afterLoad = function () {
+        this.loadOptions(this.clientApi, this.clients);
     }
 }

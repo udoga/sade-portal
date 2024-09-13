@@ -66,6 +66,11 @@ class Router {
         return Object.fromEntries(new URLSearchParams(hash.substring(hash.indexOf('?') + 1)));
     }
 
+    setUrlParams = function (query) {
+        var s = Object.keys(query).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`).join('&');
+        this.route(this.getUrlWithoutQuery() + (s? ("?" + s) : ""));
+    }
+
     findViews = function () {
         if (location.hash === "#/login") return ["login"];
         if (location.hash === "#/home") return ["layout", "home"];

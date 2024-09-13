@@ -4,6 +4,7 @@ class ListComponent {
     notifier = null;
     appendedUrl = "";
     query = {};
+    defaultQuery = {};
     records = [];
     error = {};
 
@@ -12,17 +13,22 @@ class ListComponent {
         this.api = api;
         this.notifier = notifier;
         this.appendedUrl = appendedUrl;
-        this.query = this.router.getUrlParams();
     }
 
     load = function () {
+        this.query = this.router.getUrlParams();
+        if (!this.containsDefaults(this.query, this.defaultQuery)) this.refresh();
+        else this.loadMore();
+    }
+
+    loadMore = function () {
         this.query.offset = this.records.length;
         this.api.list(this.appendedUrl, this.getFilledQuery()).then(json => this.handleLoadResponse(json));
     }
 
-    reload = function () {
-        this.records.length = 0;
-        this.load();
+    refresh = function () {
+        this.assignDefaults(this.query, this.defaultQuery);
+        this.router.setUrlParams(this.getFilledQuery());
     }
 
     remove = function (id) {
@@ -36,6 +42,7 @@ class ListComponent {
 
     handleLoadResponse = function (json) {
         json.data ? this.records.push(...json.data) : this.notifyError(json);
+        if (this.afterLoad) this.afterLoad();
     }
 
     handleRemoveResponse = function (json) {
@@ -63,5 +70,13 @@ class ListComponent {
 
     hasMore = function (records) {
         return records.length != 0 && records.length % 100 == 0;
+    }
+
+    containsDefaults = function (obj, defaultObj) {
+        return Object.keys(defaultObj).every(key => key in obj);
+    }
+
+    assignDefaults = function (obj, defaultObj) {
+        Object.keys(defaultObj).forEach(key => { if (!(key in obj)) obj[key] = defaultObj[key]; });
     }
 }
