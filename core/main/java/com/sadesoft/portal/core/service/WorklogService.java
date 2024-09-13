@@ -48,14 +48,14 @@ public class WorklogService {
     public Worklog create(String callerId, Worklog worklog) {
         authorizer.authorize(callerId, "worklog_create" + getSuffix(callerId, worklog.employeeId));
         check(worklog);
-        checkForbiddenField(worklog.status, "status");
+        checkForbiddenField(worklog.approvalStatus, "approvalStatus");
         return worklogRepo.create(worklog);
     }
 
     public Worklog update(String callerId, String id, Worklog worklog) {
         authorizer.authorize(callerId, "worklog_update" + getSuffix(callerId, worklogRepo.read(id).employeeId));
         check(worklog);
-        if (worklog.status != null) checkFieldFormat(worklog.status, "status", "^[AD]$");
+        if (worklog.approvalStatus != null) checkFieldFormat(worklog.approvalStatus, "approvalStatus", "^[AD]$");
         return worklogRepo.update(id, worklog);
     }
 

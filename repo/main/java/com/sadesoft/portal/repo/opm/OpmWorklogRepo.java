@@ -73,7 +73,7 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         setLocalDate(s, i++, o.workDate);
         s.setInt(i++, o.duration);
         if (inserting) s.setNull(i++, java.sql.Types.BOOLEAN);
-        s.setString(i++, o.status);
+        s.setString(i++, o.approvalStatus);
         if (!inserting) setId(s, i, o.id);
         return s;
     }

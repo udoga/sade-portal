@@ -48,14 +48,14 @@ public class ExpenseServiceTest {
         assertMissingField(() -> service.create(validExpense.withEmployeeId(null)));
         assertMissingField(() -> service.create(validExpense.withFormDate(null)));
         assertMissingField(() -> service.create(validExpense.withDescription(null)));
-        assertMissingField(() -> service.create(validExpense.withStatus(null)));
+        assertMissingField(() -> service.create(validExpense.withApprovalStatus(null)));
     }
 
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
         assertIdField("employeeId");
-        assertInvalidInput(() -> service.create(withField(validExpense, "status", "1")));
-        assertInvalidInput(() -> service.create(withField(validExpense, "status", "")));
+        assertInvalidInput(() -> service.create(validExpense.withApprovalStatus("1")));
+        assertInvalidInput(() -> service.create(validExpense.withApprovalStatus("")));
     }
 
     private void assertIdField(String fieldName) throws Exception {
@@ -128,7 +128,7 @@ public class ExpenseServiceTest {
             assertMissingField(() -> service.update("0", validExpense.withEmployeeId(null)));
             assertMissingField(() -> service.update("0", validExpense.withFormDate(null)));
             assertMissingField(() -> service.update("0", validExpense.withDescription(null)));
-            assertMissingField(() -> service.update("0", validExpense.withStatus(null)));
+            assertMissingField(() -> service.update("0", validExpense.withApprovalStatus(null)));
         }
     }
 }

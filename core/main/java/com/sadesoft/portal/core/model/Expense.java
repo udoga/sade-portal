@@ -11,7 +11,7 @@ public class Expense implements Record {
     public String employeeId;
     public LocalDate formDate;
     public String description;
-    public String status;
+    public String approvalStatus;
 
     public Expense() {
     }
@@ -20,12 +20,12 @@ public class Expense implements Record {
                    String employeeId,
                    LocalDate formDate,
                    String description,
-                   String status) {
+                   String approvalStatus) {
         this.id = id;
         this.employeeId = employeeId;
         this.formDate = formDate;
         this.description = description;
-        this.status = status;
+        this.approvalStatus = approvalStatus;
     }
 
     public Expense(Expense e) {
@@ -33,7 +33,7 @@ public class Expense implements Record {
         this.employeeId = e.employeeId;
         this.formDate = e.formDate;
         this.description = e.description;
-        this.status = e.status;
+        this.approvalStatus = e.approvalStatus;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Expense implements Record {
                 Objects.equals(employeeId, e.employeeId) &&
                 Objects.equals(formDate, e.formDate) &&
                 Objects.equals(description, e.description) &&
-                Objects.equals(status, e.status);
+                Objects.equals(approvalStatus, e.approvalStatus);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Expense implements Record {
                 " employeeId=" + employeeId +
                 " formDate=" + formDate +
                 " description=" + description +
-                " status=" + status +
+                " approvalStatus=" + approvalStatus +
                 "]";
     }
 
@@ -100,9 +100,9 @@ public class Expense implements Record {
         return expense;
     }
 
-    public Expense withStatus(String status) {
+    public Expense withApprovalStatus(String approvalStatus) {
         Expense expense = copy();
-        expense.status = status;
+        expense.approvalStatus = approvalStatus;
         return expense;
     }
 

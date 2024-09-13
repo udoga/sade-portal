@@ -8,7 +8,7 @@ class VacationFormComponent extends FormComponent {
     }
 
     saveVacation = function () {
-        this.vacation.status = null;
+        this.vacation.approvalStatus = null;
         this.save();
     }
 

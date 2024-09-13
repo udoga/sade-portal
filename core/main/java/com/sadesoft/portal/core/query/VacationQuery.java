@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.query;
 
 public class VacationQuery implements Cloneable {
-    public String status;
+    public String approvalStatus;
     public String employeeId;
 
     public VacationQuery() {
@@ -15,9 +15,9 @@ public class VacationQuery implements Cloneable {
         }
     }
 
-    public VacationQuery withStatus(String status) {
+    public VacationQuery withApprovalStatus(String approvalStatus) {
         VacationQuery copy = copy();
-        copy.status = status;
+        copy.approvalStatus = approvalStatus;
         return copy;
     }
 

@@ -52,7 +52,7 @@ public class VacationServiceTest {
     @Test
     public void createsVacations() {
         Vacation vacation = service.create(validVacation);
-        assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
+        assertEquals(validVacation.withId("0").withApprovalStatus("Waiting"), vacation);
         assertEquals(1, vacationRepo.list().size());
         assertEquals(vacation, vacationRepo.read("0"));
     }
@@ -71,7 +71,7 @@ public class VacationServiceTest {
 
     @Test
     public void whenApprovalStatusIsFilled_throwsError() {
-        assertForbiddenField(validVacation.withStatus("Approved"));
+        assertForbiddenField(validVacation.withApprovalStatus("Approved"));
     }
 
     private void assertIdField(String fieldName) throws Exception {
@@ -101,10 +101,10 @@ public class VacationServiceTest {
         }
 
         @Test
-        public void listsByStatus() {
+        public void listsByApprovalStatus() {
             assertEquals(1, service.listBy(new VacationQuery()).size());
-            assertEquals(1, service.listBy(new VacationQuery().withStatus("Waiting")).size());
-            assertEquals(0, service.listBy(new VacationQuery().withStatus("Approved")).size());
+            assertEquals(1, service.listBy(new VacationQuery().withApprovalStatus("Waiting")).size());
+            assertEquals(0, service.listBy(new VacationQuery().withApprovalStatus("Approved")).size());
         }
 
         @Test
@@ -131,9 +131,9 @@ public class VacationServiceTest {
 
         @Test
         public void whenUpdatesVacation_makesStatusWaiting() {
-            vacationRepo.update("0", vacationRepo.read("0").withStatus("Approved"));
+            vacationRepo.update("0", vacationRepo.read("0").withApprovalStatus("Approved"));
             Vacation vacation = service.update("0", validVacation);
-            assertEquals(validVacation.withId("0").withStatus("Waiting"), vacation);
+            assertEquals(validVacation.withId("0").withApprovalStatus("Waiting"), vacation);
         }
 
         @Test

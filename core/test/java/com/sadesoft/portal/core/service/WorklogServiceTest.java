@@ -1,6 +1,5 @@
 package com.sadesoft.portal.core.service;
 
-import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.base.error.ClientError;
@@ -93,7 +92,7 @@ public class WorklogServiceTest {
             assertIdField("projectId");
             assertIdField("employeeId");
             assertIdField("activityId");
-            assertThrows(ClientError.class, () -> service.create(callerId, validWorklog.withStatus("A")));
+            assertThrows(ClientError.class, () -> service.create(callerId, validWorklog.withApprovalStatus("A")));
         }
 
         private void assertIdField(String fieldName) throws Exception {
@@ -212,10 +211,10 @@ public class WorklogServiceTest {
             assertIdField("projectId");
             assertIdField("employeeId");
             assertIdField("activityId");
-            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "1")));
-            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "")));
-            assertInvalidInput(() -> service.update(callerId, "0", withField(validWorklog, "status", "I")));
-            assertDoesNotThrow(() -> service.update(callerId, "0", withField(validWorklog, "status", null)));
+            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("1")));
+            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("")));
+            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("I")));
+            assertDoesNotThrow(() -> service.update(callerId, "0", validWorklog.withApprovalStatus(null)));
         }
     }
 

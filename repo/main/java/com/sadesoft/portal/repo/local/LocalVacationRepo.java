@@ -24,7 +24,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 new JdbcColumn("end_time", true),
                 new JdbcColumn("day_count", true),
                 new JdbcColumn("description", true),
-                new JdbcColumn("status", true)));
+                new JdbcColumn("approval_status", true)));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
                 getLocalDateTime(s, "end_time"),
                 s.getInt("day_count"),
                 s.getString("description"),
-                s.getString("status"));
+                s.getString("approval_status"));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
         setLocalDateTime(s, i++, l.endTime);
         s.setInt(i++, l.dayCount);
         s.setString(i++, l.description);
-        s.setString(i++, l.status);
+        s.setString(i++, l.approvalStatus);
         if (l.id != null) setId(s, i, l.id);
         return s;
     }
@@ -90,7 +90,7 @@ public class LocalVacationRepo extends JdbcRepo<Vacation> implements VacationRep
     private String getWhereSql(VacationQuery q) {
         List<String> conditions = new ArrayList<>();
         if (q.employeeId != null) conditions.add("v.employee_id = " + q.employeeId);
-        if (q.status != null) conditions.add("v.status = '" + q.status + "'");
+        if (q.approvalStatus != null) conditions.add("v.approvalStatus = '" + q.approvalStatus + "'");
         return getWhereSql(String.join(" and ", conditions));
     }
 }

@@ -97,7 +97,7 @@ CREATE TABLE worklogs(
     work_date DATE NOT NULL,
     duration INT NOT NULL,
     description TEXT NOT NULL,
-    status VARCHAR(1),
+    approval_status VARCHAR(1),
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT,
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE RESTRICT
@@ -116,7 +116,7 @@ CREATE TABLE vacations(
     end_time TIMESTAMP NOT NULL,
     day_count INT NOT NULL,
     description VARCHAR(255) NOT NULL,
-    status VARCHAR(255) NOT NULL,
+    approval_status VARCHAR(255) NOT NULL,
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
     FOREIGN KEY (category_id) REFERENCES vacation_categories(id) ON DELETE RESTRICT
 );
@@ -259,13 +259,13 @@ INSERT INTO positions VALUES
 
 INSERT INTO engagements VALUES
 --   id,      project_id, employee_id, position_id,   start_date,    end_date,        description,   status
-    (default,           1,           1,          1, '2022-01-01', '2022-05-05', 'Description one.', 'Active'),
-    (default,           2,           2,          2, '2022-02-02', '2022-06-06', 'Description two.', 'Inactive');
+    (default,           1,           1,          1, '2022-01-01', '2022-05-05', 'Description one.',     'A'),
+    (default,           2,           2,          2, '2022-02-02', '2022-06-06', 'Description two.',     'I');
 
 INSERT INTO worklogs VALUES
---   id,      project_id, employee_id, activity_id, work_date,    duration,  description,        status
-    (default,          1,           1,           1, '2022-01-01',        5,  'Description one.',    'D'),
-    (default,          2,           2,           2, '2022-02-02',        6,  'Description two.',   null);
+--   id,      project_id, employee_id, activity_id, work_date,    duration,  description,        approval_status
+    (default,          1,           1,           1, '2022-01-01',        5,  'Description one.',             'D'),
+    (default,          2,           2,           2, '2022-02-02',        6,  'Description two.',            null);
 
 INSERT INTO vacation_categories VALUES
 --   id,      name
@@ -273,14 +273,14 @@ INSERT INTO vacation_categories VALUES
     (default, 'MarriageVacation');
 
 INSERT INTO vacations VALUES
---   id,      employee_id, category_id, start_time,            end_time,              day_count, description,        status
-    (default,           1,           1, '2022-01-01T09:00:00', '2022-05-05T12:00:00',         5, 'Description one.', 'Approved'),
-    (default,           2,           1, '2022-01-01T08:00:00', '2022-06-06T11:00:00',         6, 'Description two.', 'Rejected');
+--   id,      employee_id, category_id, start_time,            end_time,              day_count, description,        approval_status
+    (default,           1,           1, '2022-01-01T09:00:00', '2022-05-05T12:00:00',         5, 'Description one.',             'A'),
+    (default,           2,           1, '2022-01-01T08:00:00', '2022-06-06T11:00:00',         6, 'Description two.',             'D');
 
 INSERT INTO expenses VALUES
---   id,      employee_id, form_date,    description,        status
-    (default,           1, '2022-01-01', 'Description one.', 'Approved'),
-    (default,           2, '2022-02-02', 'Description two.', 'Rejected');
+--   id,      employee_id, form_date,    description,        approval_status
+    (default,           1, '2022-01-01', 'Description one.',             'A'),
+    (default,           2, '2022-02-02', 'Description two.',             'D');
 
 INSERT INTO receipt_categories VALUES
 --   id,      name

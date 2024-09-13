@@ -14,13 +14,13 @@ public class Worklog implements Record {
     public LocalDate workDate;
     public Integer duration;
     public String description;
-    public String status;
+    public String approvalStatus;
 
     public Worklog() {
     }
 
     public Worklog(String id, String projectId, String employeeId, String activityId, LocalDate workDate,
-            Integer duration, String description, String status) {
+            Integer duration, String description, String approvalStatus) {
         this.id = id;
         this.projectId = projectId;
         this.employeeId = employeeId;
@@ -28,7 +28,7 @@ public class Worklog implements Record {
         this.workDate = workDate;
         this.duration = duration;
         this.description = description;
-        this.status = status;
+        this.approvalStatus = approvalStatus;
     }
 
     public Worklog(Worklog w) {
@@ -39,7 +39,7 @@ public class Worklog implements Record {
         this.workDate = w.workDate;
         this.duration = w.duration;
         this.description = w.description;
-        this.status = w.status;
+        this.approvalStatus = w.approvalStatus;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Worklog implements Record {
                 Objects.equals(workDate, w.workDate) &&
                 Objects.equals(duration, w.duration) &&
                 Objects.equals(description, w.description) &&
-                Objects.equals(status, w.status);
+                Objects.equals(approvalStatus, w.approvalStatus);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Worklog implements Record {
                 " workDate=" + workDate +
                 " duration=" + duration +
                 " description=" + description +
-                " status=" + status +
+                " approvalStatus=" + approvalStatus +
                 ']';
     }
 
@@ -130,9 +130,9 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withStatus(String status) {
+    public Worklog withApprovalStatus(String approvalStatus) {
         Worklog worklog = copy();
-        worklog.status = status;
+        worklog.approvalStatus = approvalStatus;
         return worklog;
     }
 

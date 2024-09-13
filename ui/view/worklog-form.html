@@ -42,8 +42,8 @@
       <textarea class="sp" placeholder="Description" x-model="worklog.description"></textarea>
     </div>
     <div x-show="router.getId()" class="field">
-      <label class="sp">Status</label>
-      <select class="sp" x-model="worklog.status" x-effect="worklog.status ||= null">
+      <label class="sp">Approval Status</label>
+      <select class="sp" x-model="worklog.approvalStatus" x-effect="worklog.approvalStatus ||= null">
         <option value=''>Pending</option>
         <option value="A">Approved</option>
         <option value="D">Denied</option>

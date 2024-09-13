@@ -37,12 +37,12 @@ public class VacationService {
 
     public Vacation create(Vacation vacation) {
         check(vacation);
-        return repo.create(vacation.withStatus("Waiting"));
+        return repo.create(vacation.withApprovalStatus("Waiting"));
     }
 
     public Vacation update(String id, Vacation vacation) {
         check(vacation);
-        return repo.update(id, vacation.withStatus("Waiting"));
+        return repo.update(id, vacation.withApprovalStatus("Waiting"));
     }
 
     public Vacation delete(String id) {
@@ -52,7 +52,7 @@ public class VacationService {
     private void check(Vacation vacation) {
         checkMissingFields(vacation);
         checkFieldFormats(vacation);
-        checkForbiddenField(vacation.status, "status");
+        checkForbiddenField(vacation.approvalStatus, "approvalStatus");
     }
 
     private void checkMissingFields(Vacation vacation) {

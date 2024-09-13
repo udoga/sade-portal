@@ -40,7 +40,7 @@ public class LocalExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         setId(s, i++, o.employeeId);
         setLocalDate(s, i++, o.formDate);
         s.setString(i++, o.description);
-        s.setString(i++, o.status);
+        s.setString(i++, o.approvalStatus);
         if (o.id != null) setId(s, i, o.id);
         return s;
     }

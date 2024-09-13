@@ -66,7 +66,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
         if (inserting) s.setObject(i++, UUID.randomUUID());
         setLocalDateTime(s, i++, o.endTime);
         setLocalDateTime(s, i++, o.startTime);
-        s.setString(i++, o.status);
+        s.setString(i++, o.approvalStatus);
         if (inserting) s.setNull(i++, java.sql.Types.VARCHAR);
         setId(s, i++, o.categoryId);
         if (!inserting) setId(s, i, o.id);
@@ -110,7 +110,7 @@ public class OpmVacationRepo extends JdbcRepo<Vacation> implements VacationRepo 
     private String getWhereSql(VacationQuery q) {
         List<String> conditions = new ArrayList<>();
         if (q.employeeId != null) conditions.add("v.employee_id = " + q.employeeId);
-        if (q.status != null) conditions.add("v.vacation_status = '" + q.status + "'");
+        if (q.approvalStatus != null) conditions.add("v.vacation_status = '" + q.approvalStatus + "'");
         return getWhereSql(String.join(" and ", conditions));
     }
 }

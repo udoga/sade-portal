@@ -14,15 +14,7 @@ public class Vacation implements Record {
     public LocalDateTime endTime;
     public Integer dayCount;
     public String description;
-    public String status;
-
-    public Vacation copy() {
-        try {
-            return (Vacation) clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public String approvalStatus;
 
     public Vacation() {
     }
@@ -34,7 +26,7 @@ public class Vacation implements Record {
                     LocalDateTime endTime,
                     Integer dayCount,
                     String description,
-                    String status) {
+                    String approvalStatus) {
         this.id = id;
         this.employeeId = employeeId;
         this.categoryId = categoryId;
@@ -42,7 +34,7 @@ public class Vacation implements Record {
         this.endTime = endTime;
         this.dayCount = dayCount;
         this.description = description;
-        this.status = status;
+        this.approvalStatus = approvalStatus;
     }
 
     public Vacation(Vacation v) {
@@ -53,7 +45,7 @@ public class Vacation implements Record {
         this.endTime = v.endTime;
         this.dayCount = v.dayCount;
         this.description = v.description;
-        this.status = v.status;
+        this.approvalStatus = v.approvalStatus;
     }
 
     @Override
@@ -67,7 +59,7 @@ public class Vacation implements Record {
                 Objects.equals(endTime, l.endTime) &&
                 Objects.equals(dayCount, l.dayCount) &&
                 Objects.equals(description, l.description) &&
-                Objects.equals(status, l.status);
+                Objects.equals(approvalStatus, l.approvalStatus);
     }
 
     @Override
@@ -80,7 +72,7 @@ public class Vacation implements Record {
                 " endTime=" + endTime +
                 " dayCount=" + description +
                 " description=" + description +
-                " status=" + status +
+                " approvalStatus=" + approvalStatus +
                 "]";
     }
 
@@ -92,6 +84,14 @@ public class Vacation implements Record {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Vacation copy() {
+        try {
+            return (Vacation) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Vacation withId(String id) {
@@ -136,14 +136,14 @@ public class Vacation implements Record {
         return vacation;
     }
 
-    public Vacation withStatus(String status) {
+    public Vacation withApprovalStatus(String approvalStatus) {
         Vacation vacation = copy();
-        vacation.status = status;
+        vacation.approvalStatus = approvalStatus;
         return vacation;
     }
 
     public boolean matches(VacationQuery q) {
-        if (q.status != null && !status.equals(q.status)) return false;
+        if (q.approvalStatus != null && !approvalStatus.equals(q.approvalStatus)) return false;
         if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
         return true;
     }

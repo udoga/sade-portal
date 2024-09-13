@@ -25,7 +25,7 @@ public class VacationController extends RestController {
 
     private VacationQuery getQuery(Context c) {
         return new VacationQuery()
-                .withStatus(c.queryParam("status"))
+                .withApprovalStatus(c.queryParam("approvalStatus"))
                 .withEmployeeId(c.queryParam("employeeId"));
     }
 }

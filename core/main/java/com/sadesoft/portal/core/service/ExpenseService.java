@@ -57,12 +57,12 @@ public class ExpenseService {
         checkMissingField(expense.employeeId, "employeeId");
         checkMissingField(expense.formDate, "formDate");
         checkMissingField(expense.description, "description");
-        checkMissingField(expense.status, "status");
+        checkMissingField(expense.approvalStatus, "approvalStatus");
     }
 
     private void checkFieldFormats(Expense expense) {
         checkFieldFormat(expense.employeeId, "employeeId", "^[0-9]+$");
-        checkFieldFormat(expense.status, "status", "^[a-zA-Z]+$");
+        checkFieldFormat(expense.approvalStatus, "approvalStatus", "^[a-zA-Z]+$");
     }
 
     private void checkMissingField(String value, String field) {

@@ -56,7 +56,7 @@ public class OpmExpenseRepo extends JdbcRepo<Expense> implements ExpenseRepo {
         s.setString(i++, o.description);
         setId(s, i++, o.employeeId);
         setLocalDateTime(s, i++, o.formDate.atTime(0, 0, 0));
-        s.setString(i++, o.status);
+        s.setString(i++, o.approvalStatus);
         if (inserting) s.setInt(i++, 0);
         if (inserting) setLocalDateTime(s, i++, LocalDateTime.now());
         if (inserting) s.setInt(i++, 0);

@@ -13,7 +13,7 @@
       <th class="narrow">Id</th>
       <th>Form Date</th>
       <th>Employee</th>
-      <th>Status</th>
+      <th>Approval Status</th>
       <th class="narrow last">
         <a class="green header icon button" href="#/expense-form"><i class="fas fa-plus"></i> New</a>
       </th>
@@ -23,7 +23,7 @@
         <td x-text="e.id" class="narrow"></td>
         <td x-text="e.formDate"></td>
         <td><a class="blue" x-text="e.employee.fullName" :href="'#/employee-page/' + e.employee.id"></a></td>
-        <td x-text="e.status"></td>
+        <td x-text="e.approvalStatus"></td>
         <td class="narrow last">
           <a title="Show" class="light-blue row button" :href="'#/expense-page/' + e.id">
             <i class="fas fa-eye"></i>
