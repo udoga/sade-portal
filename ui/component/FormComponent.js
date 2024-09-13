@@ -11,14 +11,17 @@ class FormComponent {
     }
 
     load = function () {
-        var id = this.router.getId();
-        if (id) this.api.read(id).then(json => this.handleLoadResponse(json));
+        if (this.isEditing()) this.api.read(this.router.getId()).then(json => this.handleLoadResponse(json));
         else Object.assign(this.record, this.router.getUrlParams());
     }
 
     save = function () {
-        if (this.router.getId()) this.update();
+        if (this.isEditing()) this.update();
         else this.create();
+    }
+
+    isEditing = function() {
+        return this.router.getId() !== null;
     }
 
     loadOptions = function (api, array) {
