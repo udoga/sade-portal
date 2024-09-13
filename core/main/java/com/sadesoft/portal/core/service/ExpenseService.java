@@ -62,7 +62,6 @@ public class ExpenseService {
 
     private void checkFieldFormats(Expense expense) {
         checkFieldFormat(expense.employeeId, "employeeId", "^[0-9]+$");
-        checkFieldFormat(expense.description, "description", "^[a-zA-Z]+( [a-zA-Z]+)*$");
         checkFieldFormat(expense.status, "status", "^[a-zA-Z]+$");
     }
 

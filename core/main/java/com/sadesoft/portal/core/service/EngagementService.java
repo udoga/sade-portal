@@ -63,7 +63,6 @@ public class EngagementService {
         checkFieldFormat(engagement.projectId, "projectId", "^[0-9]+$");
         checkFieldFormat(engagement.employeeId, "employeeId", "^[0-9]+$");
         checkFieldFormat(engagement.positionId, "positionId", "^[0-9]+$");
-        checkFieldFormat(engagement.description, "description", "^[a-zA-Z]+( [a-zA-Z]+)*$");
         checkFieldFormat(engagement.status, "status", "^[AI]$");
     }
 

@@ -57,7 +57,6 @@ public class ReceiptService {
         checkFieldFormat(receipt.expenseId, "expenseId", "^[0-9]+$");
         checkFieldFormat(receipt.categoryId, "categoryId", "^[0-9]+$");
         checkFieldFormat(receipt.currency, "currency", "^[a-zA-Z]+( [a-zA-Z]+)*$");
-        checkFieldFormat(receipt.description, "description", "^[a-zA-Z]+( [a-zA-Z]+)*$");
         checkVatRate(receipt.vatRate);
         checkAmount(receipt.amount);
     }

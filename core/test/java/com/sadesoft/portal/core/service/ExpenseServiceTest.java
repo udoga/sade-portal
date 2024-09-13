@@ -54,7 +54,6 @@ public class ExpenseServiceTest {
     @Test
     public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
         assertIdField("employeeId");
-        assertSpacedField("description");
         assertInvalidInput(() -> service.create(withField(validExpense, "status", "1")));
         assertInvalidInput(() -> service.create(withField(validExpense, "status", "")));
     }
@@ -63,14 +62,6 @@ public class ExpenseServiceTest {
         assertInvalidInput(() -> service.create(withField(validExpense, fieldName, "A")));
         assertInvalidInput(() -> service.create(withField(validExpense, fieldName, "")));
         assertDoesNotThrow(() -> service.create(withField(validExpense, fieldName, "11")));
-    }
-
-    private void assertSpacedField(String fieldName) throws Exception {
-        assertInvalidInput(() -> service.create(withField(validExpense, fieldName, "1")));
-        assertInvalidInput(() -> service.create(withField(validExpense, fieldName, "")));
-        assertInvalidInput(() -> service.create(withField(validExpense, fieldName, " ")));
-        assertInvalidInput(() -> service.create(withField(validExpense, fieldName, "a ")));
-        assertDoesNotThrow(() -> service.create(withField(validExpense, fieldName, "A B")));
     }
 
     private Expense withField(Expense expense, String fieldName, String value) throws Exception {

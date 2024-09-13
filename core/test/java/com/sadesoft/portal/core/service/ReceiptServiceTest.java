@@ -57,7 +57,6 @@ public class ReceiptServiceTest {
         assertIdField("expenseId");
         assertIdField("categoryId");
         assertSpacedField("currency");
-        assertSpacedField("description");
     }
 
     @Test

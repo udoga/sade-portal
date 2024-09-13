@@ -64,7 +64,6 @@ public class EngagementServiceTest {
         assertIdField("projectId");
         assertIdField("employeeId");
         assertIdField("positionId");
-        assertSpacedField("description");
         assertInvalidInput(() -> service.create(withField(validEngagement, "status", "1")));
         assertInvalidInput(() -> service.create(withField(validEngagement, "status", "")));
         assertInvalidInput(() -> service.create(withField(validEngagement, "status", "C")));
@@ -74,14 +73,6 @@ public class EngagementServiceTest {
         assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, "A")));
         assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, "")));
         assertDoesNotThrow(() -> service.create(withField(validEngagement, fieldName, "11")));
-    }
-
-    private void assertSpacedField(String fieldName) throws Exception {
-        assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, "1")));
-        assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, "")));
-        assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, " ")));
-        assertInvalidInput(() -> service.create(withField(validEngagement, fieldName, "a ")));
-        assertDoesNotThrow(() -> service.create(withField(validEngagement, fieldName, "A B")));
     }
 
     private Engagement withField(Engagement engagement, String fieldName, String value) throws Exception {

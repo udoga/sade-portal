@@ -55,7 +55,6 @@ public class ProjectServiceTest {
     public void whenHasInvalidInputOnCreate_throwsError() throws Exception {
         assertIdField("clientId");
         assertSpacedField("name");
-        assertSpacedField("description");
     }
 
     private void assertIdField(String fieldName) throws Exception {
