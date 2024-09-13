@@ -1,8 +1,7 @@
 package com.sadesoft.portal.core.service;
 
+import static com.sadesoft.portal.base.util.TestUtil.*;
 import com.sadesoft.portal.base.error.ClientError;
-import com.sadesoft.portal.base.error.EmptyFieldError;
-import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.query.VacationQuery;
 import com.sadesoft.portal.core.mock.MockEmployeeRepo;
 import com.sadesoft.portal.core.mock.MockVacationRepo;
@@ -16,7 +15,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.lang.reflect.Field;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,15 +27,6 @@ public class VacationServiceTest {
     private MockVacationRepo vacationRepo;
     private VacationService service;
     private Vacation validVacation;
-
-    private void assertEmptyField(Vacation vacation, String field) {
-        EmptyFieldError e = assertThrows(EmptyFieldError.class, () -> service.create(vacation));
-        assertEquals("Field '" + field + "' should not be empty.", e.getMessage());
-    }
-
-    private void assertMissingField(Vacation vacation) {
-        assertThrows(MissingFieldError.class, () -> service.create(vacation));
-    }
 
     private void assertForbiddenField(Vacation vacation) {
         assertThrows(ClientError.class, () -> service.create(vacation));
@@ -67,12 +59,14 @@ public class VacationServiceTest {
 
     @Test
     public void whenHasMissingFieldOnCreate_throwsError() {
-        assertMissingField(validVacation.withEmployeeId(null));
-        assertMissingField(validVacation.withVacationCategoryId(null));
-        assertMissingField(validVacation.withStartTime(null));
-        assertMissingField(validVacation.withEndTime(null));
-        assertMissingField(validVacation.withDayCount(null));
-        assertMissingField(validVacation.withDescription(null));
+        assertMissingField(() -> service.create(validVacation.withEmployeeId(null)));
+        assertMissingField(() -> service.create(validVacation.withVacationCategoryId(null)));
+    }
+
+    @Test
+    public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
+        assertIdField("employeeId");
+        assertIdField("categoryId");
     }
 
     @Test
@@ -80,9 +74,16 @@ public class VacationServiceTest {
         assertForbiddenField(validVacation.withStatus("Approved"));
     }
 
-    @Test
-    public void whenDescriptionIsEmpty_throwsError() {
-        assertEmptyField(validVacation.withDescription(""), "description");
+    private void assertIdField(String fieldName) throws Exception {
+        assertInvalidInput(() -> service.create(withField(validVacation, fieldName, "A")));
+        assertInvalidInput(() -> service.create(withField(validVacation, fieldName, "")));
+        assertDoesNotThrow(() -> service.create(withField(validVacation, fieldName, "11")));
+    }
+
+    private Vacation withField(Vacation vacation, String fieldName, String value) throws Exception {
+        Field field = vacation.getClass().getDeclaredField(fieldName);
+        field.set(vacation, value);
+        return vacation;
     }
 
     @Nested
@@ -145,8 +146,8 @@ public class VacationServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertThrows(MissingFieldError.class, () -> service.update("0", validVacation.withEmployeeId(null)));
-            assertThrows(MissingFieldError.class, () -> service.update("0", validVacation.withStartTime(null)));
+            assertMissingField(() -> service.update("0", validVacation.withEmployeeId(null)));
+            assertMissingField(() -> service.update("0", validVacation.withVacationCategoryId(null)));
         }
     }
 }

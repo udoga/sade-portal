@@ -1,7 +1,7 @@
 package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.error.ClientError;
-import com.sadesoft.portal.base.error.EmptyFieldError;
+import com.sadesoft.portal.base.error.InvalidInputError;
 import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.detailed.DetailedVacation;
 import com.sadesoft.portal.core.query.VacationQuery;
@@ -9,6 +9,8 @@ import com.sadesoft.portal.core.model.Vacation;
 import com.sadesoft.portal.core.repo.VacationRepo;
 
 import java.util.List;
+
+import java.util.regex.Pattern;
 
 public class VacationService {
     private final VacationRepo repo;
@@ -49,7 +51,7 @@ public class VacationService {
 
     private void check(Vacation vacation) {
         checkMissingFields(vacation);
-        checkEmptyFields(vacation);
+        checkFieldFormats(vacation);
         checkForbiddenField(vacation.status, "status");
     }
 
@@ -62,8 +64,9 @@ public class VacationService {
         checkMissingField(vacation.description, "description");
     }
 
-    private void checkEmptyFields(Vacation vacation) {
-        checkEmptyField(vacation.description, "description");
+    private void checkFieldFormats(Vacation vacation) {
+        checkFieldFormat(vacation.employeeId, "employeeId", "^[0-9]+$");
+        checkFieldFormat(vacation.categoryId, "categoryId", "^[0-9]+$");
     }
 
     private void checkMissingField(Object value, String field) {
@@ -74,7 +77,7 @@ public class VacationService {
         if (value != null) throw new ClientError("Field '" + field + "' should not exist.");
     }
 
-    private void checkEmptyField(String value, String field) {
-        if (value.isEmpty()) throw new EmptyFieldError(field);
+    private void checkFieldFormat(String value, String field, String regex) {
+        if (!Pattern.matches(regex, value)) throw new InvalidInputError("Format of field '" + field + "' is invalid.");
     }
 }
