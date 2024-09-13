@@ -52,8 +52,8 @@ public class WorklogServiceTest {
                 "0",
                 LocalDate.of(2024, 1, 1),
                 2,
-                null,
-                "Sample Worklog");
+                "Sample Worklog",
+                null);
     }
 
     private void assertUnauthorized(String requestName, Executable executable) {

@@ -100,8 +100,8 @@ CREATE TABLE worklogs(
     activity_id INT NOT NULL,
     work_date DATE NOT NULL,
     duration INT NOT NULL,
-    status VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
+    status VARCHAR(1),
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE RESTRICT,
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE RESTRICT,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE RESTRICT
@@ -266,9 +266,9 @@ INSERT INTO engagements VALUES
     (default,           2,           2,          2, '2022-02-02', '2022-06-06', 'Description two.', 'Inactive');
 
 INSERT INTO worklogs VALUES
---   id,      project_id, employee_id, activity_id, work_date,    duration, status, description
-    (default,          1,           1,           1, '2022-01-01',        5, 'Done',  'Description one.'),
-    (default,          2,           2,           2, '2022-02-02',        6, 'Done',  'Description two.');
+--   id,      project_id, employee_id, activity_id, work_date,    duration,  description,        status
+    (default,          1,           1,           1, '2022-01-01',        5,  'Description one.',    'D'),
+    (default,          2,           2,           2, '2022-02-02',        6,  'Description two.',   null);
 
 INSERT INTO vacation_categories VALUES
 --   id,      name

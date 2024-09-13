@@ -50,8 +50,8 @@ public class OpmWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 getId(s, "activity_id"),
                 getLocalDate(s, "work_date"),
                 s.getInt("work_duration_in_minutes"),
-                s.getString("worklog_status"),
-                s.getString("work_content")
+                s.getString("work_content"),
+                s.getString("worklog_status")
         );
     }
 

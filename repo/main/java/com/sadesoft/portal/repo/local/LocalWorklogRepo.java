@@ -27,8 +27,8 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 new JdbcColumn("activity_id", true),
                 new JdbcColumn("work_date", true),
                 new JdbcColumn("duration", true),
-                new JdbcColumn("status", true),
-                new JdbcColumn("description", true)));
+                new JdbcColumn("description", true),
+                new JdbcColumn("status", true)));
     }
 
     @Override
@@ -40,8 +40,8 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
                 getId(s, "activity_id"),
                 getLocalDate(s, "work_date"),
                 s.getInt("duration"),
-                s.getString("status"),
-                s.getString("description")
+                s.getString("description"),
+                s.getString("status")
         );
     }
 
@@ -53,8 +53,8 @@ public class LocalWorklogRepo extends JdbcRepo<Worklog> implements WorklogRepo {
         setId(s, i++, o.activityId);
         setLocalDate(s, i++, o.workDate);
         s.setInt(i++, o.duration);
-        s.setString(i++, o.status);
         s.setString(i++, o.description);
+        s.setString(i++, o.status);
         if (o.id != null) setId(s, i, o.id);
         return s;
     }

@@ -13,21 +13,22 @@ public class Worklog implements Record {
     public String activityId;
     public LocalDate workDate;
     public Integer duration;
-    public String status;
     public String description;
+    public String status;
 
-    public Worklog(){}
+    public Worklog() {
+    }
 
     public Worklog(String id, String projectId, String employeeId, String activityId, LocalDate workDate,
-            Integer duration, String status, String description) {
+            Integer duration, String description, String status) {
         this.id = id;
         this.projectId = projectId;
         this.employeeId = employeeId;
         this.activityId = activityId;
         this.workDate = workDate;
         this.duration = duration;
-        this.status = status;
         this.description = description;
+        this.status = status;
     }
 
     public Worklog(Worklog w) {
@@ -37,8 +38,8 @@ public class Worklog implements Record {
         this.activityId = w.activityId;
         this.workDate = w.workDate;
         this.duration = w.duration;
-        this.status = w.status;
         this.description = w.description;
+        this.status = w.status;
     }
 
     @Override
@@ -51,8 +52,8 @@ public class Worklog implements Record {
                 Objects.equals(activityId, w.activityId) &&
                 Objects.equals(workDate, w.workDate) &&
                 Objects.equals(duration, w.duration) &&
-                Objects.equals(status, w.status) &&
-                Objects.equals(description, w.description);
+                Objects.equals(description, w.description) &&
+                Objects.equals(status, w.status);
     }
 
     @Override
@@ -64,8 +65,8 @@ public class Worklog implements Record {
                 " activityId=" + activityId +
                 " workDate=" + workDate +
                 " duration=" + duration +
-                " status=" + status +
                 " description=" + description +
+                " status=" + status +
                 ']';
     }
 
@@ -123,15 +124,15 @@ public class Worklog implements Record {
         return worklog;
     }
 
-    public Worklog withStatus(String status) {
-        Worklog worklog = copy();
-        worklog.status = status;
-        return worklog;
-    }
-
     public Worklog withDescription(String description) {
         Worklog worklog = copy();
         worklog.description = description;
+        return worklog;
+    }
+
+    public Worklog withStatus(String status) {
+        Worklog worklog = copy();
+        worklog.status = status;
         return worklog;
     }
 
