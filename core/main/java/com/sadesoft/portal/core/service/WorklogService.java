@@ -26,47 +26,47 @@ public class WorklogService {
     }
 
     public List<Worklog> listBy(String callerId, WorklogQuery query) {
-        authorizer.authorize(callerId, "worklog_list" + getSuffix(callerId, query.employeeId));
+        authorizer.authorize(callerId, "worklog_list", getFlags(callerId, query.employeeId));
         return worklogRepo.listBy(query);
     }
 
     public List<DetailedWorklog> listDetailedBy(String callerId, WorklogQuery query) {
-        authorizer.authorize(callerId, "worklog_list_detailed" + getSuffix(callerId, query.employeeId));
+        authorizer.authorize(callerId, "worklog_list_detailed", getFlags(callerId, query.employeeId));
         return worklogRepo.listDetailedBy(query);
     }
 
     public Worklog read(String callerId, String id) {
-        authorizer.authorize(callerId, "worklog_read" + getSuffix(callerId, worklogRepo.read(id).employeeId));
+        authorizer.authorize(callerId, "worklog_read", getFlags(callerId, worklogRepo.read(id).employeeId));
         return worklogRepo.read(id);
     }
 
     public DetailedWorklog readDetailed(String callerId, String id) {
-        authorizer.authorize(callerId, "worklog_read_detailed" + getSuffix(callerId, worklogRepo.read(id).employeeId));
+        authorizer.authorize(callerId, "worklog_read_detailed", getFlags(callerId, worklogRepo.read(id).employeeId));
         return worklogRepo.readDetailed(id);
     }
 
     public Worklog create(String callerId, Worklog worklog) {
-        authorizer.authorize(callerId, "worklog_create" + getSuffix(callerId, worklog.employeeId));
+        authorizer.authorize(callerId, "worklog_create", getFlags(callerId, worklog.employeeId));
         check(worklog);
         checkForbiddenField(worklog.approvalStatus, "approvalStatus");
         return worklogRepo.create(worklog);
     }
 
     public Worklog update(String callerId, String id, Worklog worklog) {
-        authorizer.authorize(callerId, "worklog_update" + getSuffix(callerId, worklogRepo.read(id).employeeId));
+        authorizer.authorize(callerId, "worklog_update", getFlags(callerId, worklogRepo.read(id).employeeId));
         check(worklog);
         if (worklog.approvalStatus != null) checkFieldFormat(worklog.approvalStatus, "approvalStatus", "^[AD]$");
         return worklogRepo.update(id, worklog);
     }
 
     public Worklog delete(String callerId, String id) {
-        authorizer.authorize(callerId, "worklog_delete" + getSuffix(callerId, worklogRepo.read(id).employeeId));
+        authorizer.authorize(callerId, "worklog_delete", getFlags(callerId, worklogRepo.read(id).employeeId));
         return worklogRepo.delete(id);
     }
 
-    private String getSuffix(String callerId, String employeeId) {
-        try { return employeeRepo.read(employeeId).userId.equals(callerId)? "" : "-employee:other"; }
-        catch (Exception e) { return ""; }
+    private List<String> getFlags(String callerId, String employeeId) {
+        try { return employeeRepo.read(employeeId).userId.equals(callerId)? List.of() : List.of("employee:other"); }
+        catch (Exception e) { return List.of(); }
     }
 
     private void check(Worklog worklog) {
