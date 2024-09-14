@@ -55,9 +55,9 @@ public class WorklogServiceTest {
                 null);
     }
 
-    private void assertUnauthorized(String requestName, Executable executable) {
+    private void assertUnauthorized(String permissionName, Executable executable) {
         AuthorizationError e = assertThrows(AuthorizationError.class, executable);
-        assertEquals(requestName, e.requestName);
+        assertEquals(permissionName, e.permissionName);
     }
 
     @Nested
@@ -67,12 +67,19 @@ public class WorklogServiceTest {
             authorizer.callerIds.add(callerId);
             authorizer.permissionNames.addAll(List.of(
                     "worklog_list",
+                    "worklog_list-employee:other",
                     "worklog_list_detailed",
+                    "worklog_list_detailed-employee:other",
                     "worklog_read",
+                    "worklog_read-employee:other",
                     "worklog_read_detailed",
+                    "worklog_read_detailed-employee:other",
                     "worklog_create",
+                    "worklog_create-employee:other",
                     "worklog_update",
-                    "worklog_delete"));
+                    "worklog_update-employee:other",
+                    "worklog_delete",
+                    "worklog_delete-employee:other"));
             worklogRepo.create(validWorklog);
             employeeRepo.create(new Employee().withUserId(callerId));
         }
@@ -227,13 +234,13 @@ public class WorklogServiceTest {
         public void setup() {
             authorizer.callerIds.addAll(List.of(callerOne, callerTwo));
             authorizer.permissionNames.addAll(List.of(
-                    "worklog_list:own",
-                    "worklog_list_detailed:own",
-                    "worklog_read:own",
-                    "worklog_read_detailed:own",
-                    "worklog_create:own",
-                    "worklog_update:own",
-                    "worklog_delete:own"));
+                    "worklog_list",
+                    "worklog_list_detailed",
+                    "worklog_read",
+                    "worklog_read_detailed",
+                    "worklog_create",
+                    "worklog_update",
+                    "worklog_delete"));
             employeeRepo.create(new Employee().withUserId(callerOne));
             employeeRepo.create(new Employee().withUserId(callerTwo));
             worklogRepo.create(validWorklog.withEmployeeId("0"));
@@ -244,11 +251,12 @@ public class WorklogServiceTest {
 
         @Test
         public void whenListRequestIsUnauthorized_throwsError() {
+            String permissionName = "worklog_list_detailed-employee:other";
             WorklogQuery employeeOneQuery = new WorklogQuery().withEmployeeId("0");
             WorklogQuery employeeTwoQuery = new WorklogQuery().withEmployeeId("1");
-            assertUnauthorized("worklog_list", () -> service.listBy(callerOne, employeeTwoQuery));
-            assertUnauthorized("worklog_list", () -> service.listBy(callerTwo, employeeOneQuery));
-            assertUnauthorized("worklog_list_detailed", () -> service.listDetailedBy(callerOne, employeeTwoQuery));
+            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(callerOne, employeeTwoQuery));
+            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(callerTwo, employeeOneQuery));
+            assertUnauthorized(permissionName, () -> service.listDetailedBy(callerOne, employeeTwoQuery));
             assertDoesNotThrow(() -> service.listBy(callerOne, employeeOneQuery));
             assertDoesNotThrow(() -> service.listBy(callerTwo, employeeTwoQuery));
             assertDoesNotThrow(() -> service.listDetailedBy(callerOne, employeeOneQuery));
@@ -256,9 +264,9 @@ public class WorklogServiceTest {
 
         @Test
         public void whenReadRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_read", () -> service.read(callerOne, "1"));
-            assertUnauthorized("worklog_read", () -> service.read(callerTwo, "0"));
-            assertUnauthorized("worklog_read_detailed", () -> service.readDetailed(callerOne, "1"));
+            assertUnauthorized("worklog_read-employee:other", () -> service.read(callerOne, "1"));
+            assertUnauthorized("worklog_read-employee:other", () -> service.read(callerTwo, "0"));
+            assertUnauthorized("worklog_read_detailed-employee:other", () -> service.readDetailed(callerOne, "1"));
             assertDoesNotThrow(() -> service.read(callerOne, "0"));
             assertDoesNotThrow(() -> service.read(callerTwo, "1"));
             assertDoesNotThrow(() -> service.readDetailed(callerOne, "0"));
@@ -266,24 +274,25 @@ public class WorklogServiceTest {
 
         @Test
         public void whenCreateRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_create", () -> service.create(callerOne, validWorklog.withEmployeeId("1")));
-            assertUnauthorized("worklog_create", () -> service.create(callerTwo, validWorklog.withEmployeeId("0")));
+            String permissionName = "worklog_create-employee:other";
+            assertUnauthorized(permissionName, () -> service.create(callerOne, validWorklog.withEmployeeId("1")));
+            assertUnauthorized(permissionName, () -> service.create(callerTwo, validWorklog.withEmployeeId("0")));
             assertDoesNotThrow(() -> service.create(callerOne, validWorklog.withEmployeeId("0")));
             assertDoesNotThrow(() -> service.create(callerTwo, validWorklog.withEmployeeId("1")));
         }
 
         @Test
         public void whenUpdateRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_update", () -> service.update(callerOne, "1", validWorklog));
-            assertUnauthorized("worklog_update", () -> service.update(callerTwo, "0", validWorklog));
+            assertUnauthorized("worklog_update-employee:other", () -> service.update(callerOne, "1", validWorklog));
+            assertUnauthorized("worklog_update-employee:other", () -> service.update(callerTwo, "0", validWorklog));
             assertDoesNotThrow(() -> service.update(callerOne, "0", validWorklog));
             assertDoesNotThrow(() -> service.update(callerTwo, "1", validWorklog));
         }
 
         @Test
         public void whenDeleteRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_delete", () -> service.delete(callerOne, "1"));
-            assertUnauthorized("worklog_delete", () -> service.delete(callerTwo, "0"));
+            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(callerOne, "1"));
+            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(callerTwo, "0"));
             assertDoesNotThrow(() -> service.delete(callerOne, "0"));
             assertDoesNotThrow(() -> service.delete(callerTwo, "1"));
         }

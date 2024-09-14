@@ -65,7 +65,7 @@ public class WorklogService {
     }
 
     private String getSuffix(String callerId, String employeeId) {
-        try { return employeeRepo.read(employeeId).userId.equals(callerId)? ":own" : ""; }
+        try { return employeeRepo.read(employeeId).userId.equals(callerId)? "" : "-employee:other"; }
         catch (Exception e) { return ""; }
     }
 

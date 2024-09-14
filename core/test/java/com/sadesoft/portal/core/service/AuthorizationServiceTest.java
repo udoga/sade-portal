@@ -17,7 +17,7 @@ public class AuthorizationServiceTest {
     @BeforeEach
     public void setup() {
         repo = new MockPermissionRepo();
-        service = new AuthorizationService(true, repo);
+        service = new AuthorizationService(repo, true, "");
         repo.authorizedUserId = "1";
     }
 
@@ -29,25 +29,31 @@ public class AuthorizationServiceTest {
 
     @Test
     public void whenAuthorizationIsDisabled_doesNotThrowError() {
-        assertDoesNotThrow(() -> new AuthorizationService(false, repo).authorize("1", "read_user"));
+        assertDoesNotThrow(() -> new AuthorizationService(repo, false, "").authorize("1", "read_user"));
     }
 
-    private void assertUnauthorized(String requestName, Executable executable) {
+    @Test
+    public void whenPrefixIsSet_addsItToPermissionNames() {
+        repo.create(new Permission(null, "sp-read_user"));
+        assertDoesNotThrow(() -> new AuthorizationService(repo, true, "sp-").authorize("1", "read_user"));
+    }
+
+    private void assertUnauthorized(String permissionName, Executable executable) {
         AuthorizationError e = assertThrows(AuthorizationError.class, executable);
-        assertEquals(requestName, e.requestName);
+        assertEquals(permissionName, e.permissionName);
     }
 
     @Nested
     public class GivenAuthorizerServiceWithSinglePermission {
         @BeforeEach
         public void setup() {
-            repo.create(new Permission(null, "sp-read_user"));
+            repo.create(new Permission(null, "read_user"));
         }
 
         @Test
         public void whenContainsPermission_doesNotThrowError() {
-            assertDoesNotThrow(() -> new AuthorizationService(false, repo).authorize("1", "read_user"));
-            assertDoesNotThrow(() -> new AuthorizationService(false, repo).authorize("1", "read_user:own"));
+            assertDoesNotThrow(() -> service.authorize("1", "read_user"));
+            assertUnauthorized("read_user-user:other", () -> service.authorize("1", "read_user-user:other"));
             assertUnauthorized("create_user", () -> service.authorize("1", "create_user"));
         }
 

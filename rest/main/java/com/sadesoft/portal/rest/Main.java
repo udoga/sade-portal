@@ -43,7 +43,7 @@ public class Main {
         ReceiptCategoryRepo receiptCategoryRepo = isLocalRepo? new LocalReceiptCategoryRepo(c) : new OpmReceiptCategoryRepo(c);
         ReceiptRepo receiptRepo = isLocalRepo? new LocalReceiptRepo(c) : new OpmReceiptRepo(c);
 
-        AuthorizationService authorizer = new AuthorizationService(authConfig.authorizationEnabled, permissionRepo);
+        AuthorizationService authorizer = new AuthorizationService(permissionRepo, authConfig.authorizationEnabled, "sp-");
         UserService userService = new UserService(userRepo, authorizer, authConfig.salt);
         SessionService sessionService = new SessionService(authConfig, sessionRepo, userRepo);
         RoleService roleService = new RoleService(roleRepo);

@@ -26,11 +26,21 @@ public class UserServiceTest {
         callerId = "0";
         userRepo = new MockUserRepo();
         authorizer = new MockAuthorizer();
-        authorizer.callerIds.add(callerId);
-        authorizer.permissionNames.addAll(List.of(
-                "user_list", "user_list_options", "user_create", "user_read", "user_update", "user_delete"));
         service = new UserService(userRepo, authorizer, "");
         validUser = new User(null, "sample-username", "sample-password");
+        setupAuthorizer();
+    }
+
+    private void setupAuthorizer() {
+        authorizer.callerIds.add(callerId);
+        authorizer.permissionNames.addAll(List.of(
+                "user_list",
+                "user_list_options",
+                "user_create",
+                "user_read",
+                "user_read-user:other",
+                "user_update",
+                "user_delete"));
     }
 
     @Test
@@ -85,7 +95,9 @@ public class UserServiceTest {
 
         @Test
         public void readsUser() {
+            userRepo.create(validUser);
             assertEquals(validUser.withId("0").withPassword(null), service.read(callerId, "0"));
+            assertEquals(validUser.withId("1").withPassword(null), service.read(callerId, "1"));
         }
 
         @Test
@@ -127,22 +139,22 @@ public class UserServiceTest {
             assertUnauthorized("user_list", () -> service.list(callerId));
             assertUnauthorized("user_list_options", () -> service.listOptions(callerId));
             assertUnauthorized("user_create", () -> service.create(callerId, validUser));
-            assertUnauthorized("user_read:own", () -> service.read(callerId, "0"));
+            assertUnauthorized("user_read", () -> service.read(callerId, "0"));
             assertUnauthorized("user_update", () -> service.update(callerId, "0", validUser));
             assertUnauthorized("user_delete", () -> service.delete(callerId, "0"));
         }
 
         @Test
-        public void whenCallerHasReadOwnPermission_canOnlyReadOwnUser() {
-            userRepo.create(new User(null, "new-username", "new-password"));
-            authorizer.permissionNames.set(3, "user_read:own");
+        public void whenReadOtherPermissionIsMissing_cannotReadOtherUser() {
+            userRepo.create(validUser);
+            authorizer.permissionNames.remove("user_read-user:other");
             assertDoesNotThrow(() -> service.read(callerId, "0"));
-            assertUnauthorized("user_read", () -> service.read(callerId, "1"));
+            assertUnauthorized("user_read-user:other", () -> service.read(callerId, "1"));
         }
 
-        private void assertUnauthorized(String requestName, Executable executable) {
+        private void assertUnauthorized(String permissionName, Executable executable) {
             AuthorizationError e = assertThrows(AuthorizationError.class, executable);
-            assertEquals(requestName, e.requestName);
+            assertEquals(permissionName, e.permissionName);
         }
 
         private void assertMissingFieldOnUpdate(User user) {

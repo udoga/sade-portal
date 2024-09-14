@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public User read(String callerId, String id) {
-        authorizer.authorize(callerId, "user_read" + (callerId.equals(id)? ":own" : ""));
+        authorizer.authorize(callerId, "user_read" + (callerId.equals(id)? "" : "-user:other"));
         return userRepo.read(id).withPassword(null);
     }
 

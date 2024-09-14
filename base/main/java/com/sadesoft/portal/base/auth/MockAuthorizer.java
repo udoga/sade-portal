@@ -11,7 +11,7 @@ public class MockAuthorizer implements Authorizer {
 
     @Override
     public void authorize(String callerId, String requestName) {
-        for (String name: permissionNames) if (callerIds.contains(callerId) && requestName.startsWith(name)) return;
+        for (String name: permissionNames) if (callerIds.contains(callerId) && requestName.equals(name)) return;
         throw new AuthorizationError(requestName);
     }
 }
