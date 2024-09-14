@@ -6,9 +6,10 @@ import com.sadesoft.portal.core.mock.MockUserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static com.sadesoft.portal.base.util.TestUtil.assertMissingField;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sadesoft.portal.base.error.MissingFieldError;
 import com.sadesoft.portal.core.model.User;
 import org.junit.jupiter.api.function.Executable;
 
@@ -35,23 +36,13 @@ public class UserServiceTest {
         assertEquals(permissionName, e.permissionName);
     }
 
-    private void assertMissingFieldOnCreate(User user) {
-        assertThrows(MissingFieldError.class, () -> service.create(caller0, user));
-    }
-
-    private void assertMissingFieldOnUpdate(User user) {
-        assertThrows(MissingFieldError.class, () -> service.update(caller0, "0", user));
-    }
-
-    @Test
-    public void whenCallerIsUnauthorized_throwsError() {
-        userRepo.create(validUser);
-        assertUnauthorized("user_list", () -> service.list(caller0));
-        assertUnauthorized("user_list_options", () -> service.listOptions(caller0));
-        assertUnauthorized("user_create", () -> service.create(caller0, validUser));
-        assertUnauthorized("user_read", () -> service.read(caller0, "0"));
-        assertUnauthorized("user_update", () -> service.update(caller0, "0", validUser));
-        assertUnauthorized("user_delete", () -> service.delete(caller0, "0"));
+    private void assertUnauthorizedForAll(String callerId) {
+        assertUnauthorized("user_list", () -> service.list(callerId));
+        assertUnauthorized("user_list_options", () -> service.listOptions(callerId));
+        assertUnauthorized("user_create", () -> service.create(callerId, validUser));
+        assertUnauthorized("user_read", () -> service.read(callerId, "0"));
+        assertUnauthorized("user_update", () -> service.update(callerId, "0", validUser));
+        assertUnauthorized("user_delete", () -> service.delete(callerId, "0"));
     }
 
     @Nested
@@ -70,6 +61,12 @@ public class UserServiceTest {
                     "user_update-user:other",
                     "user_update-username:update",
                     "user_delete"));
+        }
+
+        @Test
+        public void whenCallerIdIsNullOrUnauthorized_throwsError() {
+            assertUnauthorizedForAll(null);
+            assertUnauthorizedForAll("1");
         }
 
         @Test
@@ -94,8 +91,8 @@ public class UserServiceTest {
 
         @Test
         public void whenHasMissingFieldOnCreate_throwsError() {
-            assertMissingFieldOnCreate(validUser.withUsername(null));
-            assertMissingFieldOnCreate(validUser.withPassword(null));
+            assertMissingField(() -> service.create(caller0, validUser.withUsername(null)));
+            assertMissingField(() -> service.create(caller0, validUser.withPassword(null)));
         }
 
         @Test
@@ -140,8 +137,8 @@ public class UserServiceTest {
 
         @Test
         public void whenHasMissingFieldOnUpdate_throwsError() {
-            assertMissingFieldOnUpdate(validUser.withUsername(null));
-            assertMissingFieldOnUpdate(validUser.withPassword(null));
+            assertMissingField(() -> service.update(caller0, "0", validUser.withUsername(null)));
+            assertMissingField(() -> service.update(caller0, "0", validUser.withPassword(null)));
         }
 
         @Test
