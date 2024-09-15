@@ -79,8 +79,8 @@ public class Assignment implements Record {
     }
 
     public boolean matches(AssignmentQuery q) {
-        if (q.userId != null && !userId.equals(q.userId)) return false;
-        if (q.roleId != null && !roleId.equals(q.roleId)) return false;
+        if (q.userId != null && !q.userId.equals(userId)) return false;
+        if (q.roleId != null && !q.roleId.equals(roleId)) return false;
         return true;
     }
 }

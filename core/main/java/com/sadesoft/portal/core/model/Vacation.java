@@ -143,8 +143,8 @@ public class Vacation implements Record {
     }
 
     public boolean matches(VacationQuery q) {
-        if (q.approvalStatus != null && !approvalStatus.equals(q.approvalStatus)) return false;
-        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
+        if (q.approvalStatus != null && !q.approvalStatus.equals(approvalStatus)) return false;
+        if (q.employeeId != null && !q.employeeId.equals(employeeId)) return false;
         return true;
     }
 }

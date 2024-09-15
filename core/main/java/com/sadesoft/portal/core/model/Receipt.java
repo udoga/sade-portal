@@ -133,7 +133,7 @@ public class Receipt implements Record {
     }
 
     public boolean matches(ReceiptQuery q) {
-        if (q.expenseId != null && !expenseId.equals(q.expenseId)) return false;
+        if (q.expenseId != null && !q.expenseId.equals(expenseId)) return false;
         return true;
     }
 }

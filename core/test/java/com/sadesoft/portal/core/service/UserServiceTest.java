@@ -45,28 +45,19 @@ public class UserServiceTest {
         assertUnauthorized("user_delete", () -> service.delete(callerId, "0"));
     }
 
+    @Test
+    public void whenCallerIdIsNullOrUnauthorized_throwsError() {
+        userRepo.create(validUser);
+        assertUnauthorizedForAll(null);
+        assertUnauthorizedForAll("1");
+    }
+
     @Nested
-    public class GivenServiceWithOneUserAndFullPermissions {
+    public class GivenServiceWithOneUserAndNoAuthorization {
         @BeforeEach
         public void setup() {
             userRepo.create(validUser);
-            authorizer.callerIds.add(caller0);
-            authorizer.permissionNames.addAll(List.of(
-                    "user_list",
-                    "user_list_options",
-                    "user_create",
-                    "user_read",
-                    "user_read-user:other",
-                    "user_update",
-                    "user_update-user:other",
-                    "user_update-username:update",
-                    "user_delete"));
-        }
-
-        @Test
-        public void whenCallerIdIsNullOrUnauthorized_throwsError() {
-            assertUnauthorizedForAll(null);
-            assertUnauthorizedForAll("1");
+            authorizer.enabled = false;
         }
 
         @Test
@@ -180,7 +171,7 @@ public class UserServiceTest {
 
         @Test
         public void whenUpdatesOwnUsername_throwsError() {
-            String permissionName = "user_update-username:update";
+            String permissionName = "user_update-username_change";
             assertUnauthorized(permissionName, () -> service.update(caller0, "0", validUser.withUsername("username1")));
             assertUnauthorized(permissionName, () -> service.update(caller1, "1", validUser.withUsername("username0")));
             assertDoesNotThrow(() -> service.update(caller0, "0", validUser.withUsername("username0")));

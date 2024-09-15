@@ -107,7 +107,7 @@ public class Expense implements Record {
     }
 
     public boolean matches(ExpenseQuery q) {
-        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
+        if (q.employeeId != null && !q.employeeId.equals(employeeId)) return false;
         return true;
     }
 }

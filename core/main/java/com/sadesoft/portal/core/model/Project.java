@@ -88,7 +88,7 @@ public class Project implements Record {
     }
 
     public boolean matches(ProjectQuery q) {
-        if (q.clientId != null && !clientId.equals(q.clientId)) return false;
+        if (q.clientId != null && !q.clientId.equals(clientId)) return false;
         return true;
     }
 }

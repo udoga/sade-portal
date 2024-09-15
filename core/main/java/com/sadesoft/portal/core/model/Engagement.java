@@ -138,8 +138,8 @@ public class Engagement implements Record {
     }
 
     public boolean matches(EngagementQuery q) {
-        if (q.projectId != null && !projectId.equals(q.projectId)) return false;
-        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
+        if (q.projectId != null && !q.projectId.equals(projectId)) return false;
+        if (q.employeeId != null && !q.employeeId.equals(employeeId)) return false;
         return true;
     }
 }

@@ -81,8 +81,8 @@ public class Grant implements Record {
     }
 
     public boolean matches(GrantQuery q) {
-        if (q.roleId != null && !roleId.equals(q.roleId)) return false;
-        if (q.permissionId != null && !permissionId.equals(q.permissionId)) return false;
+        if (q.roleId != null && !q.roleId.equals(roleId)) return false;
+        if (q.permissionId != null && !q.permissionId.equals(permissionId)) return false;
         return true;
     }
 }

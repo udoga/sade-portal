@@ -163,13 +163,14 @@ INSERT INTO users VALUES
 --   id,      username,       password
     (default, 'admin',        '63524dd54916a96b6fbf052757e39bae1af467e82d3a392931edfa9580888ae55f49f3f68d014396e8a9f13851c89d0f0c1865661da5be18dc097ab9e13c8e9d'),
     (default, 'doga.sezgin',  'd404aad0d3110d60debb48163beb3b21ee6dcdf4b25dba7b2065c5e9607deefa87ed938d4aafa9f8b74ad7abe82c2bd5e9fdf6f927919cdc3c825a549d552bb8'),
-    (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26');
+    (default, 'eylul.erdinc', '5e14b3da28f2ce06212b1e061be836d3074c34fcf029c6271a5521c2223abed099083befbc02783af3dcbdfef27e1e597806f54b7e1435884a2773fe51ac0a26'),
+    (default, 'seda.tekin',   'fcdec9e6feafeb2ee8eb48c1cb9b6247c125eaaf7d808a8a5aff18cc78db582f76faabea751c718ce1edf1863e83ba7fff0e0e9829dccc0747d7225b143e8031');
 
 INSERT INTO roles VALUES
 --   id,      name
-    (default, 'SP Admin'),
-    (default, 'SP Employee'),
-    (default, 'SP Project Manager');
+    (default, 'Admin'),
+    (default, 'Employee'),
+    (default, 'Project Manager');
 
 INSERT INTO permissions  VALUES
 --   id,      name
@@ -180,7 +181,7 @@ INSERT INTO permissions  VALUES
     (default, 'sp-user_create'),
     (default, 'sp-user_update'),
     (default, 'sp-user_update-user:other'),
-    (default, 'sp-user_update-username:update'),
+    (default, 'sp-user_update-username_change'),
     (default, 'sp-user_delete'),
     (default, 'sp-worklog_list'),
     (default, 'sp-worklog_list-employee:other'),
@@ -192,16 +193,27 @@ INSERT INTO permissions  VALUES
     (default, 'sp-worklog_read_detailed-employee:other'),
     (default, 'sp-worklog_create'),
     (default, 'sp-worklog_create-employee:other'),
+    (default, 'sp-worklog_create-approval:responded'),
+    (default, 'sp-worklog_create-project:unengaged'),
     (default, 'sp-worklog_update'),
     (default, 'sp-worklog_update-employee:other'),
+    (default, 'sp-worklog_update-approval:responded'),
+    (default, 'sp-worklog_update-project:unengaged'),
+    (default, 'sp-worklog_update-employee_change'),
+    (default, 'sp-worklog_update-approval_change'),
+    (default, 'sp-worklog_update-project_change'),
     (default, 'sp-worklog_delete'),
-    (default, 'sp-worklog_delete-employee:other');
+    (default, 'sp-worklog_delete-employee:other'),
+    (default, 'sp-worklog_delete-approval:responded'),
+    (default, 'sp-worklog_delete-project:unengaged');
 
 INSERT INTO assignments VALUES
 --   id,      user_id, role_id
     (default,       1,       1),
     (default,       2,       2),
-    (default,       3,       2);
+    (default,       3,       2),
+    (default,       4,       2),
+    (default,       4,       3);
 
 INSERT INTO grants VALUES
 --   id,      role_id, permission_id
@@ -228,6 +240,15 @@ INSERT INTO grants VALUES
     (default,       1,            21),
     (default,       1,            22),
     (default,       1,            23),
+    (default,       1,            24),
+    (default,       1,            25),
+    (default,       1,            26),
+    (default,       1,            27),
+    (default,       1,            28),
+    (default,       1,            29),
+    (default,       1,            30),
+    (default,       1,            31),
+    (default,       1,            32),
     (default,       2,             1),
     (default,       2,             2),
     (default,       2,             3),
@@ -237,8 +258,18 @@ INSERT INTO grants VALUES
     (default,       2,            14),
     (default,       2,            16),
     (default,       2,            18),
-    (default,       2,            20),
-    (default,       2,            22);
+    (default,       2,            22),
+    (default,       2,            29),
+    (default,       3,            11),
+    (default,       3,            13),
+    (default,       3,            15),
+    (default,       3,            17),
+    (default,       3,            19),
+    (default,       3,            20),
+    (default,       3,            23),
+    (default,       3,            24),
+    (default,       3,            26),
+    (default,       3,            27);
 
 INSERT INTO sectors VALUES
 --   id,      name
@@ -263,17 +294,19 @@ INSERT INTO activities VALUES
 INSERT INTO employees VALUES
 --   id,      user_id,  first_name, last_name
     (default,       2, 'Uğur Doğa',  'Sezgin'),
-    (default,       3, 'Eylül',      'Erdinç');
+    (default,       3, 'Eylül',      'Erdinç'),
+    (default,       4, 'Seda',       'Tekin');
 
 INSERT INTO positions VALUES
 --   id,      name
     (default, 'Manager'),
-    (default, 'Assistant' );
+    (default, 'Developer' );
 
 INSERT INTO engagements VALUES
---   id,      project_id, employee_id, position_id,   start_date,    end_date,        description,   status
-    (default,           1,           1,          1, '2022-01-01', '2022-05-05', 'Description one.',     'A'),
-    (default,           2,           2,          2, '2022-02-02', '2022-06-06', 'Description two.',     'I');
+--   id,      project_id, employee_id, position_id,   start_date,    end_date,           description,  status
+    (default,           1,           3,          1, '2024-01-01', '2024-12-04',   'Description one.',     'A'),
+    (default,           1,           1,          2, '2024-01-02', '2024-12-05',   'Description two.',     'A'),
+    (default,           2,           2,          2, '2024-02-03', '2024-12-06', 'Description three.',     'A');
 
 INSERT INTO worklogs VALUES
 --   id,      project_id, employee_id, activity_id, work_date,    duration,  description,        approval_status

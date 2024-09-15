@@ -3,13 +3,11 @@ package com.sadesoft.portal.core.service;
 import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.base.error.ClientError;
+import com.sadesoft.portal.base.error.InconsistencyError;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.mock.*;
+import com.sadesoft.portal.core.model.*;
 import com.sadesoft.portal.core.query.WorklogQuery;
-import com.sadesoft.portal.core.model.Project;
-import com.sadesoft.portal.core.model.Employee;
-import com.sadesoft.portal.core.model.Activity;
-import com.sadesoft.portal.core.model.Worklog;
 
 import com.sadesoft.portal.core.order.WorklogOrder;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,6 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.lang.reflect.Field;
 
 import static com.sadesoft.portal.base.util.TestUtil.assertInvalidInput;
 import static com.sadesoft.portal.base.util.TestUtil.assertMissingField;
@@ -30,6 +27,7 @@ public class WorklogServiceTest {
     private MockProjectRepo projectRepo;
     private MockEmployeeRepo employeeRepo;
     private MockActivityRepo activityRepo;
+    private MockEngagementRepo engagementRepo;
     private MockWorklogRepo worklogRepo;
     private MockAuthorizer authorizer;
     private WorklogService service;
@@ -41,9 +39,10 @@ public class WorklogServiceTest {
         projectRepo = new MockProjectRepo(null);
         employeeRepo = new MockEmployeeRepo(null);
         activityRepo = new MockActivityRepo();
+        engagementRepo = new MockEngagementRepo(null, null, null);
         worklogRepo = new MockWorklogRepo(projectRepo, employeeRepo, activityRepo);
         authorizer = new MockAuthorizer();
-        service = new WorklogService(worklogRepo, employeeRepo, authorizer);
+        service = new WorklogService(worklogRepo, employeeRepo, engagementRepo, authorizer);
         validWorklog = new Worklog(
                 null,
                 "0",
@@ -61,27 +60,13 @@ public class WorklogServiceTest {
     }
 
     @Nested
-    public class GivenServiceWithOneWorklogAndFullPermissions {
+    public class GivenServiceWithOneWorklogAndNoAuthorization {
         @BeforeEach
         public void setup() {
-            authorizer.callerIds.add(callerId);
-            authorizer.permissionNames.addAll(List.of(
-                    "worklog_list",
-                    "worklog_list-employee:other",
-                    "worklog_list_detailed",
-                    "worklog_list_detailed-employee:other",
-                    "worklog_read",
-                    "worklog_read-employee:other",
-                    "worklog_read_detailed",
-                    "worklog_read_detailed-employee:other",
-                    "worklog_create",
-                    "worklog_create-employee:other",
-                    "worklog_update",
-                    "worklog_update-employee:other",
-                    "worklog_delete",
-                    "worklog_delete-employee:other"));
+            authorizer.enabled = false;
             worklogRepo.create(validWorklog);
             employeeRepo.create(new Employee().withUserId(callerId));
+            engagementRepo.create(new Engagement().withProjectId("0").withEmployeeId("0"));
         }
 
         @Test
@@ -95,23 +80,31 @@ public class WorklogServiceTest {
         }
 
         @Test
-        public void whenHasInvalidInputOnCreate_throwsError() throws Exception{
-            assertIdField("projectId");
-            assertIdField("employeeId");
-            assertIdField("activityId");
-            assertThrows(ClientError.class, () -> service.create(callerId, validWorklog.withApprovalStatus("A")));
+        public void whenHasInvalidInputOnCreate_throwsError() {
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withEmployeeId("A")));
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withProjectId("")));
+            assertDoesNotThrow(() -> service.create(callerId, validWorklog.withActivityId("11")));
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withApprovalStatus("1")));
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withApprovalStatus("")));
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withApprovalStatus("I")));
+            assertDoesNotThrow(() -> service.create(callerId, validWorklog.withApprovalStatus(null)));
+            assertDoesNotThrow(() -> service.create(callerId, validWorklog.withApprovalStatus("A")));
+            assertInvalidInput(() -> service.create(callerId, validWorklog.withApprovalStatus("AD")));
         }
 
-        private void assertIdField(String fieldName) throws Exception {
-            assertInvalidInput(() -> service.create(callerId, withField(validWorklog, fieldName, "A")));
-            assertInvalidInput(() -> service.create(callerId, withField(validWorklog, fieldName, "")));
-            assertDoesNotThrow(() -> service.create(callerId, withField(validWorklog, fieldName, "11")));
+        @Test
+        public void whenWorklogProjectIdAndEmployeeIdAreUnengaged_throwsError() {
+            assertThrows(InconsistencyError.class, () -> service.create(callerId, validWorklog.withProjectId("1")));
         }
 
-        private Worklog withField(Worklog worklog, String fieldName, String value) throws Exception {
-            Field field = worklog.getClass().getDeclaredField(fieldName);
-            field.set(worklog, value);
-            return worklog;
+        @Test
+        public void whenHasMissingFieldOnUpdate_throwsError(){
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withProjectId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withEmployeeId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withActivityId(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withWorkDate(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDuration(null)));
+            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDescription(null)));
         }
 
         @Test
@@ -186,7 +179,9 @@ public class WorklogServiceTest {
             projectRepo.create(new Project(null, null, "Name", "Description"));
             employeeRepo.create(new Employee(null, null, "first", "last"));
             activityRepo.create(new Activity(null, "Sample Activity"));
-            assertEquals(worklogRepo.readDetailed("0"), service.readDetailed(callerId, "0"));
+            Worklog w1 = worklogRepo.readDetailed("0");
+            Worklog w2 = service.readDetailed(callerId, "0");
+            assertEquals(w1, w2);
         }
 
         @Test
@@ -202,37 +197,16 @@ public class WorklogServiceTest {
             assertEquals(validWorklog.withId("0"), client);
             assertEquals(0, worklogRepo.list().size());
         }
-
-        @Test
-        public void whenHasMissingFieldOnUpdate_throwsError(){
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withProjectId(null)));
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withEmployeeId(null)));
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withActivityId(null)));
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withWorkDate(null)));
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDuration(null)));
-            assertMissingField(() -> service.update(callerId, "0", validWorklog.withDescription(null)));
-        }
-
-        @Test
-        public void whenHasInvalidInputOnUpdate_throwsError() throws Exception{
-            assertIdField("projectId");
-            assertIdField("employeeId");
-            assertIdField("activityId");
-            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("1")));
-            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("")));
-            assertInvalidInput(() -> service.update(callerId, "0", validWorklog.withApprovalStatus("I")));
-            assertDoesNotThrow(() -> service.update(callerId, "0", validWorklog.withApprovalStatus(null)));
-        }
     }
 
     @Nested
     public class GivenServiceWithTwoWorklogsAndEmployees {
-        private final String callerOne = "5";
-        private final String callerTwo = "6";
+        private final String caller0 = "5";
+        private final String caller1 = "6";
 
         @BeforeEach
         public void setup() {
-            authorizer.callerIds.addAll(List.of(callerOne, callerTwo));
+            authorizer.callerIds.addAll(List.of(caller0, caller1));
             authorizer.permissionNames.addAll(List.of(
                     "worklog_list",
                     "worklog_list_detailed",
@@ -241,8 +215,9 @@ public class WorklogServiceTest {
                     "worklog_create",
                     "worklog_update",
                     "worklog_delete"));
-            employeeRepo.create(new Employee().withUserId(callerOne));
-            employeeRepo.create(new Employee().withUserId(callerTwo));
+            employeeRepo.create(new Employee().withUserId(caller0));
+            employeeRepo.create(new Employee().withUserId(caller1));
+            engagementRepo.create(new Engagement().withProjectId("0").withEmployeeId("0"));
             worklogRepo.create(validWorklog.withEmployeeId("0"));
             worklogRepo.create(validWorklog.withEmployeeId("1"));
             projectRepo.create(new Project());
@@ -250,51 +225,122 @@ public class WorklogServiceTest {
         }
 
         @Test
-        public void whenListRequestIsUnauthorized_throwsError() {
-            String permissionName = "worklog_list_detailed-employee:other";
-            WorklogQuery employeeOneQuery = new WorklogQuery().withEmployeeId("0");
-            WorklogQuery employeeTwoQuery = new WorklogQuery().withEmployeeId("1");
-            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(callerOne, employeeTwoQuery));
-            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(callerTwo, employeeOneQuery));
-            assertUnauthorized(permissionName, () -> service.listDetailedBy(callerOne, employeeTwoQuery));
-            assertDoesNotThrow(() -> service.listBy(callerOne, employeeOneQuery));
-            assertDoesNotThrow(() -> service.listBy(callerTwo, employeeTwoQuery));
-            assertDoesNotThrow(() -> service.listDetailedBy(callerOne, employeeOneQuery));
+        public void whenQueryEmployeeIdDoesNotExist_throwsError() {
+            WorklogQuery query = new WorklogQuery().withEmployeeId("10");
+            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(caller0, query));
         }
 
         @Test
-        public void whenReadRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_read-employee:other", () -> service.read(callerOne, "1"));
-            assertUnauthorized("worklog_read-employee:other", () -> service.read(callerTwo, "0"));
-            assertUnauthorized("worklog_read_detailed-employee:other", () -> service.readDetailed(callerOne, "1"));
-            assertDoesNotThrow(() -> service.read(callerOne, "0"));
-            assertDoesNotThrow(() -> service.read(callerTwo, "1"));
-            assertDoesNotThrow(() -> service.readDetailed(callerOne, "0"));
+        public void whenReceivesListRequest_authorizesEmployeeIsAnother() {
+            WorklogQuery query0 = new WorklogQuery().withEmployeeId("0");
+            WorklogQuery query1 = new WorklogQuery().withEmployeeId("1");
+            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(caller0, query1));
+            assertUnauthorized("worklog_list-employee:other", () -> service.listBy(caller1, query0));
+            assertUnauthorized("worklog_list_detailed-employee:other", () -> service.listDetailedBy(caller0, query1));
+            assertDoesNotThrow(() -> service.listBy(caller0, query0));
+            assertDoesNotThrow(() -> service.listBy(caller1, query1));
+            assertDoesNotThrow(() -> service.listDetailedBy(caller0, query0));
         }
 
         @Test
-        public void whenCreateRequestIsUnauthorized_throwsError() {
+        public void whenReceivesReadRequest_authorizesEmployeeIsAnother() {
+            assertUnauthorized("worklog_read-employee:other", () -> service.read(caller0, "1"));
+            assertUnauthorized("worklog_read-employee:other", () -> service.read(caller1, "0"));
+            assertUnauthorized("worklog_read_detailed-employee:other", () -> service.readDetailed(caller0, "1"));
+            assertDoesNotThrow(() -> service.read(caller0, "0"));
+            assertDoesNotThrow(() -> service.read(caller1, "1"));
+            assertDoesNotThrow(() -> service.readDetailed(caller0, "0"));
+        }
+
+        @Test
+        public void whenReceivesCreateRequest_authorizesEmployeeIsAnother() {
             String permissionName = "worklog_create-employee:other";
-            assertUnauthorized(permissionName, () -> service.create(callerOne, validWorklog.withEmployeeId("1")));
-            assertUnauthorized(permissionName, () -> service.create(callerTwo, validWorklog.withEmployeeId("0")));
-            assertDoesNotThrow(() -> service.create(callerOne, validWorklog.withEmployeeId("0")));
-            assertDoesNotThrow(() -> service.create(callerTwo, validWorklog.withEmployeeId("1")));
+            assertUnauthorized(permissionName, () -> service.create(caller0, validWorklog.withEmployeeId("1")));
+            assertUnauthorized(permissionName, () -> service.create(caller1, validWorklog.withEmployeeId("0")));
         }
 
         @Test
-        public void whenUpdateRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_update-employee:other", () -> service.update(callerOne, "1", validWorklog));
-            assertUnauthorized("worklog_update-employee:other", () -> service.update(callerTwo, "0", validWorklog));
-            assertDoesNotThrow(() -> service.update(callerOne, "0", validWorklog));
-            assertDoesNotThrow(() -> service.update(callerTwo, "1", validWorklog));
+        public void whenReceivesCreateRequest_authorizesApprovalIsResponded() {
+            String permissionName = "worklog_create-approval:responded";
+            assertUnauthorized(permissionName, () -> service.create(caller0, validWorklog.withApprovalStatus("A")));
+            assertUnauthorized(permissionName, () -> service.create(caller0, validWorklog.withApprovalStatus("D")));
         }
 
         @Test
-        public void whenDeleteRequestIsUnauthorized_throwsError() {
-            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(callerOne, "1"));
-            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(callerTwo, "0"));
-            assertDoesNotThrow(() -> service.delete(callerOne, "0"));
-            assertDoesNotThrow(() -> service.delete(callerTwo, "1"));
+        public void whenReceivesCreateRequest_authorizesProjectIsUnengaged() {
+            String permissionName = "worklog_create-project:unengaged";
+            Worklog worklog0 = validWorklog.withEmployeeId("0");
+            Worklog worklog1 = validWorklog.withEmployeeId("1");
+            assertDoesNotThrow(() -> service.create(caller0, worklog0.withProjectId("0")));
+            assertUnauthorized(permissionName, () -> service.create(caller0, worklog0.withProjectId("1")));
+            assertUnauthorized(permissionName, () -> service.create(caller1, worklog1.withProjectId("0")));
+            assertUnauthorized(permissionName, () -> service.create(caller1, worklog1.withProjectId("1")));
+        }
+
+        @Test
+        void whenReceivesCreateRequest_authorizesProjectIsUnengagedWithCaller() {
+            String permissionName = "worklog_create-project:unengaged";
+            authorizer.permissionNames.add("worklog_create-employee:other");
+            Worklog worklog1 = validWorklog.withEmployeeId("1");
+            assertThrows(InconsistencyError.class, () -> service.create(caller0, worklog1.withProjectId("0")));
+            assertUnauthorized(permissionName, () -> service.create(caller1, worklog1.withProjectId("1")));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesEmployeeIsAnother() {
+            assertUnauthorized("worklog_update-employee:other", () -> service.update(caller0, "1", validWorklog));
+            assertUnauthorized("worklog_update-employee:other", () -> service.update(caller1, "0", validWorklog));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesApprovalIsResponded() {
+            String permissionName = "worklog_update-approval:responded";
+            worklogRepo.update("0", worklogRepo.read("0").withApprovalStatus("A"));
+            assertUnauthorized(permissionName, () -> service.update(caller0, "0", validWorklog));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesProjectIsUnengaged() {
+            String permissionName = "worklog_update-project:unengaged";
+            assertUnauthorized(permissionName, () -> service.update(caller1, "1", validWorklog.withEmployeeId("1")));
+            assertDoesNotThrow(() -> service.update(caller0, "0", validWorklog.withEmployeeId("0")));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesEmployeeChange() {
+            String permissionName = "worklog_update-employee_change";
+            assertUnauthorized(permissionName, () -> service.update(caller0, "0", validWorklog.withEmployeeId("1")));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesApprovalChange() {
+            String permissionName = "worklog_update-approval_change";
+            assertUnauthorized(permissionName, () -> service.update(caller0, "0", validWorklog.withApprovalStatus("A")));
+        }
+
+        @Test
+        public void whenReceivesUpdateRequest_authorizesProjectChange() {
+            String permissionName = "worklog_update-project_change";
+            assertUnauthorized(permissionName, () -> service.update(caller0, "0", validWorklog.withProjectId("1")));
+        }
+
+        @Test
+        public void whenReceivesDeleteRequest_authorizesEmployeeIsAnother() {
+            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(caller0, "1"));
+            assertUnauthorized("worklog_delete-employee:other", () -> service.delete(caller1, "0"));
+        }
+
+        @Test
+        public void whenReceivesDeleteRequest_authorizesApprovalIsResponded() {
+            String permissionName = "worklog_delete-approval:responded";
+            worklogRepo.update("0", worklogRepo.read("0").withApprovalStatus("A"));
+            assertUnauthorized(permissionName, () -> service.delete(caller0, "0"));
+        }
+
+        @Test
+        public void whenReceivesDeleteRequest_authorizesProjectIsUnengaged() {
+            assertUnauthorized("worklog_delete-project:unengaged", () -> service.delete(caller1, "1"));
+            assertDoesNotThrow(() -> service.delete(caller0, "0"));
         }
     }
 }

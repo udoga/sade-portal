@@ -92,7 +92,7 @@ public class Employee implements Record {
     }
 
     public boolean matches(EmployeeQuery q) {
-        if (q.userId != null && !userId.equals(q.userId)) return false;
+        if (q.userId != null && !q.userId.equals(userId)) return false;
         return true;
     }
 }

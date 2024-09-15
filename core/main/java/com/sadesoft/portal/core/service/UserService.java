@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public User read(String callerId, String id) {
-        authorizer.authorize(callerId, "user_read", getFlags(callerId, userRepo.read(id), null));
+        authorizer.authorize(callerId, "user_read", getFlags(callerId, userRepo.read(id)));
         return userRepo.read(id).withPassword(null);
     }
 
@@ -52,10 +52,13 @@ public class UserService {
         return userRepo.delete(id).withPassword(null);
     }
 
+    private List<String> getFlags(String callerId, User user) {
+        return (callerId == null || !callerId.equals(user.id))? List.of("user:other") : List.of();
+    }
+
     private List<String> getFlags(String callerId, User oldUser, User newUser) {
-        ArrayList<String> flags = new ArrayList<>();
-        if (callerId == null || !callerId.equals(oldUser.id)) flags.add("user:other");
-        if (newUser != null && !Objects.equals(oldUser.username, newUser.username)) flags.add("username:update");
+        ArrayList<String> flags = new ArrayList<>(getFlags(callerId, oldUser));
+        if (!Objects.equals(oldUser.username, newUser.username)) flags.add("username_change");
         return flags;
     }
 

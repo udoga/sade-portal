@@ -57,7 +57,7 @@ public class Main {
         EmployeeService employeeService = new EmployeeService(employeeRepo);
         PositionService positionService = new PositionService(positionRepo);
         EngagementService engagementService = new EngagementService(engagementRepo);
-        WorklogService worklogService = new WorklogService(worklogRepo, employeeRepo, authorizer);
+        WorklogService worklogService = new WorklogService(worklogRepo, employeeRepo, engagementRepo, authorizer);
         VacationCategoryService vacationCategoryService = new VacationCategoryService(vacationCategoryRepo);
         VacationService vacationService = new VacationService(vacationRepo);
         ExpenseService expenseService = new ExpenseService(expenseRepo);

@@ -137,10 +137,10 @@ public class Worklog implements Record {
     }
 
     public boolean matches(WorklogQuery q) {
-        if (q.projectId != null && !projectId.equals(q.projectId)) return false;
-        if (q.employeeId != null && !employeeId.equals(q.employeeId)) return false;
-        if (q.minDate != null && workDate.isBefore(q.minDate)) return false;
-        if (q.maxDate != null && workDate.isAfter(q.maxDate)) return false;
+        if (q.projectId != null && !q.projectId.equals(projectId)) return false;
+        if (q.employeeId != null && !q.employeeId.equals(employeeId)) return false;
+        if (q.minDate != null && q.minDate.isAfter(workDate)) return false;
+        if (q.maxDate != null && q.maxDate.isBefore(workDate)) return false;
         return true;
     }
 }
