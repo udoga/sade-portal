@@ -46,6 +46,7 @@ public class SectorServiceTest {
         assertInvalidInput(() -> service.create(withField(validSector, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validSector, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validSector, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validSector, fieldName, "ğ")));
     }
 
     private Sector withField(Sector sector, String fieldName, String value) throws Exception {

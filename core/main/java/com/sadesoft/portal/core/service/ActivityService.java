@@ -43,7 +43,7 @@ public class ActivityService {
 
     private void check(Activity activity) {
         checkMissingField(activity.name, "name");
-        checkFieldFormat(activity.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(activity.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

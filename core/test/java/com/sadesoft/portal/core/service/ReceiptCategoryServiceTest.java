@@ -47,6 +47,7 @@ public class ReceiptCategoryServiceTest {
         assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validReceiptCategory, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validReceiptCategory, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validReceiptCategory, fieldName, "ğ")));
     }
 
     private ReceiptCategory withField(ReceiptCategory receiptCategory, String fieldName, String value) throws Exception {

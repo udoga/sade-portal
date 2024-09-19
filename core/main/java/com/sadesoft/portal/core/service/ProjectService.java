@@ -64,7 +64,7 @@ public class ProjectService {
 
     private void checkFieldFormats(Project project) {
         checkFieldFormat(project.clientId, "clientId", "^[0-9]+$");
-        checkFieldFormat(project.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(project.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

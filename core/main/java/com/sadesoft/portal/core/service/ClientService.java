@@ -63,7 +63,7 @@ public class ClientService {
 
     private void checkFieldFormats(Client client) {
         checkFieldFormat(client.sectorId, "sectorId", "^[0-9]+$");
-        checkFieldFormat(client.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(client.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

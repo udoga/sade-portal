@@ -64,6 +64,7 @@ public class EmployeeServiceTest {
         assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validEmployee, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validEmployee, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validEmployee, fieldName, "ğ")));
     }
 
     private Employee withField(Employee employee, String fieldName, String value) throws Exception {

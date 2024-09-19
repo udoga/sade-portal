@@ -46,6 +46,7 @@ public class VacationCategoryServiceTest {
         assertInvalidInput(() -> service.create(withField(validVacationCategory, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validVacationCategory, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validVacationCategory, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validVacationCategory, fieldName, "ğ")));
     }
 
     private VacationCategory withField(VacationCategory vacationCategory, String fieldName, String value) throws Exception {

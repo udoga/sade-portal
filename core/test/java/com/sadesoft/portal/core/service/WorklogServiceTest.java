@@ -2,7 +2,6 @@ package com.sadesoft.portal.core.service;
 
 import com.sadesoft.portal.base.auth.MockAuthorizer;
 import com.sadesoft.portal.base.error.AuthorizationError;
-import com.sadesoft.portal.base.error.ClientError;
 import com.sadesoft.portal.base.error.InconsistencyError;
 import com.sadesoft.portal.core.detailed.DetailedWorklog;
 import com.sadesoft.portal.core.mock.*;

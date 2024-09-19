@@ -43,7 +43,7 @@ public class RoleService {
 
     private void check(Role role) {
         checkMissingField(role.name, "name");
-        checkFieldFormat(role.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(role.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

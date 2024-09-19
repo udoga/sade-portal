@@ -48,6 +48,7 @@ public class RoleServiceTest {
         assertInvalidInput(() -> service.create(withField(validRole, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validRole, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validRole, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validRole, fieldName, "ğ")));
     }
 
     private Role withField(Role role, String fieldName, String value) throws Exception {

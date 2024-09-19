@@ -39,7 +39,7 @@ public class VacationCategoryService {
 
     private void check(VacationCategory vacationCategory) {
         checkMissingField(vacationCategory.name, "name");
-        checkFieldFormat(vacationCategory.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(vacationCategory.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

@@ -43,7 +43,7 @@ public class PositionService {
 
     private void check(Position position) {
         checkMissingField(position.name, "name");
-        checkFieldFormat(position.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(position.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

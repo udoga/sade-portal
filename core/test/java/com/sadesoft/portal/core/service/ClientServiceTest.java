@@ -61,6 +61,7 @@ public class ClientServiceTest {
         assertInvalidInput(() -> service.create(withField(validClient, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validClient, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validClient, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validClient, fieldName, "ğ")));
     }
 
     private Client withField(Client client, String fieldName, String value) throws Exception {

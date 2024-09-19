@@ -38,7 +38,7 @@ public class SectorService {
 
     private void check(Sector sector) {
         checkMissingField(sector.name, "name");
-        checkFieldFormat(sector.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(sector.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

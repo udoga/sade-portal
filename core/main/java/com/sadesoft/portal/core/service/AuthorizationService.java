@@ -5,7 +5,6 @@ import com.sadesoft.portal.base.error.AuthorizationError;
 import com.sadesoft.portal.core.model.Permission;
 import com.sadesoft.portal.core.repo.PermissionRepo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 

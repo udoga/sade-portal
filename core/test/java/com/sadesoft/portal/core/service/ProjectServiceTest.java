@@ -69,6 +69,7 @@ public class ProjectServiceTest {
         assertInvalidInput(() -> service.create(withField(validProject, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validProject, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validProject, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validProject, fieldName, "ğ")));
     }
 
     private Project withField(Project project, String fieldName, String value) throws Exception {

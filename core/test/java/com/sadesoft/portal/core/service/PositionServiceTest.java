@@ -40,6 +40,7 @@ public class PositionServiceTest {
         assertInvalidInput(() -> service.create(withField(validPosition, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validPosition, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validPosition, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validPosition, fieldName, "ğ")));
     }
 
     private Position withField(Position position, String fieldName, String value) throws Exception {

@@ -38,7 +38,7 @@ public class ReceiptCategoryService {
 
     private void check(ReceiptCategory receiptCategory) {
         checkMissingField(receiptCategory.name, "name");
-        checkFieldFormat(receiptCategory.name, "name", "^[a-zA-Z]+( [a-zA-Z]+)*$");
+        checkFieldFormat(receiptCategory.name, "name", "^[a-zA-ZçÇğĞıİöÖşŞüÜ]+( [a-zA-ZçÇğĞıİöÖşŞüÜ]+)*$");
     }
 
     private void checkMissingField(String value, String field) {

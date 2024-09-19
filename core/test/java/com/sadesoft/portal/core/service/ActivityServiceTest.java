@@ -49,6 +49,7 @@ public class ActivityServiceTest {
         assertInvalidInput(() -> service.create(withField(validActivity, fieldName, " ")));
         assertInvalidInput(() -> service.create(withField(validActivity, fieldName, "a ")));
         assertDoesNotThrow(() -> service.create(withField(validActivity, fieldName, "A B")));
+        assertDoesNotThrow(() -> service.create(withField(validActivity, fieldName, "ğ")));
     }
 
     private Activity withField(Activity activity, String fieldName, String value) throws Exception {
