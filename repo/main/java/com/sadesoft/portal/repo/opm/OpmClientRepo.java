@@ -100,6 +100,7 @@ public class OpmClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     private String getWhereSql(ClientQuery q) {
         List<String> conditions = new ArrayList<>();
+        if (q.searchName != null) conditions.add("POSITION(LOWER('" + q.searchName + "') IN LOWER(c.name)) > 0");
         return getWhereSql(String.join(" and ", conditions));
     }
 }

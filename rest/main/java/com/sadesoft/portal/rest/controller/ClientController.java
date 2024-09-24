@@ -26,6 +26,7 @@ public class ClientController extends RestController {
 
     private ClientQuery getQuery(Context c) {
         return new ClientQuery()
-                .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0));
+                .withOffset(c.queryParamAsClass("offset", Integer.class).getOrDefault(0))
+                .withSearchName(c.queryParam("searchName"));
     }
 }

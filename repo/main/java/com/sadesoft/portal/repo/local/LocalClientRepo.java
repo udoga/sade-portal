@@ -83,6 +83,7 @@ public class LocalClientRepo extends JdbcRepo<Client> implements ClientRepo {
 
     private String getWhereSql(ClientQuery q) {
         List<String> conditions = new ArrayList<>();
+        if (q.searchName != null) conditions.add("POSITION('c.name', '" + q.searchName + "') > 0");
         return getWhereSql(String.join(" and ", conditions));
     }
 }

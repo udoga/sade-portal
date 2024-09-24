@@ -1,5 +1,8 @@
 <div x-data="new ClientListComponent(router, clientApi, notifier)" x-init="load()">
   <h2>Clients</h2>
+  <div class="sp field">
+    <input placeholder="Search" type="text" x-model="query.searchName" @change="refresh()"/>
+  </div>
   <table class="records">
     <tr>
       <th class="narrow">Id</th>

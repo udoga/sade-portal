@@ -92,6 +92,14 @@ public class ClientServiceTest {
         }
 
         @Test
+        public void listsBySearchName() {
+            clientRepo.create(validClient.copy().withName("New Firm"));
+            assertEquals(2, service.listBy(new ClientQuery().withSearchName("Firm")).size());
+            assertEquals(1, service.listBy(new ClientQuery().withSearchName("Sample")).size());
+            assertEquals(0, service.listBy(new ClientQuery().withSearchName("Other")).size());
+        }
+
+        @Test
         public void listsDetailedClients() {
             sectorRepo.create(new Sector(null, "Sample"));
             assertEquals(clientRepo.listDetailedBy(new ClientQuery()), service.listDetailedBy(new ClientQuery()));

@@ -77,6 +77,7 @@ public class Client implements Record {
     }
 
     public boolean matches(ClientQuery q) {
+        if (q.searchName != null && !name.contains(q.searchName)) return false;
         return true;
     }
 }
